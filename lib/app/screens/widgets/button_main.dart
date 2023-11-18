@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 
-class ButtonMain extends StatelessWidget {
+class ButtonMain extends StatefulWidget {
   const ButtonMain({super.key, required this.text, required this.onTap});
 
   final String text;
   final Function onTap;
 
   @override
+  State<ButtonMain> createState() => _ButtonMainState();
+}
+
+class _ButtonMainState extends State<ButtonMain> {
+  @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: () => onTap,
+      onPressed: () => widget.onTap(),
       child: SizedBox(
         height: 50,
         width: 350,
@@ -21,7 +26,7 @@ class ButtonMain extends StatelessWidget {
                   color: const Color.fromRGBO(50, 58, 71, 1), width: 2),
               color: const Color.fromRGBO(50, 58, 71, 1)),
           child: Text(
-            text,
+            widget.text,
             style: const TextStyle(color: CupertinoColors.white, fontSize: 20),
             textAlign: TextAlign.center,
           ),

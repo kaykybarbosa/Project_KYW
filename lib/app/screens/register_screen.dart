@@ -6,21 +6,26 @@ import 'package:kyw_management/app/screens/widgets/button_network.dart';
 import 'package:kyw_management/app/screens/widgets/input_field.dart';
 import 'package:kyw_management/app/screens/widgets/my_title.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        child: Center(
-      child: SingleChildScrollView(
         child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        const MyTitle(title: 'REGISTER'),
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               children: [
-                const MyTitle(title: 'REGISTER'),
-                const SizedBox(height: 60),
                 const InputField(placeHolder: 'Nome'),
                 const SizedBox(height: 20),
                 const InputField(placeHolder: 'E-mail ou Número'),
@@ -53,41 +58,35 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 40),
-                ButtonMain(
-                  onTap: () {},
-                  text: 'Registre-se',
-                ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: 200,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: 'Já tem uma conta?',
-                      style: const TextStyle(
-                          color: CupertinoColors.black, fontSize: 18),
-                      children: [
-                        TextSpan(
-                            text: ' Clique aqui',
-                            style: const TextStyle(
-                                color: CupertinoColors.link,
-                                fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                context.pushReplacement("/login");
-                              }),
-                        const TextSpan(text: ' para entrar'),
-                      ],
-                    ),
-                  ),
                 )
               ],
-            ),
+            )
           ],
         ),
-      ),
+        ButtonMain(
+          onTap: () {},
+          text: 'Registre-se',
+        ),
+        SizedBox(
+          width: 200,
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Já tem uma conta?',
+              style:
+                  const TextStyle(color: CupertinoColors.black, fontSize: 18),
+              children: [
+                TextSpan(
+                    text: ' Clique aqui',
+                    style: const TextStyle(color: CupertinoColors.link),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => context.go("/")),
+                const TextSpan(text: ' para entrar'),
+              ],
+            ),
+          ),
+        )
+      ],
     ));
   }
 }

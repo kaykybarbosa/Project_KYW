@@ -14,6 +14,9 @@ class _MyAppState extends State<MyApp> {
     return CupertinoApp.router(
       debugShowCheckedModeBanner: false,
       title: 'KYW Management',
+      theme: const CupertinoThemeData(
+          primaryColor: Color.fromRGBO(50, 58, 71, 1),
+          scaffoldBackgroundColor: CupertinoColors.lightBackgroundGray),
       routerDelegate: routes.routerDelegate,
       routeInformationParser: routes.routeInformationParser,
       routeInformationProvider: routes.routeInformationProvider,

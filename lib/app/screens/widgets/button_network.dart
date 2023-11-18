@@ -17,7 +17,7 @@ class ButtonNetwork extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: CupertinoColors.black, width: 1),
+          border: Border.all(color: CupertinoColors.link, width: 1),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
