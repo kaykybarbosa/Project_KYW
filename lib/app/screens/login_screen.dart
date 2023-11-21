@@ -1,9 +1,9 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/screens/widgets/button_main.dart';
-import 'package:kyw_management/app/screens/widgets/input_field.dart';
+import 'package:kyw_management/app/screens/widgets/input_email_valid.dart';
+import 'package:kyw_management/app/screens/widgets/input_password_%20valid.dart';
 import 'package:kyw_management/app/screens/widgets/my_title.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,23 +28,27 @@ class _LoginScreenState extends State<LoginScreen> {
             const MyTitle(title: 'LOGIN'),
             Column(
               children: [
-                const InputField(placeHolder: 'E-mail ou Número'),
-                InputField(
-                    placeHolder: 'Senha',
-                    isPassword: true,
-                    validation: (email) =>
-                        email != null && !EmailValidator.validate(email)
-                            ? const Text('Digite um e-mail válido')
-                            : null),
-                SizedBox(
-                  width: 375,
-                  child: Row(
-                    children: [
-                      CupertinoButton(
-                          onPressed: () => context.push("/forgot-password"),
-                          child: const Text('Esqueceu a senha ?'))
-                    ],
-                  ),
+                CupertinoFormSection(
+                  backgroundColor:
+                      CupertinoTheme.of(context).scaffoldBackgroundColor,
+                  children: [
+                    const InputEmailValid(placeHolder: 'E-mail'),
+                    const InputPasswordValid(placeHolder: 'Senha'),
+                    SizedBox(
+                      width: 375,
+                      child: Row(
+                        children: [
+                          CupertinoButton(
+                            onPressed: () => context.push("/forgot-password"),
+                            child: const Text(
+                              'Esqueceu a senha ?',
+                              style: TextStyle(color: CupertinoColors.link),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -72,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: CupertinoColors.link),
                           recognizer: TapGestureRecognizer()
                             ..onTap =
-                                () => context.pushReplacement('/login-test')),
+                                () => context.pushReplacement('/register')),
                       const TextSpan(text: ' para criar uma'),
                     ],
                   ),

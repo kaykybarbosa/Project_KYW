@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/screens/widgets/button_main.dart';
-import 'package:kyw_management/app/screens/widgets/input_field.dart';
+import 'package:kyw_management/app/screens/widgets/input_email_valid.dart';
 import 'package:kyw_management/app/screens/widgets/my_title.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -30,7 +30,9 @@ class ForgotPassword extends StatelessWidget {
                           color: Color.fromRGBO(50, 58, 71, 1), fontSize: 20),
                     ),
                   ),
-                  InputField(placeHolder: 'E-mail'),
+                  InputEmailValid(
+                    placeHolder: 'E-mail',
+                  ),
                 ],
               ),
             ),
