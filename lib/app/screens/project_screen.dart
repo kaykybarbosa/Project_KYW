@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kyw_management/app/screens/widgets/projects/my_navigator.dart';
+import 'package:kyw_management/app/widgets/my_navigator.dart';
 
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});

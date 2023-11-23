@@ -1,11 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/screens/widgets/button_main.dart';
-import 'package:kyw_management/app/screens/widgets/button_network.dart';
-import 'package:kyw_management/app/screens/widgets/input_email_valid.dart';
-import 'package:kyw_management/app/screens/widgets/input_password_%20valid.dart';
-import 'package:kyw_management/app/screens/widgets/my_title.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

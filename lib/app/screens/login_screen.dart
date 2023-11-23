@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/screens/widgets/button_main.dart';
-import 'package:kyw_management/app/screens/widgets/input_email_valid.dart';
-import 'package:kyw_management/app/screens/widgets/input_password_%20valid.dart';
-import 'package:kyw_management/app/screens/widgets/my_title.dart';
+import 'package:kyw_management/app/widgets/button_main.dart';
+import 'package:kyw_management/app/widgets/my_title.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,27 +26,23 @@ class _LoginScreenState extends State<LoginScreen> {
             const MyTitle(title: 'LOGIN'),
             Column(
               children: [
-                CupertinoFormSection(
-                  backgroundColor:
-                      CupertinoTheme.of(context).scaffoldBackgroundColor,
-                  children: [
-                    const InputEmailValid(placeHolder: 'E-mail'),
-                    const InputPasswordValid(placeHolder: 'Senha'),
-                    SizedBox(
-                      width: 375,
-                      child: Row(
-                        children: [
-                          CupertinoButton(
-                            onPressed: () => context.push("/forgot-password"),
-                            child: const Text(
-                              'Esqueceu a senha ?',
-                              style: TextStyle(color: CupertinoColors.link),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                // const InputEmailValid(placeHolder: 'E-mail'),
+                // const InputPasswordValid(placeHolder: 'Senha'),
+                // const InputEmailValid(placeHolder: 'E-mail'),
+                // const InputPasswordValid(placeHolder: 'Senha'),
+                SizedBox(
+                  width: 375,
+                  child: Row(
+                    children: [
+                      CupertinoButton(
+                        onPressed: () => context.push("/forgot-password"),
+                        child: const Text(
+                          'Esqueceu a senha ?',
+                          style: TextStyle(color: CupertinoColors.link),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
