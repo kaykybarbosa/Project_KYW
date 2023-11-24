@@ -6,7 +6,8 @@ import 'package:kyw_management/app/screens/project_screen.dart';
 import 'package:kyw_management/app/screens/register_screen.dart';
 
 final routes = GoRouter(
-  initialLocation: "/",
+  // initialLocation: "/",
+  initialLocation: "/projects",
   routes: [
     GoRoute(path: "/", builder: (context, state) => const FormScreen()),
     GoRoute(

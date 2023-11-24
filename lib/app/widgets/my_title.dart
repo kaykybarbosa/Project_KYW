@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class MyTitle extends StatelessWidget {
   const MyTitle({super.key, required this.title});

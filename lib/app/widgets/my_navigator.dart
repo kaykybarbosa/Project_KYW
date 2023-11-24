@@ -26,12 +26,14 @@ class _MyNavigatorState extends State<MyNavigator> {
         alignment: Alignment.topCenter,
         width: 100,
         decoration: BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    width: 2,
-                    color: widget.wasPressed
-                        ? CupertinoColors.white
-                        : CupertinoTheme.of(context).primaryColor))),
+          border: Border(
+            bottom: BorderSide(
+                width: 2,
+                color: widget.wasPressed
+                    ? CupertinoColors.white
+                    : CupertinoTheme.of(context).primaryColor),
+          ),
+        ),
         child: Text(widget.title,
             style: const TextStyle(color: CupertinoColors.white, fontSize: 18)),
       ),
