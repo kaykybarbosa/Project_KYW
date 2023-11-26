@@ -28,14 +28,20 @@ class _MyNavigatorState extends State<MyNavigator> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-                width: 2,
-                color: widget.wasPressed
-                    ? CupertinoColors.white
-                    : CupertinoTheme.of(context).primaryColor),
+              width: 2,
+              color: widget.wasPressed
+                  ? CupertinoColors.white
+                  : const Color.fromRGBO(50, 58, 71, 1),
+            ),
           ),
         ),
-        child: Text(widget.title,
-            style: const TextStyle(color: CupertinoColors.white, fontSize: 18)),
+        child: Text(
+          widget.title,
+          style: const TextStyle(
+            color: CupertinoColors.white,
+            fontSize: 18,
+          ),
+        ),
       ),
     );
   }

@@ -7,12 +7,15 @@ class MyDecorations {
   static Color myBorderColor = CupertinoColors.inactiveGray;
 
   static BoxDecoration inputDecoration(
-      {Color? borderColor, Color? inputColor, bool isActice = false}) {
+      {Color? borderColor,
+      Color? inputColor,
+      double? borderRadius,
+      bool isActice = false}) {
     return BoxDecoration(
       color: isActice ? (inputColor ?? myInputColor) : null,
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(borderRadius ?? 6.0),
       border: Border.all(
-        width: 1,
+        width: 1.0,
         color: borderColor ?? myBorderColor,
       ),
     );
@@ -21,7 +24,7 @@ class MyDecorations {
   static TextStyle placeHolderStyle(
       {Color? placeHolderColor, double? fontSize}) {
     return TextStyle(
-      fontSize: fontSize ?? 20,
+      fontSize: fontSize ?? 20.0,
       color: placeHolderColor ?? CupertinoColors.placeholderText,
       fontWeight: FontWeight.w500,
       height: 2.0,
@@ -31,14 +34,14 @@ class MyDecorations {
   static TextStyle textSpanStyle() {
     return const TextStyle(
       color: CupertinoColors.black,
-      fontSize: 18,
+      fontSize: 18.0,
     );
   }
 
-  static TextStyle inputTextStyle() {
+  static TextStyle inputTextStyle({double? fontSize}) {
     return TextStyle(
       color: primaryColor,
-      fontSize: 21,
+      fontSize: fontSize ?? 21.0,
     );
   }
 }

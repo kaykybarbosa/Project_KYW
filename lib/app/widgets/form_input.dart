@@ -36,6 +36,13 @@ class FormInput extends StatefulWidget {
 }
 
 class _FormInputState extends State<FormInput> {
+  setInputDecoration({Color? borderColor, bool isActice = false}) {
+    setState(() {
+      widget.inputDecoration = MyDecorations.inputDecoration(
+          borderColor: borderColor, isActice: isActice);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTextFormFieldRow(
@@ -52,27 +59,18 @@ class _FormInputState extends State<FormInput> {
       decoration: widget.inputDecoration ?? MyDecorations.inputDecoration(),
       style: widget.inputTextStyle ?? MyDecorations.inputTextStyle(),
       onTap: () {
-        setState(() {
-          widget.inputDecoration =
-              MyDecorations.inputDecoration(isActice: true);
-        });
+        setInputDecoration(isActice: true);
       },
       onChanged: (value) {
-        setState(() {
-          if (widget.validator(value) != null) {
-            widget.inputDecoration = MyDecorations.inputDecoration(
-                borderColor: CupertinoColors.systemRed, isActice: true);
-          } else {
-            widget.inputDecoration =
-                MyDecorations.inputDecoration(isActice: true);
-          }
-        });
+        if (widget.validator(value) != null) {
+          setInputDecoration(
+              borderColor: CupertinoColors.systemRed, isActice: true);
+        } else {
+          setInputDecoration(isActice: true);
+        }
       },
       onEditingComplete: () {
-        setState(() {
-          widget.inputDecoration =
-              MyDecorations.inputDecoration(isActice: false);
-        });
+        setInputDecoration(isActice: false);
       },
       validator: (value) {
         return widget.validator(value);
