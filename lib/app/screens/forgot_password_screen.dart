@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
+import 'package:kyw_management/app/enums/my_route.dart';
 import 'package:kyw_management/app/validation/form_input_validation.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
@@ -127,7 +128,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     color: CupertinoColors.link),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    context.push('/');
+                                    context.push(MyRoute.form);
                                   },
                               ),
                               TextSpan(
