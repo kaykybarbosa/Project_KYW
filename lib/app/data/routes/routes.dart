@@ -1,36 +1,31 @@
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_route.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/screens/change_password_screen.dart';
 import 'package:kyw_management/app/screens/forgot_password_screen.dart';
 import 'package:kyw_management/app/screens/form_screen.dart';
 import 'package:kyw_management/app/screens/home_screen.dart';
 import 'package:kyw_management/app/screens/notification_screen.dart';
-import 'package:kyw_management/app/screens/project_screen.dart';
 
 final routes = GoRouter(
-  initialLocation: MyRoute.home,
+  initialLocation: MyRoutes.home,
   routes: [
     GoRoute(
-      path: MyRoute.form,
+      path: MyRoutes.form,
       builder: (context, state) => const FormScreen(),
     ),
     GoRoute(
-        path: MyRoute.forgotPassword,
+        path: MyRoutes.forgotPassword,
         builder: (context, state) => const ForgotPassword()),
     GoRoute(
-      path: MyRoute.changePassword,
-      builder: (context, state) => ChangePasswordScreen(),
+      path: MyRoutes.changePassword,
+      builder: (context, state) => const ChangePasswordScreen(),
     ),
     GoRoute(
-      path: MyRoute.home,
+      path: MyRoutes.home,
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      path: MyRoute.projects,
-      builder: (context, state) => const ProjectScreen(),
-    ),
-    GoRoute(
-      path: MyRoute.notifications,
+      path: MyRoutes.notifications,
       builder: (context, state) {
         return NotificationScreen(context: context);
       },

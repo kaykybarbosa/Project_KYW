@@ -8,39 +8,30 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: 19.0),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-            color: CupertinoColors.activeBlue,
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.back,
-                      size: 33.0,
-                    ),
-                    SizedBox(width: 8.0),
-                    Text(
-                      'Notification',
-                      style: TextStyle(fontSize: 27.0),
-                    ),
-                  ],
-                ),
-                Icon(CupertinoIcons.ellipsis_vertical)
-              ],
-            ),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: CupertinoColors.white,
           ),
-          const MyNotification(),
-          const Divider(),
-          const MyNotification(),
-          const Divider(),
-          const MyNotification(),
-          const Divider(),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text(
+          'Notificações',
+          style: TextStyle(fontSize: 25.0, color: CupertinoColors.white),
+        ),
+        backgroundColor: CupertinoTheme.of(context).primaryColor,
+      ),
+      body: const Column(
+        children: [
+          MyNotification(),
+          Divider(),
+          MyNotification(),
+          Divider(),
+          MyNotification(),
+          Divider(),
         ],
       ),
     );

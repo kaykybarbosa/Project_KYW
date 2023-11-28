@@ -36,7 +36,7 @@ class FormInput extends StatefulWidget {
 }
 
 class _FormInputState extends State<FormInput> {
-  setInputDecoration({Color? borderColor, bool isActice = false}) {
+  _setInputDecoration({Color? borderColor, bool isActice = false}) {
     setState(() {
       widget.inputDecoration = MyDecorations.inputDecoration(
           borderColor: borderColor, isActice: isActice);
@@ -59,18 +59,18 @@ class _FormInputState extends State<FormInput> {
       decoration: widget.inputDecoration ?? MyDecorations.inputDecoration(),
       style: widget.inputTextStyle ?? MyDecorations.inputTextStyle(),
       onTap: () {
-        setInputDecoration(isActice: true);
+        _setInputDecoration(isActice: true);
       },
       onChanged: (value) {
         if (widget.validator(value) != null) {
-          setInputDecoration(
+          _setInputDecoration(
               borderColor: CupertinoColors.systemRed, isActice: true);
         } else {
-          setInputDecoration(isActice: true);
+          _setInputDecoration(isActice: true);
         }
       },
       onEditingComplete: () {
-        setInputDecoration(isActice: false);
+        _setInputDecoration(isActice: false);
       },
       validator: (value) {
         return widget.validator(value);

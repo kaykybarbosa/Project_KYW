@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
-import 'package:kyw_management/app/enums/my_route.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/validation/form_input_validation.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/button_network.dart';
@@ -25,6 +25,15 @@ class _FormScreenState extends State<FormScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController =
       TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +125,7 @@ class _FormScreenState extends State<FormScreen> {
                               CupertinoButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () =>
-                                    context.push(MyRoute.forgotPassword),
+                                    context.push(MyRoutes.forgotPassword),
                                 child: const Text(
                                   'Esqueceu a senha ?',
                                   textAlign: TextAlign.start,
@@ -253,7 +262,7 @@ class _FormScreenState extends State<FormScreen> {
   mainButtonClicked() {
     if (_formKey.currentState!.validate()) {
       if (_isLogin) {
-        context.go(MyRoute.home);
+        context.go(MyRoutes.home);
       }
     } else {
       _formKey.currentState!.reset();

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kyw_management/app/data/routes/routes.dart';
 
 class MyApp extends StatefulWidget {
@@ -15,11 +16,17 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'KYW Management',
       theme: const CupertinoThemeData(
-          primaryColor: Color.fromRGBO(50, 58, 71, 1),
-          scaffoldBackgroundColor: CupertinoColors.extraLightBackgroundGray),
+        primaryColor: Color.fromRGBO(50, 58, 71, 1),
+        scaffoldBackgroundColor: CupertinoColors.extraLightBackgroundGray,
+        primaryContrastingColor: CupertinoColors.activeBlue,
+      ),
       routerDelegate: routes.routerDelegate,
       routeInformationParser: routes.routeInformationParser,
       routeInformationProvider: routes.routeInformationProvider,
+      localizationsDelegates: const [
+        DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+      ],
     );
   }
 }

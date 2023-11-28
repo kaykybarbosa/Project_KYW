@@ -36,7 +36,9 @@ class MyNotification extends StatelessWidget {
               const Text(
                 '1 de nov de 2023 as 10:50',
                 style: TextStyle(
-                    color: CupertinoColors.systemGrey, fontSize: 15.0),
+                  color: CupertinoColors.systemGrey,
+                  fontSize: 15.0,
+                ),
               ),
               Expanded(
                 child: GestureDetector(

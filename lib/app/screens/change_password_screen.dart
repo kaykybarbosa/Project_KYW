@@ -2,18 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
-import 'package:kyw_management/app/enums/my_route.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/validation/form_input_validation.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
-  ChangePasswordScreen({super.key});
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
+  @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +60,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   const SizedBox(height: 15.0),
 
-                  // input the password
+                  // input the new password
                   FormInput(
                     placeHolder: 'Nova Senha',
                     inputController: _passwordController,
@@ -62,7 +74,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   const SizedBox(height: 20.0),
 
-                  // text the input password confirm
+                  // text the input new password confirm
                   const Row(
                     children: [
                       Text(
@@ -77,7 +89,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   const SizedBox(height: 15.0),
 
-                  // input the password confirm
+                  // input the new password confirm
                   FormInput(
                     placeHolder: 'Confirme a nova senha',
                     inputController: _passwordConfirmController,
@@ -117,7 +129,8 @@ class ChangePasswordScreen extends StatelessWidget {
                               text: 'Clique aqui',
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  context.go(MyRoute.projects);
+                                  // Go to HomeApp
+                                  context.go(MyRoutes.home);
                                 },
                               style: const TextStyle(
                                 color: CupertinoColors.systemRed,

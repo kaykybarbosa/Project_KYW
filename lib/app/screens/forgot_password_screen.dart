@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
-import 'package:kyw_management/app/enums/my_route.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/validation/form_input_validation.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
@@ -18,14 +18,36 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   final _codeTest = '123456';
-  BoxDecoration myInputDecoration =
-      MyDecorations.inputDecoration(borderColor: CupertinoColors.activeBlue);
+  BoxDecoration? _myInputDecoration;
   bool _isLoading = false;
 
   final _emailController = TextEditingController();
   final _codeController = TextEditingController();
 
   bool _sendCode = false;
+
+  @override
+  void initState() {
+    _setInputDecoration();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _codeController.dispose();
+    super.dispose();
+  }
+
+  _setInputDecoration(
+      {Color borderColor = CupertinoColors.activeBlue, bool isActive = false}) {
+    setState(() {
+      _myInputDecoration = MyDecorations.inputDecoration(
+        borderColor: borderColor,
+        isActice: isActive,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +150,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     color: CupertinoColors.link),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    context.push(MyRoute.form);
+                                    context.push(MyRoutes.form);
                                   },
                               ),
                               TextSpan(
@@ -181,12 +203,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       /// If the form is not valid, and API sent the authentication code
       /// show 'border' the [inputTheCode] in red
       if (_sendCode) {
-        setState(() {
-          myInputDecoration = MyDecorations.inputDecoration(
-            borderColor: CupertinoColors.systemRed,
-            isActice: true,
-          );
-        });
+        _setInputDecoration(
+            borderColor: CupertinoColors.systemRed, isActive: true);
       } else {
         _formKey.currentState!.reset();
       }
@@ -199,7 +217,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       controller: _codeController,
       textAlign: TextAlign.center,
       padding: EdgeInsets.zero,
-      decoration: myInputDecoration,
+      decoration: _myInputDecoration,
       keyboardType: TextInputType.visiblePassword,
       style: const TextStyle(color: CupertinoColors.black, fontSize: 23),
       placeholderStyle: MyDecorations.placeHolderStyle(
@@ -207,22 +225,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         fontSize: 23,
       ),
       onTap: () {
-        setState(() {
-          myInputDecoration = MyDecorations.inputDecoration(
-            borderColor: CupertinoColors.activeBlue,
-            isActice: true,
-          );
-
-          _formKey.currentState!.reset();
-        });
+        _setInputDecoration(isActive: true);
+        _formKey.currentState!.reset();
       },
       onEditingComplete: () {
-        setState(() {
-          myInputDecoration = MyDecorations.inputDecoration(
-            borderColor: CupertinoColors.activeBlue,
-            isActice: false,
-          );
-        });
+        _setInputDecoration;
       },
       validator: (code) {
         return Validation.validateCode(
