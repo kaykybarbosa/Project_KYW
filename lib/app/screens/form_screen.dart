@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/validation/form_input_validation.dart';
+import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/button_network.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
@@ -66,7 +66,7 @@ class _FormScreenState extends State<FormScreen> {
                         textInputType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         validator: (name) {
-                          return Validation.validateName(name);
+                          return InputValidator.validateName(name);
                         },
                       ),
                     ),
@@ -79,7 +79,7 @@ class _FormScreenState extends State<FormScreen> {
                       textInputType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validator: (email) {
-                        return Validation.validateEmail(email);
+                        return InputValidator.validateEmail(email);
                       },
                     ),
 
@@ -92,7 +92,7 @@ class _FormScreenState extends State<FormScreen> {
                       textInputType: TextInputType.visiblePassword,
                       textInputAction: _isLogin ? null : TextInputAction.next,
                       validator: (password) {
-                        return Validation.validatePassword(
+                        return InputValidator.validatePassword(
                             password: password, isLogin: _isLogin);
                       },
                     ),
@@ -107,7 +107,7 @@ class _FormScreenState extends State<FormScreen> {
                         textInputType: TextInputType.visiblePassword,
                         obscureText: true,
                         validator: (passwordConfirm) {
-                          return Validation.validatePasswordConfirm(
+                          return InputValidator.validatePasswordConfirm(
                             passwordConfirm: passwordConfirm,
                             password: _passwordController.text,
                           );
@@ -230,7 +230,7 @@ class _FormScreenState extends State<FormScreen> {
                                     });
 
                                     // Cleaning fields the form
-                                    if ((Validation.validateEmail(
+                                    if ((InputValidator.validateEmail(
                                             _emailController.text)) !=
                                         null) {
                                       _emailController.clear();

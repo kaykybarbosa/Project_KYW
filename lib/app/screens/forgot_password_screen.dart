@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/validation/form_input_validation.dart';
+import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
@@ -97,7 +97,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         inputController: _emailController,
                         textInputType: TextInputType.emailAddress,
                         validator: (email) {
-                          return Validation.validateEmail(email);
+                          return InputValidator.validateEmail(email);
                         },
                       ),
                     ),
@@ -232,7 +232,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         _setInputDecoration;
       },
       validator: (code) {
-        return Validation.validateCode(
+        return InputValidator.validateCode(
           code: code,
           confirmCode: _codeTest,
         );

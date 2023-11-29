@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/validation/form_input_validation.dart';
+import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
@@ -68,7 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     textInputAction: TextInputAction.next,
                     obscureText: true,
                     validator: (value) {
-                      return Validation.validatePassword(password: value);
+                      return InputValidator.validatePassword(password: value);
                     },
                   ),
 
@@ -96,7 +96,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     textInputType: TextInputType.visiblePassword,
                     obscureText: true,
                     validator: (passwordConfirm) {
-                      return Validation.validatePasswordConfirm(
+                      return InputValidator.validatePasswordConfirm(
                           password: passwordConfirm,
                           passwordConfirm: _passwordController.text);
                     },

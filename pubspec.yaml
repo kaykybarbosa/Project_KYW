@@ -38,6 +38,8 @@ dependencies:
   go_router: ^12.1.1
   email_validator: ^2.1.17
   intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

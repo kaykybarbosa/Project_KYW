@@ -69,7 +69,7 @@ class _CardTaskState extends State<CardTask> {
 
                   //Task category
                   const Text(
-                    'Category',
+                    'Categoria',
                     style: TextStyle(fontSize: 17.0),
                   )
                 ],

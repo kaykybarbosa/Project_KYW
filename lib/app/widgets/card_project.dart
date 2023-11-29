@@ -6,11 +6,11 @@ class CardProject extends StatefulWidget {
   const CardProject({
     super.key,
     required this.project,
-    this.onTap,
+    required this.onTap,
   });
 
   final Project project;
-  final Function? onTap;
+  final Function onTap;
 
   @override
   State<CardProject> createState() => _CardProjectState();
@@ -39,9 +39,7 @@ class _CardProjectState extends State<CardProject> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.onTap;
-      },
+      onTap: () {},
       child: Container(
         padding: const EdgeInsets.only(left: 6.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),

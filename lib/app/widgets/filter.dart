@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/enums/status.dart';
+import 'package:kyw_management/app/validation/date_validator.dart';
 import 'package:kyw_management/app/widgets/filter_buttons.dart';
 import 'package:kyw_management/app/widgets/my_status.dart';
 
@@ -23,9 +25,11 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   // Variables
-  DateTime? _initDateSelected;
-  DateTime? _finalDateSelected;
-  DateTime? _dateSelected;
+
+  // DateTime? _initDateSelected;
+  // DateTime? _finalDateSelected;
+  // DateTime? _dateSelected;
+
   // 1.1 Projects
   bool _isCreatedByMe = false;
   bool _isMarked = false;
@@ -34,6 +38,7 @@ class _FilterState extends State<Filter> {
   bool _pending = false;
   bool _incomplete = false;
 
+  BoxDecoration _decoration = MyDecorations.inputDecoration();
   final _initDateController = TextEditingController();
   final _finalDateController = TextEditingController();
 
@@ -53,20 +58,19 @@ class _FilterState extends State<Filter> {
     required bool isInitDate,
   }) {
     return CupertinoTextField(
-      placeholder: 'dd/MM/yyyy',
+      placeholder: 'dd/mm/yyyy',
       placeholderStyle: const TextStyle(
-          fontSize: 16.0, color: CupertinoColors.placeholderText),
-      controller: controller,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
-        border: Border.all(
-          color: CupertinoColors.systemGrey,
-        ),
+        fontSize: 16.0,
+        color: CupertinoColors.placeholderText,
       ),
+      style: const TextStyle(fontSize: 16.0),
+      controller: controller,
+      decoration: _decoration,
       suffix: IconButton(
         icon: const Icon(CupertinoIcons.calendar),
         onPressed: () async {
-          final DateTime? dateSelected = await _showCalendar();
+          // Calendar
+          DateTime? dateSelected = await _showCalendar();
 
           if (isInitDate && dateSelected != null) {
             _initDateController.text = formatter.format(dateSelected);
@@ -75,6 +79,15 @@ class _FilterState extends State<Filter> {
           }
         },
       ),
+      onChanged: (value) {
+        bool isValid =
+            DateValidator.validateDate(formatter.parseUTC(value).toString());
+        if (!isValid) {
+          _setDecorationInvalid(isInvalid: true);
+        } else {
+          _setDecorationInvalid(isInvalid: false);
+        }
+      },
     );
   }
 
@@ -145,9 +158,9 @@ class _FilterState extends State<Filter> {
 
   Transform _myCheckBox({required Status status}) {
     bool isChecked;
-    if (status == Status.complete) {
+    if (status == Status.completo) {
       isChecked = _complete;
-    } else if (status == Status.incomplete) {
+    } else if (status == Status.incompleto) {
       isChecked = _incomplete;
     } else {
       isChecked = _pending;
@@ -162,9 +175,9 @@ class _FilterState extends State<Filter> {
         activeColor: CupertinoColors.systemGrey,
         onChanged: (bool? value) {
           setState(() {
-            if (status == Status.complete && value != null) {
+            if (status == Status.completo && value != null) {
               _complete = value;
-            } else if (status == Status.incomplete && value != null) {
+            } else if (status == Status.incompleto && value != null) {
               _incomplete = value;
             } else if (value != null) {
               _pending = value;
@@ -185,15 +198,33 @@ class _FilterState extends State<Filter> {
       initialDate: now,
       firstDate: firstDate,
       lastDate: now,
-      cancelText: 'Cancelar',
-      helpText: 'Selecione a Data',
-      fieldLabelText: 'Digite a Data',
-      errorFormatText: 'Data inválida',
-      errorInvalidText: 'Data incorreta',
-      barrierColor: const Color.fromRGBO(50, 58, 71, 0.435),
+      barrierColor: const Color.fromARGB(45, 255, 255, 255),
+      builder: (BuildContext context, Widget? widget) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color.fromRGBO(50, 58, 71, 1),
+            colorScheme: const ColorScheme.light(
+              primary: CupertinoColors.systemBlue,
+            ),
+            buttonTheme: const ButtonThemeData(
+              textTheme: ButtonTextTheme.primary,
+            ),
+          ),
+          child: widget!,
+        );
+      },
     );
 
     return dateSelected;
+  }
+
+  void _setDecorationInvalid({bool isInvalid = false}) {
+    setState(() {
+      _decoration = MyDecorations.inputDecoration(
+        borderColor:
+            isInvalid ? CupertinoColors.systemRed : CupertinoColors.systemGrey,
+      );
+    });
   }
 
   @override
@@ -235,12 +266,14 @@ class _FilterState extends State<Filter> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Text
                     _dateText(text: 'Início'),
                     _dateText(text: 'Fim'),
                   ],
                 ),
                 Row(
                   children: [
+                    // Init Date
                     SizedBox(
                       width: 150.0,
                       child: _dateInput(
@@ -248,12 +281,15 @@ class _FilterState extends State<Filter> {
                         isInitDate: true,
                       ),
                     ),
+
                     const Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Divider(color: CupertinoColors.systemGrey),
                       ),
                     ),
+
+                    // Final Date
                     SizedBox(
                       width: 150.0,
                       child: _dateInput(
@@ -296,6 +332,7 @@ class _FilterState extends State<Filter> {
 
             /// Else if [currentScreen] is Tasks, show filters to Tasks
             Visibility(
+              visible: widget.currentScreen == Screens.task,
               child: Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,20 +344,20 @@ class _FilterState extends State<Filter> {
                     ),
                     Row(
                       children: [
-                        _myCheckBox(status: Status.complete),
-                        MyStatus(status: Status.complete)
+                        _myCheckBox(status: Status.pendente),
+                        MyStatus(status: Status.pendente)
                       ],
                     ),
                     Row(
                       children: [
-                        _myCheckBox(status: Status.incomplete),
-                        MyStatus(status: Status.incomplete)
+                        _myCheckBox(status: Status.completo),
+                        MyStatus(status: Status.completo)
                       ],
                     ),
                     Row(
                       children: [
-                        _myCheckBox(status: Status.pending),
-                        MyStatus(status: Status.pending)
+                        _myCheckBox(status: Status.incompleto),
+                        MyStatus(status: Status.incompleto)
                       ],
                     ),
 

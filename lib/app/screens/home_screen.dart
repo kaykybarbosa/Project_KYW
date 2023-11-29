@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/decorations/my_decorations.dart';
-import 'package:kyw_management/app/enums/filters_enum.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/enums/status.dart';
 import 'package:kyw_management/app/models/project.dart';
@@ -32,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       name: 'Projeto do Milhão',
       lastMessage: 'última mensagem envia...',
       lastMessageTime: '14:32',
-    )
+    ),
   ];
 
   final List<Task> _tasks = [
@@ -45,53 +44,56 @@ class _HomeScreenState extends State<HomeScreen> {
     Task(
       title: 'Fazer Orçamento',
       description: 'Buscar os melhores valores dos materiais',
-      status: Status.complete,
+      status: Status.completo,
     ),
     Task(
       title: 'Revisão do Projeto',
       description: 'Verificar e ajustar caso precise',
-      status: Status.pending,
+      status: Status.pendente,
     ),
   ];
 
   Color itemsBarColor = CupertinoColors.lightBackgroundGray;
   BoxDecoration _decoration = MyDecorations.inputDecoration(borderRadius: 20.0);
 
-  Widget? _currentScreen;
   Screens _currentText = Screens.project;
-  bool _haveMessage = false;
+  bool _haveMessage = true;
+  bool _showFilterBar = true;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _currentScreen = ListProjects(projects: _projects);
+      // Add Listerner the Scroll
+      // _scrollController.addListener(() => _scrollDirection());
     });
   }
 
-  _setCurrentScreen(int value) {
+  void _setCurrentScreen(int value) {
     /// [value] == 0 => ShowMyProjects and
     /// [value] == 1 => ShowMyTasks
 
     setState(() {
       if (value == 0) {
         _currentText = Screens.project;
-        _currentScreen = ListProjects(
-          projects: _projects,
-        );
       } else {
         _currentText = Screens.task;
-        _currentScreen = ListTasks(tasks: _tasks);
       }
     });
   }
 
-  _setDecoration({double borderRadius = 20.0, bool isActive = true}) {
+  void _setDecoration({double borderRadius = 20.0, bool isActive = true}) {
     setState(() {
       _decoration = MyDecorations.inputDecoration(
         borderRadius: borderRadius,
         isActice: isActive,
       );
+    });
+  }
+
+  void _setShowFilterBar({required bool isVisible}) {
+    setState(() {
+      _showFilterBar = isVisible;
     });
   }
 
@@ -101,90 +103,110 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 2,
       child: Scaffold(
         appBar: myAppBar(),
-        body: Container(
-          margin: const EdgeInsets.symmetric(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: 14.0,
             vertical: 15.0,
           ),
           child: Column(
             children: [
-              Row(
-                children: [
-                  // Input Search
-                  Expanded(
-                    child: CupertinoTextField(
-                      placeholder: _currentText == Screens.project
-                          ? 'Buscar projeto'
-                          : 'Buscar tarefa',
-                      decoration: _decoration,
-                      style: MyDecorations.inputTextStyle(fontSize: 19.0),
-                      onTap: () {
-                        _setDecoration(isActive: true);
-                      },
-                      onEditingComplete: () {
-                        _setDecoration(isActive: false);
-                      },
-                    ),
-                  ),
+              // FiltersBar
+              Expanded(
+                flex: _showFilterBar ? 2 : 0,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        // Input Search
+                        Visibility(
+                          visible: _showFilterBar,
+                          child: Expanded(
+                            flex: _showFilterBar ? 1 : 0,
+                            child: CupertinoTextField(
+                              placeholder: _currentText == Screens.project
+                                  ? 'Buscar projeto'
+                                  : 'Buscar tarefa',
+                              decoration: _decoration,
+                              style:
+                                  MyDecorations.inputTextStyle(fontSize: 19.0),
+                              onTap: () {
+                                _setDecoration(isActive: true);
+                              },
+                              onEditingComplete: () {
+                                _setDecoration(isActive: false);
+                              },
+                            ),
+                          ),
+                        ),
 
-                  // Icon Search
-                  Container(
-                    padding: EdgeInsets.zero,
-                    margin: const EdgeInsets.only(left: 10.0),
-                    height: 38.0,
-                    width: 38.0,
-                    decoration: BoxDecoration(
-                      color: CupertinoColors.systemBlue,
-                      borderRadius: BorderRadius.circular(50.0),
+                        // Icon Search
+                        Visibility(
+                          visible: _showFilterBar,
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 10.0),
+                            height: 38.0,
+                            width: 38.0,
+                            decoration: BoxDecoration(
+                              color: CupertinoColors.systemBlue,
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                CupertinoIcons.search,
+                                size: 23.0,
+                                color: CupertinoColors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      icon: const Icon(
-                        CupertinoIcons.search,
-                        size: 23.0,
-                        color: CupertinoColors.white,
-                      ),
+
+                    // Buttons the filters
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Filter
+                        _filterButton(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (BuildContext context) {
+                                return Filter(currentScreen: _currentText);
+                              },
+                            );
+                          },
+                          label: 'Filtrar',
+                          icon: Icons.filter_list_alt,
+                        ),
+
+                        // Order
+                        _filterButton(
+                          onTap: () {},
+                          label: 'Ordenar',
+                          icon: CupertinoIcons.chevron_down,
+                          size: 23.0,
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-
-              const SizedBox(height: 15.0),
-
-              // Buttons the filters
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Filter
-                  filterButton(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (BuildContext context) {
-                          return Filter(currentScreen: _currentText);
-                        },
-                      );
-                    },
-                    label: 'Filtrar',
-                    icon: Icons.filter_list_alt,
-                  ),
-
-                  // Order
-                  filterButton(
-                    onTap: () {},
-                    label: 'Ordenar',
-                    icon: CupertinoIcons.chevron_down,
-                    size: 23.0,
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 18.0),
 
               // Current screen
-              Expanded(child: _currentScreen!)
+              Expanded(
+                flex: 12,
+                child: _currentText == Screens.project
+                    ? ListProjects(
+                        projects: _projects,
+                        showFilterBar: (isVisible) {
+                          _setShowFilterBar(isVisible: isVisible);
+                        },
+                      )
+                    : ListTasks(tasks: _tasks),
+              ),
             ],
           ),
         ),
@@ -194,7 +216,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(50.0),
                 child: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _projects.add(
+                        Project(
+                          name: 'Casa na Árvore',
+                          image: 'assets/casa-na-arvore.webp',
+                          lastMessage: 'última mensagem envia...',
+                          lastMessageTime: '12:25',
+                          isImportant: true,
+                        ),
+                      );
+                    });
+                  },
                   backgroundColor: CupertinoColors.activeBlue,
                   child: const Icon(
                     CupertinoIcons.add,
@@ -213,7 +247,6 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Column(
         children: [
           const SizedBox(height: 10.0),
-
           // App name
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,12 +269,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       context.push(MyRoutes.notifications);
                       setState(() {
-                        _haveMessage = true;
+                        _haveMessage = false;
                       });
                     },
                     child: Badge(
-                      label: _haveMessage ? null : const Text('2'),
-                      smallSize: _haveMessage ? 0 : 6,
+                      label: _haveMessage ? const Text('2') : null,
+                      smallSize: _haveMessage ? 6 : 0,
                       child: myIcon(CupertinoIcons.bell),
                     ),
                   ),
@@ -293,11 +326,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  GestureDetector filterButton(
-      {required Function onTap, String? label, IconData? icon, double? size}) {
+  GestureDetector _filterButton({
+    required Function onTap,
+    required String label,
+    required IconData icon,
+    double? size,
+  }) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
+        margin: const EdgeInsets.only(top: 15.0, bottom: 10.0),
         padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 4.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
@@ -307,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              label ?? '',
+              label,
               style: TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w600,

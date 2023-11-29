@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 
-class Validation {
+class InputValidator {
   static String? validateName(String? name) {
     if (name == null || name.isEmpty) {
       return 'Digite seu nome';
