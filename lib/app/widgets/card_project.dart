@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/app/models/project.dart';
 
 class CardProject extends StatefulWidget {
@@ -121,10 +121,10 @@ class _CardProjectState extends State<CardProject> {
                       children: [
                         Icon(
                           widget.project.isImportant
-                              ? Icons.push_pin_rounded
+                              ? FontAwesomeIcons.thumbtack
                               : null,
                           color: CupertinoColors.systemGrey2,
-                          size: 27.0,
+                          size: 22.5,
                         )
                       ],
                     )

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:kyw_management/app/widgets/my_notification.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key, BuildContext? context});
+  const NotificationScreen({super.key});
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

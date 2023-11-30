@@ -8,14 +8,14 @@ import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPassword> createState() => _ForgotPasswordState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _codeTest = '123456';
   BoxDecoration? _myInputDecoration;
@@ -39,7 +39,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     super.dispose();
   }
 
-  _setInputDecoration(
+  void _setInputDecoration(
       {Color borderColor = CupertinoColors.activeBlue, bool isActive = false}) {
     setState(() {
       _myInputDecoration = MyDecorations.inputDecoration(
@@ -126,7 +126,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     // Main button the screen
                     ButtonMain(
                       onTap: () async {
-                        mainButtonClicked();
+                        _mainButtonClicked();
                       },
                       text: _sendCode ? 'Avançar' : 'Receber código',
                     ),
@@ -171,7 +171,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  void mainButtonClicked() async {
+  void _mainButtonClicked() async {
     /// Shows the progress circle
     /// if the user already request the code
     ///

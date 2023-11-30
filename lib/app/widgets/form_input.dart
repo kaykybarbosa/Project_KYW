@@ -71,6 +71,9 @@ class _FormInputState extends State<FormInput> {
       },
       onEditingComplete: () {
         _setInputDecoration(isActice: false);
+        if (widget.textInputAction != TextInputAction.next) {
+          FocusScope.of(context).unfocus();
+        }
       },
       validator: (value) {
         return widget.validator(value);

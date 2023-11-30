@@ -5,6 +5,7 @@ import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
+import 'package:kyw_management/app/widgets/change_password_screen/input_of_title.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 
@@ -45,18 +46,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
                   const SizedBox(height: 70.0),
 
-                  // text the input password
-                  const Row(
-                    children: [
-                      Text(
-                        'Entre com sua nova senha',
-                        style: TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // text the input new password
+                  const InputOfTitle(label: 'Entre com sua nova senha'),
 
                   const SizedBox(height: 15.0),
 
@@ -75,17 +66,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   const SizedBox(height: 20.0),
 
                   // text the input new password confirm
-                  const Row(
-                    children: [
-                      Text(
-                        'Confirme a senha',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: CupertinoColors.systemGrey,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const InputOfTitle(label: 'Confirme a senha'),
 
                   const SizedBox(height: 15.0),
 

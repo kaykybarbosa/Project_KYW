@@ -16,10 +16,6 @@ class ListProjects extends StatefulWidget {
 
 class _ListProjectsState extends State<ListProjects> {
   final ScrollController _scrollController = ScrollController();
-  int indexC = 0;
-  double indexB = 0;
-
-  double scrollOffset = 0.0;
 
   @override
   void initState() {
@@ -52,29 +48,14 @@ class _ListProjectsState extends State<ListProjects> {
       if (_scrollController.position.pixels == 0.0) {
         widget.showFilterBar(true);
       }
-
-      // To disable ListView scrolling
-      // if (_scrollController.position.pixels == 0.0 &&
-      //     _scrollController.position.userScrollDirection ==
-      //         ScrollDirection.forward) {
-      //   _scrolled = false;
-      // } else if (_scrollController.position.userScrollDirection !=
-      //     ScrollDirection.idle) {
-      //   _scrolled = true;
-      // }
     });
   }
-
-  bool _scrolled = true;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: widget.projects.length,
       controller: _scrollController,
-      physics: _scrolled
-          ? const AlwaysScrollableScrollPhysics()
-          : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return CardProject(
           project: widget.projects[index],

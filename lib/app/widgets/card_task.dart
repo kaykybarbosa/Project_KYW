@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/app/models/task.dart';
 import 'package:kyw_management/app/widgets/my_status.dart';
 
@@ -83,8 +83,10 @@ class _CardTaskState extends State<CardTask> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(
-                      widget.task.isImportant ? Icons.push_pin_rounded : null,
-                      size: 27.0,
+                      widget.task.isImportant
+                          ? FontAwesomeIcons.thumbtack
+                          : null,
+                      size: 23.0,
                       color: CupertinoColors.systemGrey2,
                     ),
                   ],

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:kyw_management/app/data/routes/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -20,6 +19,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: Color.fromRGBO(50, 58, 71, 1),
         scaffoldBackgroundColor: CupertinoColors.extraLightBackgroundGray,
         primaryContrastingColor: CupertinoColors.activeBlue,
+        barBackgroundColor: Color.fromRGBO(50, 58, 71, 1),
       ),
       routerDelegate: routes.routerDelegate,
       routeInformationParser: routes.routeInformationParser,

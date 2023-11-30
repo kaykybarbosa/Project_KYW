@@ -5,8 +5,10 @@ import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
-import 'package:kyw_management/app/widgets/button_network.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
+import 'package:kyw_management/app/widgets/form_screen/continue_with.dart';
+import 'package:kyw_management/app/widgets/form_screen/forgot_password.dart';
+import 'package:kyw_management/app/widgets/form_screen/sign_google_facebook.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 
 class FormScreen extends StatefulWidget {
@@ -116,26 +118,13 @@ class _FormScreenState extends State<FormScreen> {
                     ),
 
                     // Forgot password
-                    Column(
-                      children: [
-                        Visibility(
-                          visible: _isLogin,
-                          child: Row(
-                            children: [
-                              CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () =>
-                                    context.push(MyRoutes.forgotPassword),
-                                child: const Text(
-                                  'Esqueceu a senha ?',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(color: CupertinoColors.link),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    Visibility(
+                      visible: _isLogin,
+                      child: ForgotPassword(
+                        onTap: () {
+                          context.push(MyRoutes.forgotPassword);
+                        },
+                      ),
                     ),
 
                     SizedBox(height: _isLogin ? 0 : 30),
@@ -143,30 +132,7 @@ class _FormScreenState extends State<FormScreen> {
                     // Or continue with
                     Visibility(
                       visible: !_isLogin,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 1.0,
-                              color: CupertinoColors.separator,
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 17),
-                            child: Text(
-                              'Ou continue com',
-                              style:
-                                  TextStyle(color: CupertinoColors.systemGrey),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              height: 1.0,
-                              color: CupertinoColors.separator,
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: const ContinueWith(),
                     ),
 
                     SizedBox(height: _isLogin ? 0 : 19),
@@ -174,26 +140,7 @@ class _FormScreenState extends State<FormScreen> {
                     // Google + Facebook
                     Visibility(
                       visible: !_isLogin,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ButtonNetwork(
-                            text: 'Google',
-                            image: Image.asset(
-                              'assets/Google.webp',
-                              width: 30,
-                            ),
-                            width: 140,
-                          ),
-                          ButtonNetwork(
-                            text: 'Facebook',
-                            image: Image.asset(
-                              'assets/Facebook-logo.webp',
-                              width: 34,
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: const SignGoogleFacebook(),
                     ),
 
                     const SizedBox(height: 40),
@@ -201,7 +148,7 @@ class _FormScreenState extends State<FormScreen> {
                     // Main button the screen
                     ButtonMain(
                       onTap: () {
-                        mainButtonClicked();
+                        _mainButtonClicked();
                       },
                       text: _isLogin ? 'Entrar' : 'Criar Conta',
                     ),
@@ -259,7 +206,7 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  mainButtonClicked() {
+  void _mainButtonClicked() {
     if (_formKey.currentState!.validate()) {
       if (_isLogin) {
         context.go(MyRoutes.home);

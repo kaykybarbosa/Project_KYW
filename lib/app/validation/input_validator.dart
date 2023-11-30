@@ -67,4 +67,20 @@ class InputValidator {
 
     return null;
   }
+
+  static String? validateTitle({String? title}) {
+    if (title == null || title.isEmpty) {
+      return 'Digite o título';
+    }
+
+    return null;
+  }
+
+  static String? validateDescription({String? description}) {
+    if (description == null || description.isEmpty) {
+      return 'Digite uma descrição';
+    }
+
+    return null;
+  }
 }
