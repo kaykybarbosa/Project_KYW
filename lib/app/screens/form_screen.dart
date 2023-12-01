@@ -81,7 +81,7 @@ class _FormScreenState extends State<FormScreen> {
                       textInputType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       validator: (email) {
-                        return InputValidator.validateEmail(email);
+                        return InputValidator.validateEmail(email: email);
                       },
                     ),
 
@@ -178,7 +178,7 @@ class _FormScreenState extends State<FormScreen> {
 
                                     // Cleaning fields the form
                                     if ((InputValidator.validateEmail(
-                                            _emailController.text)) !=
+                                            email: _emailController.text)) !=
                                         null) {
                                       _emailController.clear();
                                     }

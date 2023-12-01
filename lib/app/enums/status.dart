@@ -1,1 +1,1 @@
-enum Status { completo, incompleto, pendente }
+enum Status { complete, incomplete, pending }

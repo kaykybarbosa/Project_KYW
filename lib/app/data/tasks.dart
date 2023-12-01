@@ -11,11 +11,11 @@ final List<Task> tasksData = [
   Task(
     title: 'Fazer Orçamento',
     description: 'Buscar os melhores valores dos materiais',
-    status: Status.completo,
+    status: Status.complete,
   ),
   Task(
     title: 'Revisão do Projeto',
     description: 'Verificar e ajustar caso precise',
-    status: Status.pendente,
+    status: Status.pending,
   ),
 ];

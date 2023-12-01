@@ -77,18 +77,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Filter
                     TheFilters(
                       onTap: () {
-                        showModalBottomSheet(
-                          context: context,
+                        return showModalBottomSheet(
                           isScrollControlled: true,
-                          builder: (BuildContext context) {
-                            return Filter(currentScreen: _currentText);
-                          },
+                          context: context,
+                          builder: (BuildContext context) => SizedBox(
+                            height: 700,
+                            child: DraggableScrollableSheet(
+                              initialChildSize: 0.999,
+                              minChildSize: 0.999,
+                              builder: (context, scrollController) => Filter(
+                                currentScreen: _currentText,
+                                controller: scrollController,
+                              ),
+                            ),
+                          ),
                         );
                       },
                       label: 'Filtrar',
                       labelSize: 17.0,
-                      icon: FontAwesomeIcons.filter,
                       iconSize: 17.0,
+                      icon: FontAwesomeIcons.filter,
                     ),
 
                     // Order
@@ -133,51 +141,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PreferredSizeWidget myAppBar() {
     return AppBar(
+      // App name
+      leading: Align(
+        alignment: const Alignment(1, 0.3),
+        child: Text(
+          'KYW',
+          style: TextStyle(
+            color: itemsBarColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
       title: Column(
         children: [
           const SizedBox(height: 10.0),
-          // App name
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'KYW',
-                style: TextStyle(
-                  color: itemsBarColor,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-
               // Right icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Notifications
-                  Badge(
-                    label: _haveMessage ? const Text('2') : null,
-                    smallSize: _haveMessage ? 6 : 0,
-                    child: MyIcon(
-                      icon: CupertinoIcons.bell,
-                      color: itemsBarColor,
-                      onTap: () {
-                        context.push(MyRoutes.notifications);
-                        setState(() {
-                          _haveMessage = false;
-                        });
-                      },
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // Notifications
+                    Badge(
+                      label: _haveMessage ? const Text('2') : null,
+                      smallSize: _haveMessage ? 6 : 0,
+                      child: MyIcon(
+                        icon: CupertinoIcons.bell,
+                        color: itemsBarColor,
+                        onTap: () {
+                          context.push(MyRoutes.notifications);
+                          setState(() {
+                            _haveMessage = false;
+                          });
+                        },
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(width: 15.0),
+                    const SizedBox(width: 15.0),
 
-                  // More options
-                  MyIcon(
-                    icon: CupertinoIcons.ellipsis_vertical,
-                    color: itemsBarColor,
-                    onTap: () {},
-                  ),
-                ],
+                    // More options
+                    MyIcon(
+                      icon: CupertinoIcons.ellipsis_vertical,
+                      color: itemsBarColor,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

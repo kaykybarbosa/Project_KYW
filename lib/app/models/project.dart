@@ -4,6 +4,7 @@ import 'package:kyw_management/app/models/user.dart';
 class Project {
   Project({
     required this.name,
+    this.description,
     this.image,
     this.lastMessage,
     this.lastMessageTime,
@@ -14,6 +15,7 @@ class Project {
   });
 
   String name;
+  String? description;
   String? image;
   String? lastMessage;
   String? lastMessageTime;

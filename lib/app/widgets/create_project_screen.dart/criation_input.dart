@@ -6,11 +6,13 @@ class CreationInput extends StatelessWidget {
     required this.onTap,
     required this.text,
     required this.placeHolder,
+    required this.controller,
+    required this.validation,
     this.heightPrefix = 36.0,
     this.maxLine,
     this.maxLength,
     this.textInputType,
-    required this.validation,
+    this.showText = true,
   });
 
   final Function onTap;
@@ -21,6 +23,8 @@ class CreationInput extends StatelessWidget {
   final int? maxLength;
   final TextInputType? textInputType;
   final Function validation;
+  final bool showText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +35,20 @@ class CreationInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Text
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                  color: CupertinoTheme.of(context).primaryColor,
+              Visibility(
+                visible: showText,
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    color: CupertinoTheme.of(context).primaryColor,
+                  ),
                 ),
               ),
 
               const SizedBox(height: 5.0),
+
               // Input
               CupertinoTextFormFieldRow(
                 maxLines: maxLine,
@@ -48,6 +56,7 @@ class CreationInput extends StatelessWidget {
                 keyboardType: textInputType,
                 placeholder: placeHolder,
                 padding: EdgeInsets.zero,
+                controller: controller,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(5.0),

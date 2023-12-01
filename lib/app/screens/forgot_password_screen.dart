@@ -97,7 +97,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         inputController: _emailController,
                         textInputType: TextInputType.emailAddress,
                         validator: (email) {
-                          return InputValidator.validateEmail(email);
+                          return InputValidator.validateEmail(email: email);
                         },
                       ),
                     ),

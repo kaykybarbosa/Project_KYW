@@ -1,9 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kyw_management/app/enums/status.dart';
+import 'package:kyw_management/app/widgets/create_project_screen.dart/criation_input.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/card_category.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_by_status.dart';
 
 class FilterForTask extends StatefulWidget {
-  const FilterForTask({super.key});
+  const FilterForTask(
+      {super.key, required this.categoryController, this.onTap});
+
+  final TextEditingController categoryController;
+  final Function? onTap;
 
   @override
   State<FilterForTask> createState() => _FilterForTaskState();
@@ -76,6 +82,54 @@ class _FilterForTaskState extends State<FilterForTask> {
           'Category',
           style: TextStyle(fontSize: 20.0),
         ),
+
+        // CheckBox with Show categories
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Checkbox(
+              value: false,
+              onChanged: (value) {},
+            ),
+            const Text(
+              'Mostrar apenas minhas categorias',
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ],
+        ),
+
+        // Input select categories
+        CreationInput(
+          onTap: () => widget.onTap,
+          text: '',
+          showText: false,
+          controller: widget.categoryController,
+          placeHolder: 'Inserir categoria',
+          maxLine: 2,
+          heightPrefix: 56.0,
+          validation: (category) {},
+        ),
+
+        const SizedBox(height: 25.0),
+
+        // Cards categories
+        const Wrap(
+          runSpacing: 12.0,
+          children: [
+            CardCategory(
+              category: 'Atividades',
+            ),
+            CardCategory(
+              category: 'Trabalho',
+            ),
+            CardCategory(
+              category: 'Estudo',
+            ),
+            CardCategory(
+              category: 'Some orther category',
+            ),
+          ],
+        )
       ],
     );
   }

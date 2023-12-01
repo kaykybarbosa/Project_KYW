@@ -86,7 +86,7 @@ class _CardProjectState extends State<CardProject> {
 
                       // Last message send
                       Text(
-                        widget.project.lastMessage ?? '',
+                        widget.project.lastMessage ?? 'Você criou este projeto',
                         style: const TextStyle(
                           fontSize: 17.0,
                           color: CupertinoColors.systemGrey2,

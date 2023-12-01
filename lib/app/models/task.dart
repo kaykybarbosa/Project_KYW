@@ -5,7 +5,7 @@ class Task {
     required this.title,
     this.description,
     this.isImportant = false,
-    this.status = Status.incompleto,
+    this.status = Status.incomplete,
   });
 
   String title;

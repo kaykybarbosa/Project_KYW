@@ -13,12 +13,18 @@ class InputValidator {
     return null;
   }
 
-  static String? validateEmail(String? email) {
-    if (email == null || email.isEmpty) {
+  static String? validateEmail({String? email, bool? isRequired = true}) {
+    if (email == null || email.isEmpty && isRequired!) {
       return 'Digite seu email';
     }
 
-    if (!EmailValidator.validate(email)) {
+    if (email.isNotEmpty && !isRequired!) {
+      if (!EmailValidator.validate(email)) {
+        return 'Digite um e-mail válido';
+      }
+    }
+
+    if (!EmailValidator.validate(email) && isRequired!) {
       return 'Digite um e-mail válido';
     }
 

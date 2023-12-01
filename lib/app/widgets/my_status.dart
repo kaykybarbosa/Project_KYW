@@ -7,15 +7,15 @@ class MyStatus extends StatelessWidget {
   final Status status;
 
   final Map<Status, Color> color = {
-    Status.completo: CupertinoColors.systemGreen,
-    Status.incompleto: CupertinoColors.systemYellow,
-    Status.pendente: CupertinoColors.systemRed,
+    Status.complete: CupertinoColors.systemGreen,
+    Status.incomplete: CupertinoColors.systemYellow,
+    Status.pending: CupertinoColors.systemRed,
   };
 
   final Map<Status, Color> backgroundColor = {
-    Status.completo: const Color.fromARGB(40, 52, 199, 89),
-    Status.incompleto: const Color.fromARGB(40, 255, 204, 0),
-    Status.pendente: const Color.fromARGB(40, 255, 58, 48),
+    Status.complete: const Color.fromARGB(40, 52, 199, 89),
+    Status.incomplete: const Color.fromARGB(40, 255, 204, 0),
+    Status.pending: const Color.fromARGB(40, 255, 58, 48),
   };
 
   @override

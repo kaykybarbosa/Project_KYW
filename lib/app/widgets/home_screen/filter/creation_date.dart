@@ -5,17 +5,18 @@ import 'package:kyw_management/app/my_app.dart';
 import 'package:kyw_management/app/validation/date_validator.dart';
 
 class CreationDate extends StatefulWidget {
-  const CreationDate(
-      {super.key,
-      required this.isInitDate,
-      required this.controller,
-      required this.showCalendar,
-      required this.onChanged});
+  const CreationDate({
+    super.key,
+    required this.isInitDate,
+    required this.controller,
+    required this.showCalendar,
+    this.onTap,
+  });
 
   final bool isInitDate;
   final TextEditingController controller;
   final Function showCalendar;
-  final Function onChanged;
+  final Function? onTap;
 
   @override
   State<CreationDate> createState() => _CreationDateState();
@@ -69,11 +70,12 @@ class _CreationDateState extends State<CreationDate> {
             controller: widget.controller,
             decoration: _decoration,
             suffix: IconButton(
-              icon: const Icon(CupertinoIcons.calendar),
+              icon: const Icon(Icons.calendar_today_rounded),
               onPressed: () {
                 widget.showCalendar();
               },
             ),
+            onTap: () => widget.onTap,
             onChanged: (value) {
               _validator(value: value);
             },

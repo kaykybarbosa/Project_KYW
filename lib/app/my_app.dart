@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:kyw_management/app/data/routes/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -8,6 +9,8 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
+DateFormat formatter = DateFormat("dd/MM/yyyy");
 
 class _MyAppState extends State<MyApp> {
   @override
