@@ -135,12 +135,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               )
             : null,
+        endDrawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: const [
+              DrawerHeader(child: Text('OAOAOAO')),
+              ListTile(
+                title: Text('data'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   PreferredSizeWidget myAppBar() {
     return AppBar(
+      actions: [
+        Badge(
+          label: _haveMessage ? const Text('2') : null,
+          smallSize: _haveMessage ? 6 : 0,
+          child: MyIcon(
+            icon: CupertinoIcons.bell,
+            color: itemsBarColor,
+            onTap: () {
+              context.push(MyRoutes.notifications);
+              setState(() {
+                _haveMessage = false;
+              });
+            },
+          ),
+        ),
+        MyIcon(
+          icon: CupertinoIcons.ellipsis_vertical,
+          color: CupertinoColors.white,
+          onTap: () {
+            print("CHEGOU");
+            Scaffold.of(context).openEndDrawer();
+          },
+        ),
+      ],
+      automaticallyImplyLeading: false,
       // App name
       leading: Align(
         alignment: const Alignment(1, 0.3),
@@ -165,29 +201,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     // Notifications
-                    Badge(
-                      label: _haveMessage ? const Text('2') : null,
-                      smallSize: _haveMessage ? 6 : 0,
-                      child: MyIcon(
-                        icon: CupertinoIcons.bell,
-                        color: itemsBarColor,
-                        onTap: () {
-                          context.push(MyRoutes.notifications);
-                          setState(() {
-                            _haveMessage = false;
-                          });
-                        },
-                      ),
-                    ),
+                    // Badge(
+                    //   label: _haveMessage ? const Text('2') : null,
+                    //   smallSize: _haveMessage ? 6 : 0,
+                    //   child: MyIcon(
+                    //     icon: CupertinoIcons.bell,
+                    //     color: itemsBarColor,
+                    //     onTap: () {
+                    //       context.push(MyRoutes.notifications);
+                    //       setState(() {
+                    //         _haveMessage = false;
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
 
                     const SizedBox(width: 15.0),
 
                     // More options
-                    MyIcon(
-                      icon: CupertinoIcons.ellipsis_vertical,
-                      color: itemsBarColor,
-                      onTap: () {},
-                    ),
+                    // MyIcon(
+                    //   icon: CupertinoIcons.ellipsis_vertical,
+                    //   color: itemsBarColor,
+                    //   onTap: () {
+                    //     return;
+                    //   },
+                    // ),
                   ],
                 ),
               ),
