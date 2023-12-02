@@ -60,6 +60,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
 
               /// Firs Step the creation project
               /// enter with [Title] and [Description]
+              /// and [Image] optional
               ? SingleChildScrollView(
                   child: InputTitleAndDescription(
                     titleController: _titleController,

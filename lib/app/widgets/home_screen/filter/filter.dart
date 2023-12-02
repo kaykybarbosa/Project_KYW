@@ -106,7 +106,10 @@ class _FilterState extends State<Filter> {
             // Creation date
             const Text(
               'Data de criação',
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500,
+              ),
             ),
 
             const SizedBox(height: 15.0),

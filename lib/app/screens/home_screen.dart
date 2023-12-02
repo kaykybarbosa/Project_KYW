@@ -6,7 +6,10 @@ import 'package:kyw_management/app/data/projects.dart';
 import 'package:kyw_management/app/data/tasks.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/enums/screens.dart';
-import 'package:kyw_management/app/widgets/filter.dart';
+import 'package:kyw_management/app/widgets/home_screen/app_bar/app_name.dart';
+import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
+import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
@@ -22,6 +25,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Scaffold key
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Color itemsBarColor = CupertinoColors.lightBackgroundGray;
   Screens _currentText = Screens.project;
   bool _haveMessage = true;
@@ -47,17 +53,65 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _openMessage() {
+    context.push(MyRoutes.notifications);
+    setState(() {
+      _haveMessage = false;
+    });
+  }
+
+  void _openEndDrawer() {
+    _scaffoldKey.currentState!.openEndDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: myAppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 14.0,
-            vertical: 15.0,
+        key: _scaffoldKey,
+        endDrawer: const MyEndDrawer(),
+        appBar: AppBar(
+          // App name
+          leading: AppName(color: itemsBarColor),
+          actions: [
+            // Messages
+            Badge(
+              label: _haveMessage ? const Text('2') : null,
+              smallSize: _haveMessage ? 6 : 0,
+              child: MyIcon(
+                icon: CupertinoIcons.bell,
+                color: itemsBarColor,
+                onTap: () {
+                  _openMessage();
+                },
+              ),
+            ),
+
+            const SizedBox(width: 15.0),
+
+            // More options
+            MyIcon(
+              icon: CupertinoIcons.ellipsis_vertical,
+              color: CupertinoColors.white,
+              onTap: () {
+                _openEndDrawer();
+              },
+            ),
+            const SizedBox(width: 13.0),
+          ],
+
+          elevation: 0,
+          toolbarHeight: 50.0,
+          backgroundColor: CupertinoTheme.of(context).primaryColor,
+          bottom: myTabBar(
+            onTap: (value) {
+              _setCurrentScreen(value);
+            },
           ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 15.0),
           child: Column(
             children: [
               // Input Search
@@ -135,128 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               )
             : null,
-        endDrawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: const [
-              DrawerHeader(child: Text('OAOAOAO')),
-              ListTile(
-                title: Text('data'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget myAppBar() {
-    return AppBar(
-      actions: [
-        Badge(
-          label: _haveMessage ? const Text('2') : null,
-          smallSize: _haveMessage ? 6 : 0,
-          child: MyIcon(
-            icon: CupertinoIcons.bell,
-            color: itemsBarColor,
-            onTap: () {
-              context.push(MyRoutes.notifications);
-              setState(() {
-                _haveMessage = false;
-              });
-            },
-          ),
-        ),
-        MyIcon(
-          icon: CupertinoIcons.ellipsis_vertical,
-          color: CupertinoColors.white,
-          onTap: () {
-            print("CHEGOU");
-            Scaffold.of(context).openEndDrawer();
-          },
-        ),
-      ],
-      automaticallyImplyLeading: false,
-      // App name
-      leading: Align(
-        alignment: const Alignment(1, 0.3),
-        child: Text(
-          'KYW',
-          style: TextStyle(
-            color: itemsBarColor,
-            fontSize: 18.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      title: Column(
-        children: [
-          const SizedBox(height: 10.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Right icons
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // Notifications
-                    // Badge(
-                    //   label: _haveMessage ? const Text('2') : null,
-                    //   smallSize: _haveMessage ? 6 : 0,
-                    //   child: MyIcon(
-                    //     icon: CupertinoIcons.bell,
-                    //     color: itemsBarColor,
-                    //     onTap: () {
-                    //       context.push(MyRoutes.notifications);
-                    //       setState(() {
-                    //         _haveMessage = false;
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-
-                    const SizedBox(width: 15.0),
-
-                    // More options
-                    // MyIcon(
-                    //   icon: CupertinoIcons.ellipsis_vertical,
-                    //   color: itemsBarColor,
-                    //   onTap: () {
-                    //     return;
-                    //   },
-                    // ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      elevation: 0,
-      toolbarHeight: 50.0,
-      backgroundColor: CupertinoTheme.of(context).primaryColor,
-      bottom: TabBar(
-        tabs: const [
-          Tab(text: 'Projetos'),
-          Tab(text: 'Tarefas'),
-        ],
-        onTap: (value) {
-          _setCurrentScreen(value);
-        },
-        labelStyle: const TextStyle(
-          color: CupertinoColors.white,
-          fontSize: 18.0,
-        ),
-        dividerHeight: 0,
-        enableFeedback: false,
-        overlayColor:
-            MaterialStateProperty.all(const Color.fromARGB(59, 242, 242, 247)),
-        unselectedLabelColor: CupertinoColors.white,
-        indicatorColor: CupertinoColors.white,
-        indicatorWeight: 4.0,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorPadding: const EdgeInsets.symmetric(horizontal: 35.0),
       ),
     );
   }

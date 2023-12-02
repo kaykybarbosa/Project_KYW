@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kyw_management/app/validation/input_validator.dart';
-import 'package:kyw_management/app/widgets/create_project_screen.dart/circle_image.dart';
+import 'package:kyw_management/app/widgets/circle_image.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/criation_input.dart';
 
 class InputTitleAndDescription extends StatelessWidget {
