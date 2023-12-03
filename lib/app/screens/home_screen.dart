@@ -70,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 2,
       child: Scaffold(
         key: _scaffoldKey,
-        endDrawer: MyEndDrawer(),
         appBar: AppBar(
           // App name
           leading: AppName(color: itemsBarColor),
@@ -88,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(width: 15.0),
+            const SizedBox(width: 12.0),
 
             // More options
             MyIcon(
@@ -98,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _openEndDrawer();
               },
             ),
+
             const SizedBox(width: 13.0),
           ],
 
@@ -180,6 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+
+        // EndDrawer the more options
+        endDrawer: const MyEndDrawer(),
 
         // Button create project
         floatingActionButton: _currentText == Screens.project

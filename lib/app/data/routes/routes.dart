@@ -6,6 +6,7 @@ import 'package:kyw_management/app/screens/create_project_screen.dart';
 import 'package:kyw_management/app/screens/forgot_password_screen.dart';
 import 'package:kyw_management/app/screens/form_screen.dart';
 import 'package:kyw_management/app/screens/home_screen.dart';
+import 'package:kyw_management/app/screens/my_account_screen.dart';
 import 'package:kyw_management/app/screens/notification_screen.dart';
 
 final routes = GoRouter(
@@ -38,6 +39,10 @@ final routes = GoRouter(
     GoRoute(
       path: MyRoutes.configuration,
       builder: (context, state) => ConfigurationScreen(),
+    ),
+    GoRoute(
+      path: MyRoutes.myAccount,
+      builder: (context, state) => MyAccountScreen(),
     ),
   ],
 );

@@ -18,10 +18,13 @@ class MyIcon extends StatelessWidget {
       onTap: () {
         onTap();
       },
-      child: Icon(
-        icon,
-        color: color,
-        size: 22.0,
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Icon(
+          icon,
+          color: color,
+          size: 22.0,
+        ),
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:kyw_management/app/widgets/home_screen/app_bar/drawer_option.dar
 import 'package:kyw_management/app/widgets/home_screen/app_bar/sign_out_button.dart';
 
 class MyEndDrawer extends StatefulWidget {
-  MyEndDrawer({super.key});
+  const MyEndDrawer({super.key});
 
   @override
   State<MyEndDrawer> createState() => _MyEndDrawerState();
@@ -17,7 +17,7 @@ class MyEndDrawer extends StatefulWidget {
 class _MyEndDrawerState extends State<MyEndDrawer> {
   @override
   Widget build(BuildContext context) {
-    final List<DrawerOption> _options = [
+    final List<DrawerOption> options = [
       DrawerOption(
         icon: Icons.settings,
         label: 'Configurações',
@@ -48,59 +48,54 @@ class _MyEndDrawerState extends State<MyEndDrawer> {
     return Drawer(
       width: 270.0,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // padding: EdgeInsets.zero,
+        // physics: const NeverScrollableScrollPhysics(),
         children: [
-          Expanded(
-            flex: 2,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                // Header
-                DrawerHeader(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.zero,
-                  child: Container(
-                    color: CupertinoTheme.of(context).primaryColor,
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // Profile image
-                        CircleImage(
-                          iconSize: 30.0,
-                          padding: const EdgeInsets.all(18.0),
-                          changeIconVisible: false,
-                          onTap: () {},
-                        ),
-
-                        // Nick name
-                        const Text(
-                          'Joãozin',
-                          style: TextStyle(
-                            color: CupertinoColors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20.0,
-                          ),
-                        )
-                      ],
-                    ),
+          // Header
+          DrawerHeader(
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
+            child: Container(
+              width: double.infinity,
+              color: CupertinoTheme.of(context).primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              margin: EdgeInsets.zero,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Profile image
+                  CircleImage(
+                    iconSize: 30.0,
+                    padding: const EdgeInsets.all(18.0),
+                    changeIconVisible: false,
+                    onTap: () {},
                   ),
-                ),
-              ],
+
+                  // Nick name
+                  const Text(
+                    'Joãozin',
+                    style: TextStyle(
+                      color: CupertinoColors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.0,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
 
           // Options the configuration
           Expanded(
-            flex: 7,
             child: ListView.separated(
-              itemBuilder: (context, index) {
-                return Container(
-                    color: CupertinoColors.activeBlue, child: _options[index]);
-              },
+              padding: EdgeInsets.zero,
+              itemCount: options.length,
+              physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (__, _) => const Divider(height: 0.0),
-              itemCount: _options.length,
+              itemBuilder: (context, index) {
+                return options[index];
+              },
             ),
           ),
 

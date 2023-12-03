@@ -14,8 +14,8 @@ class FormInput extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.placeHolderStyle,
     this.inputTextStyle,
-    this.inputDecoration,
     this.obscureText,
+    this.inputDecoration,
   });
 
   final String placeHolder;
@@ -23,20 +23,20 @@ class FormInput extends StatefulWidget {
   final Function validator;
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
-  AutovalidateMode autovalidateMode;
-  EdgeInsetsGeometry? padding;
-  TextAlign textAlign;
-  TextStyle? placeHolderStyle;
-  TextStyle? inputTextStyle;
+  final AutovalidateMode autovalidateMode;
+  final EdgeInsetsGeometry? padding;
+  final TextAlign textAlign;
+  final TextStyle? placeHolderStyle;
+  final TextStyle? inputTextStyle;
+  final bool? obscureText;
   BoxDecoration? inputDecoration;
-  bool? obscureText;
 
   @override
   State<FormInput> createState() => _FormInputState();
 }
 
 class _FormInputState extends State<FormInput> {
-  _setInputDecoration({Color? borderColor, bool isActice = false}) {
+  void _setInputDecoration({Color? borderColor, bool isActice = false}) {
     setState(() {
       widget.inputDecoration = MyDecorations.inputDecoration(
           borderColor: borderColor, isActice: isActice);

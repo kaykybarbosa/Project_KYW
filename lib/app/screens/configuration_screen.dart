@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
 class ConfigurationScreen extends StatelessWidget {
@@ -29,23 +30,11 @@ class ConfigurationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CupertinoTheme.of(context).primaryColor,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: CupertinoColors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text(
-          'Configurações',
-          style: TextStyle(color: CupertinoColors.white),
-        ),
-      ),
+    return MyScaffold(
+      arrowBack: () {
+        context.pop(context);
+      },
+      title: 'Configurações',
       body: ListView.separated(
         itemBuilder: (context, index) {
           return _options[index];
@@ -56,6 +45,7 @@ class ConfigurationScreen extends StatelessWidget {
         ),
         itemCount: _options.length,
         padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
       ),
     );
   }
