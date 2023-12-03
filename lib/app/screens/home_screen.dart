@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openEndDrawer() {
-    _scaffoldKey.currentState!.openEndDrawer();
+    _scaffoldKey.currentState?.openEndDrawer();
   }
 
   @override
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 2,
       child: Scaffold(
         key: _scaffoldKey,
-        endDrawer: const MyEndDrawer(),
+        endDrawer: MyEndDrawer(),
         appBar: AppBar(
           // App name
           leading: AppName(color: itemsBarColor),

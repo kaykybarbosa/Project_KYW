@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/screens/change_password_screen.dart';
+import 'package:kyw_management/app/screens/configuration_screen.dart';
 import 'package:kyw_management/app/screens/create_project_screen.dart';
 import 'package:kyw_management/app/screens/forgot_password_screen.dart';
 import 'package:kyw_management/app/screens/form_screen.dart';
@@ -15,8 +16,9 @@ final routes = GoRouter(
       builder: (context, state) => const FormScreen(),
     ),
     GoRoute(
-        path: MyRoutes.forgotPassword,
-        builder: (context, state) => const ForgotPasswordScreen()),
+      path: MyRoutes.forgotPassword,
+      builder: (context, state) => const ForgotPasswordScreen(),
+    ),
     GoRoute(
       path: MyRoutes.changePassword,
       builder: (context, state) => const ChangePasswordScreen(),
@@ -27,15 +29,15 @@ final routes = GoRouter(
     ),
     GoRoute(
       path: MyRoutes.notifications,
-      builder: (context, state) {
-        return const NotificationScreen();
-      },
+      builder: (context, state) => const NotificationScreen(),
     ),
     GoRoute(
       path: MyRoutes.createProject,
-      builder: (context, state) {
-        return const CreateProjectScreen();
-      },
+      builder: (context, state) => const CreateProjectScreen(),
+    ),
+    GoRoute(
+      path: MyRoutes.configuration,
+      builder: (context, state) => ConfigurationScreen(),
     ),
   ],
 );
