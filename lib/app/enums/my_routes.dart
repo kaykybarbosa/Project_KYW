@@ -8,4 +8,12 @@ class MyRoutes {
   static String configuration = '/configuration';
   static String myAccount = '/my-account';
   static String help = '/help';
+  static String contactUs = '/help/contact-us';
+  static String configurationAccount = '/configuration/account';
+  static String configurationTwoStep = '/configuration/account/two-step';
+  static String configurationChangeNumber =
+      '/configuration/account/change-number';
+  static String configurationDeleteAccount =
+      '/configuration/account/delete-account';
+  static String chat = '/home/chat/:projectId';
 }

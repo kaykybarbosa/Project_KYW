@@ -1,35 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
-class ConfigurationScreen extends StatelessWidget {
+class ConfigurationScreen extends StatefulWidget {
   ConfigurationScreen({super.key});
 
-  final List<ConfigOption> _options = [
-    ConfigOption(
-      icon: FontAwesomeIcons.user,
-      title: 'Conta',
-      subTitle: 'Configurações da conta',
-      onTap: () {},
-    ),
-    ConfigOption(
-      icon: FontAwesomeIcons.bell,
-      title: 'Notificações',
-      subTitle: 'Notificações do app',
-      onTap: () {},
-    ),
-    ConfigOption(
-      icon: FontAwesomeIcons.question,
-      title: 'Ajuda',
-      subTitle: 'Entre em contato',
-      onTap: () {},
-    ),
-  ];
+  @override
+  State<ConfigurationScreen> createState() => _ConfigurationScreenState();
+}
 
+class _ConfigurationScreenState extends State<ConfigurationScreen> {
   @override
   Widget build(BuildContext context) {
+    final List<ConfigOption> _options = [
+      ConfigOption(
+        icon: FontAwesomeIcons.user,
+        title: 'Conta',
+        subTitle: 'Configurações da conta',
+        onTap: () {
+          context.push(MyRoutes.configurationAccount);
+        },
+      ),
+      ConfigOption(
+        icon: FontAwesomeIcons.bell,
+        title: 'Notificações',
+        subTitle: 'Notificações do app',
+        onTap: () {},
+      ),
+      ConfigOption(
+        icon: FontAwesomeIcons.question,
+        title: 'Ajuda',
+        subTitle: 'Entre em contato',
+        onTap: () {},
+      ),
+    ];
+
     return MyScaffold(
       arrowBack: () {
         context.pop(context);

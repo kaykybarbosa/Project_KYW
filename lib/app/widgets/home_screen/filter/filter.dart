@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/my_app.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/apply_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_buttons.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/creation_date.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_projet/filter_for_project.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_for_task.dart';
 
 class Filter extends StatefulWidget {
-  const Filter(
-      {super.key, required this.currentScreen, required this.controller});
+  const Filter({super.key, required this.currentScreen});
 
   final Screens currentScreen;
-  final ScrollController controller;
 
   @override
   State<Filter> createState() => _FilterState();
@@ -99,7 +98,7 @@ class _FilterState extends State<Filter> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // The 3 buttons
-            FilterButtons(current: FilterEnum.Filter, reset: () {}),
+            FilterButtons(current: FilterEnum.Filter, resetFunction: () {}),
 
             const SizedBox(height: 30.0),
 
@@ -174,23 +173,10 @@ class _FilterState extends State<Filter> {
               ),
             ),
 
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 100.0),
 
-            // Apply filter or Order
-            SizedBox(
-              width: double.infinity,
-              child: CupertinoButton(
-                color: CupertinoColors.systemBlue,
-                child: const Text(
-                  'Aplicar',
-                  style: TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500),
-                ),
-                onPressed: () {},
-              ),
-            ),
+            // Apply filter
+            ApplyButtom(onTap: () {})
           ],
         ),
       ),

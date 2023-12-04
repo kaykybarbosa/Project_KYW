@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:kyw_management/app/enums/status.dart';
 import 'package:kyw_management/app/widgets/my_status.dart';
 
-class FilterByStatus extends StatelessWidget {
-  const FilterByStatus({
-    super.key,
-    required this.status,
-    required this.onChanged,
-    required this.isChecked,
-  });
+class FilterByCheckedBox extends StatelessWidget {
+  const FilterByCheckedBox(
+      {super.key,
+      this.status,
+      required this.onChanged,
+      this.isChecked,
+      this.statusIsVisible = true});
 
   final Function onChanged;
-  final bool isChecked;
-  final Status status;
+  final bool? isChecked;
+  final Status? status;
+  final bool statusIsVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,10 @@ class FilterByStatus extends StatelessWidget {
             },
           ),
         ),
-        MyStatus(status: status)
+        Visibility(
+          visible: statusIsVisible,
+          child: MyStatus(status: status ?? Status.incomplete),
+        )
       ],
     );
   }

@@ -29,7 +29,9 @@ class ConfigurationAccountScreen extends StatelessWidget {
       context.push(MyRoutes.configurationChangeNumber);
     }
 
-    void deleteAccount() {}
+    void deleteAccount() {
+      context.push(MyRoutes.configurationDeleteAccount);
+    }
 
     List<Function> optionsFunction = [
       /// If [index] == 0 => show two_step_screen

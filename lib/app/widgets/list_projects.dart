@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/card_project.dart';
 
@@ -59,7 +61,9 @@ class _ListProjectsState extends State<ListProjects> {
       itemBuilder: (context, index) {
         return CardProject(
           project: widget.projects[index],
-          onTap: () {},
+          onTap: () {
+            context.push(MyRoutes.chat);
+          },
         );
       },
     );

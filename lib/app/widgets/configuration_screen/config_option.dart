@@ -27,12 +27,13 @@ class ConfigOption extends StatelessWidget {
         title,
         style: const TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 17.0,
+          fontSize: 19.0,
         ),
       ),
       subtitle: Text(
         subTitle,
-        style: const TextStyle(color: CupertinoColors.systemGrey4),
+        style:
+            const TextStyle(color: CupertinoColors.systemGrey3, fontSize: 15.0),
       ),
       dense: true,
     );

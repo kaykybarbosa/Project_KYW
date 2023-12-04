@@ -11,6 +11,7 @@ import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/order.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/the_filters.dart';
@@ -108,6 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: (value) {
               _setCurrentScreen(value);
             },
+            tabs: const [
+              Tab(text: 'Projetos'),
+              Tab(text: 'Tarefas'),
+            ],
           ),
         ),
         body: Padding(
@@ -118,8 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Visibility(
                 visible: _showFilterBar,
                 child: MySearchBar(
-                    placeHolder:
-                        _currentText == Screens.project ? 'projeto' : 'task'),
+                  placeHolder:
+                      _currentText == Screens.project ? 'projeto' : 'task',
+                ),
               ),
 
               // Buttons the filters
@@ -139,10 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: DraggableScrollableSheet(
                               initialChildSize: 0.999,
                               minChildSize: 0.999,
-                              builder: (context, scrollController) => Filter(
-                                currentScreen: _currentText,
-                                controller: scrollController,
-                              ),
+                              builder: (context, scrollController) =>
+                                  Filter(currentScreen: _currentText),
                             ),
                           ),
                         );
@@ -155,11 +159,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Order
                     TheFilters(
-                      onTap: () {},
                       label: 'Ordenar',
                       labelSize: 17.0,
                       icon: FontAwesomeIcons.caretDown,
                       iconSize: 26.0,
+                      onTap: () {
+                        return showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext context) => SizedBox(
+                            height: 700,
+                            child: Order(
+                              currentScreen: _currentText,
+                              // controller: scrollController,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

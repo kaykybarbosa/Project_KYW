@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 
 class FilterButtons extends StatelessWidget {
-  const FilterButtons({super.key, required this.current, required this.reset});
+  const FilterButtons(
+      {super.key, required this.current, required this.resetFunction});
 
   final FilterEnum current;
-  final Function reset;
+  final Function resetFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class FilterButtons extends StatelessWidget {
         ),
         _button(
           onTap: () {
-            reset();
+            resetFunction();
           },
           text: 'Resetar',
           color: CupertinoColors.systemBlue,

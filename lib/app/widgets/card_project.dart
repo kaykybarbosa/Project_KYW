@@ -39,7 +39,9 @@ class _CardProjectState extends State<CardProject> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        widget.onTap();
+      },
       child: Container(
         padding: const EdgeInsets.only(left: 6.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),

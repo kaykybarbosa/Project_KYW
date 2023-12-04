@@ -5,7 +5,7 @@ import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/circle_image.dart';
 
 class MyAccountScreen extends StatelessWidget {
-  MyAccountScreen({super.key});
+  const MyAccountScreen({super.key});
 
   final List<String> optionsTitle = const ['Nome', 'E-mail', 'Telefone'];
   final List<String> optionsLabel = const [
@@ -68,6 +68,7 @@ class MyAccountScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // Icon change data
                   trailing: Stack(
                     alignment: const Alignment(2.4, -2.4),
                     children: [

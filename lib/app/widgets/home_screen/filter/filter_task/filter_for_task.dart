@@ -19,6 +19,7 @@ class _FilterForTaskState extends State<FilterForTask> {
   bool _complete = false;
   bool _pending = false;
   bool _incomplete = false;
+  bool _myCategory = false;
 
   void _setStatusTask({required Status status, bool? value}) {
     setState(() {
@@ -34,6 +35,12 @@ class _FilterForTaskState extends State<FilterForTask> {
     });
   }
 
+  void _setMyCategory({bool wasClicked = false}) {
+    setState(() {
+      _myCategory = wasClicked;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +51,7 @@ class _FilterForTaskState extends State<FilterForTask> {
           'Status',
           style: TextStyle(fontSize: 20.0),
         ),
-        FilterByStatus(
+        FilterByCheckedBox(
           isChecked: _pending,
           status: Status.pending,
           onChanged: (value) {
@@ -54,7 +61,7 @@ class _FilterForTaskState extends State<FilterForTask> {
             );
           },
         ),
-        FilterByStatus(
+        FilterByCheckedBox(
           isChecked: _complete,
           status: Status.complete,
           onChanged: (value) {
@@ -64,7 +71,7 @@ class _FilterForTaskState extends State<FilterForTask> {
             );
           },
         ),
-        FilterByStatus(
+        FilterByCheckedBox(
           isChecked: _incomplete,
           status: Status.incomplete,
           onChanged: (value) {
@@ -87,9 +94,12 @@ class _FilterForTaskState extends State<FilterForTask> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Checkbox(
-              value: false,
-              onChanged: (value) {},
+            FilterByCheckedBox(
+              statusIsVisible: false,
+              isChecked: _myCategory,
+              onChanged: (value) {
+                _setMyCategory(wasClicked: value);
+              },
             ),
             const Text(
               'Mostrar apenas minhas categorias',

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-PreferredSizeWidget myTabBar({required Function onTap}) {
+PreferredSizeWidget myTabBar({
+  required Function onTap,
+  required List<Tab> tabs,
+}) {
   return TabBar(
-    tabs: const [
-      Tab(text: 'Projetos'),
-      Tab(text: 'Tarefas'),
-    ],
+    tabs: tabs,
     onTap: (value) {
       onTap(value);
     },
