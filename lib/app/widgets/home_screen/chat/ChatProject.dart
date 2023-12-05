@@ -27,7 +27,7 @@ class _ChatProjectState extends State<ChatProject> {
             ),
             onPressed: () {},
           ),
-          title: Text(''),
+          title: const Text(''),
           bottom: myTabBar(
             onTap: () {},
             tabs: const [
@@ -36,7 +36,7 @@ class _ChatProjectState extends State<ChatProject> {
             ],
           ),
         ),
-        body: Text('data'),
+        body: const Text('data'),
       ),
     );
   }

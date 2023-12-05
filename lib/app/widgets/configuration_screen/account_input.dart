@@ -23,6 +23,7 @@ class AccountInput extends StatelessWidget {
           ),
         ],
       ),
+      style: const TextStyle(fontSize: 20.0),
       placeholder: placeHolder,
       validator: (value) {
         return validator(value);

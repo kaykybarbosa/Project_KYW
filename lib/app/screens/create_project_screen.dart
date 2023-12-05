@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/data/projects.dart';
 import 'package:kyw_management/app/data/users.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
@@ -189,13 +188,5 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     });
   }
 
-  void _addProject() {
-    setState(() {
-      projectsData.add(Project(
-        name: _titleController.text,
-        description: _descriptionController.text,
-        users: _users,
-      ));
-    });
-  }
+  void _addProject() {}
 }

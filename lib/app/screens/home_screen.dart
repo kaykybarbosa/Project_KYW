@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/data/projects.dart';
 import 'package:kyw_management/app/data/tasks.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/enums/screens.dart';
@@ -32,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Color itemsBarColor = CupertinoColors.lightBackgroundGray;
   Screens _currentText = Screens.project;
   bool _haveMessage = true;
-  bool _showFilterBar = true;
 
   // Functions
   void _setCurrentScreen(int value) {
@@ -45,12 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         _currentText = Screens.task;
       }
-    });
-  }
-
-  void _setShowFilterBar({required bool isVisible}) {
-    setState(() {
-      _showFilterBar = isVisible;
     });
   }
 
@@ -120,77 +112,66 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               // Input Search
-              Visibility(
-                visible: _showFilterBar,
-                child: MySearchBar(
-                  placeHolder:
-                      _currentText == Screens.project ? 'projeto' : 'task',
-                ),
+              MySearchBar(
+                placeHolder:
+                    _currentText == Screens.project ? 'projeto' : 'task',
               ),
 
               // Buttons the filters
-              Visibility(
-                visible: _showFilterBar,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Filter
-                    TheFilters(
-                      onTap: () {
-                        return showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) => SizedBox(
-                            height: 700,
-                            child: DraggableScrollableSheet(
-                              initialChildSize: 0.999,
-                              minChildSize: 0.999,
-                              builder: (context, scrollController) =>
-                                  Filter(currentScreen: _currentText),
-                            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Filter
+                  TheFilters(
+                    onTap: () {
+                      return showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) => SizedBox(
+                          height: 700,
+                          child: DraggableScrollableSheet(
+                            initialChildSize: 0.999,
+                            minChildSize: 0.999,
+                            builder: (context, scrollController) =>
+                                Filter(currentScreen: _currentText),
                           ),
-                        );
-                      },
-                      label: 'Filtrar',
-                      labelSize: 17.0,
-                      iconSize: 17.0,
-                      icon: FontAwesomeIcons.filter,
-                    ),
+                        ),
+                      );
+                    },
+                    label: 'Filtrar',
+                    labelSize: 17.0,
+                    iconSize: 17.0,
+                    icon: FontAwesomeIcons.filter,
+                  ),
 
-                    // Order
-                    TheFilters(
-                      label: 'Ordenar',
-                      labelSize: 17.0,
-                      icon: FontAwesomeIcons.caretDown,
-                      iconSize: 26.0,
-                      onTap: () {
-                        return showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) => SizedBox(
-                            height: 700,
-                            child: Order(
-                              currentScreen: _currentText,
-                              // controller: scrollController,
-                            ),
+                  // Order
+                  TheFilters(
+                    label: 'Ordenar',
+                    labelSize: 17.0,
+                    icon: FontAwesomeIcons.caretDown,
+                    iconSize: 26.0,
+                    onTap: () {
+                      return showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) => SizedBox(
+                          height: 700,
+                          child: Order(
+                            currentScreen: _currentText,
+                            // controller: scrollController,
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
 
               // Current screen
               Expanded(
                 flex: 12,
                 child: _currentText == Screens.project
-                    ? ListProjects(
-                        projects: projectsData,
-                        showFilterBar: (isVisible) {
-                          _setShowFilterBar(isVisible: isVisible);
-                        },
-                      )
+                    ? const ListProjects()
                     : ListTasks(tasks: tasksData),
               )
             ],

@@ -46,7 +46,7 @@ final routes = GoRouter(
     ),
     GoRoute(
       path: MyRoutes.configuration,
-      builder: (context, state) => ConfigurationScreen(),
+      builder: (context, state) => const ConfigurationScreen(),
     ),
     GoRoute(
       path: MyRoutes.myAccount,

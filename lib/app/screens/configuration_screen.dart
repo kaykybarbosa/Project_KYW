@@ -6,7 +6,7 @@ import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
 class ConfigurationScreen extends StatefulWidget {
-  ConfigurationScreen({super.key});
+  const ConfigurationScreen({super.key});
 
   @override
   State<ConfigurationScreen> createState() => _ConfigurationScreenState();
@@ -15,7 +15,7 @@ class ConfigurationScreen extends StatefulWidget {
 class _ConfigurationScreenState extends State<ConfigurationScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<ConfigOption> _options = [
+    final List<ConfigOption> options = [
       ConfigOption(
         icon: FontAwesomeIcons.user,
         title: 'Conta',
@@ -45,13 +45,13 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
       title: 'Configurações',
       body: ListView.separated(
         itemBuilder: (context, index) {
-          return _options[index];
+          return options[index];
         },
         separatorBuilder: (__, _) => const Padding(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
           child: Divider(height: 0.0),
         ),
-        itemCount: _options.length,
+        itemCount: options.length,
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
       ),
