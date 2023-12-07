@@ -17,6 +17,7 @@ class PasswordInput extends StatelessWidget {
         return TextFormField(
           initialValue: state.password.value,
           focusNode: _passwordFocusNode,
+          obscureText: true,
           decoration: InputDecoration(
             hintText: 'Senha',
             border: const OutlineInputBorder(),
@@ -24,9 +25,12 @@ class PasswordInput extends StatelessWidget {
                 ? "Sua senha deve conter pelo menos 6 caracteres!"
                 : null,
           ),
-          onChanged: (password) => context
-              .read<SignInBloc>()
-              .add(PasswordSignInChanged(password: password)),
+          onChanged: (password) => context.read<SignInBloc>().add(
+                PasswordSignInChanged(
+                  password: password,
+                  formType: FormType.signIn.name,
+                ),
+              ),
         );
       },
     );

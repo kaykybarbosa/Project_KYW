@@ -14,7 +14,9 @@ class SubmitButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: isValid
-            ? () => context.read<SignInBloc>().add(FormSignInSubmitted())
+            ? () => context
+                .read<SignInBloc>()
+                .add(FormSignInSubmitted(formType: FormType.signIn.name))
             : null,
         child: const Text(
           'ENTRAR',

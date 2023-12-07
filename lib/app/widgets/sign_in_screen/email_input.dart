@@ -26,9 +26,12 @@ class EmailInput extends StatelessWidget {
                   ? "Por favor, informe um e-mail válido!"
                   : null,
             ),
-            onChanged: (email) => context
-                .read<SignInBloc>()
-                .add(EmailSignInChanged(email: email)),
+            onChanged: (email) => context.read<SignInBloc>().add(
+                  EmailSignInChanged(
+                    email: email,
+                    formType: FormType.signIn.name,
+                  ),
+                ),
           );
         },
       ),
