@@ -7,9 +7,11 @@ import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/button_main.dart';
 import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/form_screen/continue_with.dart';
-import 'package:kyw_management/app/widgets/form_screen/forgot_password.dart';
+import 'package:kyw_management/app/widgets/form_screen/forgot_password_button.dart';
 import 'package:kyw_management/app/widgets/form_screen/sign_google_facebook.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
+
+import '../../domain/blocs/sign_in_export.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -75,13 +77,17 @@ class _FormScreenState extends State<FormScreen> {
 
                     const SizedBox(height: 15),
 
-                    FormInput(
-                      placeHolder: 'E-mail ou Número',
-                      inputController: _emailController,
-                      textInputType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      validator: (email) {
-                        return InputValidator.validateEmail(email: email);
+                    BlocBuilder<SignInBloc, SignInState>(
+                      builder: (context, state) {
+                        return FormInput(
+                          placeHolder: 'E-mail ou Número',
+                          inputController: _emailController,
+                          textInputType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          validator: (email) {
+                            return InputValidator.validateEmail(email: email);
+                          },
+                        );
                       },
                     ),
 
@@ -120,7 +126,7 @@ class _FormScreenState extends State<FormScreen> {
                     // Forgot password
                     Visibility(
                       visible: _isLogin,
-                      child: ForgotPassword(
+                      child: ForgotPasswordButton(
                         onTap: () {
                           context.push(MyRoutes.forgotPassword);
                         },

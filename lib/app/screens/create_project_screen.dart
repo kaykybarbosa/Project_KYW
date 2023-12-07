@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/data/users.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/models/user.dart';
 import 'package:kyw_management/app/validation/input_validator.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/input_title_description.dart';
@@ -180,11 +179,11 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
     }
   }
 
-  final List<User> _users = [];
+  final List<UserTest> _users = [];
 
   void _addMembers(String email) {
     setState(() {
-      _users.add(User(name: email, email: email));
+      _users.add(UserTest(name: email, email: email));
     });
   }
 

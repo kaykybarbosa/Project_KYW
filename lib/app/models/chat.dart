@@ -13,5 +13,5 @@ class Chat {
   String imageUri;
   String title;
   List<Task> tasks;
-  List<User> members;
+  List<UserTest> members;
 }

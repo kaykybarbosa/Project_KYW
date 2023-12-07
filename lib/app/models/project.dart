@@ -24,7 +24,7 @@ class Project extends Equatable {
   String? lastMessage;
   String? lastMessageTime;
   List<Task>? tasks;
-  List<User>? users;
+  List<UserTest>? users;
   String? inviteLink;
   bool isImportant;
 
@@ -48,7 +48,7 @@ class Project extends Equatable {
     String? lastMessage,
     String? lastMessageTime,
     List<Task>? tasks,
-    List<User>? users,
+    List<UserTest>? users,
     String? inviteLink,
     bool? isImportant,
   }) {

@@ -5,7 +5,7 @@ import 'package:kyw_management/app/models/user.dart';
 class ListMembers extends StatelessWidget {
   const ListMembers({super.key, required this.users});
 
-  final List<User> users;
+  final List<UserTest> users;
 
   @override
   Widget build(BuildContext context) {

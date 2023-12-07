@@ -1,7 +1,7 @@
 import 'package:kyw_management/app/models/user.dart';
 
-final List<User> usersData = [
-  User(name: 'Yure', email: 'yuresilva@gmail.com'),
-  User(name: 'Wesle', email: 'wesle@gmail.com'),
-  User(name: 'Kbuloso', email: 'kbuloso@gmail.com'),
+final List<UserTest> usersData = [
+  UserTest(name: 'Yure', email: 'yuresilva@gmail.com'),
+  UserTest(name: 'Wesle', email: 'wesle@gmail.com'),
+  UserTest(name: 'Kbuloso', email: 'kbuloso@gmail.com'),
 ];
