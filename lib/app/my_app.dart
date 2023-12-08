@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/domain/blocs/sign_in_export.dart';
@@ -6,8 +5,6 @@ import 'package:kyw_management/domain/services/app_routes/app_routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyw_management/domain/blocs/bloc_export.dart';
 import 'package:kyw_management/domain/repositories/project_repository.dart';
-
-import '../domain/blocs/register_export.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -30,7 +27,6 @@ class _MyAppState extends State<MyApp> {
                 ),
         ),
         BlocProvider(create: (context) => SignInBloc()),
-        BlocProvider(create: (context) => RegisterBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

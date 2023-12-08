@@ -3,7 +3,7 @@ import 'package:kyw_management/app/data/chats.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/home_screen/chat/ChatProject.dart';
 
-import '../../../app/screens/registration_screen.dart';
+import '../../../app/screens/sign_up_screen.dart';
 import '../../../app/screens/screens_export.dart';
 
 final appRoutes = GoRouter(
@@ -14,8 +14,8 @@ final appRoutes = GoRouter(
       builder: (context, state) => const SignInScreen(),
     ),
     GoRoute(
-      path: MyRoutes.registration,
-      builder: (context, state) => const RegistrationScreen(),
+      path: MyRoutes.signUp,
+      builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
       path: MyRoutes.form,
