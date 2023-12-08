@@ -20,13 +20,12 @@ class NameSignUpChanged extends SignInEvent {
 class NameSignUpUnfocused extends SignInEvent {}
 
 class EmailSignInChanged extends SignInEvent {
-  const EmailSignInChanged({required this.email, required this.formType});
+  const EmailSignInChanged({required this.email});
 
   final String email;
-  final String formType;
 
   @override
-  List<Object> get props => [email, formType];
+  List<Object> get props => [email];
 }
 
 class EmailSignInUnfocused extends SignInEvent {}
@@ -43,13 +42,12 @@ class NumberSignInChanged extends SignInEvent {
 class NumberSignInUnfocused extends SignInEvent {}
 
 class PasswordSignInChanged extends SignInEvent {
-  const PasswordSignInChanged({required this.password, required this.formType});
+  const PasswordSignInChanged({required this.password});
 
   final String password;
-  final String formType;
 
   @override
-  List<Object> get props => [password, formType];
+  List<Object> get props => [password];
 }
 
 class PasswordSignInUnfocused extends SignInEvent {}
@@ -62,3 +60,5 @@ class FormSignInSubmitted extends SignInEvent {
   @override
   List<Object> get props => [formType];
 }
+
+class ScreenChanged extends SignInEvent {}

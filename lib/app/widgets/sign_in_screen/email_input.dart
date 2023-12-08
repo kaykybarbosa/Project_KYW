@@ -19,6 +19,8 @@ class EmailInput extends StatelessWidget {
           return TextFormField(
             initialValue: state.email.value,
             focusNode: _emailFocusNode,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: 'E-mail ou Número',
               border: const OutlineInputBorder(),
@@ -26,12 +28,9 @@ class EmailInput extends StatelessWidget {
                   ? "Por favor, informe um e-mail válido!"
                   : null,
             ),
-            onChanged: (email) => context.read<SignInBloc>().add(
-                  EmailSignInChanged(
-                    email: email,
-                    formType: FormType.signIn.name,
-                  ),
-                ),
+            onChanged: (email) => context
+                .read<SignInBloc>()
+                .add(EmailSignInChanged(email: email)),
           );
         },
       ),

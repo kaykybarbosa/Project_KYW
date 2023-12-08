@@ -14,6 +14,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     on<EmailSignInUnfocused>(_onEmailSignInUnfocused);
     on<PasswordSignInUnfocused>(_onPasswordSignInUnfocused);
     on<FormSignInSubmitted>(_onFormSignInSubmitted);
+    on<ScreenChanged>(_onScreenChanged);
   }
 
   void _onNameSignUpChanged(
@@ -37,16 +38,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
   ) {
     final email = Email.dirty(event.email);
     bool isValid = state.isValid;
-    FormType formType = event.formType == FormType.signIn.name
-        ? FormType.signIn
-        : FormType.signUp;
+    FormType formType = state.formType;
 
-    print('MUDANDO EMAIL');
-
-    if (formType == FormType.signIn) {
-      isValid = Formz.validate([email, state.password]);
-    } else {
+    if (formType != FormType.signIn) {
+      formType = FormType.signUp;
       isValid = Formz.validate([state.name, email, state.password]);
+    } else {
+      isValid = Formz.validate([email, state.password]);
     }
 
     emit(
@@ -68,16 +66,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     PasswordSignInChanged event,
     Emitter<SignInState> emit,
   ) {
-    final password = Password.dirty(event.password);
     bool isValid = state.isValid;
-    FormType formType = event.formType == FormType.signIn.name
-        ? FormType.signIn
-        : FormType.signUp;
+    FormType formType = state.formType;
+    final password = Password.dirty(event.password);
 
-    if (formType == FormType.signIn) {
-      isValid = Formz.validate([state.email, password]);
-    } else {
+    if (formType != FormType.signIn) {
+      formType = FormType.signUp;
       isValid = Formz.validate([state.name, state.email, password]);
+    } else {
+      isValid = Formz.validate([state.email, password]);
     }
 
     emit(
@@ -111,11 +108,21 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     Emitter<SignInState> emit,
   ) {
     final email = Email.dirty(state.email.value);
+    bool isValid = state.isValid;
+    FormType formType = state.formType;
+
+    if (formType != FormType.signIn) {
+      isValid = Formz.validate([state.name, email, state.password]);
+      formType = FormType.signUp;
+    } else {
+      isValid = Formz.validate([email, state.password]);
+    }
+
     emit(state.copyWith(
       email: email,
-      isValid: Formz.validate([email, state.password]),
+      isValid: isValid,
       status: FormzSubmissionStatus.initial,
-      formType: FormType.signIn,
+      formType: formType,
     ));
   }
 
@@ -124,12 +131,21 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     Emitter<SignInState> emit,
   ) {
     final password = Password.dirty(state.password.value);
+    bool isValid = state.isValid;
+    FormType formType = state.formType;
+
+    if (formType != FormType.signIn) {
+      isValid = Formz.validate([state.name, state.email, password]);
+      formType = FormType.signUp;
+    } else {
+      isValid = Formz.validate([state.email, password]);
+    }
 
     emit(state.copyWith(
       password: password,
-      isValid: Formz.validate([state.email, password]),
+      isValid: isValid,
       status: FormzSubmissionStatus.initial,
-      formType: FormType.signIn,
+      formType: formType,
     ));
   }
 
@@ -142,14 +158,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     final password = Password.dirty(state.password.value);
 
     bool isValid = state.isValid;
-    FormType formType = event.formType == FormType.signIn.name
-        ? FormType.signIn
-        : FormType.signUp;
+    FormType formType = state.formType;
 
-    if (formType == FormType.signIn) {
-      isValid = Formz.validate([email, password]);
-    } else {
+    if (formType != FormType.signIn) {
       isValid = Formz.validate([name, email, password]);
+      formType = FormType.signUp;
+    } else {
+      isValid = Formz.validate([email, password]);
     }
 
     emit(
@@ -162,12 +177,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
         formType: formType,
       ),
     );
-    print('STATUS ${state.formType}');
-    print('STATUS ${state.isValid}');
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       await Future<void>.delayed(const Duration(seconds: 2));
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     }
+  }
+
+  void _onScreenChanged(
+    ScreenChanged event,
+    Emitter<SignInState> emit,
+  ) {
+    FormType formType =
+        state.formType == FormType.signIn ? FormType.signUp : FormType.signIn;
+
+    emit(SignInState(formType: formType));
   }
 }

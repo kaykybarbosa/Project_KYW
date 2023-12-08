@@ -6,10 +6,8 @@ import 'package:kyw_management/domain/blocs/bloc_export.dart';
 import '../../../domain/blocs/sign_in_export.dart';
 import '../../enums/my_routes.dart';
 
-class MessageToRegistered extends StatelessWidget {
-  const MessageToRegistered({
-    super.key,
-  });
+class MessageToSignIn extends StatelessWidget {
+  const MessageToSignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +15,22 @@ class MessageToRegistered extends StatelessWidget {
     TextStyle linkText = const TextStyle(color: Colors.blue, fontSize: 16);
 
     return SizedBox(
-      width: 260,
+      width: 240,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
           children: [
-            TextSpan(text: 'Não possui uma conta? ', style: defaultText),
+            TextSpan(text: 'Possui uma conta? ', style: defaultText),
             TextSpan(
               text: 'Clique aqui ',
               style: linkText,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   context.read<SignInBloc>().add(ScreenChanged());
-                  GoRouter.of(context).push(MyRoutes.signUp);
+                  GoRouter.of(context).pushReplacement(MyRoutes.signIn);
                 },
             ),
-            TextSpan(text: 'para criar uma', style: defaultText),
+            TextSpan(text: 'para realizar o login', style: defaultText),
           ],
         ),
       ),

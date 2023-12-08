@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 import '../../../domain/blocs/sign_in_export.dart';
 
 class SubmitButton extends StatelessWidget {
-  const SubmitButton({
-    super.key,
-  });
+  const SubmitButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isValid = context.select((SignInBloc bloc) => bloc.state.isValid);
+    final bool isValid =
+        context.select((SignInBloc bloc) => bloc.state.isValid);
+    final FormType formType =
+        context.select((SignInBloc bloc) => bloc.state.formType);
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: isValid
             ? () => context
                 .read<SignInBloc>()
-                .add(FormSignInSubmitted(formType: FormType.signIn.name))
+                .add(FormSignInSubmitted(formType: formType.name))
             : null,
-        child: const Text(
-          'ENTRAR',
-          style: TextStyle(fontSize: 18),
+        child: Text(
+          formType == FormType.signIn ? 'ENTRAR' : 'CRIAR CONTA',
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     );
