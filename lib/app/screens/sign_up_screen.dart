@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/app/widgets/sign_in_screen/email_input.dart';
-import 'package:kyw_management/app/widgets/sign_in_screen/message_to_sign_in.dart';
-import 'package:kyw_management/app/widgets/sign_in_screen/password_input.dart';
-import 'package:kyw_management/app/widgets/sign_in_screen/submit_button.dart';
+import 'package:kyw_management/app/widgets/auth_screens/email_input.dart';
+import 'package:kyw_management/app/widgets/auth_screens/message_to_sign_in.dart';
+import 'package:kyw_management/app/widgets/auth_screens/password_input.dart';
+import 'package:kyw_management/app/widgets/auth_screens/submit_button.dart';
 
-import '../../domain/blocs/sign_in_export.dart';
+import '../../domain/blocs/auth_export.dart';
 import '../widgets/form_screen/continue_with.dart';
 import '../widgets/form_screen/sign_google_facebook.dart';
 import '../widgets/my_title.dart';
-import '../widgets/sign_in_screen/name_input.dart';
+import '../widgets/auth_screens/name_input.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -27,35 +27,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
     _nameFocusNode.addListener(() {
       if (!_nameFocusNode.hasFocus) {
-        context.read<SignInBloc>().add(NameSignUpUnfocused());
+        context.read<AuthBloc>().add(NameAuthUnfocused());
         // FocusScope.of(context).requestFocus(_emailFocusNode);
       }
     });
 
     _emailFocusNode.addListener(() {
       if (!_emailFocusNode.hasFocus) {
-        context.read<SignInBloc>().add(EmailSignInUnfocused());
+        context.read<AuthBloc>().add(EmailAuthUnfocused());
         // FocusScope.of(context).requestFocus(_passwordFocusNode);
       }
     });
 
     _passwordFocusNode.addListener(() {
       if (!_passwordFocusNode.hasFocus) {
-        context.read<SignInBloc>().add(PasswordSignInUnfocused());
+        context.read<AuthBloc>().add(PasswordAuthUnfocused());
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+  void dispose() {
+    super.dispose();
+    _nameFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: screenSize.height,
+            height: 800,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -88,6 +94,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 // Button for submited form
                 const SubmitButton(),
+
+                const SizedBox(height: 30),
 
                 // Message to go Sign In
                 const MessageToSignIn()

@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/domain/blocs/bloc_export.dart';
+import 'package:kyw_management/domain/blocs/project_export.dart';
 
-import '../../../domain/blocs/sign_in_export.dart';
+import '../../../domain/blocs/auth_export.dart';
 import '../../enums/my_routes.dart';
 
 class MessageToRegistered extends StatelessWidget {
@@ -28,7 +28,7 @@ class MessageToRegistered extends StatelessWidget {
               style: linkText,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  context.read<SignInBloc>().add(ScreenChanged());
+                  context.read<AuthBloc>().add(ScreenChanged());
                   GoRouter.of(context).push(MyRoutes.signUp);
                 },
             ),

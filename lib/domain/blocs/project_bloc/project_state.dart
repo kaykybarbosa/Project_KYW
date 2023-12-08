@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:kyw_management/app/models/project.dart';
 
 // ignore: must_be_immutable
-class ProjectsState extends Equatable {
-  const ProjectsState({this.allProject = const <Project>[]});
+class ProjectState extends Equatable {
+  const ProjectState({this.allProject = const <Project>[]});
 
   final List<Project> allProject;
 

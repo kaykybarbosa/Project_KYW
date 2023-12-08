@@ -4,7 +4,7 @@ import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/card_project.dart';
 
-import '../../domain/blocs/bloc_export.dart';
+import '../../domain/blocs/project_export.dart';
 
 class ListProjects extends StatefulWidget {
   const ListProjects({super.key});
@@ -45,7 +45,7 @@ class _ListProjectsState extends State<ListProjects> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProjectsBloc, ProjectsState>(
+    return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, state) {
         List<Project> projects = state.allProject;
         return ListView.builder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/blocs/sign_in_export.dart';
+import '../../../domain/blocs/auth_export.dart';
 
 class PasswordInput extends StatelessWidget {
   const PasswordInput({
@@ -12,7 +12,7 @@ class PasswordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return TextFormField(
           initialValue: state.password.value,
@@ -27,8 +27,8 @@ class PasswordInput extends StatelessWidget {
                 : null,
           ),
           onChanged: (password) => context
-              .read<SignInBloc>()
-              .add(PasswordSignInChanged(password: password)),
+              .read<AuthBloc>()
+              .add(PasswordAuthChanged(password: password)),
         );
       },
     );

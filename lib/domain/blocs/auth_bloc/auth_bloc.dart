@@ -1,25 +1,24 @@
 import 'package:formz/formz.dart';
-import 'package:kyw_management/domain/services/mixins/validations_mixin.dart';
 
 import '../../models/models_export.dart';
-import '../sign_in_export.dart';
+import '../auth_export.dart';
 
-class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
-  SignInBloc() : super(const SignInState()) {
-    on<NameSignUpChanged>(_onNameSignUpChanged);
-    on<EmailSignInChanged>(_onEmailSignInChanged);
-    on<NumberSignInChanged>(_onNumberSignInChanged);
-    on<PasswordSignInChanged>(_onPasswordSignInChanged);
-    on<NameSignUpUnfocused>(_onNameSignUpUnfocused);
-    on<EmailSignInUnfocused>(_onEmailSignInUnfocused);
-    on<PasswordSignInUnfocused>(_onPasswordSignInUnfocused);
-    on<FormSignInSubmitted>(_onFormSignInSubmitted);
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(const AuthState()) {
+    on<NameAuthChanged>(_onNameAuthChanged);
+    on<EmailAuthChanged>(_onEmailAuthChanged);
+    on<NumberAuthChanged>(_onNumberAuthChanged);
+    on<PasswordAuthChanged>(_onPasswordAuthChanged);
+    on<NameAuthUnfocused>(_onNameAuthUnfocused);
+    on<EmailAuthUnfocused>(_onEmailAuthUnfocused);
+    on<PasswordAuthUnfocused>(_onPasswordAuthUnfocused);
+    on<FormAuthSubmitted>(_onFormAuthSubmitted);
     on<ScreenChanged>(_onScreenChanged);
   }
 
-  void _onNameSignUpChanged(
-    NameSignUpChanged event,
-    Emitter<SignInState> emit,
+  void _onNameAuthChanged(
+    NameAuthChanged event,
+    Emitter<AuthState> emit,
   ) {
     final name = Name.dirty(event.name);
     emit(
@@ -32,9 +31,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     );
   }
 
-  void _onEmailSignInChanged(
-    EmailSignInChanged event,
-    Emitter<SignInState> emit,
+  void _onEmailAuthChanged(
+    EmailAuthChanged event,
+    Emitter<AuthState> emit,
   ) {
     final email = Email.dirty(event.email);
     bool isValid = state.isValid;
@@ -57,14 +56,14 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     );
   }
 
-  void _onNumberSignInChanged(
-    NumberSignInChanged event,
-    Emitter<SignInState> emit,
+  void _onNumberAuthChanged(
+    NumberAuthChanged event,
+    Emitter<AuthState> emit,
   ) {}
 
-  void _onPasswordSignInChanged(
-    PasswordSignInChanged event,
-    Emitter<SignInState> emit,
+  void _onPasswordAuthChanged(
+    PasswordAuthChanged event,
+    Emitter<AuthState> emit,
   ) {
     bool isValid = state.isValid;
     FormType formType = state.formType;
@@ -87,9 +86,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     );
   }
 
-  void _onNameSignUpUnfocused(
-    NameSignUpUnfocused event,
-    Emitter<SignInState> emit,
+  void _onNameAuthUnfocused(
+    NameAuthUnfocused event,
+    Emitter<AuthState> emit,
   ) {
     final name = Name.dirty(state.name.value);
 
@@ -103,9 +102,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     );
   }
 
-  void _onEmailSignInUnfocused(
-    EmailSignInUnfocused event,
-    Emitter<SignInState> emit,
+  void _onEmailAuthUnfocused(
+    EmailAuthUnfocused event,
+    Emitter<AuthState> emit,
   ) {
     final email = Email.dirty(state.email.value);
     bool isValid = state.isValid;
@@ -126,9 +125,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     ));
   }
 
-  void _onPasswordSignInUnfocused(
-    PasswordSignInUnfocused event,
-    Emitter<SignInState> emit,
+  void _onPasswordAuthUnfocused(
+    PasswordAuthUnfocused event,
+    Emitter<AuthState> emit,
   ) {
     final password = Password.dirty(state.password.value);
     bool isValid = state.isValid;
@@ -149,9 +148,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
     ));
   }
 
-  void _onFormSignInSubmitted(
-    FormSignInSubmitted event,
-    Emitter<SignInState> emit,
+  void _onFormAuthSubmitted(
+    FormAuthSubmitted event,
+    Emitter<AuthState> emit,
   ) async {
     final name = Name.dirty(state.name.value);
     final email = Email.dirty(state.email.value);
@@ -186,11 +185,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> with ValidationsMixin {
 
   void _onScreenChanged(
     ScreenChanged event,
-    Emitter<SignInState> emit,
+    Emitter<AuthState> emit,
   ) {
     FormType formType =
         state.formType == FormType.signIn ? FormType.signUp : FormType.signIn;
 
-    emit(SignInState(formType: formType));
+    emit(AuthState(formType: formType));
   }
 }

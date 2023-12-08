@@ -1,6 +1,5 @@
 class MyRoutes {
   static String home = '/';
-  static String form = '/form';
   static String signIn = '/sign-in';
   static String signUp = '/sign_up';
   static String forgotPassword = '/forgot-password';

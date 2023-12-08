@@ -2,10 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
 import '../../models/models_export.dart';
-import '../enums/enum_form_type.dart';
 
-class SignInState extends Equatable {
-  const SignInState({
+enum FormType { signIn, signUp }
+
+class AuthState extends Equatable {
+  const AuthState({
     this.name = const Name.pure(),
     this.email = const Email.pure(),
     this.number = '',
@@ -26,7 +27,7 @@ class SignInState extends Equatable {
   @override
   List<Object> get props => [name, email, number, password, status, formType];
 
-  SignInState copyWith({
+  AuthState copyWith({
     Name? name,
     Email? email,
     String? number,
@@ -35,7 +36,7 @@ class SignInState extends Equatable {
     FormzSubmissionStatus? status,
     FormType? formType,
   }) {
-    return SignInState(
+    return AuthState(
       name: name ?? this.name,
       email: email ?? this.email,
       number: number ?? this.number,

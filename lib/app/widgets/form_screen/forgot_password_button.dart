@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   const ForgotPasswordButton({super.key, required this.onTap});
@@ -11,11 +12,11 @@ class ForgotPasswordButton extends StatelessWidget {
       children: [
         CupertinoButton(
           padding: EdgeInsets.zero,
-          onPressed: () => onTap,
+          onPressed: onTap,
           child: const Text(
             'Esqueceu a senha ?',
             textAlign: TextAlign.start,
-            style: TextStyle(color: CupertinoColors.link),
+            style: TextStyle(color: Colors.blue),
           ),
         ),
       ],

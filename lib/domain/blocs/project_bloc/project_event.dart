@@ -1,13 +1,13 @@
-part of 'projects_bloc.dart';
+part of 'project_bloc.dart';
 
-sealed class ProjectsEvent extends Equatable {
-  const ProjectsEvent();
+sealed class ProjectEvent extends Equatable {
+  const ProjectEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class AddProject extends ProjectsEvent {
+class AddProject extends ProjectEvent {
   const AddProject({required this.project});
 
   final Project project;
@@ -16,7 +16,7 @@ class AddProject extends ProjectsEvent {
   List<Object> get props => [project];
 }
 
-class AddProjects extends ProjectsEvent {
+class AddProjects extends ProjectEvent {
   const AddProjects({required this.projects});
 
   final List<Project> projects;

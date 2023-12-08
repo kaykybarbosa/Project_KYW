@@ -18,10 +18,6 @@ final appRoutes = GoRouter(
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      path: MyRoutes.form,
-      builder: (context, state) => const FormScreen(),
-    ),
-    GoRoute(
       path: MyRoutes.forgotPassword,
       builder: (context, state) => const ForgotPasswordScreen(),
     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/blocs/sign_in_export.dart';
+import '../../../domain/blocs/auth_export.dart';
 
 class NameInput extends StatelessWidget {
   const NameInput({
@@ -14,7 +14,7 @@ class NameInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<SignInBloc, SignInState>(
+      child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           return TextFormField(
             initialValue: state.name.value,
@@ -29,7 +29,7 @@ class NameInput extends StatelessWidget {
                   : null,
             ),
             onChanged: (name) =>
-                context.read<SignInBloc>().add(NameSignUpChanged(name: name)),
+                context.read<AuthBloc>().add(NameAuthChanged(name: name)),
           );
         },
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/blocs/sign_in_export.dart';
+import '../../../domain/blocs/auth_export.dart';
 
 class EmailInput extends StatelessWidget {
   const EmailInput({
@@ -14,7 +14,7 @@ class EmailInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<SignInBloc, SignInState>(
+      child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           return TextFormField(
             initialValue: state.email.value,
@@ -28,9 +28,8 @@ class EmailInput extends StatelessWidget {
                   ? "Por favor, informe um e-mail válido!"
                   : null,
             ),
-            onChanged: (email) => context
-                .read<SignInBloc>()
-                .add(EmailSignInChanged(email: email)),
+            onChanged: (email) =>
+                context.read<AuthBloc>().add(EmailAuthChanged(email: email)),
           );
         },
       ),

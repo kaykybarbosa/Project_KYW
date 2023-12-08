@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kyw_management/domain/blocs/sign_in_export.dart';
+import 'package:kyw_management/domain/blocs/blocs_export.dart';
 import 'package:kyw_management/domain/services/app_routes/app_routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kyw_management/domain/blocs/bloc_export.dart';
 import 'package:kyw_management/domain/repositories/project_repository.dart';
 
 class MyApp extends StatefulWidget {
@@ -21,12 +20,13 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProjectsBloc()
+          create: (context) => ProjectBloc()
             ..add(AddProjects(
                     projects: ProjectRepository().projects) // Data static
                 ),
         ),
-        BlocProvider(create: (context) => SignInBloc()),
+        BlocProvider(create: (conxt) => AuthBloc()),
+        BlocProvider(create: (conxt) => ForgotPasswordBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: Colors.grey[200],
           elevatedButtonTheme: const ElevatedButtonThemeData(
             style: ButtonStyle(
+              surfaceTintColor: MaterialStatePropertyAll(Colors.amber),
               padding:
                   MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
               foregroundColor: MaterialStatePropertyAll(Colors.white),
