@@ -14,6 +14,8 @@ class ForgotPasswordBloc
     on<CodeForgotPasswordChanged>(_onCodeForgotPasswordChanged);
     on<EmailForgotPasswordUnfocused>(_onEmailForgotPasswordUnfocused);
     on<CodeForgotPasswordUnfocused>(_onCodeForgotPasswordUnfocused);
+    on<StepForgotPasswordChanged>(_onStepForgotPasswordChanged);
+    on<DisposeForgotPassword>(_onDisposeForgotPassword);
     on<FormForgotPasswordSubmitted>(_onFormForgotPasswordSubmitted);
   }
 
@@ -49,14 +51,16 @@ class ForgotPasswordBloc
     EmailForgotPasswordUnfocused event,
     Emitter<ForgotPasswordState> emit,
   ) {
-    final email = Email.dirty(state.email.value);
+    if (state.step != StepsForgotPassword.gettingEmail) {
+      final email = Email.dirty(state.email.value);
 
-    emit(state.copyWith(
-      email: email,
-      isValid: Formz.validate([email]),
-      step: StepsForgotPassword.gettingEmail,
-      status: FormzSubmissionStatus.initial,
-    ));
+      emit(state.copyWith(
+        email: email,
+        isValid: Formz.validate([email]),
+        step: StepsForgotPassword.gettingEmail,
+        status: FormzSubmissionStatus.initial,
+      ));
+    }
   }
 
   void _onCodeForgotPasswordUnfocused(
@@ -73,6 +77,20 @@ class ForgotPasswordBloc
     ));
   }
 
+  void _onStepForgotPasswordChanged(
+    StepForgotPasswordChanged event,
+    Emitter<ForgotPasswordState> emit,
+  ) {
+    emit(const ForgotPasswordState(step: StepsForgotPassword.validationCode));
+  }
+
+  void _onDisposeForgotPassword(
+    DisposeForgotPassword event,
+    Emitter<ForgotPasswordState> emit,
+  ) {
+    emit(const ForgotPasswordState());
+  }
+
   void _onFormForgotPasswordSubmitted(
     FormForgotPasswordSubmitted event,
     Emitter<ForgotPasswordState> emit,
@@ -85,7 +103,7 @@ class ForgotPasswordBloc
 
     if (step == StepsForgotPassword.gettingEmail) {
       isValid = Formz.validate([email]);
-    } else {
+    } else if (step != StepsForgotPassword.goToValidationCode) {
       isValid = Formz.validate([code]);
       step = StepsForgotPassword.validationCode;
     }
@@ -105,14 +123,14 @@ class ForgotPasswordBloc
       var step = state.step;
       var status = state.status;
 
-      if (state.step == StepsForgotPassword.gettingEmail) {
+      if (step == StepsForgotPassword.gettingEmail) {
         // Sendig code to user e-mail
         await Future<void>.delayed(const Duration(seconds: 2));
 
         // If send e-mail has success
-        step = StepsForgotPassword.validationCode;
+        step = StepsForgotPassword.goToValidationCode;
         status = FormzSubmissionStatus.success;
-      } else {
+      } else if (step != StepsForgotPassword.goToValidationCode) {
         // Confirmation code validation
         var codeConfirmationExample = '123456';
         var codeIsValid =

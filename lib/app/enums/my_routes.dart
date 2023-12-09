@@ -3,6 +3,7 @@ class MyRoutes {
   static String signIn = '/sign-in';
   static String signUp = '/sign_up';
   static String forgotPassword = '/forgot-password';
+  static String forgotPasswordValidation = '/forgot-password/validation-code';
   static String changePassword = '/change-password';
   static String notifications = '/notifications';
   static String createProject = '/create-project';

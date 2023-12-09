@@ -1,6 +1,6 @@
 part of 'forgot_password_bloc.dart';
 
-enum StepsForgotPassword { gettingEmail, validationCode }
+enum StepsForgotPassword { gettingEmail, goToValidationCode, validationCode }
 
 class ForgotPasswordState extends Equatable {
   const ForgotPasswordState({

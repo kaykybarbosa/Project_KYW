@@ -29,4 +29,8 @@ class CodeForgotPasswordChanged extends ForgotPasswordEvent {
 
 class CodeForgotPasswordUnfocused extends ForgotPasswordEvent {}
 
+class StepForgotPasswordChanged extends ForgotPasswordEvent {}
+
+class DisposeForgotPassword extends ForgotPasswordEvent {}
+
 class FormForgotPasswordSubmitted extends ForgotPasswordEvent {}

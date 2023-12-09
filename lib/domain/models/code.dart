@@ -12,7 +12,6 @@ class Code extends FormzInput<String, CodeValidationError>
   CodeValidationError? validator(String value, [String? compareValue]) {
     final codeValid = combine([
       () => isNotEmpty(value),
-      () => isSixChars(value),
       () => isEquals(value, compareValue ?? value),
     ]);
 

@@ -3,6 +3,7 @@ import 'package:kyw_management/app/data/chats.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/home_screen/chat/ChatProject.dart';
 
+import '../../../app/screens/forgot_validation_code_screen.dart';
 import '../../../app/screens/sign_up_screen.dart';
 import '../../../app/screens/screens_export.dart';
 
@@ -20,6 +21,10 @@ final appRoutes = GoRouter(
     GoRoute(
       path: MyRoutes.forgotPassword,
       builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: MyRoutes.forgotPasswordValidation,
+      builder: (context, state) => const ForgotValidationCodeScreen(),
     ),
     GoRoute(
       path: MyRoutes.changePassword,

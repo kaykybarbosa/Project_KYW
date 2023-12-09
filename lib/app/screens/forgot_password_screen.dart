@@ -1,17 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/decorations/my_decorations.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/validation/input_validator.dart';
-import 'package:kyw_management/app/widgets/auth_screens/message_to_sign_in.dart';
-import 'package:kyw_management/app/widgets/button_main.dart';
-import 'package:kyw_management/app/widgets/form_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 
 import '../../domain/blocs/blocs_export.dart';
 import '../widgets/forgot_password_screens/email_input_forgot.dart';
+import '../widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
 import '../widgets/forgot_password_screens/submit_forgot_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -22,281 +16,67 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _codeTest = '123456';
-  BoxDecoration? _myInputDecoration;
-  bool _isLoading = false;
-
-  final _emailController = TextEditingController();
-  final _codeController = TextEditingController();
-
-  bool _sendCode = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _codeController.dispose();
-    super.dispose();
-  }
-
-  void _setInputDecoration(
-      {Color borderColor = CupertinoColors.activeBlue, bool isActive = false}) {
-    setState(() {
-      _myInputDecoration = MyDecorations.inputDecoration(
-        borderColor: borderColor,
-        isActice: isActive,
-      );
-    });
-  }
-
   final _emailFocusNode = FocusNode();
+  final _emailController = TextEditingController();
+
   @override
   void initState() {
-    _setInputDecoration();
-
     _emailFocusNode.addListener(() {
       if (!_emailFocusNode.hasFocus) {
         context.read<ForgotPasswordBloc>().add(EmailForgotPasswordUnfocused());
       }
     });
+
     super.initState();
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _emailFocusNode.dispose();
+    _emailController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Title
-            const MyTitle(title: 'FORGOT PASSWORD'),
+    var status = context.select((ForgotPasswordBloc bloc) => bloc.state.status);
 
-            // Message the input
-            EmailInputForgot(emailFocusNode: _emailFocusNode),
+    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+      listener: (context, state) {
+        if (state.step == StepsForgotPassword.goToValidationCode) {
+          GoRouter.of(context).push(MyRoutes.forgotPasswordValidation);
+        }
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Title
+              const MyTitle(title: 'FORGOT PASSWORD'),
 
-            // Buttom send e-mail
-            const SubmitForgotButton(),
-            SizedBox(
-              width: 200,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                        text: 'Possui uma conta? ',
-                        style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                      text: 'Clique aqui ',
-                      style: const TextStyle(color: Colors.blue),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          GoRouter.of(context).pushReplacement(MyRoutes.signIn);
-                        },
-                    ),
-                    const TextSpan(
-                        text: 'para realizar o login',
-                        style: TextStyle(color: Colors.black)),
-                  ],
-                ),
+              // Message and input the email
+              EmailInputForgot(
+                emailFocusNode: _emailFocusNode,
+                emailController: _emailController,
               ),
-            ),
-          ],
+
+              // Buttom send e-mail
+              const SubmitForgotButton(),
+
+              // IsProgress
+              Visibility(
+                visible: status == FormzSubmissionStatus.inProgress,
+                child: const CircularProgressIndicator(),
+              ),
+
+              // Link
+              const ForgotToGoSignIn(),
+            ],
+          ),
         ),
       ),
     );
   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return CupertinoPageScaffold(
-//       backgroundColor: MyDecorations.backGroundColor,
-//       child: SafeArea(
-//         child: Form(
-//           key: _formKey,
-//           child: Container(
-//             padding: const EdgeInsets.symmetric(horizontal: 10),
-//             margin: const EdgeInsets.all(30),
-//             child: Center(
-//               child: SingleChildScrollView(
-//                 child: Column(
-//                   children: [
-//                     // Title the screen
-//                     const MyTitle(title: 'FORGOT PASSWORD'),
-
-//                     const SizedBox(height: 70),
-
-//                     // Text informing what to do
-//                     Row(
-//                       mainAxisAlignment: _sendCode
-//                           ? MainAxisAlignment.center
-//                           : MainAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           _sendCode
-//                               ? 'Digite o código que enviamos para seu e-mail'
-//                               : 'Digite o e-mail cadastrado em sua conta',
-//                           style: TextStyle(
-//                             fontWeight: FontWeight.w500,
-//                             color: CupertinoColors.systemGrey,
-//                             fontSize: _sendCode ? 15 : 17,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-
-//                     const SizedBox(height: 15),
-
-//                     // Input the Email
-//                     Visibility(
-//                       visible: !_sendCode,
-//                       child: FormInput(
-//                         placeHolder: 'E-mail',
-//                         inputController: _emailController,
-//                         textInputType: TextInputType.emailAddress,
-//                         validator: (email) {
-//                           return InputValidator.validateEmail(email: email);
-//                         },
-//                       ),
-//                     ),
-
-//                     // Input the Code
-//                     Visibility(
-//                       visible: _sendCode,
-//                       child: SizedBox(
-//                         width: 210,
-//                         child: inputFieldCode(),
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 50),
-
-//                     Visibility(
-//                       visible: _isLoading,
-//                       child: const CupertinoActivityIndicator(
-//                         radius: 20.0,
-//                         color: CupertinoColors.activeBlue,
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 150),
-
-//                     // Main button the screen
-//                     ButtonMain(
-//                       onTap: () async {
-//                         _mainButtonClicked();
-//                       },
-//                       text: _sendCode ? 'Avançar' : 'Receber código',
-//                     ),
-
-//                     const SizedBox(height: 70),
-
-//                     // Message to login, case have account
-//                     Align(
-//                       alignment: Alignment.bottomCenter,
-//                       child: SizedBox(
-//                         width: 190,
-//                         child: RichText(
-//                           textAlign: TextAlign.center,
-//                           text: TextSpan(
-//                             text: 'Já tem um conta?',
-//                             style: MyDecorations.textSpanStyle(),
-//                             children: [
-//                               TextSpan(
-//                                 text: ' Clique aqui',
-//                                 style: const TextStyle(
-//                                     color: CupertinoColors.link),
-//                                 recognizer: TapGestureRecognizer()
-//                                   ..onTap = () {
-//                                     context.push(MyRoutes.signIn);
-//                                   },
-//                               ),
-//                               TextSpan(
-//                                   text: ' para entrar',
-//                                   style: MyDecorations.textSpanStyle()),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
-//   void _mainButtonClicked() async {
-//     /// Shows the progress circle
-//     /// if the user already request the code
-//     ///
-//     if (_sendCode && _codeController.text.isNotEmpty) {
-//       setState(() {
-//         _isLoading = true;
-//       });
-
-//       await Future.delayed(const Duration(seconds: 2));
-
-//       setState(() {
-//         _isLoading = false;
-//       });
-//     }
-
-//     if (_formKey.currentState!.validate()) {
-//       setState(() {
-//         /// If the API is sent authenticate Code
-//         /// go to chage-password-screen
-//         ///
-//         if (_sendCode) {
-//           _codeController.clear();
-//           context.push('/change-password');
-//         }
-
-//         _sendCode = !_sendCode;
-//       });
-//     } else {
-//       /// If the form is not valid, and API sent the authentication code
-//       /// show 'border' the [inputTheCode] in red
-//       if (_sendCode) {
-//         _setInputDecoration(
-//             borderColor: CupertinoColors.systemRed, isActive: true);
-//       } else {
-//         _formKey.currentState!.reset();
-//       }
-//     }
-//   }
-
-//   CupertinoTextFormFieldRow inputFieldCode() {
-//     return CupertinoTextFormFieldRow(
-//       placeholder: '* * *  -  * * *',
-//       controller: _codeController,
-//       textAlign: TextAlign.center,
-//       padding: EdgeInsets.zero,
-//       decoration: _myInputDecoration,
-//       keyboardType: TextInputType.visiblePassword,
-//       style: const TextStyle(color: CupertinoColors.black, fontSize: 23),
-//       placeholderStyle: MyDecorations.placeHolderStyle(
-//         placeHolderColor: CupertinoTheme.of(context).primaryColor,
-//         fontSize: 23,
-//       ),
-//       onTap: () {
-//         _setInputDecoration(isActive: true);
-//         _formKey.currentState!.reset();
-//       },
-//       onEditingComplete: () {
-//         _setInputDecoration;
-//       },
-//       validator: (code) {
-//         return InputValidator.validateCode(
-//           code: code,
-//           confirmCode: _codeTest,
-//         );
-//       },
-//     );
-//   }
-// }
 }
