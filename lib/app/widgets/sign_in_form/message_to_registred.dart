@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../domain/services/routers/export_routes.dart';
+import '../../enums/my_routes.dart';
 
-class ForgotToGoSignIn extends StatelessWidget {
-  const ForgotToGoSignIn({
+class MessageToRegistered extends StatelessWidget {
+  const MessageToRegistered({
     super.key,
   });
 
@@ -11,22 +13,27 @@ class ForgotToGoSignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle defaultText = const TextStyle(color: Colors.black, fontSize: 16);
     TextStyle linkText = const TextStyle(color: Colors.blue, fontSize: 16);
+
     return SizedBox(
-      width: 240,
+      width: 260,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
           children: [
-            TextSpan(text: 'Possui uma conta? ', style: defaultText),
+            TextSpan(
+              text: 'Não possui uma conta? ',
+              style: defaultText,
+            ),
             TextSpan(
               text: 'Clique aqui ',
               style: linkText,
               recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  GoRouter.of(context).pushReplacement(MyRoutes.signIn);
-                },
+                ..onTap = () => GoRouter.of(context).push(MyRoutes.signUp),
             ),
-            TextSpan(text: 'para realizar o login', style: defaultText),
+            TextSpan(
+              text: 'para criar uma',
+              style: defaultText,
+            ),
           ],
         ),
       ),

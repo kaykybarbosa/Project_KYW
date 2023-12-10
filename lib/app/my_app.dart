@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
-import 'package:kyw_management/domain/services/app_routes/app_routes.dart';
+import 'package:kyw_management/domain/services/routers/app_routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyw_management/domain/repositories/project_repository.dart';
+import 'package:kyw_management/theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -25,34 +26,14 @@ class _MyAppState extends State<MyApp> {
                     projects: ProjectRepository().projects) // Data static
                 ),
         ),
-        BlocProvider(create: (conxt) => AuthBloc()),
+        BlocProvider(create: (conxt) => SignInBloc()),
+        BlocProvider(create: (conxt) => SignUpBloc()),
         BlocProvider(create: (conxt) => ForgotPasswordBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'KYW Management',
-        theme: ThemeData(
-          primaryColor: const Color.fromRGBO(50, 58, 71, 1),
-          scaffoldBackgroundColor: Colors.grey[200],
-          elevatedButtonTheme: const ElevatedButtonThemeData(
-            style: ButtonStyle(
-              surfaceTintColor: MaterialStatePropertyAll(Colors.amber),
-              padding:
-                  MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
-              foregroundColor: MaterialStatePropertyAll(Colors.white),
-              backgroundColor:
-                  MaterialStatePropertyAll(Color.fromRGBO(50, 58, 71, 1)),
-              overlayColor: MaterialStatePropertyAll(Colors.grey),
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)))),
-            ),
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            hintStyle: TextStyle(color: Colors.grey),
-            focusedBorder:
-                OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
-          ),
-        ),
+        theme: theme,
         routerDelegate: appRoutes.routerDelegate,
         routeInformationParser: appRoutes.routeInformationParser,
         routeInformationProvider: appRoutes.routeInformationProvider,
