@@ -4,7 +4,7 @@ import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/card_project.dart';
 
-import '../../domain/blocs/project_export.dart';
+import '../../domain/blocs/blocs_export.dart';
 
 class ListProjects extends StatefulWidget {
   const ListProjects({super.key});

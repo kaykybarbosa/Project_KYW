@@ -11,4 +11,5 @@ export 'package:kyw_management/app/screens/help_screen.dart';
 export 'package:kyw_management/app/screens/home_screen.dart';
 export 'package:kyw_management/app/screens/my_account_screen.dart';
 export 'package:kyw_management/app/screens/notification_screen.dart';
-export 'package:kyw_management/app/screens/sign_in_screen.dart';
+export 'package:kyw_management/app/screens/forms/sign_in_screen.dart';
+export 'package:kyw_management/app/screens/forms/sign_up_screen.dart';

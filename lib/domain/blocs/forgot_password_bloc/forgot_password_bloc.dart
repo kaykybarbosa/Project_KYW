@@ -81,7 +81,15 @@ class ForgotPasswordBloc
     StepForgotPasswordChanged event,
     Emitter<ForgotPasswordState> emit,
   ) {
-    emit(const ForgotPasswordState(step: StepsForgotPassword.validationCode));
+    var step = state.step;
+
+    print('========================$step==================');
+    if (state.step == StepsForgotPassword.gettingEmail) {
+      step = StepsForgotPassword.validationCode;
+    } else {
+      step = StepsForgotPassword.gettingEmail;
+    }
+    emit(ForgotPasswordState(step: step));
   }
 
   void _onDisposeForgotPassword(

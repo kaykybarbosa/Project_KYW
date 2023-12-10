@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/app/models/project.dart';
 
-import '../project_export.dart';
+import '../blocs_export.dart';
 
 part 'project_event.dart';
 

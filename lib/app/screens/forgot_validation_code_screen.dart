@@ -32,6 +32,7 @@ class _ForgotValidationCodeScreenState
   void dispose() {
     super.dispose();
     _codeFocusNode.dispose();
+    context.read<ForgotPasswordBloc>().add(StepForgotPasswordChanged());
   }
 
   @override
