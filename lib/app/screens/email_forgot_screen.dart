@@ -6,7 +6,7 @@ import 'package:kyw_management/app/widgets/my_title.dart';
 import '../../domain/blocs/blocs_export.dart';
 import '../widgets/forgot_password_screens/email_input_forgot.dart';
 import '../widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
-import '../widgets/forgot_password_screens/submit_forgot_button.dart';
+import '../widgets/forgot_password_screens/submit_email_forgot_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -57,13 +57,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const MyTitle(title: 'FORGOT PASSWORD'),
 
               // Message and input the email
-              EmailInputForgot(
-                emailFocusNode: _emailFocusNode,
-                emailController: _emailController,
-              ),
+              const EmailInputForgot(),
 
               // Buttom send e-mail
-              const SubmitForgotButton(),
+              const SubmitEmailForgotButton(),
 
               // IsProgress
               Visibility(
