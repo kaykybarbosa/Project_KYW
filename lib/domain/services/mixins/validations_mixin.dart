@@ -40,6 +40,23 @@ mixin ValidationsMixin {
     return null;
   }
 
+  String? numberIsValid(String? value, [String? message]) {
+    if (value!.length != 11) {
+      return message ?? 'Número de celular inválido';
+    }
+
+    RegExp regex = RegExp(r'.*[a-zA-Z].*');
+    if (regex.hasMatch(value)) {
+      return message ?? 'Número de celular inválido';
+    }
+
+    if (!value.startsWith('9')) {
+      return message ?? 'Número de celular inválido';
+    }
+
+    return null;
+  }
+
   bool signInValidate(String email, String password) {
     final validations = combine([
       () => isNotEmpty(email),

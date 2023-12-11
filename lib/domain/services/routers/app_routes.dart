@@ -1,13 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/data/chats.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/app/screens/configuration_screens/change_number_or_email_screen.dart';
+
 import 'package:kyw_management/app/widgets/home_screen/chat/ChatProject.dart';
 
-import '../../../app/screens/forgot_validation_code_screen.dart';
 import '../../../app/screens/screens_export.dart';
 
 final appRoutes = GoRouter(
-  initialLocation: MyRoutes.signIn,
+  initialLocation: MyRoutes.home,
   routes: [
     GoRoute(
       path: MyRoutes.signIn,
@@ -18,12 +19,12 @@ final appRoutes = GoRouter(
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      path: MyRoutes.forgotPassword,
-      builder: (context, state) => const ForgotPasswordScreen(),
+      path: MyRoutes.emailForgotPassword,
+      builder: (context, state) => const EmailForgotScreen(),
     ),
     GoRoute(
-      path: MyRoutes.forgotPasswordValidation,
-      builder: (context, state) => const ForgotValidationCodeScreen(),
+      path: MyRoutes.codeForgotPassword,
+      builder: (context, state) => const CodeForgotScreen(),
     ),
     GoRoute(
       path: MyRoutes.changePassword,
@@ -62,11 +63,15 @@ final appRoutes = GoRouter(
       builder: (context, state) => const ConfigurationAccountScreen(),
     ),
     GoRoute(
-      path: MyRoutes.configurationTwoStep,
+      path: MyRoutes.twoStepVerification,
       builder: (context, state) => const TwoStepVerificationScreen(),
     ),
     GoRoute(
-      path: MyRoutes.configurationChangeNumber,
+      path: MyRoutes.changeNumberOrEmail,
+      builder: (context, state) => const ChangeNumberOrEmail(),
+    ),
+    GoRoute(
+      path: MyRoutes.changeNumber,
       builder: (context, state) => const ChangeNumberScreen(),
     ),
     GoRoute(

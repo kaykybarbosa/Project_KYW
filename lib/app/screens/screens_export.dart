@@ -1,4 +1,3 @@
-export 'package:kyw_management/app/screens/change_password_screen.dart';
 export 'package:kyw_management/app/screens/configuration_screen.dart';
 export 'package:kyw_management/app/screens/configuration_screens/change_number_screen.dart';
 export 'package:kyw_management/app/screens/configuration_screens/configuration_account_screen.dart';
@@ -6,10 +5,12 @@ export 'package:kyw_management/app/screens/configuration_screens/delete_account_
 export 'package:kyw_management/app/screens/configuration_screens/two_step_verification_screen.dart';
 export 'package:kyw_management/app/screens/contact_us_screen.dart';
 export 'package:kyw_management/app/screens/create_project_screen.dart';
-export 'package:kyw_management/app/screens/email_forgot_screen.dart';
+export 'package:kyw_management/app/screens/steps_forgot_password/email_forgot_screen.dart';
 export 'package:kyw_management/app/screens/help_screen.dart';
 export 'package:kyw_management/app/screens/home_screen.dart';
 export 'package:kyw_management/app/screens/my_account_screen.dart';
 export 'package:kyw_management/app/screens/notification_screen.dart';
 export 'package:kyw_management/app/screens/forms/sign_in_screen.dart';
 export 'package:kyw_management/app/screens/forms/sign_up_screen.dart';
+export 'package:kyw_management/app/screens/steps_forgot_password/code_forgot_screen.dart';
+export 'steps_forgot_password/change_password_screen.dart';

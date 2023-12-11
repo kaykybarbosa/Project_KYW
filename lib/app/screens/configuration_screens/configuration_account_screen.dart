@@ -10,6 +10,8 @@ class ConfigurationAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Color primaryColor = Color.fromRGBO(50, 58, 71, 1);
+
     final List<String> optionsTitle = [
       'Configuração de duas etapas',
       'Mudar Número ou E-mail',
@@ -22,11 +24,11 @@ class ConfigurationAccountScreen extends StatelessWidget {
     ];
 
     void goTwoStepVerification() {
-      context.push(MyRoutes.configurationTwoStep);
+      context.push(MyRoutes.twoStepVerification);
     }
 
     void goChangeNumberOrEmail() {
-      context.push(MyRoutes.configurationChangeNumber);
+      context.push(MyRoutes.changeNumberOrEmail);
     }
 
     void deleteAccount() {
@@ -53,16 +55,14 @@ class ConfigurationAccountScreen extends StatelessWidget {
           return ListTile(
             leading: Icon(
               optionsIcon[index],
-              color: index != 2
-                  ? CupertinoTheme.of(context).primaryColor
-                  : CupertinoColors.destructiveRed,
+              color: index != 2 ? primaryColor : CupertinoColors.destructiveRed,
             ),
             title: Text(
               optionsTitle[index],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
-                color: CupertinoTheme.of(context).primaryColor,
+                color: primaryColor,
               ),
             ),
             onTap: () {

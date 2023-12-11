@@ -14,6 +14,7 @@ class ForgotCodeCubit extends Cubit<ForgotCodeState> {
       state.copyWith(
         code: code,
         isValid: Formz.validate([code]),
+        status: FormzSubmissionStatus.initial,
       ),
     );
   }

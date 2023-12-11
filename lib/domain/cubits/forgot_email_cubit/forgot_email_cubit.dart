@@ -10,7 +10,7 @@ class ForgotEmailCubit extends Cubit<ForgotEmailState> {
   ForgotEmailCubit() : super(const ForgotEmailState());
 
   void emailChanged(String value) {
-    final email = Email.pure(value);
+    final email = Email.dirty(value);
     emit(
       state.copyWith(
         email: email,

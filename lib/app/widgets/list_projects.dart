@@ -22,27 +22,6 @@ class _ListProjectsState extends State<ListProjects> {
     super.dispose();
   }
 
-  // void _scrollListener() {
-  //   setState(() {
-  //     // Up
-  //     if (_scrollController.position.userScrollDirection ==
-  //         ScrollDirection.reverse) {
-  //       widget.showFilterBar(false);
-  //     }
-
-  //     // Down
-  //     if (_scrollController.position.userScrollDirection ==
-  //         ScrollDirection.forward) {
-  //       widget.showFilterBar(true);
-  //     }
-
-  //     // To disable FilterBar scrolling
-  //     if (_scrollController.position.pixels == 0.0) {
-  //       widget.showFilterBar(true);
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(

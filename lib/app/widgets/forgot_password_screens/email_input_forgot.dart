@@ -22,6 +22,7 @@ class EmailInputForgot extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: BlocBuilder<ForgotEmailCubit, ForgotEmailState>(
+            buildWhen: (previous, current) => previous.email != current.email,
             builder: (context, state) {
               return TextFormField(
                   initialValue: state.email.value,

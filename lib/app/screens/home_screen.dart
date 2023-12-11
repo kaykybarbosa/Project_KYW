@@ -94,9 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 13.0),
           ],
 
-          elevation: 0,
           toolbarHeight: 50.0,
-          backgroundColor: CupertinoTheme.of(context).primaryColor,
           bottom: myTabBar(
             onTap: (value) {
               _setCurrentScreen(value);

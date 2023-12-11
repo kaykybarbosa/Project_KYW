@@ -48,8 +48,6 @@ class _MyEndDrawerState extends State<MyEndDrawer> {
     return Drawer(
       width: 270.0,
       child: Column(
-        // padding: EdgeInsets.zero,
-        // physics: const NeverScrollableScrollPhysics(),
         children: [
           // Header
           DrawerHeader(
@@ -57,7 +55,7 @@ class _MyEndDrawerState extends State<MyEndDrawer> {
             margin: EdgeInsets.zero,
             child: Container(
               width: double.infinity,
-              color: CupertinoTheme.of(context).primaryColor,
+              color: Theme.of(context).primaryColor,
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               margin: EdgeInsets.zero,
               child: Column(

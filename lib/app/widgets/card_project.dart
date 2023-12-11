@@ -17,6 +17,8 @@ class CardProject extends StatefulWidget {
 }
 
 class _CardProjectState extends State<CardProject> {
+  final Color primaryColor = const Color.fromRGBO(50, 58, 71, 1);
+
   Widget _getImage() {
     if (widget.project.image != null) {
       return Image.asset(
@@ -46,7 +48,7 @@ class _CardProjectState extends State<CardProject> {
         padding: const EdgeInsets.only(left: 6.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: BoxDecoration(
-          color: CupertinoTheme.of(context).primaryColor,
+          color: primaryColor,
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Container(
@@ -82,7 +84,7 @@ class _CardProjectState extends State<CardProject> {
                         style: TextStyle(
                           fontSize: 22.0,
                           fontWeight: FontWeight.w600,
-                          color: CupertinoTheme.of(context).primaryColor,
+                          color: primaryColor,
                         ),
                       ),
 

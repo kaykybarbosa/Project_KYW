@@ -26,9 +26,9 @@ class _MyAppState extends State<MyApp> {
                     projects: ProjectRepository().projects) // Data static
                 ),
         ),
-        BlocProvider(create: (conxt) => SignInBloc()),
-        BlocProvider(create: (conxt) => SignUpBloc()),
-        BlocProvider(create: (conxt) => ForgotPasswordBloc()),
+        BlocProvider(create: (context) => SignInBloc()),
+        BlocProvider(create: (context) => SignUpBloc()),
+        BlocProvider(create: (context) => ForgotPasswordBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

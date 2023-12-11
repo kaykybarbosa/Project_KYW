@@ -8,26 +8,41 @@ class CodeInputForgot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForgotCodeCubit, ForgotCodeState>(
+      buildWhen: (previous, current) => previous.code != current.code,
       builder: (context, state) {
-        return SizedBox(
-          width: 200,
-          child: TextFormField(
-              initialValue: state.code.value,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.zero,
-                hintText: '* * * - * * *',
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 20,
-                ),
-                border: const OutlineInputBorder(),
-                errorText:
-                    state.code.displayError != null ? "Código Inválido!" : null,
+        return Column(
+          children: [
+            const Text(
+              'Digite o código que enviamos no seu e-mail',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+                fontSize: 15,
               ),
-              onChanged: (code) =>
-                  context.read<ForgotCodeCubit>().codeChanged(code)),
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                  initialValue: state.code.value,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.zero,
+                    hintText: '* * * - * * *',
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 20,
+                    ),
+                    border: const OutlineInputBorder(),
+                    errorText: state.code.displayError != null
+                        ? "Código Inválido!"
+                        : null,
+                  ),
+                  onChanged: (code) =>
+                      context.read<ForgotCodeCubit>().codeChanged(code)),
+            ),
+          ],
         );
       },
     );

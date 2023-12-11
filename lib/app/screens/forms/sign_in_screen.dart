@@ -46,8 +46,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       // Forgot password
                       ForgotPasswordButton(
-                        onTap: () =>
-                            GoRouter.of(context).push(MyRoutes.forgotPassword),
+                        onTap: () => GoRouter.of(context)
+                            .push(MyRoutes.emailForgotPassword),
                       ),
                     ],
                   ),

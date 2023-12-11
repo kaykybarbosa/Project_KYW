@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TheFilters extends StatelessWidget {
   const TheFilters({
@@ -25,7 +25,7 @@ class TheFilters extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 4.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: CupertinoColors.systemGrey2),
+          border: Border.all(color: Colors.grey),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,13 +35,12 @@ class TheFilters extends StatelessWidget {
               style: TextStyle(
                 fontSize: labelSize,
                 fontWeight: FontWeight.w600,
-                color: CupertinoTheme.of(context).primaryColor,
               ),
             ),
             const SizedBox(width: 5.0),
             Icon(
               icon,
-              color: CupertinoColors.systemGrey2,
+              color: Colors.grey[400],
               size: iconSize,
             ),
           ],

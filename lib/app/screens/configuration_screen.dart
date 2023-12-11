@@ -5,14 +5,9 @@ import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
-class ConfigurationScreen extends StatefulWidget {
+class ConfigurationScreen extends StatelessWidget {
   const ConfigurationScreen({super.key});
 
-  @override
-  State<ConfigurationScreen> createState() => _ConfigurationScreenState();
-}
-
-class _ConfigurationScreenState extends State<ConfigurationScreen> {
   @override
   Widget build(BuildContext context) {
     final List<ConfigOption> options = [
