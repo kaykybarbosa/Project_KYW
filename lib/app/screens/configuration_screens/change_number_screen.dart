@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
-import 'package:kyw_management/app/widgets/configuration_screen/account_button_main.dart';
-import 'package:kyw_management/app/widgets/configuration_screen/account_input.dart';
+import 'package:kyw_management/domain/cubits/change_number_cubit/change_number_cubit.dart';
 
 class ChangeNumberScreen extends StatelessWidget {
   const ChangeNumberScreen({super.key});
@@ -20,61 +21,156 @@ class ChangeNumberScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
         child: Form(
             child: SingleChildScrollView(
-          // physics: const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: SizedBox(
             height: (screenSize.height / 1.3),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Text new number
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 8.0,
-                      ),
-                      child: Text(
-                        'Insira seu número novo',
-                        style: TextStyle(fontSize: 19.0),
-                      ),
-                    ),
+            child: BlocProvider(
+              create: (context) => ChangeNumberCubit(),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Text new number
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _TextTheInput(label: 'Insira seu número novo'),
 
-                    // Input new number
-                    AccountInput(
-                      placeHolder: 'Número novo',
-                      validator: () {},
-                    ),
+                      // Input new number
+                      _NewNumberInput(),
 
-                    const SizedBox(height: 20.0),
+                      // Text old number
+                      _TextTheInput(label: 'Insira seu número atual '),
 
-                    // Text old number
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(
-                        'Insira seu número atual',
-                        style: TextStyle(fontSize: 19.0),
-                      ),
-                    ),
+                      // Imput old number
+                      _CurrentNumberInput(),
+                    ],
+                  ),
 
-                    // Imput old number
-                    AccountInput(
-                      placeHolder: 'Número atual',
-                      validator: () {},
-                    ),
-                  ],
-                ),
-
-                // Button change number
-                AccountButtonMain(
-                  label: 'Mudar Número',
-                  onTap: () {},
-                )
-              ],
+                  // Button change number
+                  _SubmitButton(),
+                ],
+              ),
             ),
           ),
         )),
       ),
+    );
+  }
+}
+
+class _TextTheInput extends StatelessWidget {
+  const _TextTheInput({required String label}) : _label = label;
+
+  final String _label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+      ),
+      child: Text(
+        _label,
+        style: const TextStyle(fontSize: 19.0),
+      ),
+    );
+  }
+}
+
+class _NewNumberInput extends StatelessWidget {
+  const _NewNumberInput();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
+        buildWhen: (previous, current) =>
+            previous.newNumber != current.newNumber,
+        builder: (context, state) {
+          return TextFormField(
+              initialValue: state.newNumber.value,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+                hintText: 'Novo número',
+                border: const OutlineInputBorder(),
+                errorText: state.newNumber.displayError != null
+                    ? "Número inválido!"
+                    : null,
+              ),
+              onChanged: (number) =>
+                  context.read<ChangeNumberCubit>().newNumberChanged(number));
+        },
+      ),
+    );
+  }
+}
+
+class _CurrentNumberInput extends StatelessWidget {
+  const _CurrentNumberInput();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
+        buildWhen: (previous, current) =>
+            previous.currentNumber != current.currentNumber,
+        builder: (context, state) {
+          return TextFormField(
+              initialValue: state.currentNumber.value,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+                hintText: 'Novo número',
+                border: const OutlineInputBorder(),
+                errorText: state.currentNumber.displayError != null
+                    ? "Número inválido!"
+                    : null,
+              ),
+              onChanged: (number) => context
+                  .read<ChangeNumberCubit>()
+                  .currentNumberChanged(number));
+        },
+      ),
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
+      builder: (context, state) {
+        return state.status.isInProgress
+            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
+            : SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStatePropertyAll(
+                        state.isValid ? Colors.white : Colors.white70),
+                    backgroundColor: MaterialStatePropertyAll(state.isValid
+                        ? const Color.fromARGB(255, 6, 172, 147)
+                        : const Color.fromARGB(240, 6, 172, 147)),
+                  ),
+                  onPressed: state.isValid
+                      ? () => context
+                          .read<ChangeNumberCubit>()
+                          .formChangeNumberSubmitted()
+                      : null,
+                  child: const Text(
+                    'Alterar número',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              );
+      },
     );
   }
 }
