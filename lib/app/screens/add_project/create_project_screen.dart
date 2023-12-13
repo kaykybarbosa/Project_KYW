@@ -132,11 +132,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
             ),
             // Button Create Project
             floatingActionButton: FloatingActionButton(
-              onPressed: state.isValid
-                  ? () {
-                      _validatingField();
-                    }
-                  : null,
+              onPressed: state.isValid ? () => _validatingField() : null,
               backgroundColor: Theme.of(context).primaryColor,
               child: const Icon(
                 CupertinoIcons.arrow_right,
@@ -151,109 +147,10 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
   }
 
   void _validatingField() {
-    if (_formKey.currentState!.validate()) {
-      if (_firstStep) {
-        setState(() {
-          _firstStep = !_firstStep;
-        });
-      } else {
-        // Adding project
-        _addProject();
-        GoRouter.of(context).pushReplacement(MyRoutes.home);
-      }
-    }
+    // Adding project
+    _addProject();
+    GoRouter.of(context).push(MyRoutes.createProjectDescription);
   }
-
-  final List<UserTest> _users = [];
-
-  void _addMembers(String email) {
-    setState(() {
-      _users.add(UserTest(name: email, email: email));
-    });
-  }
-
-  void _addProject() {}
 }
 
-// Column(
-//                   children: [
-//                     // Invite friends by e-mail text and input
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.symmetric(
-//                           horizontal: 35.0, vertical: 25.0),
-//                       decoration: const BoxDecoration(
-//                         color: CupertinoColors.systemGrey4,
-//                         boxShadow: [
-//                           BoxShadow(
-//                             color: CupertinoColors.systemGrey3,
-//                             blurRadius: 6.0,
-//                             spreadRadius: 2.0,
-//                           )
-//                         ],
-//                       ),
-//                       child: Row(
-//                         children: [
-//                           Expanded(
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 MyCreationInput(
-//                                   placeHolder: 'Inserir e-mail',
-//                                   text: 'Convidar amigos por e-mail',
-//                                   controller: _emailController,
-//                                   onTap: () {},
-//                                   validation: (email) {
-//                                     var result = InputValidator.validateEmail(
-//                                       email: email,
-//                                       isRequired: false,
-//                                     );
-
-//                                     // If [result] valid, add members
-//                                     _addMembers(_emailController.text);
-
-//                                     return result;
-//                                   },
-//                                 )
-//                               ],
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-
-//                     // Guests
-//                     Expanded(
-//                       child: Container(
-//                         padding: const EdgeInsets.symmetric(
-//                             vertical: 20.0, horizontal: 20.0),
-//                         child: Column(
-//                           children: [
-//                             const Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Padding(
-//                                   padding: EdgeInsets.all(8.0),
-//                                   child: Text(
-//                                     'Membros',
-//                                     style: TextStyle(fontSize: 18.0),
-//                                   ),
-//                                 ),
-//                                 Divider(
-//                                   height: 0,
-//                                   color: Colors.grey,
-//                                 ),
-//                               ],
-//                             ),
-
-//                             // List of invited members
-//                             Expanded(
-//                               flex: 11,
-//                               child: ListMembers(users: usersData),
-//                             )
-//                           ],
-//                         ),
-//                       ),
-//                     )
-//                   ],
-//                 ),
+void _addProject() {}

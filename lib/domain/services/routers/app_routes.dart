@@ -43,6 +43,10 @@ final appRoutes = GoRouter(
       builder: (context, state) => const CreateProjectScreen(),
     ),
     GoRoute(
+      path: MyRoutes.createProjectDescription,
+      builder: (context, state) => const DescriptionScreen(),
+    ),
+    GoRoute(
       path: MyRoutes.configuration,
       builder: (context, state) => const ConfigurationScreen(),
     ),
