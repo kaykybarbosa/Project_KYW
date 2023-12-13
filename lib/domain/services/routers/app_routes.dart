@@ -75,6 +75,10 @@ final appRoutes = GoRouter(
       builder: (context, state) => const ChangeNumberScreen(),
     ),
     GoRoute(
+      path: MyRoutes.changeEmail,
+      builder: (context, state) => const ChangeEmailScreen(),
+    ),
+    GoRoute(
       path: MyRoutes.configurationDeleteAccount,
       builder: (context, state) => const DeleteAccountScreen(),
     ),
