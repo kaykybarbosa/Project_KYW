@@ -14,3 +14,6 @@ export 'sign_in_bloc/sign_in_bloc.dart';
 
 // SignUp Bloc
 export 'sign_up_bloc/sign_up_bloc.dart';
+
+// Home
+export 'home_bloc/home_bloc.dart';
