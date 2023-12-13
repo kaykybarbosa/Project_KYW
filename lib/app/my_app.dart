@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SignInBloc()),
         BlocProvider(create: (context) => SignUpBloc()),
         BlocProvider(create: (context) => ForgotPasswordBloc()),
+        BlocProvider(create: (context) => HomeBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

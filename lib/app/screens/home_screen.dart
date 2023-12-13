@@ -16,6 +16,7 @@ import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/the_filters.dart';
 import 'package:kyw_management/app/widgets/list_projects.dart';
 import 'package:kyw_management/app/widgets/list_tasks.dart';
+import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,29 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
   // Scaffold key
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Color itemsBarColor = CupertinoColors.lightBackgroundGray;
-  Screens _currentText = Screens.project;
-  bool _haveMessage = true;
-
   // Functions
   void _setCurrentScreen(int value) {
     /// [value] == 0 => ShowMyProjects and
     /// [value] == 1 => ShowMyTasks
 
-    setState(() {
-      if (value == 0) {
-        _currentText = Screens.project;
-      } else {
-        _currentText = Screens.task;
-      }
-    });
-  }
-
-  void _openMessage() {
-    context.push(MyRoutes.notifications);
-    setState(() {
-      _haveMessage = false;
-    });
+    if (value == 0) {
+      context
+          .read<HomeBloc>()
+          .add(const ScreenChangedHome(screen: Screens.project));
+    } else {
+      context
+          .read<HomeBloc>()
+          .add(const ScreenChangedHome(screen: Screens.task));
+    }
   }
 
   void _openEndDrawer() {
@@ -61,132 +53,131 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          // App name
-          leading: AppName(color: itemsBarColor),
-          actions: [
-            // Messages
-            Badge(
-              label: _haveMessage ? const Text('2') : null,
-              smallSize: _haveMessage ? 6 : 0,
-              child: MyIcon(
-                icon: CupertinoIcons.bell,
-                color: itemsBarColor,
-                onTap: () {
-                  _openMessage();
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              // App name
+              leading: AppName(color: Theme.of(context).colorScheme.onPrimary),
+              actions: [
+                // Messages Icon
+                MyIcon(
+                  icon: CupertinoIcons.bell,
+                  onTap: () {
+                    GoRouter.of(context).push(MyRoutes.notifications);
+                    context
+                        .read<HomeBloc>()
+                        .add(const HaveMessageHome(haveMessage: false));
+                  },
+                ),
+
+                // More options Icon
+                MyIcon(
+                  icon: CupertinoIcons.ellipsis_vertical,
+                  onTap: () => _openEndDrawer(),
+                  showBadge: false,
+                ),
+              ],
+
+              toolbarHeight: 50.0,
+              bottom: myTabBar(
+                onTap: (value) {
+                  _setCurrentScreen(value);
                 },
-              ),
-            ),
-
-            const SizedBox(width: 12.0),
-
-            // More options
-            MyIcon(
-              icon: CupertinoIcons.ellipsis_vertical,
-              color: CupertinoColors.white,
-              onTap: () {
-                _openEndDrawer();
-              },
-            ),
-
-            const SizedBox(width: 13.0),
-          ],
-
-          toolbarHeight: 50.0,
-          bottom: myTabBar(
-            onTap: (value) {
-              _setCurrentScreen(value);
-            },
-            tabs: const [
-              Tab(text: 'Projetos'),
-              Tab(text: 'Tarefas'),
-            ],
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 15.0),
-          child: Column(
-            children: [
-              // Input Search
-              MySearchBar(
-                placeHolder:
-                    _currentText == Screens.project ? 'projeto' : 'task',
-              ),
-
-              // Buttons the filters
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Filter
-                  TheFilters(
-                    onTap: () {
-                      return showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (BuildContext context) => SizedBox(
-                          height: 700,
-                          child: DraggableScrollableSheet(
-                            initialChildSize: 0.999,
-                            minChildSize: 0.999,
-                            builder: (context, scrollController) =>
-                                Filter(currentScreen: _currentText),
-                          ),
-                        ),
-                      );
-                    },
-                    label: 'Filtrar',
-                    labelSize: 17.0,
-                    iconSize: 17.0,
-                    icon: FontAwesomeIcons.filter,
-                  ),
-
-                  // Order
-                  TheFilters(
-                    label: 'Ordenar',
-                    labelSize: 17.0,
-                    icon: FontAwesomeIcons.caretDown,
-                    iconSize: 26.0,
-                    onTap: () {
-                      return showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (BuildContext context) => SizedBox(
-                          height: 700,
-                          child: Order(
-                            currentScreen: _currentText,
-                            // controller: scrollController,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                tabs: const [
+                  Tab(text: 'Projetos'),
+                  Tab(text: 'Tarefas'),
                 ],
               ),
+            ),
+            body: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 15.0),
+              child: Column(
+                children: [
+                  // Input Search
+                  const MySearchBar(),
 
-              // Current screen
-              Expanded(
-                flex: 12,
-                child: _currentText == Screens.project
-                    ? const ListProjects()
-                    : ListTasks(tasks: tasksData),
-              )
-            ],
-          ),
+                  // Buttons the filters
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Filter
+                      TheFilters(
+                        onTap: () {
+                          return _showModalFilter(context, state);
+                        },
+                        label: 'Filtrar',
+                        labelSize: 17.0,
+                        iconSize: 17.0,
+                        icon: FontAwesomeIcons.filter,
+                      ),
+
+                      // Order
+                      TheFilters(
+                        label: 'Ordenar',
+                        labelSize: 17.0,
+                        icon: FontAwesomeIcons.caretDown,
+                        iconSize: 26.0,
+                        onTap: () {
+                          return _showModalOrder(context, state);
+                        },
+                      ),
+                    ],
+                  ),
+
+                  // Current screen
+                  Expanded(
+                    flex: 12,
+                    child: state.currentScreen == Screens.project
+                        ? const ListProjects()
+                        : ListTasks(tasks: tasksData),
+                  )
+                ],
+              ),
+            ),
+
+            // EndDrawer the more options
+            endDrawer: const MyEndDrawer(),
+
+            // Button create project
+            floatingActionButton: state.currentScreen == Screens.project
+                ? CreateProjectButton(
+                    onTap: () {
+                      context.push(MyRoutes.createProject);
+                    },
+                  )
+                : null,
+          );
+        },
+      ),
+    );
+  }
+
+  Future<dynamic> _showModalOrder(BuildContext context, HomeState state) {
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) => SizedBox(
+        height: 700,
+        child: Order(currentScreen: state.currentScreen),
+      ),
+    );
+  }
+
+  Future<dynamic> _showModalFilter(BuildContext context, HomeState state) {
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) => SizedBox(
+        height: 700,
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.999,
+          minChildSize: 0.999,
+          builder: (context, scrollController) =>
+              Filter(currentScreen: state.currentScreen),
         ),
-
-        // EndDrawer the more options
-        endDrawer: const MyEndDrawer(),
-
-        // Button create project
-        floatingActionButton: _currentText == Screens.project
-            ? CreateProjectButton(
-                onTap: () {
-                  context.push(MyRoutes.createProject);
-                },
-              )
-            : null,
       ),
     );
   }

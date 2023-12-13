@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 final theme = ThemeData(
   primaryColor: const Color.fromRGBO(50, 58, 71, 1),
+  colorScheme: const ColorScheme.light(
+    onPrimary: Color.fromRGBO(229, 229, 234, 1),
+  ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromRGBO(50, 58, 71, 1),
     elevation: 0,
@@ -22,4 +25,5 @@ final theme = ThemeData(
     focusedBorder:
         OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
   ),
+  searchBarTheme: const SearchBarThemeData(),
 );

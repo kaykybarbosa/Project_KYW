@@ -37,7 +37,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   void formChangePasswordSubmitted() async {
     if (!state.isValid) return;
 
-    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+    emit(const ChangePasswordState(status: FormzSubmissionStatus.inProgress));
     await Future<void>.delayed(const Duration(seconds: 2));
     emit(const ChangePasswordState(status: FormzSubmissionStatus.success));
   }

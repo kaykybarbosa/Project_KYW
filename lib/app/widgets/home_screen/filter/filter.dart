@@ -167,9 +167,9 @@ class _FilterState extends State<Filter> {
               visible: widget.currentScreen == Screens.task,
               child: FilterForTask(
                 categoryController: _categoryController,
-                onTap: () {
-                  _setClicked(true);
-                },
+                // onTap: () {
+                //   _setClicked(true);
+                // },
               ),
             ),
 

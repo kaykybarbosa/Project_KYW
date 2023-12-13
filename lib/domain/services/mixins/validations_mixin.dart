@@ -40,7 +40,7 @@ mixin ValidationsMixin {
     return null;
   }
 
-  String? numberIsValid(String? value, [String? message]) {
+  String? phoneIsValid(String? value, [String? message]) {
     if (value!.length != 11) {
       return message ?? 'Número de celular inválido';
     }

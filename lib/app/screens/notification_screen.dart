@@ -13,15 +13,18 @@ class NotificationScreen extends StatelessWidget {
         context.pop(context);
       },
       title: 'Notificações',
-      body: const Column(
-        children: [
-          MyNotification(),
-          Divider(),
-          MyNotification(),
-          Divider(),
-          MyNotification(),
-          Divider(),
-        ],
+      body: ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          return const MyNotification(
+            message:
+                'Existem muitas variações de passagens de Lorem Ipsum disponíveis, mas a maioria sofreu alterações de alguma forma de tomar atitudes',
+            time: '1 de nov de 2023 as 10:50',
+          );
+        },
+        separatorBuilder: (__, _) => const Divider(
+          color: Colors.grey,
+        ),
+        itemCount: 3,
       ),
     );
   }

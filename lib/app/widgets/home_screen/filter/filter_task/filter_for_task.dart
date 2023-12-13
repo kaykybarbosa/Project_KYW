@@ -5,11 +5,9 @@ import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/card_c
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_by_status.dart';
 
 class FilterForTask extends StatefulWidget {
-  const FilterForTask(
-      {super.key, required this.categoryController, this.onTap});
+  const FilterForTask({super.key, required this.categoryController});
 
   final TextEditingController categoryController;
-  final Function? onTap;
 
   @override
   State<FilterForTask> createState() => _FilterForTaskState();
@@ -109,8 +107,7 @@ class _FilterForTaskState extends State<FilterForTask> {
         ),
 
         // Input select categories
-        CreationInput(
-          onTap: () => widget.onTap,
+        MyCreationInput(
           text: '',
           showText: false,
           controller: widget.categoryController,

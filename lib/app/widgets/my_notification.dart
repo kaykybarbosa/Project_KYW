@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MyNotification extends StatelessWidget {
-  const MyNotification({super.key});
+  const MyNotification(
+      {super.key, required String message, required String time})
+      : _message = message,
+        _time = time;
+
+  final String _message;
+  final String _time;
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +20,13 @@ class MyNotification extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          const Row(
+          Row(
             children: [
               // Message
               Expanded(
                 child: Text(
-                  'Existem muitas variações de passagens de Lorem Ipsum disponíveis, mas a maioria sofreu alterações de alguma forma de tomar atitudes',
-                  style: TextStyle(fontSize: 20.0),
+                  _message,
+                  style: const TextStyle(fontSize: 18.0),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.justify,
@@ -33,26 +40,27 @@ class MyNotification extends StatelessWidget {
           // Date and To share
           Row(
             children: [
-              const Text(
-                '1 de nov de 2023 as 10:50',
+              Text(
+                _time,
                 style: TextStyle(
-                  color: CupertinoColors.systemGrey,
+                  color: Colors.grey[600],
                   fontSize: 15.0,
                 ),
               ),
               Expanded(
                 child: GestureDetector(
-                  child: const Row(
+                  onTap: () {},
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(
                         CupertinoIcons.arrowshape_turn_up_right_fill,
-                        color: CupertinoColors.link,
+                        color: Colors.blue[700],
                       ),
                       Text(
                         'Compartilhar',
-                        style: TextStyle(
-                            color: CupertinoColors.link, fontSize: 18.0),
+                        style:
+                            TextStyle(color: Colors.blue[700], fontSize: 18.0),
                       )
                     ],
                   ),

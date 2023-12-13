@@ -23,17 +23,11 @@ class ConfigurationAccountScreen extends StatelessWidget {
       FontAwesomeIcons.solidTrashCan
     ];
 
-    void goTwoStepVerification() {
-      context.push(MyRoutes.twoStepVerification);
-    }
+    void goTwoStepVerification() => context.push(MyRoutes.twoStepVerification);
 
-    void goChangeNumberOrEmail() {
-      context.push(MyRoutes.changeNumberOrEmail);
-    }
+    void goChangeNumberOrEmail() => context.push(MyRoutes.changeNumberOrEmail);
 
-    void deleteAccount() {
-      context.push(MyRoutes.configurationDeleteAccount);
-    }
+    void deleteAccount() => context.push(MyRoutes.configurationDeleteAccount);
 
     List<Function> optionsFunction = [
       /// If [index] == 0 => show two_step_screen

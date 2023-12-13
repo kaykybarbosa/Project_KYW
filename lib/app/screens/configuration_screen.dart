@@ -34,9 +34,7 @@ class ConfigurationScreen extends StatelessWidget {
     ];
 
     return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
+      arrowBack: () => GoRouter.of(context).pop(context),
       title: 'Configurações',
       body: ListView.separated(
         itemBuilder: (context, index) {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class CreationInput extends StatelessWidget {
-  const CreationInput({
+class MyCreationInput extends StatelessWidget {
+  const MyCreationInput({
     super.key,
-    required this.onTap,
     required this.text,
     required this.placeHolder,
     required this.controller,
@@ -13,9 +13,10 @@ class CreationInput extends StatelessWidget {
     this.maxLength,
     this.textInputType,
     this.showText = true,
+    this.onChange,
   });
 
-  final Function onTap;
+  final Function? onChange;
   final String text;
   final String placeHolder;
   final double? heightPrefix;
@@ -37,14 +38,7 @@ class CreationInput extends StatelessWidget {
               // Text
               Visibility(
                 visible: showText,
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    color: CupertinoTheme.of(context).primaryColor,
-                  ),
-                ),
+                child: _MyTitle(text: text),
               ),
 
               const SizedBox(height: 5.0),
@@ -57,26 +51,9 @@ class CreationInput extends StatelessWidget {
                 placeholder: placeHolder,
                 padding: EdgeInsets.zero,
                 controller: controller,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(5.0),
-                    bottomRight: Radius.circular(5.0),
-                  ),
-                  border: Border.all(color: CupertinoColors.systemGrey),
-                  color: const Color.fromARGB(153, 242, 242, 247),
-                ),
-                prefix: Container(
-                  height: heightPrefix,
-                  width: 9.0,
-                  decoration: BoxDecoration(
-                    color: CupertinoTheme.of(context).primaryColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(3.9),
-                      bottomLeft: Radius.circular(3.9),
-                    ),
-                  ),
-                ),
-                onTap: () => onTap(),
+                decoration: _myDecoration(),
+                prefix: _MyPrefix(heightPrefix: heightPrefix),
+                onChanged: (value) => onChange!(value),
                 validator: (value) {
                   return validation(value);
                 },
@@ -85,6 +62,56 @@ class CreationInput extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  BoxDecoration _myDecoration() {
+    return BoxDecoration(
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(5.0),
+        bottomRight: Radius.circular(5.0),
+      ),
+      border: Border.all(color: Colors.grey),
+      color: const Color.fromARGB(153, 242, 242, 247),
+    );
+  }
+}
+
+class _MyTitle extends StatelessWidget {
+  const _MyTitle({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 18.0,
+        fontWeight: FontWeight.w500,
+        color: Theme.of(context).primaryColor,
+      ),
+    );
+  }
+}
+
+class _MyPrefix extends StatelessWidget {
+  const _MyPrefix({required this.heightPrefix});
+
+  final double? heightPrefix;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: heightPrefix,
+      width: 9.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(3.9),
+          bottomLeft: Radius.circular(3.9),
+        ),
+      ),
     );
   }
 }

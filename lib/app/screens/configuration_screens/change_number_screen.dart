@@ -3,56 +3,45 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
-import 'package:kyw_management/domain/cubits/change_number_cubit/change_number_cubit.dart';
+import 'package:kyw_management/domain/cubits/change_phone_cubit/change_phone_cubit.dart';
 
 class ChangeNumberScreen extends StatelessWidget {
   const ChangeNumberScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-
     return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
+      arrowBack: () => GoRouter.of(context).pop(context),
       title: 'Mudar número',
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
-        child: Form(
-            child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: SizedBox(
-            height: (screenSize.height / 1.3),
-            child: BlocProvider(
-              create: (context) => ChangeNumberCubit(),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: BlocProvider(
+          create: (context) => ChangePhoneCubit(),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Text new number
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text new number
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _TextTheInput(label: 'Insira seu número novo'),
+                  _TextTheInput(label: 'Insira seu número novo'),
 
-                      // Input new number
-                      _NewNumberInput(),
+                  // Input new number
+                  _NewNumberInput(),
 
-                      // Text old number
-                      _TextTheInput(label: 'Insira seu número atual '),
+                  // Text old number
+                  _TextTheInput(label: 'Insira seu número atual '),
 
-                      // Imput old number
-                      _CurrentNumberInput(),
-                    ],
-                  ),
-
-                  // Button change number
-                  _SubmitButton(),
+                  // Imput old number
+                  _CurrentNumberInput(),
                 ],
               ),
-            ),
+
+              // Button change number
+              _SubmitButton(),
+            ],
           ),
-        )),
+        ),
       ),
     );
   }
@@ -84,24 +73,23 @@ class _NewNumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
-        buildWhen: (previous, current) =>
-            previous.newNumber != current.newNumber,
+      child: BlocBuilder<ChangePhoneCubit, ChangePhoneState>(
+        buildWhen: (previous, current) => previous.newPhone != current.newPhone,
         builder: (context, state) {
           return TextFormField(
-              initialValue: state.newNumber.value,
+              initialValue: state.newPhone.value,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue, width: 2.5)),
-                hintText: 'Novo número',
+                hintText: 'Número novo',
                 border: const OutlineInputBorder(),
-                errorText: state.newNumber.displayError != null
+                errorText: state.newPhone.displayError != null
                     ? "Número inválido!"
                     : null,
               ),
               onChanged: (number) =>
-                  context.read<ChangeNumberCubit>().newNumberChanged(number));
+                  context.read<ChangePhoneCubit>().newPhoneChanged(number));
         },
       ),
     );
@@ -115,25 +103,24 @@ class _CurrentNumberInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
+      child: BlocBuilder<ChangePhoneCubit, ChangePhoneState>(
         buildWhen: (previous, current) =>
-            previous.currentNumber != current.currentNumber,
+            previous.currentPhone != current.currentPhone,
         builder: (context, state) {
           return TextFormField(
-              initialValue: state.currentNumber.value,
+              initialValue: state.currentPhone.value,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue, width: 2.5)),
-                hintText: 'Novo número',
+                hintText: 'Número atual',
                 border: const OutlineInputBorder(),
-                errorText: state.currentNumber.displayError != null
+                errorText: state.currentPhone.displayError != null
                     ? "Número inválido!"
                     : null,
               ),
-              onChanged: (number) => context
-                  .read<ChangeNumberCubit>()
-                  .currentNumberChanged(number));
+              onChanged: (number) =>
+                  context.read<ChangePhoneCubit>().currentPhoneChanged(number));
         },
       ),
     );
@@ -145,7 +132,7 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChangeNumberCubit, ChangeNumberState>(
+    return BlocBuilder<ChangePhoneCubit, ChangePhoneState>(
       builder: (context, state) {
         return state.status.isInProgress
             ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
@@ -161,8 +148,8 @@ class _SubmitButton extends StatelessWidget {
                   ),
                   onPressed: state.isValid
                       ? () => context
-                          .read<ChangeNumberCubit>()
-                          .formChangeNumberSubmitted()
+                          .read<ChangePhoneCubit>()
+                          .formChangePhoneSubmitted()
                       : null,
                   child: const Text(
                     'Alterar número',

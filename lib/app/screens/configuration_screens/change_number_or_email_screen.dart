@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 
 class ChangeNumberOrEmail extends StatelessWidget {
@@ -20,8 +21,16 @@ class ChangeNumberOrEmail extends StatelessWidget {
       FontAwesomeIcons.envelope,
     ];
 
+    void goToChangeNumber() => GoRouter.of(context).push(MyRoutes.changeNumber);
+    void goToChangeEmail() => GoRouter.of(context).push(MyRoutes.changeEmail);
+
+    List<Function> optionsFunction = [
+      goToChangeNumber,
+      goToChangeEmail,
+    ];
+
     return MyScaffold(
-      arrowBack: () => GoRouter.of(context).pop,
+      arrowBack: () => GoRouter.of(context).pop(context),
       title: 'Mudar Número ou E-mail',
       body: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
@@ -40,6 +49,7 @@ class ChangeNumberOrEmail extends StatelessWidget {
                 color: primaryColor,
               ),
             ),
+            onTap: () => optionsFunction[index](),
           );
         },
         separatorBuilder: (__, _) => const Padding(

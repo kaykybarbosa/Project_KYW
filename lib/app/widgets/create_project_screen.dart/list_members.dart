@@ -23,8 +23,12 @@ class ListMembers extends StatelessWidget {
           ),
         );
       }),
-      separatorBuilder: (__, _) => const Divider(),
+      separatorBuilder: (__, _) => const Divider(
+        height: 0,
+        color: Colors.grey,
+      ),
       itemCount: users.length,
+      padding: EdgeInsets.zero,
     );
   }
 }
