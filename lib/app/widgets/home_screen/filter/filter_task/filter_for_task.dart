@@ -107,14 +107,12 @@ class _FilterForTaskState extends State<FilterForTask> {
         ),
 
         // Input select categories
-        MyCreationInput(
+        const MyCreationInput(
           text: '',
           showText: false,
-          controller: widget.categoryController,
           placeHolder: 'Inserir categoria',
           maxLine: 2,
           heightPrefix: 56.0,
-          validation: (category) {},
         ),
 
         const SizedBox(height: 25.0),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/domain/cubits/change_phone_cubit/change_phone_cubit.dart';
 
 class ChangeNumberScreen extends StatelessWidget {
@@ -10,9 +8,8 @@ class ChangeNumberScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      arrowBack: () => GoRouter.of(context).pop(context),
-      title: 'Mudar número',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Mudar número')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
         child: BlocProvider(

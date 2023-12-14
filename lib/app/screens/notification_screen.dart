@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/my_notification.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -8,11 +6,8 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
-      title: 'Notificações',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Notificações')),
       body: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return const MyNotification(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
 class ConfigurationScreen extends StatelessWidget {
@@ -33,9 +32,8 @@ class ConfigurationScreen extends StatelessWidget {
       ),
     ];
 
-    return MyScaffold(
-      arrowBack: () => GoRouter.of(context).pop(context),
-      title: 'Configurações',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Configurações')),
       body: ListView.separated(
         itemBuilder: (context, index) {
           return options[index];

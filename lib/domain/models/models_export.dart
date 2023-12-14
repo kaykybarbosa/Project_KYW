@@ -7,3 +7,4 @@ export 'confirmed_password.dart';
 export 'number.dart';
 export 'title.dart';
 export 'description.dart';
+export 'date_model.dart';

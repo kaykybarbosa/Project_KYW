@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final theme = ThemeData(
+  useMaterial3: true,
   primaryColor: const Color.fromRGBO(50, 58, 71, 1),
   colorScheme: const ColorScheme.light(
     onPrimary: Color.fromRGBO(229, 229, 234, 1),
@@ -8,6 +9,7 @@ final theme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromRGBO(50, 58, 71, 1),
     elevation: 0,
+    foregroundColor: Colors.white,
   ),
   scaffoldBackgroundColor: Colors.grey[200],
   elevatedButtonTheme: const ElevatedButtonThemeData(

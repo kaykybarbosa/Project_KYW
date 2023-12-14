@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/app/widgets/circle_image.dart';
 
 class MyAccountScreen extends StatelessWidget {
@@ -21,11 +20,8 @@ class MyAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      arrowBack: () {
-        Navigator.pop(context);
-      },
-      title: 'Minha Conta',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Minha Conta')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

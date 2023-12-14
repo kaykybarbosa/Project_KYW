@@ -6,8 +6,6 @@ class MyCreationInput extends StatelessWidget {
     super.key,
     required this.text,
     required this.placeHolder,
-    required this.controller,
-    required this.validation,
     this.heightPrefix = 36.0,
     this.maxLine,
     this.maxLength,
@@ -23,9 +21,7 @@ class MyCreationInput extends StatelessWidget {
   final int? maxLine;
   final int? maxLength;
   final TextInputType? textInputType;
-  final Function validation;
   final bool showText;
-  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +46,9 @@ class MyCreationInput extends StatelessWidget {
                 keyboardType: textInputType,
                 placeholder: placeHolder,
                 padding: EdgeInsets.zero,
-                controller: controller,
                 decoration: _myDecoration(),
                 prefix: _MyPrefix(heightPrefix: heightPrefix),
                 onChanged: (value) => onChange!(value),
-                validator: (value) {
-                  return validation(value);
-                },
               ),
             ],
           ),

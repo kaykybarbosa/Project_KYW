@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/domain/cubits/two_step_verification_cubit/two_step_verification_cubit.dart';
 
 import '../../../domain/blocs/blocs_export.dart';
@@ -19,11 +17,8 @@ class _TwoStepVerificationScreenState extends State<TwoStepVerificationScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
 
-    return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
-      title: 'Configuração de duas etapas',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Configuração de duas etapas')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
         child: SingleChildScrollView(

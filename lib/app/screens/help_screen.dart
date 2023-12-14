@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 
 class HelpScreen extends StatelessWidget {
   HelpScreen({super.key});
@@ -38,11 +37,9 @@ class HelpScreen extends StatelessWidget {
       goContactUs,
       goApplicationData
     ];
-    return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
-      title: 'Ajuda',
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Ajuda')),
       body: ListView.separated(
         itemBuilder: (context, index) {
           return ListTile(

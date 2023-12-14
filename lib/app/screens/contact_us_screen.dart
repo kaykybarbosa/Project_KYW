@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
@@ -32,11 +31,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
-      title: 'Contate-nos',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Contate-nos')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
         child: SingleChildScrollView(

@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kyw_management/app/models/user.dart';
 
 class ListMembers extends StatelessWidget {
   const ListMembers({super.key, required this.users});
 
-  final List<UserTest> users;
+  final List<String> users;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class ListMembers extends StatelessWidget {
       itemBuilder: ((context, index) {
         return ListTile(
           title: Text(
-            users[index].email,
+            users[index],
             style: const TextStyle(fontSize: 18.0),
           ),
           trailing: const Icon(

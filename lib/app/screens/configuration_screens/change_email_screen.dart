@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/domain/cubits/change_email_cubit/change_email_cubit.dart';
-import 'package:kyw_management/domain/services/routers/export_routes.dart';
 
 class ChangeEmailScreen extends StatelessWidget {
   const ChangeEmailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MyScaffold(
-      arrowBack: () => GoRouter.of(context).pop(context),
-      title: 'Mudar E-mail',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Mudar E-mail')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
         child: BlocProvider(

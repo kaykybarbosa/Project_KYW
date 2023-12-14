@@ -15,4 +15,4 @@ export 'package:kyw_management/app/screens/forms/sign_up_screen.dart';
 export 'package:kyw_management/app/screens/steps_forgot_password/code_forgot_screen.dart';
 export 'package:kyw_management/app/screens/configuration_screens/change_email_screen.dart';
 export 'steps_forgot_password/change_password_screen.dart';
-export 'add_project/description_screen.dart';
+export 'add_project/invite_friends__screen.dart';

@@ -8,7 +8,7 @@ import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/app_name.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/filter.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/order.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
@@ -105,13 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       // Filter
                       TheFilters(
-                        onTap: () {
-                          return _showModalFilter(context, state);
-                        },
                         label: 'Filtrar',
                         labelSize: 17.0,
                         iconSize: 17.0,
                         icon: FontAwesomeIcons.filter,
+                        onTap: () => _showModalFilter(context, state),
                       ),
 
                       // Order
@@ -120,9 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         labelSize: 17.0,
                         icon: FontAwesomeIcons.caretDown,
                         iconSize: 26.0,
-                        onTap: () {
-                          return _showModalOrder(context, state);
-                        },
+                        onTap: () => _showModalOrder(context, state),
                       ),
                     ],
                   ),
@@ -176,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
           initialChildSize: 0.999,
           minChildSize: 0.999,
           builder: (context, scrollController) =>
-              Filter(currentScreen: state.currentScreen),
+              MyFilter(currentScreen: state.currentScreen),
         ),
       ),
     );

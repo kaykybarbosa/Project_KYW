@@ -17,3 +17,6 @@ export 'sign_up_bloc/sign_up_bloc.dart';
 
 // Home
 export 'home_bloc/home_bloc.dart';
+
+// Adding Project
+export 'add_project_bloc/add_project_bloc.dart';

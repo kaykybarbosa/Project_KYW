@@ -42,9 +42,7 @@ class FilterButtons extends StatelessWidget {
     required Color color,
   }) {
     return GestureDetector(
-      onTap: () {
-        onTap();
-      },
+      onTap: () => onTap(),
       child: Text(
         text,
         style: TextStyle(

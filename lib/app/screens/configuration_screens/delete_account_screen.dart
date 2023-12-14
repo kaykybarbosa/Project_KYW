@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/widgets/base/my_scaffold.dart';
 import 'package:kyw_management/domain/cubits/delete_account_cubit/delete_account_cubit.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
@@ -14,11 +12,8 @@ class DeleteAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return MyScaffold(
-      arrowBack: () {
-        context.pop(context);
-      },
-      title: 'Deletar conta',
+    return Scaffold(
+      appBar: AppBar(title: const Text('Deletar conta')),
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Padding(
