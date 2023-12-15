@@ -24,12 +24,7 @@ class FilterByCheckedBox extends StatelessWidget {
           scale: 1,
           child: Checkbox(
             value: isChecked,
-            checkColor: CupertinoColors.white,
-            overlayColor: MaterialStateProperty.all(Colors.grey[200]),
-            activeColor: CupertinoColors.systemGrey,
-            onChanged: (bool? value) {
-              onChanged(value);
-            },
+            onChanged: (bool? value) => onChanged(value),
           ),
         ),
         Visibility(

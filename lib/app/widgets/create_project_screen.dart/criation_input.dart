@@ -63,7 +63,10 @@ class MyCreationInput extends StatelessWidget {
         topRight: Radius.circular(5.0),
         bottomRight: Radius.circular(5.0),
       ),
-      border: Border.all(color: Colors.grey),
+      border: Border.all(
+        color: Colors.grey,
+        width: 2,
+      ),
       color: const Color.fromARGB(153, 242, 242, 247),
     );
   }

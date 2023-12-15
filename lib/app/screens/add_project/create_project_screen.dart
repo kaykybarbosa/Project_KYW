@@ -33,11 +33,11 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
               child: Column(
                 children: [
                   const _MessageTop(),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 15),
                   CircleImage(onTap: () {}),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 30),
                   const _TitleInput(),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 30),
                   const _DescriptionInput(),
                 ],
               ),

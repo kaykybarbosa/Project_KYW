@@ -57,18 +57,30 @@ mixin ValidationsMixin {
     return null;
   }
 
-  bool signInValidate(String email, String password) {
-    final validations = combine([
-      () => isNotEmpty(email),
-      () => isEmailValid(email),
-      () => isNotEmpty(password),
-      () => isSixChars(password),
-    ]);
+  String? dateIsValid(String? value, [String? message]) {
+    DateTime? date;
 
-    if (validations == null) {
-      return true;
-    } else {
-      return false;
+    try {
+      // first step
+      date = DateTime.tryParse(value!);
+      if (date == null) {
+        return message ?? 'First';
+      }
+
+      // secound step
+      DateTime now = DateTime.now();
+      DateTime firstDate = DateTime(now.year - 2, now.month, now.day);
+
+      if (date.isBefore(firstDate)) {
+        return message ?? 'Data é antiga!';
+      }
+      if (date.isAfter(now)) {
+        return message ?? 'Data é posterior!';
+      }
+
+      return null;
+    } catch (e) {
+      return e.toString();
     }
   }
 }

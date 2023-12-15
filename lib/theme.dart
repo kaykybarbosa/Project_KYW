@@ -4,6 +4,7 @@ final theme = ThemeData(
   useMaterial3: true,
   primaryColor: const Color.fromRGBO(50, 58, 71, 1),
   colorScheme: const ColorScheme.light(
+    primary: Color.fromRGBO(50, 58, 71, 1),
     onPrimary: Color.fromRGBO(229, 229, 234, 1),
   ),
   appBarTheme: const AppBarTheme(
@@ -28,4 +29,14 @@ final theme = ThemeData(
         OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
   ),
   searchBarTheme: const SearchBarThemeData(),
+  checkboxTheme: CheckboxThemeData(
+    splashRadius: 16,
+    checkColor: const MaterialStatePropertyAll(Colors.white),
+    overlayColor: MaterialStatePropertyAll(Colors.grey[800]),
+  ),
+  datePickerTheme: DatePickerThemeData(
+    headerBackgroundColor: const Color.fromRGBO(50, 58, 71, 1),
+    headerForegroundColor: Colors.white,
+    backgroundColor: Colors.grey[300],
+  ),
 );

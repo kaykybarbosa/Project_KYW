@@ -83,7 +83,6 @@ class ForgotPasswordBloc
   ) {
     var step = state.step;
 
-    print('========================$step==================');
     if (state.step == StepsForgotPassword.gettingEmail) {
       step = StepsForgotPassword.validationCode;
     } else {

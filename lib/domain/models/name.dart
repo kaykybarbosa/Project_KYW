@@ -10,8 +10,10 @@ class Name extends FormzInput<String, NameValidationError>
 
   @override
   NameValidationError? validator(String value) {
-    final nameValid =
-        combine([() => isNotEmpty(value), () => isSixChars(value)]);
+    final nameValid = combine([
+      () => isNotEmpty(value),
+      () => isSixChars(value),
+    ]);
 
     return nameValid == null ? null : NameValidationError.invalid;
   }

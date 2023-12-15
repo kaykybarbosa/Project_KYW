@@ -20,3 +20,7 @@ export 'home_bloc/home_bloc.dart';
 
 // Adding Project
 export 'add_project_bloc/add_project_bloc.dart';
+
+// Filters Project and Task
+export 'filter_project_bloc/filter_project_bloc.dart';
+export 'filter_task_bloc/filter_task_bloc.dart';

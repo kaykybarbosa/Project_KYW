@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
 
-              toolbarHeight: 50.0,
+              toolbarHeight: 50,
               bottom: myTabBar(
                 onTap: (value) {
                   _setCurrentScreen(value);
@@ -92,8 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             body: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 15.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 15,
+              ),
               child: Column(
                 children: [
                   // Input Search
@@ -106,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Filter
                       TheFilters(
                         label: 'Filtrar',
-                        labelSize: 17.0,
-                        iconSize: 17.0,
+                        labelSize: 17,
+                        iconSize: 17,
                         icon: FontAwesomeIcons.filter,
                         onTap: () => _showModalFilter(context, state),
                       ),
@@ -115,9 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Order
                       TheFilters(
                         label: 'Ordenar',
-                        labelSize: 17.0,
+                        labelSize: 17,
                         icon: FontAwesomeIcons.caretDown,
-                        iconSize: 26.0,
+                        iconSize: 26,
                         onTap: () => _showModalOrder(context, state),
                       ),
                     ],
@@ -168,12 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) => SizedBox(
         height: 700,
-        child: DraggableScrollableSheet(
-          initialChildSize: 0.999,
-          minChildSize: 0.999,
-          builder: (context, scrollController) =>
-              MyFilter(currentScreen: state.currentScreen),
-        ),
+        child: MyFilter(currentScreen: state.currentScreen),
       ),
     );
   }

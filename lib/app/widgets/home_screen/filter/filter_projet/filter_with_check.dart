@@ -40,6 +40,7 @@ class _FilterWithCheckState extends State<FilterWithCheck> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Text the Filter
           Text(
             widget.label,
             style: const TextStyle(
@@ -52,9 +53,6 @@ class _FilterWithCheckState extends State<FilterWithCheck> {
             scale: 1.1,
             child: Checkbox(
               value: widget.isChecked,
-              checkColor: CupertinoColors.white,
-              overlayColor: MaterialStateProperty.all(Colors.grey[200]),
-              activeColor: CupertinoColors.systemGrey,
               onChanged: (bool? value) {
                 widget.onChanged(value);
               },
