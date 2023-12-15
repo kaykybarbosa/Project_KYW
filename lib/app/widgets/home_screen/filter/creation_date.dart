@@ -71,9 +71,7 @@ class _CreationDateState extends State<CreationDate> {
             decoration: _decoration,
             suffix: IconButton(
               icon: const Icon(Icons.calendar_today_rounded),
-              onPressed: () {
-                widget.showCalendar();
-              },
+              onPressed: () => widget.showCalendar(),
             ),
             onTap: () => widget.onTap,
             onChanged: (value) {

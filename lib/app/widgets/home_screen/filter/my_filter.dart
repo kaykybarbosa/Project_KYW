@@ -37,8 +37,14 @@ class _MyFilterState extends State<MyFilter> {
       if (dateSelected != null) {
         if (isInitDate) {
           _initDateController.text = formatter.format(dateSelected);
+          context
+              .read<FilterProjectCubit>()
+              .initDateChanged(dateSelected.toString());
         } else {
           _finalDateController.text = formatter.format(dateSelected);
+          context
+              .read<FilterProjectCubit>()
+              .finalDateChanged(dateSelected.toString());
         }
       }
     });
@@ -159,7 +165,9 @@ class _MyFilterState extends State<MyFilter> {
                           DateTime? dateSelected = await _showCalendar();
 
                           _setDate(
-                              isInitDate: false, dateSelected: dateSelected);
+                            isInitDate: false,
+                            dateSelected: dateSelected,
+                          );
                         },
                         onTap: () {
                           _setClicked(true);
