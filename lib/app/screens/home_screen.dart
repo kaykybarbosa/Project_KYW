@@ -26,10 +26,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Scaffold key
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Functions
   void _setCurrentScreen(int value) {
     /// [value] == 0 => ShowMyProjects and
     /// [value] == 1 => ShowMyTasks
@@ -131,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: state.currentScreen == Screens.project
                         ? const ListProjects()
                         : ListTasks(tasks: tasksData),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -153,24 +151,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<dynamic> _showModalOrder(BuildContext context, HomeState state) {
-    return showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) => SizedBox(
-        height: 700,
-        child: Order(currentScreen: state.currentScreen),
-      ),
-    );
-  }
-
-  Future<dynamic> _showModalFilter(BuildContext context, HomeState state) {
-    return showModalBottomSheet(
+  Future<dynamic> _showModalFilter(
+    BuildContext context,
+    HomeState state,
+  ) async {
+    await showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) => SizedBox(
         height: 700,
         child: MyFilter(currentScreen: state.currentScreen),
+      ),
+    );
+
+    resetBlocCurrentScreen();
+  }
+
+  void resetBlocCurrentScreen() {
+    context
+        .read<FilterProjectBloc>()
+        .add(const ResetFilterProject(resetDates: true));
+  }
+
+  Future<dynamic> _showModalOrder(BuildContext context, HomeState state) async {
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) => SizedBox(
+        height: 700,
+        child: Order(currentScreen: state.currentScreen),
       ),
     );
   }

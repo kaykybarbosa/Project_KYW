@@ -1,27 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyCreationInput extends StatelessWidget {
   const MyCreationInput({
     super.key,
     required this.text,
-    required this.placeHolder,
-    this.heightPrefix = 36.0,
+    this.placeHolder,
     this.maxLine,
-    this.maxLength,
     this.textInputType,
     this.showText = true,
     this.onChange,
+    this.errorMessage,
   });
 
   final Function? onChange;
   final String text;
-  final String placeHolder;
-  final double? heightPrefix;
+  final String? placeHolder;
   final int? maxLine;
-  final int? maxLength;
   final TextInputType? textInputType;
   final bool showText;
+  final String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -40,34 +37,33 @@ class MyCreationInput extends StatelessWidget {
               const SizedBox(height: 5.0),
 
               // Input
-              CupertinoTextFormFieldRow(
-                maxLines: maxLine,
-                maxLength: maxLength,
-                keyboardType: textInputType,
-                placeholder: placeHolder,
-                padding: EdgeInsets.zero,
-                decoration: _myDecoration(),
-                prefix: _MyPrefix(heightPrefix: heightPrefix),
-                onChanged: (value) => onChange!(value),
+              Container(
+                padding: const EdgeInsets.only(left: 5),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextField(
+                  maxLines: maxLine,
+                  keyboardType: textInputType,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 0,
+                      vertical: 10,
+                    ),
+                    prefixIconConstraints: BoxConstraints(minWidth: 48),
+                    prefixIcon: Expanded(child: ColoredBox(color: Colors.red)),
+                    hintText: placeHolder,
+                    alignLabelWithHint: true,
+                    errorText: errorMessage,
+                  ),
+                  onChanged: (value) => onChange!(value),
+                ),
               ),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  BoxDecoration _myDecoration() {
-    return BoxDecoration(
-      borderRadius: const BorderRadius.only(
-        topRight: Radius.circular(5.0),
-        bottomRight: Radius.circular(5.0),
-      ),
-      border: Border.all(
-        color: Colors.grey,
-        width: 2,
-      ),
-      color: const Color.fromARGB(153, 242, 242, 247),
     );
   }
 }

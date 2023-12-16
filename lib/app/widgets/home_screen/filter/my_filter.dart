@@ -5,41 +5,37 @@ import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/my_app.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/apply_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_buttons.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/filter_projet/filter_for_project.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/my_selection_date.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/filter_projet/filter_with_check.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_for_task.dart';
 
 import '../../../../domain/blocs/blocs_export.dart';
 
-class MyFilter extends StatefulWidget {
+class MyFilter extends StatelessWidget {
   const MyFilter({super.key, required this.currentScreen});
 
   final Screens currentScreen;
 
   @override
-  State<MyFilter> createState() => _MyFilterState();
-}
-
-class _MyFilterState extends State<MyFilter> {
-  // Functions
-  void _setDate({
-    required bool isInitDate,
-    DateTime? dateSelected,
-  }) {
-    if (dateSelected != null) {
-      var date = formatter.format(dateSelected);
-      if (isInitDate) {
-        context.read<FilterProjectBloc>().add(InitDateChanged(initDate: date));
-      } else {
-        context
-            .read<FilterProjectBloc>()
-            .add(FinalDateChanged(finalDate: date));
+  Widget build(BuildContext context) {
+    void setDate({
+      required bool isInitDate,
+      DateTime? dateSelected,
+    }) {
+      if (dateSelected != null) {
+        var date = formatter.format(dateSelected);
+        if (isInitDate) {
+          context
+              .read<FilterProjectBloc>()
+              .add(InitDateChanged(initDate: date));
+        } else {
+          context
+              .read<FilterProjectBloc>()
+              .add(FinalDateChanged(finalDate: date));
+        }
       }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 28.0, horizontal: 33.0),
       child: BlocBuilder<FilterProjectBloc, FilterProjectState>(
@@ -53,9 +49,15 @@ class _MyFilterState extends State<MyFilter> {
                   // The 3 buttons
                   FilterButtons(
                     current: FilterEnum.Filter,
-                    resetFunction: () => context
-                        .read<FilterProjectBloc>()
-                        .add(ResetFilterProject()),
+                    resetFunction: () {
+                      if (currentScreen == Screens.project) {
+                        context
+                            .read<FilterProjectBloc>()
+                            .add(ResetFilterProject(resetDates: true));
+                      } else {
+                        context.read<FilterTaskBloc>().add(ResetFilterTask());
+                      }
+                    },
                   ),
 
                   const SizedBox(height: 30.0),
@@ -81,7 +83,7 @@ class _MyFilterState extends State<MyFilter> {
                             DateTime? dateSelected =
                                 await _showCalendar(context);
 
-                            _setDate(
+                            setDate(
                               isInitDate: state.isInitDate,
                               dateSelected: dateSelected,
                             );
@@ -105,7 +107,7 @@ class _MyFilterState extends State<MyFilter> {
                             DateTime? dateSelected =
                                 await _showCalendar(context);
 
-                            _setDate(
+                            setDate(
                               isInitDate: !state.isInitDate,
                               dateSelected: dateSelected,
                             );
@@ -117,16 +119,16 @@ class _MyFilterState extends State<MyFilter> {
 
                   /// If [currentScreen] is Project, show the filters to Project
                   Visibility(
-                    visible: widget.currentScreen == Screens.project,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: _FilterForProject(),
+                    visible: currentScreen == Screens.project,
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 40),
+                      child: FilterForProject(),
                     ),
                   ),
 
                   /// Else if [currentScreen] is Tasks, show filters to Tasks
                   Visibility(
-                    visible: widget.currentScreen == Screens.task,
+                    visible: currentScreen == Screens.task,
                     child: const FilterForTask(),
                   ),
                 ],
@@ -170,36 +172,4 @@ Future<DateTime?> _showCalendar(BuildContext context) async {
   );
 
   return dateSelected;
-}
-
-class _FilterForProject extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<FilterProjectBloc, FilterProjectState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Created by me
-            FilterWithCheck(
-              label: 'Criado por me',
-              isChecked: state.createdByMe,
-              onChanged: (value) =>
-                  context.read<FilterProjectBloc>().add(CreatedByMeChanged()),
-            ),
-
-            const SizedBox(height: 25.0),
-
-            // Onle marked
-            FilterWithCheck(
-              label: 'Marcados',
-              isChecked: state.marked,
-              onChanged: (value) =>
-                  context.read<FilterProjectBloc>().add(MarkedChanged()),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

@@ -137,18 +137,15 @@ class _EmailFriendsInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
-        return CupertinoFormRow(
-          padding: EdgeInsets.zero,
-          helper: state.email.displayError != null
-              ? const _MessageValidationError(messageError: 'E-mail inválido!')
-              : null,
-          child: MyCreationInput(
-            placeHolder: 'Inserir e-mail',
-            text: 'Convidar amigos por e-mail',
-            onChange: (value) => context
-                .read<AddProjectBloc>()
-                .add(EmailChangedAddProject(email: value)),
-          ),
+        return MyCreationInput(
+          placeHolder: 'Inserir e-mail',
+          text: 'Convidar amigos por e-mail',
+          textInputType: TextInputType.emailAddress,
+          onChange: (value) => context
+              .read<AddProjectBloc>()
+              .add(EmailChangedAddProject(email: value)),
+          errorMessage:
+              state.email.displayError != null ? 'E-mail inválido!' : null,
         );
       },
     );

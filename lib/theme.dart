@@ -23,10 +23,15 @@ final theme = ThemeData(
           borderRadius: BorderRadius.all(Radius.circular(5)))),
     ),
   ),
-  inputDecorationTheme: const InputDecorationTheme(
-    hintStyle: TextStyle(color: Colors.grey),
+  inputDecorationTheme: InputDecorationTheme(
+    hintStyle: const TextStyle(color: Colors.grey),
+    filled: true,
+    border: const OutlineInputBorder(),
+    enabledBorder:
+        const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+    fillColor: Colors.grey[200],
     focusedBorder:
-        OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
+        const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
   ),
   searchBarTheme: const SearchBarThemeData(),
   checkboxTheme: CheckboxThemeData(

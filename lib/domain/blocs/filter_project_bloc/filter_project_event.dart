@@ -31,4 +31,11 @@ class MarkedChanged extends FilterProjectEvent {}
 
 class IsInitDateChanged extends FilterProjectEvent {}
 
-class ResetFilterProject extends FilterProjectEvent {}
+class ResetFilterProject extends FilterProjectEvent {
+  const ResetFilterProject({required this.resetDates});
+
+  final bool resetDates;
+
+  @override
+  List<Object> get props => [resetDates];
+}
