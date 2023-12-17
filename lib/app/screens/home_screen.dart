@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
+              toolbarHeight: 50,
               // App name
               leading: AppName(color: Theme.of(context).colorScheme.onPrimary),
               actions: [
@@ -78,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
 
-              toolbarHeight: 50,
               bottom: myTabBar(
                 onTap: (value) {
                   _setCurrentScreen(value);
@@ -97,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   // Input Search
-                  const MySearchBar(),
+                  MySearchBar(search: () async {
+                    showModalBosttomSheet;
+                  }),
 
                   // Buttons the filters
                   Row(
@@ -183,4 +185,57 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Future<T?> showModalBosttomSheet<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+  Color? backgroundColor,
+  String? barrierLabel,
+  double? elevation,
+  ShapeBorder? shape,
+  Clip? clipBehavior,
+  BoxConstraints? constraints,
+  Color? barrierColor,
+  bool isScrollControlled = false,
+  double scrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
+  bool useRootNavigator = false,
+  bool isDismissible = true,
+  bool enableDrag = true,
+  bool? showDragHandle,
+  bool useSafeArea = false,
+  RouteSettings? routeSettings,
+  AnimationController? transitionAnimationController,
+  Offset? anchorPoint,
+}) {
+  assert(debugCheckHasMediaQuery(context));
+  assert(debugCheckHasMaterialLocalizations(context));
+
+  final NavigatorState navigator =
+      Navigator.of(context, rootNavigator: useRootNavigator);
+  final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+  return navigator.push(ModalBottomSheetRoute<T>(
+    builder: builder,
+    capturedThemes:
+        InheritedTheme.capture(from: context, to: navigator.context),
+    isScrollControlled: isScrollControlled,
+    scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
+    barrierLabel: barrierLabel ?? localizations.scrimLabel,
+    barrierOnTapHint:
+        localizations.scrimOnTapHint(localizations.bottomSheetLabel),
+    backgroundColor: backgroundColor,
+    elevation: elevation,
+    shape: shape,
+    clipBehavior: clipBehavior,
+    constraints: constraints,
+    isDismissible: isDismissible,
+    modalBarrierColor:
+        barrierColor ?? Theme.of(context).bottomSheetTheme.modalBarrierColor,
+    enableDrag: enableDrag,
+    showDragHandle: showDragHandle,
+    settings: routeSettings,
+    transitionAnimationController: transitionAnimationController,
+    anchorPoint: anchorPoint,
+    useSafeArea: useSafeArea,
+  ));
 }

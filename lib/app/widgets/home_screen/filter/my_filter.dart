@@ -53,7 +53,7 @@ class MyFilter extends StatelessWidget {
                       if (currentScreen == Screens.project) {
                         context
                             .read<FilterProjectBloc>()
-                            .add(ResetFilterProject(resetDates: true));
+                            .add(const ResetFilterProject(resetDates: true));
                       } else {
                         context.read<FilterTaskBloc>().add(ResetFilterTask());
                       }

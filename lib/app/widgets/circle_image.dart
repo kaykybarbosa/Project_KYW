@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CircleImage extends StatelessWidget {
@@ -23,15 +24,16 @@ class CircleImage extends StatelessWidget {
         Container(
           padding: padding,
           decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey2,
-              borderRadius: BorderRadius.circular(60.0),
-              boxShadow: const [
-                BoxShadow(
-                  color: CupertinoColors.systemGrey,
-                  spreadRadius: .3,
-                  blurRadius: 5.5,
-                )
-              ]),
+            color: CupertinoColors.systemGrey2,
+            borderRadius: BorderRadius.circular(60.0),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                spreadRadius: .3,
+                blurRadius: 5.5,
+              ),
+            ],
+          ),
           child: Icon(
             FontAwesomeIcons.solidUser,
             size: iconSize,

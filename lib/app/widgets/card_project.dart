@@ -23,15 +23,15 @@ class _CardProjectState extends State<CardProject> {
     if (widget.project.image != null) {
       return Image.asset(
         widget.project.image!,
-        width: 55.0,
+        width: 55,
       );
     } else {
       return Container(
         color: CupertinoColors.systemGrey,
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12),
         child: const Icon(
           CupertinoIcons.group_solid,
-          size: 29.0,
+          size: 29,
           color: CupertinoColors.systemGrey5,
         ),
       );
@@ -45,23 +45,23 @@ class _CardProjectState extends State<CardProject> {
         widget.onTap();
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 6.0),
-        margin: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: const EdgeInsets.only(left: 6),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: primaryColor,
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: 8.0,
+            horizontal: 10,
+            vertical: 8,
           ),
           decoration: BoxDecoration(
             color: CupertinoColors.white,
             border: Border.all(color: CupertinoColors.systemGrey4),
             borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(5.0),
-              bottomRight: Radius.circular(5.0),
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(5),
             ),
           ),
           child: Row(
@@ -69,75 +69,99 @@ class _CardProjectState extends State<CardProject> {
             children: [
               // Group image
               ClipRRect(
-                borderRadius: BorderRadius.circular(50.0),
+                borderRadius: BorderRadius.circular(50),
                 child: _getImage(),
               ),
-              Row(
-                children: [
-                  const SizedBox(width: 8.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Group name
-                      Text(
-                        widget.project.name,
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
-                        ),
-                      ),
-
-                      // Last message send
-                      Text(
-                        widget.project.lastMessage ?? 'Você criou este projeto',
-                        style: const TextStyle(
-                          fontSize: 17.0,
-                          color: CupertinoColors.systemGrey2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    // Last message time
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          widget.project.lastMessageTime ?? '',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                            color: CupertinoColors.systemGrey,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 6.0),
-
-                    // IsImportant
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          widget.project.isImportant
-                              ? FontAwesomeIcons.thumbtack
-                              : null,
-                          color: CupertinoColors.systemGrey2,
-                          size: 22.5,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
+              _NameGroup(widget: widget, primaryColor: primaryColor),
+              _MySufix(widget: widget)
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _NameGroup extends StatelessWidget {
+  const _NameGroup({
+    required this.widget,
+    required this.primaryColor,
+  });
+
+  final CardProject widget;
+  final Color primaryColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Group name
+            Text(
+              widget.project.name,
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: primaryColor,
+              ),
+            ),
+
+            // Last message send
+            Text(
+              widget.project.lastMessage ?? 'Você criou este projeto',
+              style: const TextStyle(
+                fontSize: 16,
+                color: CupertinoColors.systemGrey2,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _MySufix extends StatelessWidget {
+  const _MySufix({required this.widget});
+
+  final CardProject widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          // Last message time
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                widget.project.lastMessageTime ?? '',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: CupertinoColors.systemGrey,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 6),
+
+          // IsImportant
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                widget.project.isImportant ? FontAwesomeIcons.thumbtack : null,
+                color: CupertinoColors.systemGrey2,
+                size: 21.5,
+              )
+            ],
+          )
+        ],
       ),
     );
   }

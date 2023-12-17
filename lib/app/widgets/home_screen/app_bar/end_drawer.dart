@@ -7,14 +7,9 @@ import 'package:kyw_management/app/widgets/circle_image.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/drawer_option.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/sign_out_button.dart';
 
-class MyEndDrawer extends StatefulWidget {
+class MyEndDrawer extends StatelessWidget {
   const MyEndDrawer({super.key});
 
-  @override
-  State<MyEndDrawer> createState() => _MyEndDrawerState();
-}
-
-class _MyEndDrawerState extends State<MyEndDrawer> {
   @override
   Widget build(BuildContext context) {
     final List<DrawerOption> options = [
@@ -98,7 +93,9 @@ class _MyEndDrawerState extends State<MyEndDrawer> {
           ),
 
           // SingOut
-          SignOutButton(onTap: () {}),
+          SignOutButton(
+              onTap: () =>
+                  GoRouter.of(context).pushReplacement(MyRoutes.signIn)),
 
           const SizedBox(height: 50.0)
         ],

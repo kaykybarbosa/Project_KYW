@@ -7,18 +7,17 @@ import '../../models/models_export.dart';
 part 'add_project_event.dart';
 part 'add_project_state.dart';
 
+const addProjectInitial = AddProjectInitial(
+  title: Title.pure(),
+  description: Description.pure(),
+  email: Email.pure(),
+  invitedFriends: [],
+  isValid: false,
+  status: FormzSubmissionStatus.initial,
+);
+
 class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
-  AddProjectBloc()
-      : super(
-          const AddProjectInitial(
-            title: Title.pure(),
-            description: Description.pure(),
-            email: Email.pure(),
-            invitedFriends: [],
-            isValid: false,
-            status: FormzSubmissionStatus.initial,
-          ),
-        ) {
+  AddProjectBloc() : super(addProjectInitial) {
     on<TitleChangedAddProject>(_onTitleChangedAddProject);
     on<DescriptionChangedAddProject>(_onDescriptionChangedAddProject);
     on<EmailChangedAddProject>(_onEmailChangedAddProject);
@@ -96,15 +95,6 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     FormSubmitteddAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    emit(
-      const AddProjectInitial(
-        title: Title.pure(),
-        description: Description.pure(),
-        email: Email.pure(),
-        invitedFriends: [],
-        isValid: false,
-        status: FormzSubmissionStatus.initial,
-      ),
-    );
+    emit(addProjectInitial);
   }
 }

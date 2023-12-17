@@ -9,11 +9,9 @@ class SignOutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onTap();
-      },
+      onTap: () => onTap(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         decoration: BoxDecoration(
             color: const Color.fromARGB(40, 255, 58, 48),
             borderRadius: BorderRadius.circular(5.0)),
