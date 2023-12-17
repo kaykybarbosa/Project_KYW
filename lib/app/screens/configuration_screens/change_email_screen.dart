@@ -42,29 +42,32 @@ class _SubmitChangeEmailButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
       builder: (context, state) {
-        return state.status.isInProgress
-            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
-            : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStatePropertyAll(
-                        state.isValid ? Colors.white : Colors.white70),
-                    backgroundColor: MaterialStatePropertyAll(state.isValid
-                        ? const Color.fromARGB(255, 6, 172, 147)
-                        : const Color.fromARGB(240, 6, 172, 147)),
-                  ),
-                  onPressed: state.isValid
-                      ? () => context
-                          .read<ChangeEmailCubit>()
-                          .formChangeEmailSubmitted()
-                      : null,
-                  child: const Text(
+        return SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStatePropertyAll(
+                  state.isValid ? Colors.white : Colors.white70),
+              backgroundColor: MaterialStatePropertyAll(state.isValid
+                  ? const Color.fromARGB(255, 6, 172, 147)
+                  : const Color.fromARGB(240, 6, 172, 147)),
+            ),
+            onPressed: state.isValid
+                ? () =>
+                    context.read<ChangeEmailCubit>().formChangeEmailSubmitted()
+                : null,
+            child: state.status.isInProgress
+                ? Transform.scale(
+                    scale: 0.44,
+                    child: const CircularProgressIndicator(color: Colors.white),
+                  )
+                : const Text(
                     'Alterar e-mail',
                     style: TextStyle(fontSize: 18),
                   ),
-                ),
-              );
+          ),
+        );
       },
     );
   }

@@ -188,29 +188,33 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DeleteAccountCubit, DeleteAccountState>(
       builder: (context, state) {
-        return state.status.isInProgress
-            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
-            : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStatePropertyAll(
-                        state.isValid ? Colors.white : Colors.white70),
-                    backgroundColor: MaterialStatePropertyAll(state.isValid
-                        ? Colors.red
-                        : const Color.fromARGB(250, 244, 67, 54)),
-                  ),
-                  onPressed: state.isValid
-                      ? () => context
-                          .read<DeleteAccountCubit>()
-                          .formDeleteAccountSubimitted()
-                      : null,
-                  child: const Text(
+        return SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStatePropertyAll(
+                  state.isValid ? Colors.white : Colors.white70),
+              backgroundColor: MaterialStatePropertyAll(state.isValid
+                  ? Colors.red
+                  : const Color.fromARGB(250, 244, 67, 54)),
+            ),
+            onPressed: state.isValid
+                ? () => context
+                    .read<DeleteAccountCubit>()
+                    .formDeleteAccountSubimitted()
+                : null,
+            child: state.status.isInProgress
+                ? Transform.scale(
+                    scale: 0.44,
+                    child: const CircularProgressIndicator(color: Colors.white),
+                  )
+                : const Text(
                     'Deletar Conta',
                     style: TextStyle(fontSize: 18),
                   ),
-                ),
-              );
+          ),
+        );
       },
     );
   }

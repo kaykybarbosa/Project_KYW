@@ -37,7 +37,7 @@ class MyFilter extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 28.0, horizontal: 33.0),
+      padding: const EdgeInsets.symmetric(horizontal: 33),
       child: BlocBuilder<FilterProjectBloc, FilterProjectState>(
         builder: (context, state) {
           return Column(
@@ -45,22 +45,15 @@ class MyFilter extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // The 3 buttons
                   FilterButtons(
                     current: FilterEnum.Filter,
-                    resetFunction: () {
-                      if (currentScreen == Screens.project) {
-                        context
-                            .read<FilterProjectBloc>()
-                            .add(const ResetFilterProject(resetDates: true));
-                      } else {
-                        context.read<FilterTaskBloc>().add(ResetFilterTask());
-                      }
-                    },
+                    clearFunction: () => _clearFilter(context),
                   ),
 
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
 
                   // Label creation date
                   const _CreationDate(),
@@ -133,14 +126,27 @@ class MyFilter extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 30),
 
               // Apply filter
-              ApplyButtom(onTap: () {})
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ApplyButtom(onTap: () {}),
+              )
             ],
           );
         },
       ),
     );
+  }
+
+  void _clearFilter(BuildContext context) {
+    if (currentScreen == Screens.project) {
+      context.read<FilterProjectBloc>().add(ResetFilterProject());
+    } else {
+      context.read<FilterProjectBloc>().add(ResetFilterProject());
+      context.read<FilterTaskBloc>().add(ResetFilterTask());
+    }
   }
 }
 

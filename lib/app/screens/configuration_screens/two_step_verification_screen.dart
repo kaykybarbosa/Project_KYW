@@ -132,30 +132,38 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TwoStepVerificationCubit, TwoStepVerificationState>(
       builder: (context, state) {
-        return state.status.isInProgress
-            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
-            : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStatePropertyAll(
-                        state.isValid ? Colors.white : Colors.white70),
-                    backgroundColor: MaterialStatePropertyAll(state.isValid
-                        ? const Color.fromARGB(255, 6, 172, 147)
-                        : const Color.fromARGB(240, 6, 172, 147)),
-                  ),
-                  onPressed: state.isValid
-                      ? () => context
-                          .read<TwoStepVerificationCubit>()
-                          .formTwoStepSubmitted()
-                      : null,
-                  child: const Text(
+        return SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            style: _buttonStyle(state),
+            onPressed: state.isValid
+                ? () => context
+                    .read<TwoStepVerificationCubit>()
+                    .formTwoStepSubmitted()
+                : null,
+            child: state.status.isInProgress
+                ? Transform.scale(
+                    scale: 0.44,
+                    child: const CircularProgressIndicator(color: Colors.white),
+                  )
+                : const Text(
                     'Habilitar Verificação',
                     style: TextStyle(fontSize: 18),
                   ),
-                ),
-              );
+          ),
+        );
       },
+    );
+  }
+
+  ButtonStyle _buttonStyle(TwoStepVerificationState state) {
+    return ButtonStyle(
+      foregroundColor: MaterialStatePropertyAll(
+          state.isValid ? Colors.white : Colors.white70),
+      backgroundColor: MaterialStatePropertyAll(state.isValid
+          ? const Color.fromARGB(255, 6, 172, 147)
+          : const Color.fromARGB(240, 6, 172, 147)),
     );
   }
 }

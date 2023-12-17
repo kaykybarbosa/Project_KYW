@@ -10,7 +10,7 @@ import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/my_filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/order.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_order.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/the_filters.dart';
@@ -18,43 +18,64 @@ import 'package:kyw_management/app/widgets/list_projects.dart';
 import 'package:kyw_management/app/widgets/list_tasks.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  void _setCurrentScreen(int value) {
-    /// [value] == 0 => ShowMyProjects and
-    /// [value] == 1 => ShowMyTasks
-
-    if (value == 0) {
-      context
-          .read<HomeBloc>()
-          .add(const ScreenChangedHome(screen: Screens.project));
-    } else {
-      context
-          .read<HomeBloc>()
-          .add(const ScreenChangedHome(screen: Screens.task));
-    }
-  }
-
-  void _openEndDrawer() {
-    _scaffoldKey.currentState?.openEndDrawer();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+    void setCurrentScreen(int value) {
+      /// [value] == 0 => ShowMyProjects and
+      /// [value] == 1 => ShowMyTasks
+
+      if (value == 0) {
+        context
+            .read<HomeBloc>()
+            .add(const ScreenChangedHome(screen: Screens.project));
+      } else {
+        context
+            .read<HomeBloc>()
+            .add(const ScreenChangedHome(screen: Screens.task));
+      }
+    }
+
+    void openEndDrawer() {
+      scaffoldKey.currentState?.openEndDrawer();
+    }
+
+    void resetBlocCurrentScreen(Screens screen) {
+      if (screen == Screens.project) {
+        context.read<FilterProjectBloc>().add(ResetFilterProject());
+      } else {
+        context.read<FilterTaskBloc>().add(ResetFilterTask());
+      }
+    }
+
+    Future<dynamic> myModalBottom({
+      required BuildContext context,
+      required HomeState state,
+      required Widget child,
+    }) async {
+      await showModalBottomSheet(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        builder: (BuildContext context) => SizedBox(
+          height: 665,
+          child: child,
+        ),
+      );
+
+      resetBlocCurrentScreen(state.currentScreen);
+    }
+
     return DefaultTabController(
       length: 2,
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return Scaffold(
-            key: _scaffoldKey,
+            key: scaffoldKey,
             appBar: AppBar(
               toolbarHeight: 50,
               // App name
@@ -74,14 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 // More options Icon
                 MyIcon(
                   icon: CupertinoIcons.ellipsis_vertical,
-                  onTap: () => _openEndDrawer(),
+                  onTap: () => openEndDrawer(),
                   showBadge: false,
                 ),
               ],
 
               bottom: myTabBar(
                 onTap: (value) {
-                  _setCurrentScreen(value);
+                  setCurrentScreen(value);
                 },
                 tabs: const [
                   Tab(text: 'Projetos'),
@@ -97,9 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   // Input Search
-                  MySearchBar(search: () async {
-                    showModalBosttomSheet;
-                  }),
+                  MySearchBar(search: () {}),
 
                   // Buttons the filters
                   Row(
@@ -111,7 +130,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         labelSize: 17,
                         iconSize: 17,
                         icon: FontAwesomeIcons.filter,
-                        onTap: () => _showModalFilter(context, state),
+                        onTap: () => myModalBottom(
+                          context: context,
+                          state: state,
+                          child: MyFilter(currentScreen: state.currentScreen),
+                        ),
                       ),
 
                       // Order
@@ -120,7 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         labelSize: 17,
                         icon: FontAwesomeIcons.caretDown,
                         iconSize: 26,
-                        onTap: () => _showModalOrder(context, state),
+                        onTap: () => myModalBottom(
+                          context: context,
+                          state: state,
+                          child: MyOrder(currentScreen: state.currentScreen),
+                        ),
                       ),
                     ],
                   ),
@@ -152,90 +179,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  Future<dynamic> _showModalFilter(
-    BuildContext context,
-    HomeState state,
-  ) async {
-    await showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) => SizedBox(
-        height: 700,
-        child: MyFilter(currentScreen: state.currentScreen),
-      ),
-    );
-
-    resetBlocCurrentScreen();
-  }
-
-  void resetBlocCurrentScreen() {
-    context
-        .read<FilterProjectBloc>()
-        .add(const ResetFilterProject(resetDates: true));
-  }
-
-  Future<dynamic> _showModalOrder(BuildContext context, HomeState state) async {
-    await showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) => SizedBox(
-        height: 700,
-        child: Order(currentScreen: state.currentScreen),
-      ),
-    );
-  }
-}
-
-Future<T?> showModalBosttomSheet<T>({
-  required BuildContext context,
-  required WidgetBuilder builder,
-  Color? backgroundColor,
-  String? barrierLabel,
-  double? elevation,
-  ShapeBorder? shape,
-  Clip? clipBehavior,
-  BoxConstraints? constraints,
-  Color? barrierColor,
-  bool isScrollControlled = false,
-  double scrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
-  bool useRootNavigator = false,
-  bool isDismissible = true,
-  bool enableDrag = true,
-  bool? showDragHandle,
-  bool useSafeArea = false,
-  RouteSettings? routeSettings,
-  AnimationController? transitionAnimationController,
-  Offset? anchorPoint,
-}) {
-  assert(debugCheckHasMediaQuery(context));
-  assert(debugCheckHasMaterialLocalizations(context));
-
-  final NavigatorState navigator =
-      Navigator.of(context, rootNavigator: useRootNavigator);
-  final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-  return navigator.push(ModalBottomSheetRoute<T>(
-    builder: builder,
-    capturedThemes:
-        InheritedTheme.capture(from: context, to: navigator.context),
-    isScrollControlled: isScrollControlled,
-    scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
-    barrierLabel: barrierLabel ?? localizations.scrimLabel,
-    barrierOnTapHint:
-        localizations.scrimOnTapHint(localizations.bottomSheetLabel),
-    backgroundColor: backgroundColor,
-    elevation: elevation,
-    shape: shape,
-    clipBehavior: clipBehavior,
-    constraints: constraints,
-    isDismissible: isDismissible,
-    modalBarrierColor:
-        barrierColor ?? Theme.of(context).bottomSheetTheme.modalBarrierColor,
-    enableDrag: enableDrag,
-    showDragHandle: showDragHandle,
-    settings: routeSettings,
-    transitionAnimationController: transitionAnimationController,
-    anchorPoint: anchorPoint,
-    useSafeArea: useSafeArea,
-  ));
 }

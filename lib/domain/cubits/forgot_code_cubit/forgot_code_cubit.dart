@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
-import '../../models/models_export.dart';
+import '../../models_states/models_states_export.dart';
 
 part 'forgot_code_state.dart';
 

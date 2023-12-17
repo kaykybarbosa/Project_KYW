@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models/email.dart';
+import '../../models_states/email.dart';
 
 part 'forgot_email_state.dart';
 

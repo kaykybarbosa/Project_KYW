@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 
 class FilterButtons extends StatelessWidget {
   const FilterButtons(
-      {super.key, required this.current, required this.resetFunction});
+      {super.key, required this.current, required this.clearFunction});
 
   final FilterEnum current;
-  final Function resetFunction;
+  final Function clearFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +14,19 @@ class FilterButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _button(
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: () => Navigator.pop(context),
           text: 'Cancelar',
-          color: CupertinoColors.systemBlue,
+          color: Colors.blue[600],
         ),
         _button(
           onTap: () {},
-          text: current.name,
-          color: CupertinoColors.black,
+          text: current == FilterEnum.Filter ? 'Filtrar  ' : 'Ordenar  ',
+          color: Colors.black,
         ),
         _button(
-          onTap: () {
-            resetFunction();
-          },
-          text: 'Resetar',
-          color: CupertinoColors.systemBlue,
+          onTap: () => clearFunction(),
+          text: 'Limpar',
+          color: Colors.blue[600],
         ),
       ],
     );
@@ -39,7 +35,7 @@ class FilterButtons extends StatelessWidget {
   GestureDetector _button({
     required Function onTap,
     required String text,
-    required Color color,
+    Color? color,
   }) {
     return GestureDetector(
       onTap: () => onTap(),

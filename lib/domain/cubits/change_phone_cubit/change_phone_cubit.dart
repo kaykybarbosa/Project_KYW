@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models/models_export.dart';
+import '../../models_states/models_states_export.dart';
 
 part 'change_phone_state.dart';
 

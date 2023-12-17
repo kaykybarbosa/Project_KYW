@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models/models_export.dart';
+import '../../models_states/models_states_export.dart';
 
 part 'add_project_event.dart';
 part 'add_project_state.dart';
