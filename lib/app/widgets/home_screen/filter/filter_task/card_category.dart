@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
-import 'package:kyw_management/domain/models/my_category.dart';
+import 'package:kyw_management/domain/models_states/my_category.dart';
 
 class CardCategory extends StatefulWidget {
   const CardCategory({super.key, required this.category});

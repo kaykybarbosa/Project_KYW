@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
-import 'package:kyw_management/app/widgets/create_project_screen.dart/criation_input.dart';
+import 'package:kyw_management/app/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/list_members.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
@@ -111,10 +111,10 @@ class _MyFloatingButton extends StatelessWidget {
                 }
               : null,
           backgroundColor: Theme.of(context).primaryColor,
-          child: const Icon(
+          child: Icon(
             CupertinoIcons.check_mark,
             size: 30.0,
-            color: CupertinoColors.white,
+            color: state.isValid ? Colors.white : Colors.white60,
           ),
         );
       },
@@ -137,41 +137,17 @@ class _EmailFriendsInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
-        return CupertinoFormRow(
-          padding: EdgeInsets.zero,
-          helper: state.email.displayError != null
-              ? const _MessageValidationError(messageError: 'E-mail inválido!')
-              : null,
-          child: MyCreationInput(
-            placeHolder: 'Inserir e-mail',
-            text: 'Convidar amigos por e-mail',
-            onChange: (value) => context
-                .read<AddProjectBloc>()
-                .add(EmailChangedAddProject(email: value)),
-          ),
+        return MyTextField(
+          placeHolder: 'Inserir e-mail',
+          text: 'Convidar amigos por e-mail',
+          textInputType: TextInputType.emailAddress,
+          onChange: (value) => context
+              .read<AddProjectBloc>()
+              .add(EmailChangedAddProject(email: value)),
+          errorMessage:
+              state.email.displayError != null ? 'E-mail inválido!' : null,
         );
       },
-    );
-  }
-}
-
-class _MessageValidationError extends StatelessWidget {
-  const _MessageValidationError({required String messageError})
-      : _messageError = messageError;
-
-  final String _messageError;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Text(
-        _messageError,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 14,
-        ),
-      ),
     );
   }
 }
@@ -193,24 +169,25 @@ class _AddFriendsButton extends StatelessWidget {
             padding: const MaterialStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 10)),
           ),
-          child: const Chip(
+          child: Chip(
             padding: EdgeInsets.zero,
-            backgroundColor: Colors.blueGrey,
-            shape: RoundedRectangleBorder(
+            backgroundColor: Theme.of(context).primaryColor,
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               side: BorderSide(color: Colors.transparent),
             ),
-            label: Row(
+            label: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   Icons.add,
                   color: Colors.white,
+                  size: 20,
                 ),
                 Text(
                   'Convidar',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 16,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),

@@ -15,6 +15,8 @@ class ListMembers extends StatelessWidget {
           title: Text(
             users[index],
             style: const TextStyle(fontSize: 18.0),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           trailing: const Icon(
             CupertinoIcons.ellipsis_vertical,

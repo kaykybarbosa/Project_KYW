@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/circle_image.dart';
-import 'package:kyw_management/app/widgets/create_project_screen.dart/criation_input.dart';
+import 'package:kyw_management/app/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/domain/blocs/add_project_bloc/add_project_bloc.dart';
 
 class CreateProjectScreen extends StatefulWidget {
@@ -26,8 +26,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> {
           appBar: AppBar(title: const Text('Novo Projeto')),
           body: Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: 20.0,
-              horizontal: 35.0,
+              vertical: 20,
+              horizontal: 35,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -56,9 +56,9 @@ class _MessageTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Selecione uma imagem pra o projeto',
+      'Selecione uma imagem para o projeto',
       style: TextStyle(
-        fontSize: 18.0,
+        fontSize: 17.0,
         color: CupertinoColors.systemGrey,
       ),
     );
@@ -72,21 +72,15 @@ class _TitleInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
-        return CupertinoFormRow(
-          padding: EdgeInsets.zero,
-          helper: state.title.displayError != null
-              ? const _MessageValidationError(
-                  messageError: 'Título é obrigátorio!')
-              : null,
-          child: MyCreationInput(
-            text: 'Título do Projeto*',
-            placeHolder: 'Título',
-            textInputType: TextInputType.text,
-            maxLength: 30,
-            onChange: (value) => context
-                .read<AddProjectBloc>()
-                .add(TitleChangedAddProject(title: value)),
-          ),
+        return MyTextField(
+          text: 'Título do Projeto*',
+          placeHolder: 'Título',
+          textInputType: TextInputType.text,
+          onChange: (value) => context
+              .read<AddProjectBloc>()
+              .add(TitleChangedAddProject(title: value)),
+          errorMessage:
+              state.title.displayError != null ? 'Título é obrigátorio!' : null,
         );
       },
     );
@@ -100,25 +94,19 @@ class _DescriptionInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
-        return CupertinoFormRow(
-          padding: EdgeInsets.zero,
-          helper: state.description.displayError != null
-              ? const _MessageValidationError(
-                  messageError: 'Descrição é obrigátorio!')
+        return MyTextField(
+          text: 'Descrição do Projeto*',
+          placeHolder: 'Descrição',
+          maxLine: 5,
+          textInputType: TextInputType.multiline,
+          onChange: (value) {
+            context
+                .read<AddProjectBloc>()
+                .add(DescriptionChangedAddProject(description: value));
+          },
+          errorMessage: state.description.displayError != null
+              ? 'Descrição é obrigátorio!'
               : null,
-          child: MyCreationInput(
-            text: 'Descrição do Projeto*',
-            placeHolder: 'Descrição',
-            heightPrefix: 115.8,
-            maxLine: 5,
-            maxLength: 100,
-            textInputType: TextInputType.multiline,
-            onChange: (value) {
-              context
-                  .read<AddProjectBloc>()
-                  .add(DescriptionChangedAddProject(description: value));
-            },
-          ),
         );
       },
     );
@@ -136,10 +124,10 @@ class _MyFloatingButton extends StatelessWidget {
           onPressed:
               state.isValid ? () => context.push(MyRoutes.inviteFriends) : null,
           backgroundColor: Theme.of(context).primaryColor,
-          child: const Icon(
+          child: Icon(
             CupertinoIcons.arrow_right,
             size: 30.0,
-            color: CupertinoColors.white,
+            color: state.isValid ? Colors.white : Colors.white60,
           ),
         );
       },

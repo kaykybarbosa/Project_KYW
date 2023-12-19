@@ -10,24 +10,27 @@ class SubmitCodeForgotButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ForgotCodeCubit, ForgotCodeState>(
       builder: (context, state) {
-        return state.status.isInProgress
-            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
-            : SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    disabledForegroundColor:
-                        const Color.fromARGB(90, 238, 238, 238),
-                  ),
-                  onPressed: state.isValid
-                      ? () => context.read<ForgotCodeCubit>().formSubmitted()
-                      : null,
-                  child: const Text(
+        return SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              disabledForegroundColor: const Color.fromARGB(90, 238, 238, 238),
+            ),
+            onPressed: state.isValid
+                ? () => context.read<ForgotCodeCubit>().formSubmitted()
+                : null,
+            child: state.status.isInProgress
+                ? Transform.scale(
+                    scale: 0.44,
+                    child: const CircularProgressIndicator(color: Colors.white),
+                  )
+                : const Text(
                     'AVANÇAR',
                     style: TextStyle(fontSize: 18),
                   ),
-                ),
-              );
+          ),
+        );
       },
     );
   }

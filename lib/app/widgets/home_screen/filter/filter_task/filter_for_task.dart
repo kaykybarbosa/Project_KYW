@@ -16,10 +16,7 @@ class FilterForTask extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // The three Status CheckBox
-            const Text(
-              'Status',
-              style: TextStyle(fontSize: 20.0),
-            ),
+            const _Title(title: 'Status'),
             FilterByCheckedBox(
               isChecked: state.pending,
               status: Status.pending,
@@ -39,13 +36,10 @@ class FilterForTask extends StatelessWidget {
                   context.read<FilterTaskBloc>().add(IncompleteChanged()),
             ),
 
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 20),
 
             // Category
-            const Text(
-              'Category',
-              style: TextStyle(fontSize: 20.0),
-            ),
+            const _Title(title: 'Categoria'),
 
             // CheckBox with Show categories
             Row(
@@ -60,7 +54,7 @@ class FilterForTask extends StatelessWidget {
                 ),
                 const Text(
                   'Mostrar apenas minhas categorias',
-                  style: TextStyle(fontSize: 18.0),
+                  style: TextStyle(fontSize: 16),
                 ),
               ],
             ),
@@ -86,6 +80,23 @@ class FilterForTask extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({required String title}) : _title = title;
+
+  final String _title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _title,
+      style: const TextStyle(
+        fontSize: 20.0,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 }

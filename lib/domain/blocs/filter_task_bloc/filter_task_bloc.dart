@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kyw_management/domain/models/my_category.dart';
+import 'package:kyw_management/domain/models_states/my_category.dart';
 
 part 'filter_task_event.dart';
 part 'filter_task_state.dart';

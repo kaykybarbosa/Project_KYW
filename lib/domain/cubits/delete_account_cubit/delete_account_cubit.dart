@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
-import 'package:kyw_management/domain/models/email.dart';
+import 'package:kyw_management/domain/models_states/email.dart';
 
 part 'delete_account_state.dart';
 

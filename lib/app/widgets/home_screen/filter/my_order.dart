@@ -4,8 +4,8 @@ import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/apply_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_buttons.dart';
 
-class Order extends StatelessWidget {
-  const Order({super.key, required this.currentScreen});
+class MyOrder extends StatelessWidget {
+  const MyOrder({super.key, required this.currentScreen});
 
   final Screens currentScreen;
 
@@ -25,7 +25,7 @@ class Order extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 28.0, horizontal: 33.0),
+      padding: const EdgeInsets.symmetric(horizontal: 33),
       child: Column(
         children: [
           // Options the Order
@@ -34,7 +34,7 @@ class Order extends StatelessWidget {
               children: [
                 FilterButtons(
                   current: FilterEnum.Order,
-                  resetFunction: () {},
+                  clearFunction: () {},
                 ),
                 Expanded(
                   child: ListView.separated(
@@ -44,14 +44,14 @@ class Order extends StatelessWidget {
                           currentScreen == Screens.project
                               ? optionsOrderProject[index]
                               : optionsOrderTask[index],
-                          style: const TextStyle(fontSize: 18.0),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         onTap: () {},
                       );
                     },
-                    physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    separatorBuilder: (__, _) => const Divider(height: 0.0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (__, _) => const Divider(height: 0),
                     itemCount: currentScreen == Screens.project
                         ? optionsOrderProject.length
                         : optionsOrderTask.length,
@@ -62,7 +62,10 @@ class Order extends StatelessWidget {
           ),
 
           // Buttom apply Order
-          ApplyButtom(onTap: () {})
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: ApplyButtom(onTap: () {}),
+          )
         ],
       ),
     );

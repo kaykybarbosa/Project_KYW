@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:kyw_management/domain/models/models_export.dart';
+import 'package:kyw_management/domain/models_states/models_states_export.dart';
 
 part 'change_password_state.dart';
 

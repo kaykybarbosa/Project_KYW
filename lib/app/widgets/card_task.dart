@@ -16,23 +16,23 @@ class _CardTaskState extends State<CardTask> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 6.0),
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.only(left: 6),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
-          vertical: 8.0,
+          horizontal: 10,
+          vertical: 8,
         ),
         decoration: BoxDecoration(
           color: CupertinoColors.white,
           border: Border.all(color: CupertinoColors.systemGrey4),
           borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(5.0),
-            bottomRight: Radius.circular(5.0),
+            topRight: Radius.circular(5),
+            bottomRight: Radius.circular(5),
           ),
         ),
         child: Row(
@@ -46,31 +46,31 @@ class _CardTaskState extends State<CardTask> {
                   Text(
                     widget.task.title,
                     style: const TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
 
                   // Task description
                   Container(
-                    margin: const EdgeInsets.only(bottom: 15.0),
+                    margin: const EdgeInsets.only(bottom: 15),
                     child: Text(
                       widget.task.description ?? '',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 17.0,
+                        fontSize: 14,
                         color: CupertinoColors.systemGrey,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 5.0),
+                  const SizedBox(height: 5),
 
                   //Task category
                   const Text(
                     'Categoria',
-                    style: TextStyle(fontSize: 17.0),
+                    style: TextStyle(fontSize: 17),
                   )
                 ],
               ),
@@ -86,13 +86,13 @@ class _CardTaskState extends State<CardTask> {
                       widget.task.isImportant
                           ? FontAwesomeIcons.thumbtack
                           : null,
-                      size: 23.0,
+                      size: 23,
                       color: CupertinoColors.systemGrey2,
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 60.0),
+                const SizedBox(height: 60),
 
                 // Status name
                 MyStatus(status: widget.task.status)
