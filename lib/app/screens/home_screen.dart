@@ -8,8 +8,8 @@ import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/app_name.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/my_filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_filter.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/order.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
@@ -91,49 +91,51 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 15,
-              ),
-              child: Column(
-                children: [
-                  // Input Search
-                  const MySearchBar(),
-
-                  // Buttons the filters
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: TabBarView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 15,
+                  ),
+                  child: Column(
                     children: [
-                      // Filter
-                      TheFilters(
-                        label: 'Filtrar',
-                        labelSize: 17,
-                        iconSize: 17,
-                        icon: FontAwesomeIcons.filter,
-                        onTap: () => _showModalFilter(context, state),
-                      ),
+                      // Input Search
+                      const MySearchBar(),
 
-                      // Order
-                      TheFilters(
-                        label: 'Ordenar',
-                        labelSize: 17,
-                        icon: FontAwesomeIcons.caretDown,
-                        iconSize: 26,
-                        onTap: () => _showModalOrder(context, state),
+                      // Buttons the filters
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Filter
+                          TheFilters(
+                            label: 'Filtrar',
+                            labelSize: 17,
+                            iconSize: 17,
+                            icon: FontAwesomeIcons.filter,
+                            onTap: () => _showModalFilter(context, state),
+                          ),
+
+                          // Order
+                          TheFilters(
+                            label: 'Ordenar',
+                            labelSize: 17,
+                            icon: FontAwesomeIcons.caretDown,
+                            iconSize: 26,
+                            onTap: () => _showModalOrder(context, state),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
-                  // Current screen
-                  Expanded(
-                    flex: 12,
-                    child: state.currentScreen == Screens.project
-                        ? const ListProjects()
-                        : ListTasks(tasks: tasksData),
-                  )
-                ],
-              ),
+                ), // Current screen
+                Expanded(
+                  flex: 12,
+                  child: state.currentScreen == Screens.project
+                      ? const ListProjects()
+                      : ListTasks(tasks: tasksData),
+                )
+              ],
             ),
 
             // EndDrawer the more options

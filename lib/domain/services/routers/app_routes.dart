@@ -8,7 +8,7 @@ import 'package:kyw_management/app/widgets/home_screen/chat/ChatProject.dart';
 import '../../../app/screens/screens_export.dart';
 
 final appRoutes = GoRouter(
-  initialLocation: MyRoutes.home,
+  initialLocation: MyRoutes.signIn,
   routes: [
     GoRoute(
       path: MyRoutes.signIn,

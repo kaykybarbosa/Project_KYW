@@ -23,7 +23,9 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       body: BlocListener<SignInBloc, SignInState>(
         listener: (context, state) {
-          if (state.status.isInProgress) {}
+          if (state.status.isSuccess) {
+            GoRouter.of(context).pushReplacement(MyRoutes.home);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
