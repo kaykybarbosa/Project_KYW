@@ -9,7 +9,8 @@ import 'package:kyw_management/app/widgets/home_screen/app_bar/app_name.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/end_drawer.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/my_tab_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/create_project_button.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/order.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_filter.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_order.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_icon.dart';
 import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/the_filters.dart';
@@ -129,7 +130,11 @@ class HomeScreen extends StatelessWidget {
                         labelSize: 17,
                         iconSize: 17,
                         icon: FontAwesomeIcons.filter,
-                        onTap: () => _showModalFilter(context, state),
+                        onTap: () => myModalBottom(
+                          context: context,
+                          state: state,
+                          child: MyFilter(currentScreen: state.currentScreen),
+                        ),
                       ),
 
                       // Order
@@ -138,7 +143,11 @@ class HomeScreen extends StatelessWidget {
                         labelSize: 17,
                         icon: FontAwesomeIcons.caretDown,
                         iconSize: 26,
-                        onTap: () => _showModalOrder(context, state),
+                        onTap: () => myModalBottom(
+                          context: context,
+                          state: state,
+                          child: MyOrder(currentScreen: state.currentScreen),
+                        ),
                       ),
                     ],
                   ),
