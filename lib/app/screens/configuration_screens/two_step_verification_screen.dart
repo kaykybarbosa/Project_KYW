@@ -8,47 +8,36 @@ class TwoStepVerificationScreen extends StatefulWidget {
   const TwoStepVerificationScreen({super.key});
 
   @override
-  State<TwoStepVerificationScreen> createState() =>
-      _TwoStepVerificationScreenState();
+  State<TwoStepVerificationScreen> createState() => _TwoStepVerificationScreenState();
 }
 
 class _TwoStepVerificationScreenState extends State<TwoStepVerificationScreen> {
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(title: const Text('Configuração de duas etapas')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: SizedBox(
-            height: (screenSize.height / 1.3),
-            child: BlocProvider(
-              create: (context) => TwoStepVerificationCubit(),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+        child: BlocProvider(
+          create: (context) => TwoStepVerificationCubit(),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Text for enter email
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text for enter email
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _TextTheInput(),
-                      _EmailInput(),
+                  _TextTheInput(),
+                  _EmailInput(),
 
-                      // Message the info
-                      _MesssageInfo(),
-                    ],
-                  ),
-
-                  // const SizedBox(height: 300),
-
-                  // Button enable verification
-                  _SubmitButton()
+                  // Message the info
+                  _MesssageInfo(),
                 ],
               ),
-            ),
+
+              // Button enable verification
+              _SubmitButton()
+            ],
           ),
         ),
       ),
@@ -86,16 +75,12 @@ class _EmailInput extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+                enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 2.5)),
                 hintText: 'E-mail ou Número',
                 border: const OutlineInputBorder(),
-                errorText: state.email.displayError != null
-                    ? "Por favor, informe um e-mail válido!"
-                    : null,
+                errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
               ),
-              onChanged: (email) =>
-                  context.read<TwoStepVerificationCubit>().emailChanged(email));
+              onChanged: (email) => context.read<TwoStepVerificationCubit>().emailChanged(email));
         },
       ),
     );
@@ -111,7 +96,7 @@ class _MesssageInfo extends StatelessWidget {
         'Para garantir a segurança da sua conta, estamos aplicando uma camada adicional de proteção. Este processo adiciona uma barreira vital contra acessos não autorizados e mantém seus dados pessoais seguros.';
 
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+      padding: EdgeInsets.symmetric(vertical: 25.0),
       child: Text(
         info,
         textAlign: TextAlign.justify,
@@ -137,11 +122,7 @@ class _SubmitButton extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             style: _buttonStyle(state),
-            onPressed: state.isValid
-                ? () => context
-                    .read<TwoStepVerificationCubit>()
-                    .formTwoStepSubmitted()
-                : null,
+            onPressed: state.isValid ? () => context.read<TwoStepVerificationCubit>().formTwoStepSubmitted() : null,
             child: state.status.isInProgress
                 ? Transform.scale(
                     scale: 0.44,
@@ -159,11 +140,8 @@ class _SubmitButton extends StatelessWidget {
 
   ButtonStyle _buttonStyle(TwoStepVerificationState state) {
     return ButtonStyle(
-      foregroundColor: MaterialStatePropertyAll(
-          state.isValid ? Colors.white : Colors.white70),
-      backgroundColor: MaterialStatePropertyAll(state.isValid
-          ? const Color.fromARGB(255, 6, 172, 147)
-          : const Color.fromARGB(240, 6, 172, 147)),
+      foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
+      backgroundColor: MaterialStatePropertyAll(state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
     );
   }
 }

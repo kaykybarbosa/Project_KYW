@@ -47,16 +47,10 @@ class _SubmitChangeEmailButton extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(
-                  state.isValid ? Colors.white : Colors.white70),
-              backgroundColor: MaterialStatePropertyAll(state.isValid
-                  ? const Color.fromARGB(255, 6, 172, 147)
-                  : const Color.fromARGB(240, 6, 172, 147)),
+              foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
+              backgroundColor: MaterialStatePropertyAll(state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
             ),
-            onPressed: state.isValid
-                ? () =>
-                    context.read<ChangeEmailCubit>().formChangeEmailSubmitted()
-                : null,
+            onPressed: state.isValid ? () => context.read<ChangeEmailCubit>().formChangeEmailSubmitted() : null,
             child: state.status.isInProgress
                 ? Transform.scale(
                     scale: 0.44,
@@ -81,23 +75,18 @@ class _CurrentEMailInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
-        buildWhen: (previous, current) =>
-            previous.currentEmail != current.currentEmail,
+        buildWhen: (previous, current) => previous.currentEmail != current.currentEmail,
         builder: (context, state) {
           return TextFormField(
             initialValue: state.currentEmail.value,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+              enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 2.5)),
               hintText: 'E-mail atual',
               border: const OutlineInputBorder(),
-              errorText: state.currentEmail.displayError != null
-                  ? "E-mail inválido!"
-                  : null,
+              errorText: state.currentEmail.displayError != null ? "E-mail inválido!" : null,
             ),
-            onChanged: (number) =>
-                context.read<ChangeEmailCubit>().currentEmailChanged(number),
+            onChanged: (number) => context.read<ChangeEmailCubit>().currentEmailChanged(number),
           );
         },
       ),
@@ -119,16 +108,12 @@ class _NewEmailInput extends StatelessWidget {
             initialValue: state.newEmail.value,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+              enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 2.5)),
               hintText: 'E-mail novo',
               border: const OutlineInputBorder(),
-              errorText: state.newEmail.displayError != null
-                  ? "E-mail inválido!"
-                  : null,
+              errorText: state.newEmail.displayError != null ? "E-mail inválido!" : null,
             ),
-            onChanged: (number) =>
-                context.read<ChangeEmailCubit>().newEmailChanged(number),
+            onChanged: (number) => context.read<ChangeEmailCubit>().newEmailChanged(number),
           );
         },
       ),

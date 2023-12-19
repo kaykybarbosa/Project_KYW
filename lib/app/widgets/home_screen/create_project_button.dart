@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateProjectButton extends StatelessWidget {
@@ -10,11 +9,11 @@ class CreateProjectButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () => onTap(),
-      backgroundColor: CupertinoColors.activeBlue,
+      backgroundColor: Colors.blue,
       child: const Icon(
-        CupertinoIcons.add,
-        size: 30.0,
-        color: CupertinoColors.white,
+        Icons.add,
+        size: 35,
+        color: Colors.white,
       ),
     );
   }

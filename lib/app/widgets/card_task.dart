@@ -17,7 +17,7 @@ class _CardTaskState extends State<CardTask> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 6),
-      margin: const EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 2.5),
       decoration: BoxDecoration(
         color: CupertinoTheme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(5),

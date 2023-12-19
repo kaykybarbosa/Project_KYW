@@ -11,6 +11,7 @@ class ListTasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 7.5),
       itemCount: tasks.length,
       itemBuilder: (context, index) {
         return CardTask(task: tasks[index]);

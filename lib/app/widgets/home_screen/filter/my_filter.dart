@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 import 'package:kyw_management/app/enums/screens.dart';
-import 'package:kyw_management/app/my_app.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/apply_button.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_buttons.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_projet/filter_for_project.dart';
-import 'package:kyw_management/app/widgets/home_screen/filter/my_selection_date.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_for_task.dart';
+import 'package:kyw_management/app/widgets/home_screen/filter/my_selection_date.dart';
 
 import '../../../../domain/blocs/blocs_export.dart';
+
+DateFormat formatter = DateFormat("dd/MM/yyyy");
 
 class MyFilter extends StatelessWidget {
   const MyFilter({super.key, required this.currentScreen});
@@ -25,13 +27,9 @@ class MyFilter extends StatelessWidget {
       if (dateSelected != null) {
         var date = formatter.format(dateSelected);
         if (isInitDate) {
-          context
-              .read<FilterProjectBloc>()
-              .add(InitDateChanged(initDate: date));
+          context.read<FilterProjectBloc>().add(InitDateChanged(initDate: date));
         } else {
-          context
-              .read<FilterProjectBloc>()
-              .add(FinalDateChanged(finalDate: date));
+          context.read<FilterProjectBloc>().add(FinalDateChanged(finalDate: date));
         }
       }
     }
@@ -69,12 +67,9 @@ class MyFilter extends StatelessWidget {
                         // Init Date
                         MySelectionDate(
                           title: 'Início',
-                          hintText: state.initDate.isEmpty
-                              ? 'dd/MM/yyyy'
-                              : state.initDate,
+                          hintText: state.initDate.isEmpty ? 'dd/MM/yyyy' : state.initDate,
                           showCalendar: () async {
-                            DateTime? dateSelected =
-                                await _showCalendar(context);
+                            DateTime? dateSelected = await _showCalendar(context);
 
                             setDate(
                               isInitDate: state.isInitDate,
@@ -93,12 +88,9 @@ class MyFilter extends StatelessWidget {
                         // Final Date
                         MySelectionDate(
                           title: 'Fim',
-                          hintText: state.finalDate.isEmpty
-                              ? 'dd/MM/yyyy'
-                              : state.finalDate,
+                          hintText: state.finalDate.isEmpty ? 'dd/MM/yyyy' : state.finalDate,
                           showCalendar: () async {
-                            DateTime? dateSelected =
-                                await _showCalendar(context);
+                            DateTime? dateSelected = await _showCalendar(context);
 
                             setDate(
                               isInitDate: !state.isInitDate,

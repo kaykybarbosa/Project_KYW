@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'package:kyw_management/app/models/task.dart';
 import 'package:kyw_management/app/models/user.dart';
 
@@ -82,14 +81,10 @@ class Project extends Equatable {
   factory Project.fromMap(Map<String, dynamic> map) {
     return Project(
       name: map['name'] as String,
-      description:
-          map['description'] != null ? map['description'] as String : null,
+      description: map['description'] != null ? map['description'] as String : null,
       image: map['image'] != null ? map['image'] as String : null,
-      lastMessage:
-          map['lastMessage'] != null ? map['lastMessage'] as String : null,
-      lastMessageTime: map['lastMessageTime'] != null
-          ? map['lastMessageTime'] as String
-          : null,
+      lastMessage: map['lastMessage'] != null ? map['lastMessage'] as String : null,
+      lastMessageTime: map['lastMessageTime'] != null ? map['lastMessageTime'] as String : null,
       // tasks: map['tasks'] != null
       //     ? List<Task>.from(
       //         (map['tasks'] as List<int>).map<Task?>(
@@ -104,8 +99,7 @@ class Project extends Equatable {
       //         ),
       //       )
       //     : null,
-      inviteLink:
-          map['inviteLink'] != null ? map['inviteLink'] as String : null,
+      inviteLink: map['inviteLink'] != null ? map['inviteLink'] as String : null,
       isImportant: map['isImportant'] as bool,
     );
   }

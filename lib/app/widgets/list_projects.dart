@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/card_project.dart';
+import 'package:kyw_management/domain/services/routers/export_routes.dart';
 
 import '../../domain/blocs/blocs_export.dart';
 
@@ -28,13 +27,14 @@ class _ListProjectsState extends State<ListProjects> {
       builder: (context, state) {
         List<Project> projects = state.allProject;
         return ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 7.5),
           itemCount: projects.length,
           controller: _scrollController,
           itemBuilder: (context, index) {
             return CardProject(
               project: projects[index],
               onTap: () {
-                context.push(MyRoutes.chat);
+                GoRouter.of(context).push("${MyRoutes.chat}/$index".replaceAll(':projectId/', ''));
               },
             );
           },

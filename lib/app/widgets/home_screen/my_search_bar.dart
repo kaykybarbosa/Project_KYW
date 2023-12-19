@@ -18,21 +18,7 @@ class _MySearchBarState extends State<MySearchBar> {
         return Row(
           children: [
             // Input for search
-            Expanded(
-              child: SearchBar(
-                backgroundColor: null,
-                hintText: 'Buscar ${state.currentScreen.name}',
-                side: const MaterialStatePropertyAll(
-                    BorderSide(color: Colors.grey)),
-                elevation: const MaterialStatePropertyAll(0),
-                constraints: const BoxConstraints(
-                    minWidth: 50.0, maxWidth: 600.0, minHeight: 40.0),
-                hintStyle: MaterialStatePropertyAll(
-                    TextStyle(color: Colors.grey[600])),
-                textStyle: MaterialStatePropertyAll(
-                    TextStyle(color: Theme.of(context).primaryColor)),
-              ),
-            ),
+            Expanded(child: SearchBar(hintText: 'Buscar ${state.currentScreen.name}')),
 
             // Icon search
             Container(

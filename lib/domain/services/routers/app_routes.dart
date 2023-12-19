@@ -1,14 +1,14 @@
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/data/chats.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/screens/configuration_screens/change_number_or_email_screen.dart';
-
-import 'package:kyw_management/app/widgets/home_screen/chat/ChatProject.dart';
+import 'package:kyw_management/app/widgets/home_screen/chat/chat_project_screen.dart';
+import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
 import '../../../app/screens/screens_export.dart';
 
 final appRoutes = GoRouter(
-  initialLocation: MyRoutes.signIn,
+  initialLocation: MyRoutes.home,
   routes: [
     GoRoute(
       path: MyRoutes.signIn,
@@ -91,9 +91,9 @@ final appRoutes = GoRouter(
       builder: (context, state) {
         final projectId = int.parse(state.pathParameters['projectId']!);
 
-        final chat = chats[projectId];
+        Project project = context.select((ProjectBloc bloc) => bloc.state.allProject[projectId]);
 
-        return ChatProject(chat: chat);
+        return ChatProjectScreen(project: project);
       },
     ),
   ],

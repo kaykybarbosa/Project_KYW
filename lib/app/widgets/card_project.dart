@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/app/models/project.dart';
 
@@ -23,16 +24,16 @@ class _CardProjectState extends State<CardProject> {
     if (widget.project.image != null) {
       return Image.asset(
         widget.project.image!,
-        width: 55,
+        width: 52,
       );
     } else {
       return Container(
-        color: CupertinoColors.systemGrey,
+        color: Colors.grey,
         padding: const EdgeInsets.all(12),
-        child: const Icon(
-          CupertinoIcons.group_solid,
-          size: 29,
-          color: CupertinoColors.systemGrey5,
+        child: Icon(
+          Icons.group,
+          size: 27,
+          color: Colors.grey[200],
         ),
       );
     }
@@ -41,12 +42,10 @@ class _CardProjectState extends State<CardProject> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        widget.onTap();
-      },
+      onTap: () => widget.onTap(),
       child: Container(
         padding: const EdgeInsets.only(left: 6),
-        margin: const EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 2.5),
         decoration: BoxDecoration(
           color: primaryColor,
           borderRadius: BorderRadius.circular(5),
@@ -57,7 +56,7 @@ class _CardProjectState extends State<CardProject> {
             vertical: 8,
           ),
           decoration: BoxDecoration(
-            color: CupertinoColors.white,
+            color: Colors.white,
             border: Border.all(color: CupertinoColors.systemGrey4),
             borderRadius: const BorderRadius.only(
               topRight: Radius.circular(5),
