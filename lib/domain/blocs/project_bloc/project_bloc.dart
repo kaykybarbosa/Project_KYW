@@ -14,14 +14,13 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   void _onAddProject(AddProject event, Emitter<ProjectState> emit) {
     emit(
       ProjectState(
-        allProject: List.from(state.allProject)..add(event.project),
+        allProject: List.from(state.allProject)..insert(0, event.project),
       ),
     );
   }
 
   void _onAddListProject(AddProjects event, Emitter<ProjectState> emit) {
-    List<Project> allProject = List.from(state.allProject)
-      ..addAll(event.projects);
+    List<Project> allProject = List.from(state.allProject)..addAll(event.projects);
 
     emit(ProjectState(allProject: allProject));
   }

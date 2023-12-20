@@ -118,16 +118,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             children: [
               // Input Search
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
-                ),
+                padding: const EdgeInsets.only(left: 15, top: 12, right: 15),
                 child: MySearchBar(search: () {}),
               ),
 
               // Buttons the filters
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -166,11 +163,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   child: TabBarView(
                     controller: _tabController,
                     children: [
+                      // Projects screen
                       const ListProjects(),
+
+                      // Tasks screens
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 0),
                         child: ListTasks(tasks: tasksData),
-                      )
+                      ),
                     ],
                   ),
                 ),

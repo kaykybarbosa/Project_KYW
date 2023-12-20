@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
+import 'package:kyw_management/app/screens/chat/chat_project_screen.dart';
 import 'package:kyw_management/app/screens/configuration_screens/change_number_or_email_screen.dart';
-import 'package:kyw_management/app/widgets/home_screen/chat/chat_project_screen.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
 import '../../../app/screens/screens_export.dart';
@@ -95,6 +95,10 @@ final appRoutes = GoRouter(
 
         return ChatProjectScreen(project: project);
       },
+    ),
+    GoRoute(
+      path: MyRoutes.addTask,
+      builder: (context, state) => const AddTaskScreen(),
     ),
   ],
 );

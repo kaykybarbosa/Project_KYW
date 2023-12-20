@@ -1,4 +1,4 @@
-import 'package:kyw_management/app/models/user.dart';
+import 'package:kyw_management/app/models/user_test.dart';
 
 final List<UserTest> usersData = [
   UserTest(name: 'Yure', email: 'yuresilva@gmail.com'),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
-  pageTransitionsTheme: const PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
+  pageTransitionsTheme:
+      const PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
+  scaffoldBackgroundColor: Colors.grey[200],
   primaryColor: const Color.fromRGBO(50, 58, 71, 1),
   colorScheme: const ColorScheme.light(
     primary: Color.fromRGBO(50, 58, 71, 1),
@@ -13,7 +15,6 @@ final theme = ThemeData(
     elevation: 0,
     foregroundColor: Colors.white,
   ),
-  scaffoldBackgroundColor: Colors.grey[200],
   elevatedButtonTheme: const ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
@@ -27,6 +28,7 @@ final theme = ThemeData(
     hintStyle: const TextStyle(color: Colors.grey),
     filled: true,
     border: const OutlineInputBorder(),
+    labelStyle: const TextStyle(color: Colors.red),
     enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
     fillColor: Colors.grey[200],
     focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
@@ -34,7 +36,7 @@ final theme = ThemeData(
   searchBarTheme: SearchBarThemeData(
     hintStyle: MaterialStatePropertyAll(TextStyle(color: Colors.grey[600])),
     constraints: const BoxConstraints(minWidth: 50.0, maxWidth: 600.0, minHeight: 40.0),
-    backgroundColor: null,
+    backgroundColor: const MaterialStatePropertyAll(Colors.transparent),
     elevation: const MaterialStatePropertyAll(0),
     side: const MaterialStatePropertyAll(BorderSide(color: Colors.grey)),
     textStyle: const MaterialStatePropertyAll(TextStyle(color: Color.fromRGBO(50, 58, 71, 1))),
@@ -65,4 +67,5 @@ final theme = ThemeData(
     overlayColor: MaterialStatePropertyAll(Colors.grey),
   ),
   iconTheme: IconThemeData(color: Colors.grey[700]),
+  popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
 );

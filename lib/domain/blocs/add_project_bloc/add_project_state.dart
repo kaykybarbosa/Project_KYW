@@ -1,7 +1,7 @@
 part of 'add_project_bloc.dart';
 
 class AddProjectState extends Equatable {
-  final Title title;
+  final TitleModel title;
   final Description description;
   final Email email;
   final List<Email> invitedFriends;
@@ -28,7 +28,7 @@ class AddProjectState extends Equatable {
       ];
 
   AddProjectState copyWith({
-    Title? title,
+    TitleModel? title,
     Description? description,
     Email? email,
     List<Email>? invitedFriends,

@@ -8,7 +8,7 @@ part 'add_project_event.dart';
 part 'add_project_state.dart';
 
 const addProjectInitial = AddProjectInitial(
-  title: Title.pure(),
+  title: TitleModel.pure(),
   description: Description.pure(),
   email: Email.pure(),
   invitedFriends: [],
@@ -29,7 +29,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     TitleChangedAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    final title = Title.dirty(event.title);
+    final title = TitleModel.dirty(event.title);
 
     emit(
       state.copyWith(

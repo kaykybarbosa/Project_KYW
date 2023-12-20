@@ -4,21 +4,29 @@ class MyTextField extends StatelessWidget {
   const MyTextField({
     super.key,
     required this.text,
+    required this.onChange,
     this.placeHolder,
     this.maxLine,
     this.textInputType,
     this.showText = true,
-    this.onChange,
     this.errorMessage,
+    this.suffix,
+    this.enable,
+    this.controller,
+    this.textInputAction,
   });
 
-  final Function? onChange;
+  final Function onChange;
   final String text;
   final String? placeHolder;
   final int? maxLine;
   final TextInputType? textInputType;
   final bool showText;
   final String? errorMessage;
+  final Widget? suffix;
+  final bool? enable;
+  final TextEditingController? controller;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +51,18 @@ class MyTextField extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Container(
-                  padding: const EdgeInsets.only(
-                      left: 5, top: 0, right: 0, bottom: 0),
+                  padding: const EdgeInsets.only(left: 5, top: 0, right: 0, bottom: 0),
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: _boxDecoration(context),
                   child: TextField(
+                    controller: controller,
+                    enabled: enable,
                     maxLines: maxLine,
                     keyboardType: textInputType,
+                    textInputAction: textInputAction,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                     decoration: _inputDecoration(context),
-                    onChanged: (value) => onChange!(value),
+                    onChanged: (value) => onChange(value),
                   ),
                 ),
                 subtitle: _SubTitle(errorMessage: errorMessage),
@@ -65,16 +76,12 @@ class MyTextField extends StatelessWidget {
 
   InputDecoration _inputDecoration(BuildContext context) {
     return InputDecoration(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 10,
-      ),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-      enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.transparent)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
       hintText: placeHolder,
       alignLabelWithHint: true,
+      suffixIcon: suffix,
     );
   }
 

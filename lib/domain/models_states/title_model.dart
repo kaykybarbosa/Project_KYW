@@ -3,10 +3,9 @@ import 'package:kyw_management/domain/services/mixins/validations_mixin.dart';
 
 enum TitleValidationError { invalid }
 
-class Title extends FormzInput<String, TitleValidationError>
-    with ValidationsMixin {
-  const Title.pure([super.value = '']) : super.pure();
-  const Title.dirty([super.value = '']) : super.dirty();
+class TitleModel extends FormzInput<String, TitleValidationError> with ValidationsMixin {
+  const TitleModel.pure([super.value = '']) : super.pure();
+  const TitleModel.dirty([super.value = '']) : super.dirty();
 
   @override
   TitleValidationError? validator(String value) {

@@ -14,11 +14,10 @@ class MyRoutes {
   static String contactUs = '/help/contact-us';
   static String configurationAccount = '/configuration/account';
   static String twoStepVerification = '/configuration/account/two-step';
-  static String changeNumberOrEmail =
-      '/configuration/account/change-number-email';
+  static String changeNumberOrEmail = '/configuration/account/change-number-email';
   static String changeNumber = '/configuration/account/change-number';
   static String changeEmail = '/configuration/account/change-email';
-  static String configurationDeleteAccount =
-      '/configuration/account/delete-account';
+  static String configurationDeleteAccount = '/configuration/account/delete-account';
   static String chat = '/home/chat/:projectId';
+  static String addTask = '/add-task';
 }

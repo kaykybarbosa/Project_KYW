@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
 class MySearchBar extends StatefulWidget {
-  const MySearchBar({super.key, required this.search});
+  const MySearchBar({super.key, required this.search, String? hintText}) : _hintText = hintText;
 
   final Function search;
+  final String? _hintText;
 
   @override
   State<MySearchBar> createState() => _MySearchBarState();
@@ -18,7 +19,7 @@ class _MySearchBarState extends State<MySearchBar> {
         return Row(
           children: [
             // Input for search
-            Expanded(child: SearchBar(hintText: 'Buscar ${state.currentScreen.name}')),
+            Expanded(child: SearchBar(hintText: widget._hintText ?? 'Buscar ${state.currentScreen.name}')),
 
             // Icon search
             Container(
