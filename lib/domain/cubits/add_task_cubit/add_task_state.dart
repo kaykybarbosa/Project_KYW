@@ -8,6 +8,7 @@ class AddTaskState extends Equatable {
   final String dateOfConclusion;
   final List<UserTest> users;
   final bool arrowDownPressed;
+  final int heightDescription;
   final bool isValid;
   final FormzSubmissionStatus status;
   const AddTaskState({
@@ -17,6 +18,7 @@ class AddTaskState extends Equatable {
     required this.dateOfConclusion,
     required this.users,
     required this.arrowDownPressed,
+    required this.heightDescription,
     required this.isValid,
     required this.status,
   });
@@ -29,6 +31,7 @@ class AddTaskState extends Equatable {
         dateOfConclusion,
         users,
         arrowDownPressed,
+        heightDescription,
         isValid,
         status,
       ];
@@ -40,6 +43,7 @@ class AddTaskState extends Equatable {
     String? dateOfConclusion,
     List<UserTest>? users,
     bool? arrowDownPressed,
+    int? heightDescription,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {
@@ -50,6 +54,7 @@ class AddTaskState extends Equatable {
       dateOfConclusion: dateOfConclusion ?? this.dateOfConclusion,
       users: users ?? this.users,
       arrowDownPressed: arrowDownPressed ?? this.arrowDownPressed,
+      heightDescription: heightDescription ?? this.heightDescription,
       isValid: isValid ?? this.isValid,
       status: status ?? this.status,
     );
@@ -64,6 +69,7 @@ final class AddTaskInitial extends AddTaskState {
     required super.dateOfConclusion,
     required super.users,
     required super.arrowDownPressed,
+    required super.heightDescription,
     required super.isValid,
     required super.status,
   });

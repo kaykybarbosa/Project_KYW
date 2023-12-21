@@ -14,6 +14,7 @@ const AddTaskState addTaskInitial = AddTaskState(
   dateOfConclusion: '',
   users: [],
   arrowDownPressed: false,
+  heightDescription: 3,
   isValid: false,
   status: FormzSubmissionStatus.initial,
 );
@@ -80,6 +81,20 @@ class AddTaskCubit extends Cubit<AddTaskState> {
       users: users,
       status: FormzSubmissionStatus.initial,
     ));
+  }
+
+  void arrowDownChanged(double? value) {
+    var height = state.heightDescription;
+
+    if (value != null) {
+      if (value > 0 && height != 15) {
+        height += 1;
+      } else if (value < 0 && height != 3) {
+        height -= 1;
+      }
+    }
+
+    emit(state.copyWith(heightDescription: height));
   }
 
   void formAddTaskSubmitted() async {

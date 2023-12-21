@@ -30,45 +30,37 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text
-              Visibility(
-                visible: showText,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 2),
-                  child: _MyTitle(text: text),
-                ),
-              ),
-
-              const SizedBox(height: 5.0),
-
-              // Input
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Container(
-                  padding: const EdgeInsets.only(left: 5, top: 0, right: 0, bottom: 0),
-                  margin: const EdgeInsets.symmetric(horizontal: 3),
-                  decoration: _boxDecoration(context),
-                  child: TextField(
-                    controller: controller,
-                    enabled: enable,
-                    maxLines: maxLine,
-                    keyboardType: textInputType,
-                    textInputAction: textInputAction,
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                    decoration: _inputDecoration(context),
-                    onChanged: (value) => onChange(value),
-                  ),
-                ),
-                subtitle: _SubTitle(errorMessage: errorMessage),
-              ),
-            ],
+        // Text
+        Visibility(
+          visible: showText,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 2, bottom: 4),
+            child: _MyTitle(text: text),
           ),
+        ),
+
+        // Input
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Container(
+            padding: const EdgeInsets.only(left: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 3),
+            decoration: _boxDecoration(context),
+            child: TextField(
+              controller: controller,
+              enabled: enable,
+              maxLines: maxLine,
+              keyboardType: textInputType,
+              textInputAction: textInputAction,
+              style: TextStyle(color: Theme.of(context).primaryColor),
+              decoration: _inputDecoration(context),
+              onChanged: (value) => onChange(value),
+            ),
+          ),
+          subtitle: _SubTitle(errorMessage: errorMessage),
         ),
       ],
     );
@@ -111,15 +103,15 @@ class _SubTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 5,
-      ),
-      child: Text(
-        errorMessage ?? '',
-        style: const TextStyle(
-          fontSize: 12,
-          color: Colors.redAccent,
+      padding: const EdgeInsets.only(left: 14, top: 5, bottom: 2),
+      child: Visibility(
+        visible: errorMessage != null,
+        child: Text(
+          errorMessage ?? '',
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.redAccent,
+          ),
         ),
       ),
     );

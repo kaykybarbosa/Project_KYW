@@ -23,7 +23,7 @@ class ChangeEmailScreen extends StatelessWidget {
                   _TitleTheInput(label: 'Insira seu e-mail novo'),
                   _NewEmailInput(),
                   _TitleTheInput(label: 'Insira seu e-mail atual'),
-                  _CurrentEMailInput(),
+                  _CurrentEmailInput(),
                 ],
               ),
               _SubmitChangeEmailButton()
@@ -48,7 +48,8 @@ class _SubmitChangeEmailButton extends StatelessWidget {
           child: ElevatedButton(
             style: ButtonStyle(
               foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
-              backgroundColor: MaterialStatePropertyAll(state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
+              backgroundColor: MaterialStatePropertyAll(
+                  state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
             ),
             onPressed: state.isValid ? () => context.read<ChangeEmailCubit>().formChangeEmailSubmitted() : null,
             child: state.status.isInProgress
@@ -67,8 +68,8 @@ class _SubmitChangeEmailButton extends StatelessWidget {
   }
 }
 
-class _CurrentEMailInput extends StatelessWidget {
-  const _CurrentEMailInput();
+class _CurrentEmailInput extends StatelessWidget {
+  const _CurrentEmailInput();
 
   @override
   Widget build(BuildContext context) {
