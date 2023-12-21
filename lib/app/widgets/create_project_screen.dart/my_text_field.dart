@@ -36,10 +36,7 @@ class MyTextField extends StatelessWidget {
         // Text
         Visibility(
           visible: showText,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 2, bottom: 4),
-            child: _MyTitle(text: text),
-          ),
+          child: _MyTitle(text: text),
         ),
 
         // Input
@@ -125,12 +122,15 @@ class _MyTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 18.0,
-        fontWeight: FontWeight.w500,
-        color: Theme.of(context).primaryColor,
+    return Padding(
+      padding: const EdgeInsets.only(left: 2, bottom: 4),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.w500,
+          color: Theme.of(context).primaryColor,
+        ),
       ),
     );
   }

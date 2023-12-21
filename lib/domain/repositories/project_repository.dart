@@ -1,31 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_guid/flutter_guid.dart';
 import 'package:kyw_management/app/enums/status.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/models/task.dart';
 import 'package:kyw_management/app/models/user_test.dart';
 
 class ProjectRepository {
-  final List<Task> tasks = [
-    Task(
-      title: 'Escolher os materiais',
-      description: 'Alguma descrição aqui',
-      status: Status.complete,
-    ),
-    Task(
-      title: 'Pesquisar a cor',
-      description: 'Alguma descrição aqui',
-      isImportant: true,
-      status: Status.incomplete,
-    ),
-    Task(
-      title: 'Fazer o acabamento',
-      description: 'Alguma descrição aqui',
-      status: Status.pending,
-    ),
-  ];
-
   final List<Project> _projects = [
     Project(
+      id: Guid.newGuid.toString(),
       name: 'Casa na Árvore',
       image: 'assets/casa-na-arvore.webp',
       lastMessage: 'última mensagem envia...',
@@ -59,6 +41,7 @@ class ProjectRepository {
       ],
     ),
     Project(
+      id: Guid.newGuid.toString(),
       name: 'Projeto do Milhão',
       lastMessage: 'última mensagem envia...',
       lastMessageTime: '14:32',

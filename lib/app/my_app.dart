@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 import 'package:kyw_management/domain/repositories/project_repository.dart';
 import 'package:kyw_management/domain/services/routers/app_routes.dart';
@@ -33,7 +32,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => FilterTaskBloc()),
         BlocProvider(create: (context) => AddProjectBloc()),
       ],
-      child: GetMaterialApp.router(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'KYW Management',
         theme: theme,

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../add_task_screen.dart';
 
 class AddButtonTasks extends StatelessWidget {
-  const AddButtonTasks({super.key});
+  const AddButtonTasks({super.key, required String projectId}) : _projectId = projectId;
+
+  final String _projectId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,9 @@ class AddButtonTasks extends StatelessWidget {
             onPressed: () => showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              showDragHandle: true,
               builder: (context) => SizedBox(
-                height: MediaQuery.of(context).size.height - 100,
-                child: const AddTaskScreen(),
+                height: MediaQuery.of(context).size.height - 35,
+                child: AddTaskScreen(projectId: _projectId),
               ),
             ),
             backgroundColor: Colors.blue[700],

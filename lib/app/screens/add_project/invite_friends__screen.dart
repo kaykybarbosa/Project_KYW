@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_guid/flutter_guid.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
-import 'package:kyw_management/app/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/list_members.dart';
+import 'package:kyw_management/app/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
 
 class InviteFriendsScreen extends StatelessWidget {
@@ -56,8 +57,7 @@ class InviteFriendsScreen extends StatelessWidget {
                       Expanded(
                         flex: 11,
                         child: ListMembers(
-                          users:
-                              state.invitedFriends.map((e) => e.value).toList(),
+                          users: state.invitedFriends.map((e) => e.value).toList(),
                         ),
                       )
                     ],
@@ -122,9 +122,14 @@ class _MyFloatingButton extends StatelessWidget {
   }
 
   void _completingAdditionProject(BuildContext context, AddProjectState state) {
-    context
-        .read<ProjectBloc>()
-        .add(AddProject(project: Project(name: state.title.value)));
+    context.read<ProjectBloc>().add(
+          AddProject(
+            project: Project(
+              id: Guid.newGuid.toString(),
+              name: state.title.value,
+            ),
+          ),
+        );
     context.read<AddProjectBloc>().add(FormSubmitteddAddProject());
     GoRouter.of(context).pushReplacement(MyRoutes.home);
   }
@@ -141,11 +146,8 @@ class _EmailFriendsInput extends StatelessWidget {
           placeHolder: 'Inserir e-mail',
           text: 'Convidar amigos por e-mail',
           textInputType: TextInputType.emailAddress,
-          onChange: (value) => context
-              .read<AddProjectBloc>()
-              .add(EmailChangedAddProject(email: value)),
-          errorMessage:
-              state.email.displayError != null ? 'E-mail inválido!' : null,
+          onChange: (value) => context.read<AddProjectBloc>().add(EmailChangedAddProject(email: value)),
+          errorMessage: state.email.displayError != null ? 'E-mail inválido!' : null,
         );
       },
     );
@@ -160,14 +162,11 @@ class _AddFriendsButton extends StatelessWidget {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
         return TextButton(
-          onPressed: () =>
-              context.read<AddProjectBloc>().add(InvitedFriendsAddProject()),
+          onPressed: () => context.read<AddProjectBloc>().add(InvitedFriendsAddProject()),
           style: ButtonStyle(
-            shape: MaterialStatePropertyAll(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
             overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-            padding: const MaterialStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 10)),
+            padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
           ),
           child: Chip(
             padding: EdgeInsets.zero,

@@ -28,11 +28,8 @@ class DescriptionInputTask extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               title: Column(
                 children: [
-                  Container(
-                    decoration: _boxDecoration(),
-                    // Icons bar
-                    child: const _IconsBar(),
-                  ),
+                  // Icons bar
+                  const _IconsBar(),
                   // Text input
                   _TextInput(
                     controller: _controller,
@@ -47,18 +44,6 @@ class DescriptionInputTask extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-
-  BoxDecoration _boxDecoration() {
-    return BoxDecoration(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(5),
-        topRight: Radius.circular(5),
-        bottomLeft: Radius.zero,
-        bottomRight: Radius.zero,
-      ),
-      border: Border.all(color: Colors.grey),
     );
   }
 }
@@ -93,7 +78,7 @@ class _ArrowDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 25),
         decoration: BoxDecoration(
           color: Colors.blue[700],
           borderRadius: const BorderRadius.only(
@@ -161,24 +146,36 @@ class _IconsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.format_bold),
-          onPressed: () {},
+    var border = const BorderSide(color: Colors.grey);
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.zero,
+          bottomRight: Radius.zero,
         ),
-        IconButton(
-          icon: const Icon(Icons.format_italic),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Transform.rotate(
-            angle: 0.5,
-            child: const Icon(Icons.attach_file_rounded),
+        border: Border(left: border, top: border, right: border),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.format_bold),
+            onPressed: () {},
           ),
-          onPressed: () {},
-        ),
-      ],
+          IconButton(
+            icon: const Icon(Icons.format_italic),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Transform.rotate(
+              angle: 0.5,
+              child: const Icon(Icons.attach_file_rounded),
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
     );
   }
 }

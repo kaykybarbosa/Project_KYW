@@ -8,4 +8,12 @@ class ProjectState extends Equatable {
 
   @override
   List<Object?> get props => [allProject];
+
+  ProjectState copyWith({
+    List<Project>? allProject,
+  }) {
+    return ProjectState(
+      allProject: allProject ?? this.allProject,
+    );
+  }
 }

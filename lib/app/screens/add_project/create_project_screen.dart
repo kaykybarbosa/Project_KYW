@@ -76,11 +76,8 @@ class _TitleInput extends StatelessWidget {
           text: 'Título do Projeto*',
           placeHolder: 'Título',
           textInputType: TextInputType.text,
-          onChange: (value) => context
-              .read<AddProjectBloc>()
-              .add(TitleChangedAddProject(title: value)),
-          errorMessage:
-              state.title.displayError != null ? 'Título é obrigátorio!' : null,
+          onChange: (value) => context.read<AddProjectBloc>().add(TitleChangedAddProject(title: value)),
+          errorMessage: state.title.displayError != null ? 'Título é obrigátorio!' : null,
         );
       },
     );
@@ -100,13 +97,9 @@ class _DescriptionInput extends StatelessWidget {
           maxLine: 5,
           textInputType: TextInputType.multiline,
           onChange: (value) {
-            context
-                .read<AddProjectBloc>()
-                .add(DescriptionChangedAddProject(description: value));
+            context.read<AddProjectBloc>().add(DescriptionChangedAddProject(description: value));
           },
-          errorMessage: state.description.displayError != null
-              ? 'Descrição é obrigátorio!'
-              : null,
+          errorMessage: state.description.displayError != null ? 'Descrição é obrigátorio!' : null,
         );
       },
     );
@@ -121,8 +114,7 @@ class _MyFloatingButton extends StatelessWidget {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
         return FloatingActionButton(
-          onPressed:
-              state.isValid ? () => context.push(MyRoutes.inviteFriends) : null,
+          onPressed: state.isValid ? () => context.push(MyRoutes.inviteFriends) : null,
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
             CupertinoIcons.arrow_right,
@@ -131,27 +123,6 @@ class _MyFloatingButton extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _MessageValidationError extends StatelessWidget {
-  const _MessageValidationError({required String messageError})
-      : _messageError = messageError;
-
-  final String _messageError;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Text(
-        _messageError,
-        style: const TextStyle(
-          color: Colors.red,
-          fontSize: 14,
-        ),
-      ),
     );
   }
 }

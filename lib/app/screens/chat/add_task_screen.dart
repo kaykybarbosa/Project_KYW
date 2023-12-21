@@ -11,8 +11,9 @@ import 'widgets/add_task/submited_button_task.dart';
 import 'widgets/add_task/tilte_input_task.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  const AddTaskScreen({super.key, required String projectId}) : _projectId = projectId;
 
+  final String _projectId;
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
@@ -54,13 +55,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           return Column(
                             children: [
                               const TitleInputTask(),
-                              const CategoryInputTask(),
+                              CategoryInputTask(),
                               DateInputTask(controller: _dateController),
                               const SelectMembersTask(),
                               const SizedBox(height: 20),
                               DescriptionInputTask(controller: _descriptionController),
                               const SizedBox(height: 40),
-                              const SubmitButtonTask(),
+                              SubmitButtonTask(projectId: widget._projectId),
                               SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
                             ],
                           );

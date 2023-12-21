@@ -6,6 +6,7 @@ import 'package:kyw_management/app/models/user_test.dart';
 class Project extends Equatable {
   @override
   Project({
+    required this.id,
     required this.name,
     this.description,
     this.image,
@@ -17,6 +18,7 @@ class Project extends Equatable {
     this.isImportant = false,
   });
 
+  String id;
   String name;
   String? description;
   String? image;
@@ -29,6 +31,7 @@ class Project extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         name,
         description,
         image,
@@ -41,6 +44,7 @@ class Project extends Equatable {
       ];
 
   Project copyWith({
+    String? id,
     String? name,
     String? description,
     String? image,
@@ -52,6 +56,7 @@ class Project extends Equatable {
     bool? isImportant,
   }) {
     return Project(
+      id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       image: image ?? this.image,
