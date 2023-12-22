@@ -12,6 +12,18 @@ class SubmitButtonTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void addTask(AddTaskState state) {
+      Task task = Task(
+        title: state.title.value,
+        dateOfConclusion: DateTime.tryParse(state.dateOfConclusion),
+        description: state.description.value,
+      );
+      context.read<ProjectBloc>().add(AddTaskProject(
+            projectId: _projectId,
+            task: task,
+          ));
+    }
+
     return BlocBuilder<AddTaskCubit, AddTaskState>(
       builder: (context, state) {
         return Padding(
@@ -22,17 +34,7 @@ class SubmitButtonTask extends StatelessWidget {
             child: BlocListener<AddTaskCubit, AddTaskState>(
               listener: (context, state) {
                 if (state.status.isSuccess) {
-                  Task task = Task(
-                    title: state.title.value,
-                    dateOfConclusion: DateTime.tryParse(state.dateOfConclusion),
-                    description: state.description.value,
-                  );
-                  context.read<ProjectBloc>().add(
-                        AddTaskProject(
-                          projectId: _projectId,
-                          task: task,
-                        ),
-                      );
+                  addTask(state);
 
                   Get.back();
                   Get.snackbar(

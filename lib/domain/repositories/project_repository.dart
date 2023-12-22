@@ -28,7 +28,6 @@ class ProjectRepository {
           title: 'Pesquisar a cor',
           description: 'Alguma descrição aqui',
           isImportant: true,
-          status: Status.incomplete,
         ),
         Task(
           title: 'Fazer o acabamento',
@@ -37,6 +36,7 @@ class ProjectRepository {
         Task(
           title: 'Realizar a pintura da porta',
           description: 'Alguma descrição aqui',
+          status: Status.pending,
         ),
       ],
     ),

@@ -2,12 +2,15 @@ import 'package:equatable/equatable.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/models/task.dart';
 
+import '../../repositories/project_repository.dart';
 import '../blocs_export.dart';
 
 part 'project_event.dart';
 
+final projects = ProjectRepository().projects;
+
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
-  ProjectBloc() : super(const ProjectState()) {
+  ProjectBloc() : super(ProjectState(allProject: projects)) {
     on<AddProject>(_onAddProject);
     on<AddProjects>(_onAddListProject);
     on<UpdateProject>(_onUpdateProject);
@@ -29,16 +32,23 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   void _onUpdateProject(UpdateProject event, Emitter<ProjectState> emit) {}
+
   void _onAddTaskProject(AddTaskProject event, Emitter<ProjectState> emit) {
+    // Finding project
     final project = state.allProject.firstWhere((project) => project.id == event.projectId);
-    List<Project> projects = state.allProject;
+
+    // Getting the index
+    List<Project> allProjects = state.allProject;
+    var index = allProjects.indexOf(project);
+
+    // Emitting new state
+    emit(state.copyWith(allProject: List.from(state.allProject)..insert(index, project)));
+
+    // Updating tasks
     project.tasks = List.from(project.tasks ?? [])..insert(0, event.task);
 
-    var index = projects.indexOf(project);
-    projects = List.from(projects)
-      ..remove(project)
-      ..insert(index, project);
+    allProjects = List.from(state.allProject)..remove(project);
 
-    emit(state.copyWith(allProject: projects));
+    emit(state.copyWith(allProject: allProjects));
   }
 }

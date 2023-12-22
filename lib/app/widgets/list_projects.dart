@@ -34,7 +34,8 @@ class _ListProjectsState extends State<ListProjects> {
             return CardProject(
               project: projects[index],
               onTap: () {
-                GoRouter.of(context).push("${MyRoutes.chat}/$index".replaceAll(':projectId/', ''));
+                var route = "${MyRoutes.chat}/$index".replaceAll(':projectId/', '');
+                GoRouter.of(context).push(route);
               },
             );
           },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyw_management/domain/blocs/blocs_export.dart';
-import 'package:kyw_management/domain/repositories/project_repository.dart';
 import 'package:kyw_management/domain/services/routers/app_routes.dart';
 import 'package:kyw_management/theme.dart';
 
@@ -17,11 +16,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ProjectBloc()
-            ..add(AddProjects(projects: ProjectRepository().projects) // Data static
-                ),
-        ),
+        BlocProvider(create: (context) => ProjectBloc()),
         BlocProvider(create: (context) => SignInBloc()),
         BlocProvider(create: (context) => SignUpBloc()),
         BlocProvider(create: (context) => ForgotPasswordBloc()),

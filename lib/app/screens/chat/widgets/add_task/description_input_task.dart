@@ -5,9 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../domain/cubits/add_task_cubit/add_task_cubit.dart';
 
 class DescriptionInputTask extends StatelessWidget {
-  const DescriptionInputTask({super.key, required TextEditingController controller}) : _controller = controller;
-
-  final TextEditingController _controller;
+  const DescriptionInputTask({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,6 @@ class DescriptionInputTask extends StatelessWidget {
                   const _IconsBar(),
                   // Text input
                   _TextInput(
-                    controller: _controller,
                     state: state,
                   ),
                   const _ArrowDown(),
@@ -104,39 +101,41 @@ class _ArrowDown extends StatelessWidget {
 }
 
 class _TextInput extends StatelessWidget {
-  const _TextInput({required TextEditingController controller, required AddTaskState state})
-      : _controller = controller,
-        _state = state;
+  const _TextInput({required AddTaskState state}) : _state = state;
 
-  final TextEditingController _controller;
   final AddTaskState _state;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      maxLines: _state.heightDescription,
-      controller: _controller,
-      decoration: const InputDecoration(
-        hintText: 'Insira um descrição',
-        fillColor: Colors.transparent,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.zero,
-            topRight: Radius.zero,
-            bottomLeft: Radius.circular(5),
-            bottomRight: Radius.circular(5),
+    return BlocBuilder<AddTaskCubit, AddTaskState>(
+      buildWhen: (previous, current) => previous.description != current.description,
+      builder: (context, state) {
+        return TextFormField(
+          maxLines: _state.heightDescription,
+          initialValue: state.description.value,
+          decoration: const InputDecoration(
+            hintText: 'Insira um descrição',
+            fillColor: Colors.transparent,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.zero,
+                topRight: Radius.zero,
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+              ),
+            ),
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(5),
-            bottomRight: Radius.circular(5),
-          ),
-        ),
-      ),
-      onChanged: (value) => context.read<AddTaskCubit>().descriptionChanged(value),
+          onChanged: (value) => context.read<AddTaskCubit>().descriptionChanged(value),
+        );
+      },
     );
   }
 }

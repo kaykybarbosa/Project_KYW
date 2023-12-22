@@ -22,7 +22,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final _titleController = TextEditingController();
   final _categoryController = TextEditingController();
   final _dateController = TextEditingController();
-  final _descriptionController = TextEditingController();
 
   @override
   void dispose() {
@@ -30,7 +29,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     _titleController.dispose();
     _categoryController.dispose();
     _dateController.dispose();
-    _descriptionController.dispose();
   }
 
   @override
@@ -59,7 +57,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               DateInputTask(controller: _dateController),
                               const SelectMembersTask(),
                               const SizedBox(height: 20),
-                              DescriptionInputTask(controller: _descriptionController),
+                              const DescriptionInputTask(),
                               const SizedBox(height: 40),
                               SubmitButtonTask(projectId: widget._projectId),
                               SizedBox(height: MediaQuery.of(context).viewInsets.bottom),

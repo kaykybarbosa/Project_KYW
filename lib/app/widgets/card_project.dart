@@ -55,10 +55,14 @@ class _CardProjectState extends State<CardProject> {
             horizontal: 10,
             vertical: 8,
           ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: CupertinoColors.systemGrey4),
-            borderRadius: const BorderRadius.only(
+            border: Border(
+              top: BorderSide(color: Colors.grey),
+              right: BorderSide(color: Colors.grey),
+              bottom: BorderSide(color: Colors.grey),
+            ),
+            borderRadius: BorderRadius.only(
               topRight: Radius.circular(5),
               bottomRight: Radius.circular(5),
             ),

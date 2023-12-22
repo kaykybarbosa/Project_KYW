@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/app/models/task.dart';
 import 'package:kyw_management/app/widgets/my_status.dart';
@@ -16,11 +17,17 @@ class _CardTaskState extends State<CardTask> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 6),
       margin: const EdgeInsets.symmetric(vertical: 2.5),
       decoration: BoxDecoration(
-        color: CupertinoTheme.of(context).primaryColor,
+        border: Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 6)),
         borderRadius: BorderRadius.circular(5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            spreadRadius: 0.2,
+            blurRadius: 0.5,
+          ),
+        ],
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -28,72 +35,59 @@ class _CardTaskState extends State<CardTask> {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: CupertinoColors.white,
-          border: Border.all(color: CupertinoColors.systemGrey4),
+          color: Colors.grey[50],
+          border: const Border(
+            top: BorderSide(color: Colors.grey),
+            right: BorderSide(color: Colors.grey),
+            bottom: BorderSide(color: Colors.grey),
+          ),
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(5),
             bottomRight: Radius.circular(5),
           ),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Task name
-                  Text(
-                    widget.task.title,
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Task name
+                Text(
+                  widget.task.title,
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
                   ),
-
-                  // Task description
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      widget.task.description ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 5),
-
-                  //Task category
-                  const Text(
-                    'Categoria',
-                    style: TextStyle(fontSize: 17),
-                  )
-                ],
+                ),
+                Icon(
+                  widget.task.isImportant ? FontAwesomeIcons.thumbtack : null,
+                  size: 23,
+                  color: CupertinoColors.systemGrey2,
+                ),
+              ],
+            ),
+            // Task description
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10, right: 35),
+              child: Text(
+                widget.task.description ?? '',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: CupertinoColors.systemGrey,
+                ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // isImportant
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      widget.task.isImportant
-                          ? FontAwesomeIcons.thumbtack
-                          : null,
-                      size: 23,
-                      color: CupertinoColors.systemGrey2,
-                    ),
-                  ],
+                //Task category
+                const Text(
+                  'Categoria',
+                  style: TextStyle(fontSize: 17),
                 ),
-
-                const SizedBox(height: 60),
-
                 // Status name
                 MyStatus(status: widget.task.status)
               ],

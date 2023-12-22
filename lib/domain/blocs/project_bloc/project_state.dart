@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:kyw_management/app/models/project.dart';
 
 class ProjectState extends Equatable {
-  const ProjectState({this.allProject = const <Project>[]});
+  const ProjectState({required this.allProject});
 
   final List<Project> allProject;
 

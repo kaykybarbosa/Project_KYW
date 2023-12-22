@@ -61,24 +61,7 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
         backgroundColor: CupertinoTheme.of(context).primaryColor,
         leading: _Leading(widget: widget),
         title: _Title(widget: widget),
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            offset: const Offset(0, 95),
-            elevation: 9,
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                child: ListTile(title: Text('Projeto info')),
-              ),
-              const PopupMenuItem(
-                child: ListTile(title: Text('Limpar mensagens')),
-              ),
-              const PopupMenuItem(
-                child: ListTile(title: Text('Sair do projeto')),
-              )
-            ],
-          ),
-        ],
+        actions: const [_PopupMenuItem()],
         bottom: TabBar(
           controller: _tabController,
           labelStyle: const TextStyle(fontSize: 18),
@@ -98,6 +81,30 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
           _TasksProject(widget: widget),
         ],
       ),
+    );
+  }
+}
+
+class _PopupMenuItem extends StatelessWidget {
+  const _PopupMenuItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      icon: const Icon(Icons.more_vert),
+      offset: const Offset(0, 95),
+      elevation: 9,
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+          child: ListTile(title: Text('Projeto info')),
+        ),
+        const PopupMenuItem(
+          child: ListTile(title: Text('Limpar mensagens')),
+        ),
+        const PopupMenuItem(
+          child: ListTile(title: Text('Sair do projeto')),
+        )
+      ],
     );
   }
 }
@@ -123,7 +130,8 @@ class _TasksProject extends StatelessWidget {
           ),
           // Filters bar
           const FiltersBarTasks(),
-          ListAllTaks(project: widget.project),
+          // All tasks
+          ListAllTaks(projectId: widget.project.id),
         ],
       ),
     );

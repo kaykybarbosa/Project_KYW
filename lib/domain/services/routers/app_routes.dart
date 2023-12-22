@@ -10,7 +10,6 @@ import '../../../app/screens/screens_export.dart';
 
 final appRoutes = GoRouter(
   navigatorKey: Get.key,
-  debugLogDiagnostics: true,
   initialLocation: MyRoutes.home,
   routes: [
     GoRoute(
