@@ -37,34 +37,36 @@ class TaskList extends StatelessWidget {
       ),
     ];
 
-    return Column(
-      children: <Widget>[
-        /// Buscar tarefas
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: TConstants.defaultMargin,
-            vertical: 10,
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          /// Buscar tarefas
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: TConstants.defaultMargin,
+              vertical: 10,
+            ),
+            child: MySearchBar(
+              hintText: TTexts.hintTextTask,
+              onPressed: () {},
+            ),
           ),
-          child: MySearchBar(
-            hintText: TTexts.hintTextTask,
-            onPressed: () {},
-          ),
-        ),
 
-        /// Filtros
-        MyTwoFilters(
-          filterOnTap: () => myModalBottom(context: context),
-          orderOnTap: () {},
-        ),
-
-        /// Lista de tarefas
-        Expanded(
-          child: MySliverList(
-            childCount: tasks.length,
-            builder: (_, index) => CardTask(task: tasks[index]),
+          /// Filtros
+          MyTwoFilters(
+            filterOnTap: () => myModalBottom(context: context),
+            orderOnTap: () {},
           ),
-        ),
-      ],
+
+          /// Lista de tarefas
+          Expanded(
+            child: MySliverList(
+              childCount: tasks.length,
+              builder: (_, index) => CardTask(task: tasks[index]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

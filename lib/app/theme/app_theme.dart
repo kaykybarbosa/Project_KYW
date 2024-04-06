@@ -1,71 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:kyw_management/app/theme/custom_theme/appbar_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/check_box_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/chip_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/color_scheme.dart';
+import 'package:kyw_management/app/theme/custom_theme/date_picker_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/elevated_button_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/input_decoration_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/search_bar_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/tab_bar_theme.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
-  pageTransitionsTheme:
-      const PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()}),
-  scaffoldBackgroundColor: Colors.grey[200],
-  primaryColor: const Color.fromRGBO(50, 58, 71, 1),
-  colorScheme: const ColorScheme.light(
-    primary: Color.fromRGBO(50, 58, 71, 1),
-    onPrimary: Color.fromRGBO(229, 229, 234, 1),
+  colorScheme: TColorScheme.light,
+  appBarTheme: TAppbarTheme.light,
+  elevatedButtonTheme: TElevatedButtonTheme.light,
+  inputDecorationTheme: TInputDecorationTheme.light,
+  searchBarTheme: TSearchBarTheme.light,
+  checkboxTheme: TCheckBoxTheme.light,
+  datePickerTheme: TDatePickerTheme.light,
+  chipTheme: TChipTheme.light,
+  tabBarTheme: TTabBarTheme.light,
+  dividerColor: TColors.base200,
+  dividerTheme: const DividerThemeData(color: TColors.base200),
+  popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
+  iconTheme: const IconThemeData(
+    color: TColors.base100,
+    size: TConstants.iconMd - 2,
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromRGBO(50, 58, 71, 1),
-    elevation: 0,
-    foregroundColor: Colors.white,
-  ),
-  elevatedButtonTheme: const ElevatedButtonThemeData(
-    style: ButtonStyle(
-      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
-      foregroundColor: MaterialStatePropertyAll(Colors.white),
-      backgroundColor: MaterialStatePropertyAll(Color.fromRGBO(50, 58, 71, 1)),
-      overlayColor: MaterialStatePropertyAll(Colors.grey),
-      shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5)))),
-    ),
-  ),
-  inputDecorationTheme: InputDecorationTheme(
-    hintStyle: const TextStyle(color: Colors.grey),
-    filled: true,
-    border: const OutlineInputBorder(),
-    enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-    disabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-    fillColor: Colors.grey[200],
-    focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
-  ),
-  searchBarTheme: SearchBarThemeData(
-    hintStyle: MaterialStatePropertyAll(TextStyle(color: Colors.grey[600])),
-    constraints: const BoxConstraints(minWidth: 50.0, maxWidth: 600.0, minHeight: 40.0),
-    backgroundColor: const MaterialStatePropertyAll(Colors.transparent),
-    elevation: const MaterialStatePropertyAll(0),
-    side: const MaterialStatePropertyAll(BorderSide(color: Colors.grey)),
-    textStyle: const MaterialStatePropertyAll(TextStyle(color: Color.fromRGBO(50, 58, 71, 1))),
-  ),
-  checkboxTheme: CheckboxThemeData(
-    splashRadius: 16,
-    checkColor: const MaterialStatePropertyAll(Colors.white),
-    overlayColor: MaterialStatePropertyAll(Colors.grey[800]),
-  ),
-  datePickerTheme: DatePickerThemeData(
-    headerBackgroundColor: const Color.fromRGBO(50, 58, 71, 1),
-    headerForegroundColor: Colors.white,
-    backgroundColor: Colors.grey[300],
-  ),
-  chipTheme: ChipThemeData(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(color: Colors.transparent),
-    ),
-    color: MaterialStatePropertyAll(Colors.grey[300]),
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-  ),
-  tabBarTheme: const TabBarTheme(
-    unselectedLabelColor: Colors.white,
-    indicatorColor: Colors.white,
-    indicatorSize: TabBarIndicatorSize.tab,
-    labelStyle: TextStyle(color: Colors.white, fontSize: 18),
-    overlayColor: MaterialStatePropertyAll(Colors.grey),
-  ),
-  iconTheme: IconThemeData(color: Colors.grey[700]),
-  popupMenuTheme: const PopupMenuThemeData(color: Colors.white),
 );

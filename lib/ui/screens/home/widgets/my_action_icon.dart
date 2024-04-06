@@ -22,11 +22,7 @@ class MyActionIcon extends StatelessWidget {
           icon: Badge(
             label: showBadge ? (state.haveMessage ? const Text('2') : null) : null,
             smallSize: showBadge ? (state.haveMessage ? 6 : 0) : 0,
-            child: Icon(
-              icon,
-              color: Theme.of(context).colorScheme.onPrimary,
-              size: TConstants.iconMd,
-            ),
+            child: Icon(icon, size: TConstants.iconMd - 2),
           ),
         ),
       );

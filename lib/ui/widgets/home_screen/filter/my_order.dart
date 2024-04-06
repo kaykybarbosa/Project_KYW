@@ -50,7 +50,7 @@ class MyOrder extends StatelessWidget {
           // Buttom apply Order
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: ApplyButtom(onTap: () {}),
+            child: ApplyButtom(onPressed: () {}),
           )
         ],
       ),
