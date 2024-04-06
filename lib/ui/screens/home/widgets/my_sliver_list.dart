@@ -27,7 +27,7 @@ class MySliverList extends StatelessWidget {
               padding: padding ??
                   const EdgeInsets.symmetric(
                     vertical: 10,
-                    horizontal: Constants.defaultMargin,
+                    horizontal: TConstants.defaultMargin,
                   ),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(

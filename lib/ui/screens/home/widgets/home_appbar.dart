@@ -4,7 +4,7 @@ import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/home/home_screen.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_action_icon.dart';
 import 'package:kyw_management/utils/constants.dart';
-import 'package:kyw_management/utils/my_icons.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -24,19 +24,19 @@ class HomeAppBar extends StatelessWidget {
           title: const _AppName(),
           actions: <Widget>[
             MyActionIcon(
-              icon: MyIcons.bell,
+              icon: TIcons.bell,
               onTap: () => Get.toNamed(AppRoutes.notifications),
             ),
             MyActionIcon(
               showBadge: false,
-              icon: MyIcons.more,
+              icon: TIcons.more,
               onTap: () => homeState?.openEndDrawer(),
             ),
           ],
           bottom: TabBar(
             indicatorWeight: 3,
             controller: homeState?.tabController,
-            labelStyle: const TextStyle(fontSize: Constants.mediumFontSize),
+            labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
             tabs: const [
               Tab(text: 'Projetos'),
               Tab(text: 'Tasks'),
@@ -56,7 +56,7 @@ class _AppName extends StatelessWidget {
         'KYW',
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          fontSize: Constants.mediumFontSize + 2,
+          fontSize: TConstants.fontSizeMd + 2,
         ),
       );
 }

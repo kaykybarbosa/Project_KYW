@@ -4,6 +4,7 @@ import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/screens/home/widgets/drawer/my_end_drawer.dart';
 import 'package:kyw_management/ui/screens/home/widgets/home_appbar.dart';
 import 'package:kyw_management/ui/screens/home/widgets/project_list.dart';
+import 'package:kyw_management/ui/screens/home/widgets/task_list.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/home_bloc/home_bloc.dart';
@@ -87,6 +88,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
                 controller: tabController,
                 children: const [
                   ProjectList(),
+                  TaskList(),
                 ],
               ),
             ),
@@ -96,15 +98,6 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
     );
   }
 }
-  //         key: scaffoldKey,
-  //         appBar: const HomeAppBar(),
-  //         body: Column(
-  //           children: [
-  //             // Input Search
-  //             Padding(
-  //               padding: const EdgeInsets.only(left: 15, top: 12, right: 15),
-  //               child: MySearchBar(search: () {}),
-  //             ),
 
   //             // Buttons the filters
   //             Padding(

@@ -19,17 +19,17 @@ class FilterForTask extends StatelessWidget {
             const _Title(title: 'Status'),
             FilterByCheckedBox(
               isChecked: state.pending,
-              status: Status.pending,
+              status: TaskStatus.pending,
               onChanged: (value) => context.read<FilterTaskBloc>().add(PendingChanged()),
             ),
             FilterByCheckedBox(
               isChecked: state.complete,
-              status: Status.complete,
+              status: TaskStatus.complete,
               onChanged: (value) => context.read<FilterTaskBloc>().add(CompleteChanged()),
             ),
             FilterByCheckedBox(
               isChecked: state.incomplete,
-              status: Status.incomplete,
+              status: TaskStatus.incomplete,
               onChanged: (value) => context.read<FilterTaskBloc>().add(IncompleteChanged()),
             ),
 

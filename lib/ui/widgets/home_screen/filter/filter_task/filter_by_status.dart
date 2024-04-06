@@ -8,7 +8,7 @@ class FilterByCheckedBox extends StatelessWidget {
 
   final Function onChanged;
   final bool? isChecked;
-  final Status? status;
+  final TaskStatus? status;
   final bool statusIsVisible;
 
   @override
@@ -24,7 +24,7 @@ class FilterByCheckedBox extends StatelessWidget {
         ),
         Visibility(
           visible: statusIsVisible,
-          child: MyStatus(status: status ?? Status.incomplete),
+          child: MyStatus(status: status ?? TaskStatus.incomplete),
         )
       ],
     );

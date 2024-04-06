@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../widgets/home_screen/the_filters.dart';
+import '../../../../widgets/my_two_filters.dart';
 
 class FiltersBarTasks extends StatelessWidget {
   const FiltersBarTasks({super.key});
@@ -11,7 +11,7 @@ class FiltersBarTasks extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TheFilters(
+        MyFilter(
           onTap: () {},
           label: 'Filtrar',
           labelSize: 17,
@@ -28,7 +28,7 @@ class FiltersBarTasks extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
         ),
-        TheFilters(
+        MyFilter(
           onTap: () {},
           label: 'Ordenar',
           labelSize: 17,

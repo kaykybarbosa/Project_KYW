@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:kyw_management/domain/models/project.dart';
-import 'package:kyw_management/ui/widgets/home_screen/my_search_bar.dart';
 
 import 'widgets/chat_project/button_send_chat.dart';
 import 'widgets/chat_project/message_chat.dart';
@@ -124,10 +123,10 @@ class _TasksProject extends StatelessWidget {
       child: Column(
         children: [
           // Input Search
-          MySearchBar(
-            hintText: 'Buscar tarefas',
-            search: () {},
-          ),
+          // MySearchBar(
+          //   hintText: 'Buscar tarefas',
+          //   search: () {},
+          // ),
           // Filters bar
           const FiltersBarTasks(),
           // All tasks

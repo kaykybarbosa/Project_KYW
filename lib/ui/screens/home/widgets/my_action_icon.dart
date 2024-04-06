@@ -25,7 +25,7 @@ class MyActionIcon extends StatelessWidget {
             child: Icon(
               icon,
               color: Theme.of(context).colorScheme.onPrimary,
-              size: Constants.mediumIcon,
+              size: TConstants.iconMd,
             ),
           ),
         ),

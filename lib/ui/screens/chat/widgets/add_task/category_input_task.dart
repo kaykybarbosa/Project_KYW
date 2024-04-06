@@ -7,10 +7,10 @@ import '../../../../state_management/cubits/add_task_cubit/add_task_cubit.dart';
 class CategoryInputTask extends StatelessWidget {
   CategoryInputTask({super.key});
 
-  final List<Status> status = [
-    Status.pending,
-    Status.complete,
-    Status.incomplete,
+  final List<TaskStatus> status = [
+    TaskStatus.pending,
+    TaskStatus.complete,
+    TaskStatus.incomplete,
   ];
 
   @override
@@ -55,7 +55,7 @@ class _Title extends StatelessWidget {
 class _CategoryListRadio extends StatelessWidget {
   const _CategoryListRadio({required this.status});
 
-  final List<Status> status;
+  final List<TaskStatus> status;
 
   @override
   Widget build(BuildContext context) {
@@ -138,10 +138,10 @@ class _AddCategoryRadioItem extends StatelessWidget {
 
 class _PanelRadioItems extends StatelessWidget {
   const _PanelRadioItems({
-    required Status status,
+    required TaskStatus status,
   }) : _status = status;
 
-  final Status _status;
+  final TaskStatus _status;
 
   @override
   Widget build(BuildContext context) {

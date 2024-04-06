@@ -4,18 +4,18 @@ import 'package:kyw_management/domain/enums/status.dart';
 class MyStatus extends StatelessWidget {
   MyStatus({super.key, required this.status});
 
-  final Status status;
+  final TaskStatus status;
 
-  final Map<Status, Color> color = {
-    Status.complete: CupertinoColors.systemGreen,
-    Status.incomplete: CupertinoColors.systemYellow,
-    Status.pending: CupertinoColors.systemRed,
+  final Map<TaskStatus, Color> color = {
+    TaskStatus.complete: CupertinoColors.systemGreen,
+    TaskStatus.incomplete: CupertinoColors.systemYellow,
+    TaskStatus.pending: CupertinoColors.systemRed,
   };
 
-  final Map<Status, Color> backgroundColor = {
-    Status.complete: const Color.fromARGB(40, 52, 199, 89),
-    Status.incomplete: const Color.fromARGB(40, 255, 204, 0),
-    Status.pending: const Color.fromARGB(40, 255, 58, 48),
+  final Map<TaskStatus, Color> backgroundColor = {
+    TaskStatus.complete: const Color.fromARGB(40, 52, 199, 89),
+    TaskStatus.incomplete: const Color.fromARGB(40, 255, 204, 0),
+    TaskStatus.pending: const Color.fromARGB(40, 255, 58, 48),
   };
 
   @override

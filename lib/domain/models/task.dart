@@ -6,7 +6,7 @@ class Task {
     required this.title,
     this.description,
     this.isImportant = false,
-    this.status = Status.incomplete,
+    this.status = TaskStatus.incomplete,
     this.users,
     this.dateOfConclusion,
   });
@@ -14,7 +14,7 @@ class Task {
   String title;
   String? description;
   bool isImportant;
-  Status status;
+  TaskStatus status;
   List<UserTest>? users;
   DateTime? dateOfConclusion;
 }
