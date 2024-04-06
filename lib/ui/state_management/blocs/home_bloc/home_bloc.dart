@@ -7,7 +7,7 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc()
-      : super(const HomeInitial(
+      : super(const HomeState(
           currentScreen: Screens.project,
           haveMessage: true,
         )) {

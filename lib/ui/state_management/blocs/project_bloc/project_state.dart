@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:kyw_management/domain/models/project.dart';
+part of 'project_bloc.dart';
 
 class ProjectState extends Equatable {
   const ProjectState({required this.allProject});

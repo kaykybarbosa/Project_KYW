@@ -23,10 +23,3 @@ class HomeState extends Equatable {
     );
   }
 }
-
-final class HomeInitial extends HomeState {
-  const HomeInitial({
-    required super.currentScreen,
-    required super.haveMessage,
-  });
-}

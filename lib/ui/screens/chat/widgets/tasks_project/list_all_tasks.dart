@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/ui/screens/chat/widgets/tasks_project/add_button_tasks.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
-import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_state.dart';
 import 'package:kyw_management/ui/widgets/card_task.dart';
 
 class ListAllTaks extends StatelessWidget {

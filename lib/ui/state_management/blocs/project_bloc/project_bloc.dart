@@ -4,9 +4,9 @@ import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/domain/models/task.dart';
 
 import '../../../../data/repositories/project_repository.dart';
-import 'project_state.dart';
 
 part 'project_event.dart';
+part 'project_state.dart';
 
 final projects = ProjectRepository().projects;
 

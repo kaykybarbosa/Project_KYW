@@ -14,7 +14,7 @@ import 'package:kyw_management/ui/screens/contact_us_screen.dart';
 import 'package:kyw_management/ui/screens/forms/sign_in_screen.dart';
 import 'package:kyw_management/ui/screens/forms/sign_up_screen.dart';
 import 'package:kyw_management/ui/screens/help_screen.dart';
-import 'package:kyw_management/ui/screens/home_screen.dart';
+import 'package:kyw_management/ui/screens/home/home_screen.dart';
 import 'package:kyw_management/ui/screens/my_account_screen.dart';
 import 'package:kyw_management/ui/screens/notification_screen.dart';
 import 'package:kyw_management/ui/screens/steps_forgot_password/change_password_screen.dart';
