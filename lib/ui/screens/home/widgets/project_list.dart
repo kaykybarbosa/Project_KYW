@@ -5,6 +5,10 @@ import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/card_project.dart';
+import 'package:kyw_management/ui/widgets/my_search_bar.dart';
+import 'package:kyw_management/ui/widgets/my_two_filters.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/texts.dart';
 
 class ProjectList extends StatelessWidget {
   const ProjectList({super.key});
@@ -15,14 +19,37 @@ class ProjectList extends StatelessWidget {
       builder: (context, state) {
         var projects = state.allProject;
 
-        return MySliverList(
-          childCount: projects.length,
-          builder: (_, index) {
-            return CardProject(
-              project: projects[index],
-              onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
-            );
-          },
+        return Column(
+          children: <Widget>[
+            /// Buscar projetos
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: TConstants.defaultMargin,
+                vertical: 10,
+              ),
+              child: MySearchBar(
+                hintText: TTexts.hintTextProject,
+                onPressed: () {},
+              ),
+            ),
+
+            /// Filtros
+            MyTwoFilters(
+              filterOnTap: () {},
+              orderOnTap: () {},
+            ),
+
+            /// Lista de projetos
+            Expanded(
+              child: MySliverList(
+                childCount: projects.length,
+                builder: (_, index) => CardProject(
+                  project: projects[index],
+                  onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
