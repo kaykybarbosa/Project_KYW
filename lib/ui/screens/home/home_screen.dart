@@ -71,30 +71,34 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      endDrawer: const MyEndDrawer(),
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        physics: const BouncingScrollPhysics(),
-        headerSliverBuilder: (context, index) => [
-          /// AppBar
-          const HomeAppBar(),
-        ],
-        body: Column(
-          children: [
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: const [
-                  ProjectList(),
-                  TaskList(),
-                ],
-              ),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return Scaffold(
+          key: scaffoldKey,
+          endDrawer: const MyEndDrawer(),
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            physics: const BouncingScrollPhysics(),
+            headerSliverBuilder: (context, index) => [
+              /// AppBar
+              const HomeAppBar(),
+            ],
+            body: Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: const [
+                      ProjectList(),
+                      TaskList(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
