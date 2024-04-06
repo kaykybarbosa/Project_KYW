@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../enums/my_routes.dart';
+import '../../../domain/services/routers/my_routes.dart';
 
 class MessageToRegistered extends StatelessWidget {
   const MessageToRegistered({
@@ -27,8 +27,7 @@ class MessageToRegistered extends StatelessWidget {
             TextSpan(
               text: 'Clique aqui ',
               style: linkText,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => GoRouter.of(context).push(MyRoutes.signUp),
+              recognizer: TapGestureRecognizer()..onTap = () => GoRouter.of(context).push(AppRoutes.signUp),
             ),
             TextSpan(
               text: 'para criar uma',

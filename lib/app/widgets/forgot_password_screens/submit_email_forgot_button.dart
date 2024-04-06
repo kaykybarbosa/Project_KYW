@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:kyw_management/domain/cubits/forgot_email_cubit/forgot_email_cubit.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
 
 class SubmitEmailForgotButton extends StatelessWidget {
   const SubmitEmailForgotButton({super.key});
@@ -17,9 +17,7 @@ class SubmitEmailForgotButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               disabledForegroundColor: const Color.fromARGB(90, 238, 238, 238),
             ),
-            onPressed: state.isValid
-                ? () => context.read<ForgotEmailCubit>().formSubmitted()
-                : null,
+            onPressed: state.isValid ? () => context.read<ForgotEmailCubit>().formSubmitted() : null,
             child: state.status.isInProgress
                 ? Transform.scale(
                     scale: 0.44,

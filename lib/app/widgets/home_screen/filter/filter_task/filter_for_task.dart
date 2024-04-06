@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/app/enums/status.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/card_category.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_by_status.dart';
-
-import '../../../../../domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/filter_task_bloc/filter_task_bloc.dart';
 
 class FilterForTask extends StatelessWidget {
   const FilterForTask({super.key});
@@ -20,20 +20,17 @@ class FilterForTask extends StatelessWidget {
             FilterByCheckedBox(
               isChecked: state.pending,
               status: Status.pending,
-              onChanged: (value) =>
-                  context.read<FilterTaskBloc>().add(PendingChanged()),
+              onChanged: (value) => context.read<FilterTaskBloc>().add(PendingChanged()),
             ),
             FilterByCheckedBox(
               isChecked: state.complete,
               status: Status.complete,
-              onChanged: (value) =>
-                  context.read<FilterTaskBloc>().add(CompleteChanged()),
+              onChanged: (value) => context.read<FilterTaskBloc>().add(CompleteChanged()),
             ),
             FilterByCheckedBox(
               isChecked: state.incomplete,
               status: Status.incomplete,
-              onChanged: (value) =>
-                  context.read<FilterTaskBloc>().add(IncompleteChanged()),
+              onChanged: (value) => context.read<FilterTaskBloc>().add(IncompleteChanged()),
             ),
 
             const SizedBox(height: 20),
@@ -48,9 +45,7 @@ class FilterForTask extends StatelessWidget {
                 FilterByCheckedBox(
                   statusIsVisible: false,
                   isChecked: state.showMyCategories,
-                  onChanged: (value) => context
-                      .read<FilterTaskBloc>()
-                      .add(ShowMyCategoriesChanged()),
+                  onChanged: (value) => context.read<FilterTaskBloc>().add(ShowMyCategoriesChanged()),
                 ),
                 const Text(
                   'Mostrar apenas minhas categorias',

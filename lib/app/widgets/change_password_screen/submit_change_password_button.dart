@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:kyw_management/domain/cubits/change_password_cubit/change_password_cubit.dart';
 
 class SubmitChangePasswordButton extends StatelessWidget {
@@ -16,11 +17,7 @@ class SubmitChangePasswordButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               disabledForegroundColor: const Color.fromARGB(90, 238, 238, 238),
             ),
-            onPressed: state.isValid
-                ? () => context
-                    .read<ChangePasswordCubit>()
-                    .formChangePasswordSubmitted()
-                : null,
+            onPressed: state.isValid ? () => context.read<ChangePasswordCubit>().formChangePasswordSubmitted() : null,
             child: state.status.isInProgress
                 ? Transform.scale(
                     scale: 0.44,

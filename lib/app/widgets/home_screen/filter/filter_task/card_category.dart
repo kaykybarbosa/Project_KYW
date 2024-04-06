@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/domain/models_states/my_category.dart';
 
 class CardCategory extends StatefulWidget {
@@ -16,14 +17,11 @@ class _CardCategoryState extends State<CardCategory> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context
-          .read<FilterTaskBloc>()
-          .add(UpdateCategory(category: widget.category)),
+      onTap: () => context.read<FilterTaskBloc>().add(UpdateCategory(category: widget.category)),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
-          color:
-              widget.category.isCheck ? Colors.grey[800] : Colors.transparent,
+          color: widget.category.isCheck ? Colors.grey[800] : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),

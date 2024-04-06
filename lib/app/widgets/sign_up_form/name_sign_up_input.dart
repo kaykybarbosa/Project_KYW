@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kyw_management/domain/blocs/sign_up_bloc/sign_up_bloc.dart';
 
 class NameSignUpInput extends StatelessWidget {
   const NameSignUpInput({super.key});
@@ -19,12 +19,9 @@ class NameSignUpInput extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Nome',
               border: const OutlineInputBorder(),
-              errorText: state.name.displayError != null
-                  ? "Por favor, informe um nome válido!"
-                  : null,
+              errorText: state.name.displayError != null ? "Por favor, informe um nome válido!" : null,
             ),
-            onChanged: (name) =>
-                context.read<SignUpBloc>().add(NameSignUpChanged(name: name)),
+            onChanged: (name) => context.read<SignUpBloc>().add(NameSignUpChanged(name: name)),
           );
         },
       ),

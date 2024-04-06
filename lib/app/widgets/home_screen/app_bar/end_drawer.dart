@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 import 'package:kyw_management/app/widgets/circle_image.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/drawer_option.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/sign_out_button.dart';
@@ -17,7 +17,7 @@ class MyEndDrawer extends StatelessWidget {
         icon: Icons.settings,
         label: 'Configurações',
         onTap: () {
-          context.push(MyRoutes.configuration);
+          context.push(AppRoutes.configuration);
         },
       ),
 
@@ -26,7 +26,7 @@ class MyEndDrawer extends StatelessWidget {
         icon: FontAwesomeIcons.solidUser,
         label: 'Minha conta',
         onTap: () {
-          context.push(MyRoutes.myAccount);
+          context.push(AppRoutes.myAccount);
         },
       ),
 
@@ -35,7 +35,7 @@ class MyEndDrawer extends StatelessWidget {
         icon: FontAwesomeIcons.circleInfo,
         label: 'Ajuda',
         onTap: () {
-          context.push(MyRoutes.help);
+          context.push(AppRoutes.help);
         },
       ),
     ];
@@ -93,9 +93,7 @@ class MyEndDrawer extends StatelessWidget {
           ),
 
           // SingOut
-          SignOutButton(
-              onTap: () =>
-                  GoRouter.of(context).pushReplacement(MyRoutes.signIn)),
+          SignOutButton(onTap: () => GoRouter.of(context).pushReplacement(AppRoutes.signIn)),
 
           const SizedBox(height: 50.0)
         ],

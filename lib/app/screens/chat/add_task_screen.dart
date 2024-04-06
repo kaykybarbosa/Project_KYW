@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kyw_management/domain/cubits/add_task_cubit/add_task_cubit.dart';
-import 'package:kyw_management/domain/services/routers/export_routes.dart';
 
 import 'widgets/add_task/category_input_task.dart';
 import 'widgets/add_task/date_input_task.dart';
@@ -37,6 +37,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
+
+        /// TODO: Remover registro do cubit
         child: BlocProvider(
           create: (context) => AddTaskCubit(),
           child: Column(

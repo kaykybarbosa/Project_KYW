@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kyw_management/domain/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class EmailSignInInput extends StatelessWidget {
   const EmailSignInInput({
@@ -21,13 +21,9 @@ class EmailSignInInput extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'E-mail ou Número',
               border: const OutlineInputBorder(),
-              errorText: state.email.displayError != null
-                  ? "Por favor, informe um e-mail válido!"
-                  : null,
+              errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
             ),
-            onChanged: (email) => context
-                .read<SignInBloc>()
-                .add(EmailSignInChanged(email: email)),
+            onChanged: (email) => context.read<SignInBloc>().add(EmailSignInChanged(email: email)),
           );
         },
       ),

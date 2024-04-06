@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:kyw_management/app/widgets/change_password_screen/change_confirmed_password_input.dart';
 import 'package:kyw_management/app/widgets/change_password_screen/change_password_input.dart';
 import 'package:kyw_management/app/widgets/change_password_screen/message_dont_change_password.dart';
 import 'package:kyw_management/app/widgets/change_password_screen/message_go_to_sign_in.dart';
-import 'package:kyw_management/app/widgets/change_password_screen/title_input.dart';
 import 'package:kyw_management/app/widgets/change_password_screen/submit_change_password_button.dart';
+import 'package:kyw_management/app/widgets/change_password_screen/title_input.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
 import 'package:kyw_management/domain/cubits/change_password_cubit/change_password_cubit.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -69,8 +70,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const TitleInput(label: 'Entre com sua nova senha'),
-                    ChangePasswordInput(
-                        passwordController: _passwordController),
+                    ChangePasswordInput(passwordController: _passwordController),
                     const SizedBox(height: 15),
                     const TitleInput(label: 'Confirme a senha'),
                     ChangeConfirmedPasswordInput(

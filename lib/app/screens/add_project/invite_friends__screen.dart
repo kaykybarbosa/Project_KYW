@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/list_members.dart';
 import 'package:kyw_management/app/widgets/create_project_screen.dart/my_text_field.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/add_project_bloc/add_project_bloc.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class InviteFriendsScreen extends StatelessWidget {
   const InviteFriendsScreen({super.key});
@@ -131,7 +133,7 @@ class _MyFloatingButton extends StatelessWidget {
           ),
         );
     context.read<AddProjectBloc>().add(FormSubmitteddAddProject());
-    GoRouter.of(context).pushReplacement(MyRoutes.home);
+    GoRouter.of(context).pushReplacement(AppRoutes.home);
   }
 }
 

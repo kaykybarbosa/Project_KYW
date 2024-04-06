@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kyw_management/app/models/task.dart';
+import 'package:kyw_management/app/screens/chat/widgets/tasks_project/add_button_tasks.dart';
 import 'package:kyw_management/app/widgets/card_task.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
-
-import '../../../../models/task.dart';
-import 'add_button_tasks.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_state.dart';
 
 class ListAllTaks extends StatelessWidget {
   const ListAllTaks({

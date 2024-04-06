@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kyw_management/domain/blocs/home_bloc/home_bloc.dart';
 
 class MyIcon extends StatelessWidget {
   const MyIcon({
@@ -20,8 +21,7 @@ class MyIcon extends StatelessWidget {
         return IconButton(
           onPressed: () => onTap(),
           icon: Badge(
-            label:
-                showBadge ? (state.haveMessage ? const Text('2') : null) : null,
+            label: showBadge ? (state.haveMessage ? const Text('2') : null) : null,
             smallSize: showBadge ? (state.haveMessage ? 6 : 0) : 0,
             child: Icon(
               icon,

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/data/tasks.dart';
 import 'package:kyw_management/app/enums/screens.dart';
 import 'package:kyw_management/app/widgets/home_screen/app_bar/app_name.dart';
@@ -13,8 +15,10 @@ import 'package:kyw_management/app/widgets/home_screen/my_search_bar.dart';
 import 'package:kyw_management/app/widgets/home_screen/the_filters.dart';
 import 'package:kyw_management/app/widgets/list_projects.dart';
 import 'package:kyw_management/app/widgets/list_tasks.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
-import 'package:kyw_management/domain/services/routers/export_routes.dart';
+import 'package:kyw_management/domain/blocs/filter_project_bloc/filter_project_bloc.dart';
+import 'package:kyw_management/domain/blocs/filter_task_bloc/filter_task_bloc.dart';
+import 'package:kyw_management/domain/blocs/home_bloc/home_bloc.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -91,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               MyIcon(
                 icon: CupertinoIcons.bell,
                 onTap: () {
-                  GoRouter.of(context).push(MyRoutes.notifications);
+                  GoRouter.of(context).push(AppRoutes.notifications);
                   context.read<HomeBloc>().add(const HaveMessageHome(haveMessage: false));
                 },
               ),
@@ -184,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           // Button create project
           floatingActionButton: state.currentScreen == Screens.project
               ? CreateProjectButton(
-                  onTap: () => context.push(MyRoutes.createProject),
+                  onTap: () => context.push(AppRoutes.createProject),
                 )
               : null,
         );

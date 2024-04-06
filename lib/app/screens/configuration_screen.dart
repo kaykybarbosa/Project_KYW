@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 import 'package:kyw_management/app/widgets/configuration_screen/config_option.dart';
 
 class ConfigurationScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class ConfigurationScreen extends StatelessWidget {
         title: 'Conta',
         subTitle: 'Configurações da conta',
         onTap: () {
-          context.push(MyRoutes.configurationAccount);
+          context.push(AppRoutes.configurationAccount);
         },
       ),
       ConfigOption(

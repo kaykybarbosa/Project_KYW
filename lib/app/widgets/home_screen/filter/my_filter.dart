@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/app/enums/filters_enum.dart';
 import 'package:kyw_management/app/enums/screens.dart';
@@ -8,8 +9,8 @@ import 'package:kyw_management/app/widgets/home_screen/filter/filter_buttons.dar
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_projet/filter_for_project.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/filter_task/filter_for_task.dart';
 import 'package:kyw_management/app/widgets/home_screen/filter/my_selection_date.dart';
-
-import '../../../../domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/filter_project_bloc/filter_project_bloc.dart';
+import 'package:kyw_management/domain/blocs/filter_task_bloc/filter_task_bloc.dart';
 
 DateFormat formatter = DateFormat("dd/MM/yyyy");
 

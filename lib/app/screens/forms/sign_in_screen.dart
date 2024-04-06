@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 import 'package:kyw_management/app/widgets/sign_in_form/email_sign_in_input.dart';
 import 'package:kyw_management/app/widgets/sign_in_form/password_sign_in_input.dart';
 import 'package:kyw_management/app/widgets/sign_in_form/submit_sign_in_button.dart';
 import 'package:kyw_management/app/widgets/sign_up_form/forgot_password_button.dart';
+import 'package:kyw_management/domain/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
-import '../../../domain/blocs/blocs_export.dart';
 import '../../widgets/sign_in_form/message_to_registred.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -24,7 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: BlocListener<SignInBloc, SignInState>(
         listener: (context, state) {
           if (state.status.isSuccess) {
-            GoRouter.of(context).pushReplacement(MyRoutes.home);
+            GoRouter.of(context).pushReplacement(AppRoutes.home);
           }
         },
         child: Padding(
@@ -48,8 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       // Forgot password
                       ForgotPasswordButton(
-                        onTap: () => GoRouter.of(context)
-                            .push(MyRoutes.emailForgotPassword),
+                        onTap: () => GoRouter.of(context).push(AppRoutes.emailForgotPassword),
                       ),
                     ],
                   ),

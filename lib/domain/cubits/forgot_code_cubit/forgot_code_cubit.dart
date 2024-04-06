@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 import '../../models_states/models_states_export.dart';
 

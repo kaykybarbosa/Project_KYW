@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/widgets/forgot_password_screens/code_input_forgot.dart';
 import 'package:kyw_management/app/widgets/forgot_password_screens/submit_code_forgot_button.dart';
 import 'package:kyw_management/app/widgets/my_title.dart';
 import 'package:kyw_management/domain/cubits/forgot_code_cubit/forgot_code_cubit.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
-import '../../../domain/blocs/blocs_export.dart';
 import '../../widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
 
 class CodeForgotScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class CodeForgotScreen extends StatefulWidget {
 class _CodeForgotScreenState extends State<CodeForgotScreen> {
   @override
   Widget build(BuildContext context) {
+    /// TODO: Remover registro do cubit
     return BlocProvider(
       create: (context) => ForgotCodeCubit(),
       child: Scaffold(
@@ -36,7 +38,7 @@ class _CodeForgotScreenState extends State<CodeForgotScreen> {
                   );
               }
               if (state.status.isSuccess) {
-                GoRouter.of(context).pushReplacement(MyRoutes.changePassword);
+                GoRouter.of(context).pushReplacement(AppRoutes.changePassword);
               }
             },
             child: const Column(

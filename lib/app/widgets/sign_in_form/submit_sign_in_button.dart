@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:kyw_management/domain/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class SubmitSignInButton extends StatelessWidget {
   const SubmitSignInButton({super.key});
@@ -13,12 +14,8 @@ class SubmitSignInButton extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                disabledForegroundColor:
-                    const Color.fromARGB(90, 238, 238, 238)),
-            onPressed: state.isValid
-                ? () => context.read<SignInBloc>().add(FormSignInSubmitted())
-                : null,
+            style: ElevatedButton.styleFrom(disabledForegroundColor: const Color.fromARGB(90, 238, 238, 238)),
+            onPressed: state.isValid ? () => context.read<SignInBloc>().add(FormSignInSubmitted()) : null,
             child: state.status.isInProgress
                 ? Transform.scale(
                     scale: 0.44,

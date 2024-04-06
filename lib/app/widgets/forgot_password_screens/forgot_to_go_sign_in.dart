@@ -1,6 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../../../domain/services/routers/export_routes.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class ForgotToGoSignIn extends StatelessWidget {
   const ForgotToGoSignIn({
@@ -23,7 +24,7 @@ class ForgotToGoSignIn extends StatelessWidget {
               style: linkText,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  GoRouter.of(context).pushReplacement(MyRoutes.signIn);
+                  GoRouter.of(context).pushReplacement(AppRoutes.signIn);
                 },
             ),
             TextSpan(text: 'para realizar o login', style: defaultText),

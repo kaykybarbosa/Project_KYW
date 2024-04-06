@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class HelpScreen extends StatelessWidget {
   HelpScreen({super.key});
@@ -23,7 +23,7 @@ class HelpScreen extends StatelessWidget {
     void goHelpCenter() {}
 
     void goContactUs() {
-      context.push(MyRoutes.contactUs);
+      context.push(AppRoutes.contactUs);
     }
 
     void goApplicationData() {}

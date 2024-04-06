@@ -1,4 +1,4 @@
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:formz/formz.dart';
 import 'package:kyw_management/domain/services/mixins/validations_mixin.dart';
 
 class Category extends FormzInput<String, String> with ValidationsMixin {

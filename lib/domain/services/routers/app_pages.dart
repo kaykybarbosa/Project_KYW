@@ -1,95 +1,96 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/screens/chat/chat_project_screen.dart';
 import 'package:kyw_management/app/screens/configuration_screens/change_number_or_email_screen.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 import '../../../app/screens/screens_export.dart';
 
-final appRoutes = GoRouter(
+final appPages = GoRouter(
   navigatorKey: Get.key,
-  initialLocation: MyRoutes.home,
+  initialLocation: AppRoutes.home,
   routes: [
     GoRoute(
-      path: MyRoutes.signIn,
+      path: AppRoutes.signIn,
       builder: (context, state) => const SignInScreen(),
     ),
     GoRoute(
-      path: MyRoutes.signUp,
+      path: AppRoutes.signUp,
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      path: MyRoutes.emailForgotPassword,
+      path: AppRoutes.emailForgotPassword,
       builder: (context, state) => const EmailForgotScreen(),
     ),
     GoRoute(
-      path: MyRoutes.codeForgotPassword,
+      path: AppRoutes.codeForgotPassword,
       builder: (context, state) => const CodeForgotScreen(),
     ),
     GoRoute(
-      path: MyRoutes.changePassword,
+      path: AppRoutes.changePassword,
       builder: (context, state) => const ChangePasswordScreen(),
     ),
     GoRoute(
-      path: MyRoutes.home,
+      path: AppRoutes.home,
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      path: MyRoutes.notifications,
+      path: AppRoutes.notifications,
       builder: (context, state) => const NotificationScreen(),
     ),
     GoRoute(
-      path: MyRoutes.createProject,
+      path: AppRoutes.createProject,
       builder: (context, state) => const CreateProjectScreen(),
     ),
     GoRoute(
-      path: MyRoutes.inviteFriends,
+      path: AppRoutes.inviteFriends,
       builder: (context, state) => const InviteFriendsScreen(),
     ),
     GoRoute(
-      path: MyRoutes.configuration,
+      path: AppRoutes.configuration,
       builder: (context, state) => const ConfigurationScreen(),
     ),
     GoRoute(
-      path: MyRoutes.myAccount,
+      path: AppRoutes.myAccount,
       builder: (context, state) => const MyAccountScreen(),
     ),
     GoRoute(
-      path: MyRoutes.help,
+      path: AppRoutes.help,
       builder: (context, state) => HelpScreen(),
     ),
     GoRoute(
-      path: MyRoutes.contactUs,
+      path: AppRoutes.contactUs,
       builder: (context, state) => const ContactUsScreen(),
     ),
     GoRoute(
-      path: MyRoutes.configurationAccount,
+      path: AppRoutes.configurationAccount,
       builder: (context, state) => const ConfigurationAccountScreen(),
     ),
     GoRoute(
-      path: MyRoutes.twoStepVerification,
+      path: AppRoutes.twoStepVerification,
       builder: (context, state) => const TwoStepVerificationScreen(),
     ),
     GoRoute(
-      path: MyRoutes.changeNumberOrEmail,
+      path: AppRoutes.changeNumberOrEmail,
       builder: (context, state) => const ChangeNumberOrEmail(),
     ),
     GoRoute(
-      path: MyRoutes.changeNumber,
+      path: AppRoutes.changeNumber,
       builder: (context, state) => const ChangeNumberScreen(),
     ),
     GoRoute(
-      path: MyRoutes.changeEmail,
+      path: AppRoutes.changeEmail,
       builder: (context, state) => const ChangeEmailScreen(),
     ),
     GoRoute(
-      path: MyRoutes.configurationDeleteAccount,
+      path: AppRoutes.configurationDeleteAccount,
       builder: (context, state) => const DeleteAccountScreen(),
     ),
     GoRoute(
-      path: MyRoutes.chat,
+      path: AppRoutes.chat,
       builder: (context, state) {
         final projectId = int.parse(state.pathParameters['projectId']!);
 

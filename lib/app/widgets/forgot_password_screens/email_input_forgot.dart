@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/domain/cubits/forgot_email_cubit/forgot_email_cubit.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
 
 class EmailInputForgot extends StatelessWidget {
   const EmailInputForgot({super.key});
@@ -30,12 +29,9 @@ class EmailInputForgot extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'E-mail',
                     border: const OutlineInputBorder(),
-                    errorText: state.email.displayError != null
-                        ? "Por favor, informe um e-mail válido!"
-                        : null,
+                    errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
                   ),
-                  onChanged: (email) =>
-                      context.read<ForgotEmailCubit>().emailChanged(email));
+                  onChanged: (email) => context.read<ForgotEmailCubit>().emailChanged(email));
             },
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class ChangeNumberOrEmail extends StatelessWidget {
   const ChangeNumberOrEmail({super.key});
@@ -20,8 +20,8 @@ class ChangeNumberOrEmail extends StatelessWidget {
       FontAwesomeIcons.envelope,
     ];
 
-    void goToChangeNumber() => GoRouter.of(context).push(MyRoutes.changeNumber);
-    void goToChangeEmail() => GoRouter.of(context).push(MyRoutes.changeEmail);
+    void goToChangeNumber() => GoRouter.of(context).push(AppRoutes.changeNumber);
+    void goToChangeEmail() => GoRouter.of(context).push(AppRoutes.changeEmail);
 
     List<Function> optionsFunction = [
       goToChangeNumber,

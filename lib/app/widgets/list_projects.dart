@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/widgets/card_project.dart';
-import 'package:kyw_management/domain/services/routers/export_routes.dart';
-
-import '../../domain/blocs/blocs_export.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/domain/blocs/project_bloc/project_state.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class ListProjects extends StatefulWidget {
   const ListProjects({super.key});
@@ -34,7 +36,7 @@ class _ListProjectsState extends State<ListProjects> {
             return CardProject(
               project: projects[index],
               onTap: () {
-                var route = "${MyRoutes.chat}/$index".replaceAll(':projectId/', '');
+                var route = "${AppRoutes.chat}/$index".replaceAll(':projectId/', '');
                 GoRouter.of(context).push(route);
               },
             );

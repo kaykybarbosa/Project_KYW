@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:kyw_management/domain/cubits/two_step_verification_cubit/two_step_verification_cubit.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
 
 class TwoStepVerificationScreen extends StatefulWidget {
   const TwoStepVerificationScreen({super.key});
@@ -141,7 +141,8 @@ class _SubmitButton extends StatelessWidget {
   ButtonStyle _buttonStyle(TwoStepVerificationState state) {
     return ButtonStyle(
       foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
-      backgroundColor: MaterialStatePropertyAll(state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
+      backgroundColor: MaterialStatePropertyAll(
+          state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
     );
   }
 }

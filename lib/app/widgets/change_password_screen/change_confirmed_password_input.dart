@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/domain/cubits/change_password_cubit/change_password_cubit.dart';
 
 class ChangeConfirmedPasswordInput extends StatelessWidget {
@@ -13,8 +13,7 @@ class ChangeConfirmedPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
-      buildWhen: (previous, current) =>
-          previous.confirmedPassword != current.confirmedPassword,
+      buildWhen: (previous, current) => previous.confirmedPassword != current.confirmedPassword,
       builder: (context, state) {
         return TextFormField(
           controller: _confirmedPasswordController,
@@ -23,13 +22,9 @@ class ChangeConfirmedPasswordInput extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Confirme senha',
             border: const OutlineInputBorder(),
-            errorText: state.confirmedPassword.displayError != null
-                ? "As senhas não são iguais!"
-                : null,
+            errorText: state.confirmedPassword.displayError != null ? "As senhas não são iguais!" : null,
           ),
-          onChanged: (password) => context
-              .read<ChangePasswordCubit>()
-              .confirmedPasswordChanged(password),
+          onChanged: (password) => context.read<ChangePasswordCubit>().confirmedPasswordChanged(password),
         );
       },
     );

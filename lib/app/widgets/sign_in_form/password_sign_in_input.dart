@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../domain/blocs/blocs_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kyw_management/domain/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class PasswordSignInInput extends StatelessWidget {
   const PasswordSignInInput({super.key});
@@ -17,12 +17,9 @@ class PasswordSignInInput extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Senha',
             border: const OutlineInputBorder(),
-            errorText:
-                state.password.displayError != null ? "Senha inválida!" : null,
+            errorText: state.password.displayError != null ? "Senha inválida!" : null,
           ),
-          onChanged: (password) => context
-              .read<SignInBloc>()
-              .add(PasswordSignInChanged(password: password)),
+          onChanged: (password) => context.read<SignInBloc>().add(PasswordSignInChanged(password: password)),
         );
       },
     );

@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/app/models/project.dart';
 import 'package:kyw_management/app/models/task.dart';
 
 import '../../repositories/project_repository.dart';
-import '../blocs_export.dart';
+import 'project_state.dart';
 
 part 'project_event.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kyw_management/app/enums/my_routes.dart';
+import 'package:kyw_management/domain/services/routers/my_routes.dart';
 
 class ConfigurationAccountScreen extends StatelessWidget {
   const ConfigurationAccountScreen({super.key});
@@ -11,22 +11,18 @@ class ConfigurationAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const Color primaryColor = Color.fromRGBO(50, 58, 71, 1);
 
-    final List<String> optionsTitle = [
-      'Configuração de duas etapas',
-      'Mudar Número ou E-mail',
-      'Apagar conta'
-    ];
+    final List<String> optionsTitle = ['Configuração de duas etapas', 'Mudar Número ou E-mail', 'Apagar conta'];
     final List<IconData> optionsIcon = [
       FontAwesomeIcons.shieldHalved,
       FontAwesomeIcons.phoneFlip,
       FontAwesomeIcons.solidTrashCan
     ];
 
-    void goTwoStepVerification() => context.push(MyRoutes.twoStepVerification);
+    void goTwoStepVerification() => context.push(AppRoutes.twoStepVerification);
 
-    void goChangeNumberOrEmail() => context.push(MyRoutes.changeNumberOrEmail);
+    void goChangeNumberOrEmail() => context.push(AppRoutes.changeNumberOrEmail);
 
-    void deleteAccount() => context.push(MyRoutes.configurationDeleteAccount);
+    void deleteAccount() => context.push(AppRoutes.configurationDeleteAccount);
 
     List<Function> optionsFunction = [
       /// If [index] == 0 => show two_step_screen

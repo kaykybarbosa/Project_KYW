@@ -1,4 +1,4 @@
-class MyRoutes {
+class AppRoutes {
   static String home = '/home';
   static String signIn = '/sign-in';
   static String signUp = '/sign_up';
