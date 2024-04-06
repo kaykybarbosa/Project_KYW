@@ -1,5 +1,5 @@
-class MyCategory {
-  const MyCategory({
+class CategoryModel {
+  const CategoryModel({
     required this.id,
     required this.name,
     required this.isCheck,
@@ -9,12 +9,12 @@ class MyCategory {
   final String name;
   final bool isCheck;
 
-  MyCategory copyWith({
+  CategoryModel copyWith({
     String? id,
     String? name,
     bool? isCheck,
   }) {
-    return MyCategory(
+    return CategoryModel(
       id: id ?? this.id,
       name: name ?? this.name,
       isCheck: isCheck ?? this.isCheck,

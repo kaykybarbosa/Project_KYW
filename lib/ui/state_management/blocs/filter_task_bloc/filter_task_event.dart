@@ -18,7 +18,7 @@ class ShowMyCategoriesChanged extends FilterTaskEvent {}
 class AddCategory extends FilterTaskEvent {
   const AddCategory({required this.category});
 
-  final MyCategory category;
+  final CategoryModel category;
 
   @override
   List<Object> get props => [category];
@@ -27,7 +27,7 @@ class AddCategory extends FilterTaskEvent {
 class UpdateCategory extends FilterTaskEvent {
   const UpdateCategory({required this.category});
 
-  final MyCategory category;
+  final CategoryModel category;
 
   @override
   List<Object> get props => [category];

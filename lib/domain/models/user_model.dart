@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class User extends Equatable {
+class UserModel extends Equatable {
   final String id;
   final String name;
   final String email;
@@ -10,7 +10,7 @@ class User extends Equatable {
   final String confirmPassword;
   bool? isActive;
 
-  User({
+  UserModel({
     required this.id,
     required this.name,
     required this.email,
@@ -22,7 +22,7 @@ class User extends Equatable {
     isActive = isActive ?? true;
   }
 
-  User pure({
+  UserModel pure({
     String? id,
     String? name,
     String? email,
@@ -31,7 +31,7 @@ class User extends Equatable {
     String? confirmPassword,
     bool? isActive,
   }) {
-    return User(
+    return UserModel(
       id: id ?? '',
       name: name ?? '',
       email: email ?? '',
@@ -42,10 +42,9 @@ class User extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [name, email, number, password, confirmPassword, isActive];
+  List<Object?> get props => [name, email, number, password, confirmPassword, isActive];
 
-  User copyWith({
+  UserModel copyWith({
     String? id,
     String? name,
     String? email,
@@ -54,7 +53,7 @@ class User extends Equatable {
     String? confirmPassword,
     bool? isActive,
   }) {
-    return User(
+    return UserModel(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -77,8 +76,8 @@ class User extends Equatable {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,

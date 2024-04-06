@@ -2,10 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/domain/models/user_test.dart';
 
-// ignore: must_be_immutable
 class Project extends Equatable {
-  @override
-  Project({
+  const Project({
     required this.id,
     required this.name,
     this.description,
@@ -18,16 +16,16 @@ class Project extends Equatable {
     this.isImportant = false,
   });
 
-  String id;
-  String name;
-  String? description;
-  String? image;
-  String? lastMessage;
-  String? lastMessageTime;
-  List<Task>? tasks;
-  List<UserTest>? users;
-  String? inviteLink;
-  bool isImportant;
+  final String id;
+  final String name;
+  final String? description;
+  final String? image;
+  final String? lastMessage;
+  final String? lastMessageTime;
+  final List<Task>? tasks;
+  final List<UserTest>? users;
+  final String? inviteLink;
+  final bool isImportant;
 
   @override
   List<Object?> get props => [

@@ -36,7 +36,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
   void _onAddTaskProject(AddTaskProject event, Emitter<ProjectState> emit) {
     // Finding project
-    final project = state.allProject.firstWhere((project) => project.id == event.projectId);
+    Project project = state.allProject.firstWhere((project) => project.id == event.projectId);
 
     // Getting the index
     List<Project> allProjects = state.allProject;
@@ -46,7 +46,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(state.copyWith(allProject: List.from(state.allProject)..insert(index, project)));
 
     // Updating tasks
-    project.tasks = List.from(project.tasks ?? [])..insert(0, event.task);
+    project.copyWith(tasks: List.from(project.tasks ?? [])..insert(0, event.task));
 
     allProjects = List.from(state.allProject)..remove(project);
 

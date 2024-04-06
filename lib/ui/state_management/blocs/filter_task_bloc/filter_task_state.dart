@@ -6,7 +6,7 @@ class FilterTaskState extends Equatable {
   final bool complete;
   final bool incomplete;
   final bool showMyCategories;
-  final List<MyCategory> categories;
+  final List<CategoryModel> categories;
 
   const FilterTaskState({
     required this.pending,
@@ -30,7 +30,7 @@ class FilterTaskState extends Equatable {
     bool? complete,
     bool? incomplete,
     bool? showMyCategories,
-    List<MyCategory>? categories,
+    List<CategoryModel>? categories,
   }) {
     return FilterTaskState(
       pending: pending ?? this.pending,

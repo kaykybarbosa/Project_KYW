@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kyw_management/domain/models/category_model.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
-import 'package:kyw_management/ui/state_management/models_states/my_category.dart';
 
 class CardCategory extends StatefulWidget {
   const CardCategory({super.key, required this.category});
 
-  final MyCategory category;
+  final CategoryModel category;
 
   @override
   State<CardCategory> createState() => _CardCategoryState();

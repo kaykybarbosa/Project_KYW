@@ -6,9 +6,5 @@ class Category extends FormzInput<String, String> with ValidationsMixin {
   const Category.dirty([super.value = '']) : super.dirty();
 
   @override
-  String? validator(String value) {
-    return combine([
-      () => isNotEmpty(value),
-    ]);
-  }
+  String? validator(String value) => combine([() => isNotEmpty(value)]);
 }

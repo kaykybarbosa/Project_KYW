@@ -1,27 +1,27 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:kyw_management/ui/state_management/models_states/my_category.dart';
+import 'package:kyw_management/domain/models/category_model.dart';
 
 part 'filter_task_event.dart';
 part 'filter_task_state.dart';
 
-const List<MyCategory> categories = [
-  MyCategory(
+const List<CategoryModel> categories = [
+  CategoryModel(
     id: '1',
     name: 'Tarefa',
     isCheck: false,
   ),
-  MyCategory(
+  CategoryModel(
     id: '2',
     name: 'Estudo',
     isCheck: false,
   ),
-  MyCategory(
+  CategoryModel(
     id: '3',
     name: 'Trabalho',
     isCheck: false,
   ),
-  MyCategory(
+  CategoryModel(
     id: '4',
     name: 'Outros',
     isCheck: false,
