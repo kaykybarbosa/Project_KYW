@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/route_manager.dart';
 
-import '../../../data/services/routers/my_routes.dart';
+import '../../../app/routers/my_routes.dart';
 
 class MessageToSignIn extends StatelessWidget {
   const MessageToSignIn({super.key});
@@ -22,7 +22,7 @@ class MessageToSignIn extends StatelessWidget {
             TextSpan(
               text: 'Clique aqui ',
               style: linkText,
-              recognizer: TapGestureRecognizer()..onTap = () => GoRouter.of(context).pushReplacement(AppRoutes.signIn),
+              recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(AppRoutes.signIn),
             ),
             TextSpan(text: 'para realizar o login', style: defaultText),
           ],

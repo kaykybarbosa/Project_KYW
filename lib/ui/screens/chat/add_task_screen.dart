@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/ui/state_management/cubits/add_task_cubit/add_task_cubit.dart';
 
 import 'widgets/add_task/category_input_task.dart';
@@ -91,7 +91,7 @@ class _Title extends StatelessWidget {
             Icons.arrow_back,
             size: 29,
           ),
-          onPressed: () => context.pop(context),
+          onPressed: () => Get.back(),
         ),
         const SizedBox(width: 8),
         Text(

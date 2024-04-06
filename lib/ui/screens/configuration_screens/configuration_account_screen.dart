@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 
 class ConfigurationAccountScreen extends StatelessWidget {
   const ConfigurationAccountScreen({super.key});
@@ -18,11 +18,11 @@ class ConfigurationAccountScreen extends StatelessWidget {
       FontAwesomeIcons.solidTrashCan
     ];
 
-    void goTwoStepVerification() => context.push(AppRoutes.twoStepVerification);
+    void goTwoStepVerification() => Get.toNamed(AppRoutes.twoStepVerification);
 
-    void goChangeNumberOrEmail() => context.push(AppRoutes.changeNumberOrEmail);
+    void goChangeNumberOrEmail() => Get.toNamed(AppRoutes.changeNumberOrEmail);
 
-    void deleteAccount() => context.push(AppRoutes.configurationDeleteAccount);
+    void deleteAccount() => Get.toNamed(AppRoutes.configurationDeleteAccount);
 
     List<Function> optionsFunction = [
       /// If [index] == 0 => show two_step_screen

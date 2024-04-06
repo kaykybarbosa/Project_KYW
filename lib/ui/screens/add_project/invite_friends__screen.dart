@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_guid/flutter_guid.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
@@ -133,7 +133,7 @@ class _MyFloatingButton extends StatelessWidget {
           ),
         );
     context.read<AddProjectBloc>().add(FormSubmitteddAddProject());
-    GoRouter.of(context).pushReplacement(AppRoutes.home);
+    Get.offNamed(AppRoutes.home);
   }
 }
 

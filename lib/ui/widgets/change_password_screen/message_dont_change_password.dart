@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 
 class MessageDontCreatePassword extends StatelessWidget {
   const MessageDontCreatePassword({super.key});
@@ -27,11 +27,7 @@ class MessageDontCreatePassword extends StatelessWidget {
           children: [
             TextSpan(
               text: 'Clique aqui',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  // Go to HomeApp
-                  GoRouter.of(context).go(AppRoutes.signIn);
-                },
+              recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(AppRoutes.signIn),
               style: styleLink,
             ),
             const TextSpan(

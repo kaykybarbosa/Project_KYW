@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:kyw_management/domain/models/project.dart';
@@ -13,7 +13,7 @@ import 'widgets/tasks_project/filters_bar_tasks.dart';
 import 'widgets/tasks_project/list_all_tasks.dart';
 
 class ChatProjectScreen extends StatefulWidget {
-  const ChatProjectScreen({super.key, required this.project});
+  const ChatProjectScreen({super.key, Project? project}) : project = project ?? const Project(id: '1', name: '');
 
   final Project project;
 
@@ -148,7 +148,7 @@ class _Leading extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: InkWell(
-        onTap: () => context.pop(context),
+        onTap: () => Get.back(),
         borderRadius: const BorderRadius.all(Radius.elliptical(50, 50)),
         highlightColor: Colors.grey,
         splashColor: Colors.grey,

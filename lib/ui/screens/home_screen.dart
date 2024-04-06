@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
@@ -93,9 +93,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               // Messages Icon
               MyIcon(
                 icon: CupertinoIcons.bell,
-                onTap: () {
-                  GoRouter.of(context).push(AppRoutes.notifications);
-                  context.read<HomeBloc>().add(const HaveMessageHome(haveMessage: false));
+                onTap: () => {
+                  Get.toNamed(AppRoutes.notifications),
+                  context.read<HomeBloc>().add(const HaveMessageHome(haveMessage: false)),
                 },
               ),
 
@@ -186,9 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
           // Button create project
           floatingActionButton: state.currentScreen == Screens.project
-              ? CreateProjectButton(
-                  onTap: () => context.push(AppRoutes.createProject),
-                )
+              ? CreateProjectButton(onTap: () => Get.toNamed(AppRoutes.createProject))
               : null,
         );
       },

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/app/app_theme.dart';
-import 'package:kyw_management/data/services/routers/app_pages.dart';
+import 'package:kyw_management/app/routers/app_pages.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
@@ -34,14 +36,13 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => FilterTaskBloc()),
         BlocProvider(create: (context) => AddProjectBloc()),
       ],
-      child: MaterialApp.router(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'KYW Management',
         theme: theme,
-        routerDelegate: appPages.routerDelegate,
-        routeInformationParser: appPages.routeInformationParser,
-        routeInformationProvider: appPages.routeInformationProvider,
         supportedLocales: const [Locale('pt')],
+        getPages: AppPages.pages,
+        initialRoute: AppRoutes.home,
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

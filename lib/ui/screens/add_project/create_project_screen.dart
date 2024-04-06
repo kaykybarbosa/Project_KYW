@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/ui/widgets/create_project_screen.dart/my_text_field.dart';
@@ -114,7 +114,7 @@ class _MyFloatingButton extends StatelessWidget {
     return BlocBuilder<AddProjectBloc, AddProjectState>(
       builder: (context, state) {
         return FloatingActionButton(
-          onPressed: state.isValid ? () => context.push(AppRoutes.inviteFriends) : null,
+          onPressed: state.isValid ? () => Get.toNamed(AppRoutes.inviteFriends) : null,
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
             CupertinoIcons.arrow_right,

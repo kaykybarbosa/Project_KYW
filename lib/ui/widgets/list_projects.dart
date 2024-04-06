@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/route_manager.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_state.dart';
@@ -36,8 +36,8 @@ class _ListProjectsState extends State<ListProjects> {
             return CardProject(
               project: projects[index],
               onTap: () {
-                var route = "${AppRoutes.chat}/$index".replaceAll(':projectId/', '');
-                GoRouter.of(context).push(route);
+                /// TODO: Passar o id do Projeto.
+                Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'});
               },
             );
           },

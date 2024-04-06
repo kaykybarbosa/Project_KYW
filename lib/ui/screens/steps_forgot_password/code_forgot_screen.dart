@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_code_cubit/forgot_code_cubit.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/code_input_forgot.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/submit_code_forgot_button.dart';
@@ -38,7 +38,7 @@ class _CodeForgotScreenState extends State<CodeForgotScreen> {
                   );
               }
               if (state.status.isSuccess) {
-                GoRouter.of(context).pushReplacement(AppRoutes.changePassword);
+                Get.offAllNamed(AppRoutes.changePassword);
               }
             },
             child: const Column(

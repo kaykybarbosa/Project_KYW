@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:go_router/go_router.dart';
-import 'package:kyw_management/data/services/routers/my_routes.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_email_cubit/forgot_email_cubit.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/email_input_forgot.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
@@ -27,7 +27,7 @@ class _EmailForgotScreenState extends State<EmailForgotScreen> {
           child: BlocListener<ForgotEmailCubit, ForgotEmailState>(
             listener: (context, state) {
               if (state.status.isSuccess) {
-                GoRouter.of(context).push(AppRoutes.codeForgotPassword);
+                Get.toNamed(AppRoutes.codeForgotPassword);
               }
             },
             child: const Column(
