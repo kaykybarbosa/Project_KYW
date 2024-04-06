@@ -103,18 +103,8 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   }
 }
 
-  //             // Buttons the filters
-  //             Padding(
-  //               padding: const EdgeInsets.symmetric(horizontal: 15),
-  //               child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   // Filter
-  //                   TheFilters(
-  //                     label: 'Filtrar',
-  //                     labelSize: 17,
-  //                     iconSize: 17,
-  //                     icon: FontAwesomeIcons.filter,
+
+  //                   
   //                     onTap: () => myModalBottom(
   //                       context: context,
   //                       state: state,
@@ -122,12 +112,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   //                     ),
   //                   ),
 
-  //                   // Order
-  //                   TheFilters(
-  //                     label: 'Ordenar',
-  //                     labelSize: 17,
-  //                     icon: FontAwesomeIcons.caretDown,
-  //                     iconSize: 26,
+
   //                     onTap: () => myModalBottom(
   //                       context: context,
   //                       state: state,
@@ -138,35 +123,3 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   //               ),
   //             ),
 
-  //             Expanded(
-  //               child: Padding(
-  //                 padding: const EdgeInsets.symmetric(horizontal: 7.5),
-  //                 child: TabBarView(
-  //                   controller: tabController,
-  //                   children: const [
-  //                     // Projects screen
-  //                     ListProjects(),
-
-  //                     // Tasks screens
-  //                     Padding(
-  //                       padding: EdgeInsets.symmetric(horizontal: 0),
-  //                       child: ListTasks(tasks: []),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-
-  //         // EndDrawer the more options
-  //         endDrawer: const MyEndDrawer(),
-
-  //         // Button create project
-  //         floatingActionButton: state.currentScreen == Screens.project
-  //             ? CreateProjectButton(onTap: () => Get.toNamed(AppRoutes.createProject))
-  //             : null,
-  //       );
-  //     },
-  //   );
-  // }

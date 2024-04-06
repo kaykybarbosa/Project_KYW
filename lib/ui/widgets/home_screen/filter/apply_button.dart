@@ -1,27 +1,26 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/texts.dart';
 
 class ApplyButtom extends StatelessWidget {
-  const ApplyButtom({super.key, required this.onTap});
+  const ApplyButtom({super.key, required this.onPressed});
 
-  final Function onTap;
+  final void Function()? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: CupertinoButton(
-        color: CupertinoColors.systemBlue,
-        child: const Text(
-          'Aplicar',
-          style: TextStyle(
-              color: CupertinoColors.white,
-              fontSize: 20.0,
-              fontWeight: FontWeight.w500),
+  Widget build(BuildContext context) => SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: const Text(
+            TTexts.apply,
+            style: TextStyle(
+              color: TColors.base100,
+              fontSize: TConstants.fontSizeLg + 2,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
-        onPressed: () {
-          onTap();
-        },
-      ),
-    );
-  }
+      );
 }

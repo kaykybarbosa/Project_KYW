@@ -1,57 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
 
 class MySelectionDate extends StatelessWidget {
   const MySelectionDate({
     super.key,
     required this.title,
     required this.showCalendar,
-    required this.hintText,
+    this.hintText,
   });
 
   final String title;
   final Function showCalendar;
-  final String hintText;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _dateText(text: title),
+      children: <Widget>[
+        /// Título
+        _dateText(title),
+        const Gap(5),
         GestureDetector(
           onTap: () => showCalendar(),
-          child: SizedBox(
-            width: 150,
-            child: Card(
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-                side: const BorderSide(color: Color(0xFF757575)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 12,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 12,
+            ),
+            decoration: BoxDecoration(
+              color: TColors.base100,
+              borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+              border: Border.all(color: TColors.base200),
+              boxShadow: const [
+                BoxShadow(
+                  color: TColors.base200,
+                  blurRadius: 6,
+                )
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                /// Label do input
+                Text(
+                  hintText ?? 'dd/MM/yyyy',
+                  style: TextStyle(
+                    fontSize: TConstants.fontSizeMd,
+                    color: hintText != null ? TColors.secondary : TColors.base150,
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      hintText,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Icon(
-                      Icons.calendar_today_rounded,
-                      size: 24,
-                      color: Colors.grey[700],
-                    ),
-                  ],
+
+                /// Ícone
+                const Icon(
+                  Icons.calendar_today_rounded,
+                  color: TColors.base150,
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -60,12 +67,10 @@ class MySelectionDate extends StatelessWidget {
   }
 }
 
-Text _dateText({required String text}) {
-  return Text(
-    text,
-    style: TextStyle(
-      fontSize: 18,
-      color: Colors.grey[600],
-    ),
-  );
-}
+Text _dateText(text) => Text(
+      text,
+      style: const TextStyle(
+        fontSize: TConstants.fontSizeLg,
+        color: TColors.base200,
+      ),
+    );

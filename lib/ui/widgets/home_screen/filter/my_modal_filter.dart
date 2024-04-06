@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/domain/enums/filters_enum.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
@@ -11,11 +11,13 @@ import 'package:kyw_management/ui/widgets/home_screen/filter/filter_buttons.dart
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_projet/filter_for_project.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_task/filter_for_task.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/my_selection_date.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/texts.dart';
 
 DateFormat formatter = DateFormat("dd/MM/yyyy");
 
-class MyFilter extends StatelessWidget {
-  const MyFilter({super.key, required this.currentScreen});
+class MyModalFilter extends StatelessWidget {
+  const MyModalFilter({super.key, required this.currentScreen});
 
   final Screens currentScreen;
 
@@ -46,62 +48,69 @@ class MyFilter extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // The 3 buttons
+                  /// Botôes de actions
                   FilterButtons(
                     current: FilterEnum.Filter,
                     clearFunction: () => _clearFilter(context),
                   ),
 
-                  const SizedBox(height: 20.0),
+                  const Gap(20.0),
 
-                  // Label creation date
+                  /// Data de criação
                   const _CreationDate(),
 
-                  const SizedBox(height: 15.0),
+                  const Gap(10.0),
 
-                  // Star date and Final date
+                  /// Inputs para as data de início e fim
                   SizedBox(
-                    height: 100,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Init Date
-                        MySelectionDate(
-                          title: 'Início',
-                          hintText: state.initDate.isEmpty ? 'dd/MM/yyyy' : state.initDate,
-                          showCalendar: () async {
-                            DateTime? dateSelected = await _showCalendar(context);
+                      children: <Widget>[
+                        /// -- Data inicial
+                        Expanded(
+                          flex: 6,
+                          child: MySelectionDate(
+                            title: TTexts.start,
+                            hintText: state.initDate.isNotEmpty ? state.initDate : null,
+                            showCalendar: () async {
+                              DateTime? dateSelected = await _showCalendar(context);
 
-                            setDate(
-                              isInitDate: state.isInitDate,
-                              dateSelected: dateSelected,
-                            );
-                          },
-                        ),
-
-                        const Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Divider(color: CupertinoColors.systemGrey),
+                              setDate(
+                                isInitDate: state.isInitDate,
+                                dateSelected: dateSelected,
+                              );
+                            },
                           ),
                         ),
 
-                        // Final Date
-                        MySelectionDate(
-                          title: 'Fim',
-                          hintText: state.finalDate.isEmpty ? 'dd/MM/yyyy' : state.finalDate,
-                          showCalendar: () async {
-                            DateTime? dateSelected = await _showCalendar(context);
+                        /// -- Divisior
+                        const Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8, top: 35, right: 8),
+                            child: Divider(),
+                          ),
+                        ),
 
-                            setDate(
-                              isInitDate: !state.isInitDate,
-                              dateSelected: dateSelected,
-                            );
-                          },
+                        /// -- Data final
+                        Expanded(
+                          flex: 6,
+                          child: MySelectionDate(
+                            title: TTexts.end,
+                            hintText: state.finalDate.isNotEmpty ? state.finalDate : null,
+                            showCalendar: () async {
+                              DateTime? dateSelected = await _showCalendar(context);
+
+                              setDate(
+                                isInitDate: !state.isInitDate,
+                                dateSelected: dateSelected,
+                              );
+                            },
+                          ),
                         )
                       ],
                     ),
                   ),
+                  const Gap(20),
 
                   /// If [currentScreen] is Project, show the filters to Project
                   Visibility(
@@ -119,12 +128,12 @@ class MyFilter extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const Gap(30),
 
               // Apply filter
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: ApplyButtom(onTap: () {}),
+                child: ApplyButtom(onPressed: () {}),
               )
             ],
           );
@@ -147,15 +156,13 @@ class _CreationDate extends StatelessWidget {
   const _CreationDate();
 
   @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'Data de criação',
-      style: TextStyle(
-        fontSize: 20.0,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const Text(
+        TTexts.criationDate,
+        style: TextStyle(
+          fontSize: TConstants.fontSizeLg + 2,
+          fontWeight: FontWeight.w500,
+        ),
+      );
 }
 
 Future<DateTime?> _showCalendar(BuildContext context) async {
