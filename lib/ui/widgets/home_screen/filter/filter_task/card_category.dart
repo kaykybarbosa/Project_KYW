@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
 import 'package:kyw_management/domain/models/category_model.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class CardCategory extends StatefulWidget {
   const CardCategory({super.key, required this.category});
@@ -16,30 +19,35 @@ class CardCategory extends StatefulWidget {
 class _CardCategoryState extends State<CardCategory> {
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => context.read<FilterTaskBloc>().add(UpdateCategory(category: widget.category)),
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          color: widget.category.isCheck ? Colors.grey[800] : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: TColors.base200),
+          color: widget.category.isCheck ? colorScheme.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusLg),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
+            /// Ícone
             Icon(
-              FontAwesomeIcons.x,
-              color: widget.category.isCheck ? Colors.white : null,
-              size: 14.0,
+              TIcons.xMarked,
+              color: widget.category.isCheck ? TColors.base100 : TColors.secondary,
+              size: TConstants.iconXs,
             ),
-            const SizedBox(width: 4.0),
+            const Gap(4.0),
+
+            /// Categoria
             Text(
               widget.category.name,
               style: TextStyle(
-                fontSize: 16.0,
-                color: widget.category.isCheck ? Colors.white : null,
+                fontSize: TConstants.fontSizeMd,
+                color: widget.category.isCheck ? TColors.base100 : null,
                 fontWeight: FontWeight.w500,
               ),
             ),

@@ -83,13 +83,18 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               /// AppBar
               const HomeAppBar(),
             ],
+
+            /// Telas de Projetos e Tasks
             body: Column(
               children: <Widget>[
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
                     children: const <Widget>[
+                      /// -- Projetos
                       ProjectList(),
+
+                      /// -- Tasks
                       TaskList(),
                     ],
                   ),
@@ -102,15 +107,6 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
     );
   }
 }
-
-
-  //                   
-  //                     onTap: () => myModalBottom(
-  //                       context: context,
-  //                       state: state,
-  //                       child: MyFilter(currentScreen: state.currentScreen),
-  //                     ),
-  //                   ),
 
 
   //                     onTap: () => myModalBottom(
