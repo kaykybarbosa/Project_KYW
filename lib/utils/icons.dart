@@ -8,4 +8,5 @@ abstract class TIcons {
   static const IconData more = FontAwesomeIcons.ellipsisVertical;
   static const IconData filter = FontAwesomeIcons.filter;
   static const IconData order = FontAwesomeIcons.caretDown;
+  static const IconData share = FontAwesomeIcons.share;
 }

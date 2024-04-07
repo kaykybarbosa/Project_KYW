@@ -8,8 +8,9 @@ abstract class TColors {
   static const Color base150 = Color(0xFFBABABA);
   static const Color base200 = Color(0xFFB1B2B5);
   static const Color base300 = Color(0xFF989A9E);
+  static const Color base900 = Color(0xFF000000);
 
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
-  static const Color alert = Color(0xFFfABD52);
+  static const Color alert = Color(0xFFFABD52);
 }

@@ -2,6 +2,11 @@ abstract class TTexts {
   static const filter = 'Filtrar';
   static const order = 'Ordenar';
 
+  static const hintTextProject = 'Buscar projeto';
+  static const hintTextTask = 'Buscar tarefa';
+
+  static const toShared = 'Compartilhar';
+
   /// Modal dos filtros
   static const criationDate = 'Data de criação';
   static const start = 'Início';
@@ -16,7 +21,4 @@ abstract class TTexts {
   static const showOnlyMyCategories = 'Mostrar apenas minhas categorias';
   static const category = 'Categoria';
   static const status = 'Status';
-
-  static const hintTextProject = 'Buscar projeto';
-  static const hintTextTask = 'Buscar tarefa';
 }
