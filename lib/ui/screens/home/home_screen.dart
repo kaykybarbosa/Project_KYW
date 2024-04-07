@@ -107,15 +107,3 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
     );
   }
 }
-
-
-  //                     onTap: () => myModalBottom(
-  //                       context: context,
-  //                       state: state,
-  //                       child: MyOrder(currentScreen: state.currentScreen),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-

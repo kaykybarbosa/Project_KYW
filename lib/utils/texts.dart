@@ -6,6 +6,10 @@ abstract class TTexts {
   static const hintTextTask = 'Buscar tarefa';
 
   static const toShared = 'Compartilhar';
+  static const configurations = 'Configurações';
+  static const myAccount = 'Minha conta';
+  static const help = 'Ajuda';
+  static const singOut = 'Sair';
 
   /// Modal dos filtros
   static const criationDate = 'Data de criação';

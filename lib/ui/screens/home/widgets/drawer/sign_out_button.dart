@@ -1,34 +1,43 @@
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/texts.dart';
 
 class SignOutButton extends StatelessWidget {
   const SignOutButton({super.key, required this.onTap});
 
-  final Function onTap;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap(),
+      onTap: onTap,
       child: Container(
+        margin: const EdgeInsets.only(bottom: 30),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         decoration: BoxDecoration(
-            color: const Color.fromARGB(40, 255, 58, 48),
-            borderRadius: BorderRadius.circular(5.0)),
+          color: TColors.warn.withOpacity(.24),
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+        ),
         child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
+            /// Ícone
             Icon(
-              FontAwesomeIcons.rightFromBracket,
-              color: CupertinoColors.systemRed,
-              size: 23.0,
+              TIcons.singOut,
+              color: TColors.warn,
+              size: TConstants.iconMd - 2,
             ),
-            SizedBox(width: 15.0),
+            Gap(15.0),
+
+            /// Sair
             Text(
-              'Sair',
+              TTexts.singOut,
               style: TextStyle(
-                color: CupertinoColors.systemRed,
-                fontSize: 21.0,
+                color: TColors.warn,
+                fontSize: TConstants.fontSizeLg + 3,
                 fontWeight: FontWeight.bold,
               ),
             ),

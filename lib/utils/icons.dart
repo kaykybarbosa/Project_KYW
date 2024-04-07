@@ -9,4 +9,9 @@ abstract class TIcons {
   static const IconData filter = FontAwesomeIcons.filter;
   static const IconData order = FontAwesomeIcons.caretDown;
   static const IconData share = FontAwesomeIcons.share;
+  static const IconData configurations = FontAwesomeIcons.gear;
+  static const IconData user = FontAwesomeIcons.solidUser;
+  static const IconData info = FontAwesomeIcons.circleInfo;
+  static const IconData singOut = FontAwesomeIcons.rightFromBracket;
+  static const IconData pen = FontAwesomeIcons.pen;
 }

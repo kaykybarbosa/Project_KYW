@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class CircleImage extends StatelessWidget {
   const CircleImage({
@@ -11,62 +12,62 @@ class CircleImage extends StatelessWidget {
     this.padding = const EdgeInsets.all(38.0),
   });
 
-  final Function onTap;
+  final Function() onTap;
   final double iconSize;
   final bool changeIconVisible;
   final EdgeInsetsGeometry padding;
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: const Alignment(1.1, .6),
-      children: [
-        Container(
-          padding: padding,
-          decoration: BoxDecoration(
-            color: CupertinoColors.systemGrey2,
-            borderRadius: BorderRadius.circular(60.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.grey,
-                spreadRadius: .3,
-                blurRadius: 5.5,
-              ),
-            ],
-          ),
-          child: Icon(
-            FontAwesomeIcons.solidUser,
-            size: iconSize,
-            color: CupertinoColors.white,
-          ),
-        ),
-        Visibility(
-          visible: changeIconVisible,
-          child: Stack(
-            alignment: const Alignment(2.5, -2.5),
-            children: [
-              Container(
-                width: 22.0,
-                height: 22.0,
-                padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
-                decoration: BoxDecoration(
-                    color: CupertinoColors.white,
-                    border: Border.all(color: CupertinoColors.systemGrey),
-                    borderRadius: BorderRadius.circular(6.0)),
-                child: const Text(''),
-              ),
-              GestureDetector(
-                onTap: () => onTap(),
-                child: const Icon(
-                  FontAwesomeIcons.pen,
-                  size: 18.0,
-                  color: CupertinoColors.systemBlue,
+  Widget build(BuildContext context) => Stack(
+        alignment: const Alignment(1.1, .6),
+        children: <Widget>[
+          Container(
+            padding: padding,
+            decoration: BoxDecoration(
+              color: TColors.base200,
+              borderRadius: BorderRadius.circular(60.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: TColors.base900.withOpacity(.33),
+                  blurRadius: 10,
                 ),
-              ),
-            ],
+              ],
+            ),
+
+            /// Ícone
+            child: Icon(
+              TIcons.user,
+              size: iconSize,
+              color: TColors.base100,
+            ),
           ),
-        ),
-      ],
-    );
-  }
+          Visibility(
+            visible: changeIconVisible,
+            child: Stack(
+              alignment: const Alignment(2.5, -2.5),
+              children: <Widget>[
+                Container(
+                  width: 22.0,
+                  height: 22.0,
+                  padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
+                  decoration: BoxDecoration(
+                    color: TColors.base100,
+                    border: Border.all(color: TColors.secondary.withOpacity(.60)),
+                    borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+                  ),
+                  child: Container(),
+                ),
+                GestureDetector(
+                  onTap: onTap,
+                  child: const Icon(
+                    TIcons.pen,
+                    size: TConstants.iconSm + 2,
+                    color: TColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
 }
