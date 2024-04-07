@@ -4,9 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/ui/widgets/apply_button.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/card_category.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_header.dart';
-import 'package:kyw_management/ui/widgets/home_screen/filter/filter_task/card_category.dart';
-import 'package:kyw_management/ui/widgets/home_screen/filter/filter_task/filter_by_status.dart';
+import 'package:kyw_management/ui/widgets/my_card_status.dart';
+import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/texts.dart';
 
@@ -40,17 +41,17 @@ class MyModalFilterTask extends StatelessWidget {
                       const _Title(TTexts.status),
 
                       /// Status
-                      FilterByCheckedBox(
+                      _FilterByCheckedBox(
                         isChecked: false,
                         status: TaskStatus.pending,
                         onChanged: (value) => {},
                       ),
-                      FilterByCheckedBox(
+                      _FilterByCheckedBox(
                         isChecked: false,
                         status: TaskStatus.complete,
                         onChanged: (value) => {},
                       ),
-                      FilterByCheckedBox(
+                      _FilterByCheckedBox(
                         isChecked: false,
                         status: TaskStatus.incomplete,
                         onChanged: (value) => {},
@@ -65,15 +66,17 @@ class MyModalFilterTask extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          FilterByCheckedBox(
-                            statusIsVisible: false,
-                            isChecked: false,
+                          Checkbox(
+                            value: false,
                             onChanged: (value) => {},
                           ),
                           const Flexible(
                             child: Text(
                               TTexts.showOnlyMyCategories,
-                              style: TextStyle(fontSize: TConstants.fontSizeMd),
+                              style: TextStyle(
+                                fontSize: TConstants.fontSizeLg,
+                                color: TColors.base200,
+                              ),
                             ),
                           ),
                         ],
@@ -124,4 +127,29 @@ class _Title extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       );
+}
+
+class _FilterByCheckedBox extends StatelessWidget {
+  const _FilterByCheckedBox({
+    this.status,
+    required this.onChanged,
+    this.isChecked,
+  });
+
+  final bool? isChecked;
+  final TaskStatus? status;
+  final Function(bool?) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Checkbox(
+          value: isChecked,
+          onChanged: (bool? value) => onChanged(value),
+        ),
+        MyCardStatus(status: status ?? TaskStatus.incomplete)
+      ],
+    );
+  }
 }

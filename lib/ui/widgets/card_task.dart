@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/domain/models/task.dart';
-import 'package:kyw_management/ui/widgets/my_status.dart';
+import 'package:kyw_management/ui/widgets/my_card_status.dart';
 
 class CardTask extends StatefulWidget {
   const CardTask({super.key, required this.task});
@@ -89,7 +89,7 @@ class _CardTaskState extends State<CardTask> {
                   style: TextStyle(fontSize: 17),
                 ),
                 // Status name
-                MyStatus(status: widget.task.status)
+                MyCardStatus(status: widget.task.status)
               ],
             )
           ],

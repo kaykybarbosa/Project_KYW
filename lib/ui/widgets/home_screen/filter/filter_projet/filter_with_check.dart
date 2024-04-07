@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
 
 class FilterWithCheck extends StatefulWidget {
   const FilterWithCheck({
@@ -11,7 +12,7 @@ class FilterWithCheck extends StatefulWidget {
 
   final bool isChecked;
   final String label;
-  final Function onChanged;
+  final Function(bool?)? onChanged;
 
   @override
   State<FilterWithCheck> createState() => _FilterWithCheckState();
@@ -23,40 +24,33 @@ class _FilterWithCheckState extends State<FilterWithCheck> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 2.0),
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(38, 0, 123, 255),
-            spreadRadius: 3,
-            blurRadius: 5.0,
+            color: Theme.of(context).shadowColor,
+            blurRadius: 10,
           ),
         ],
-        borderRadius: BorderRadius.circular(5.0),
-        color: CupertinoColors.white,
-        border: Border.all(
-          color: CupertinoColors.systemBlue,
-          width: 1.2,
-        ),
+        borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+        color: TColors.base100,
+        border: Border.all(color: TColors.primary),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Text the Filter
+        children: <Widget>[
+          /// Nome
           Text(
             widget.label,
             style: const TextStyle(
-              fontSize: 20.0,
-              color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w600,
+              fontSize: TConstants.fontSizeLg,
+              color: TColors.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Transform.scale(
-            scale: 1.1,
-            child: Checkbox(
-              value: widget.isChecked,
-              onChanged: (bool? value) {
-                widget.onChanged(value);
-              },
-            ),
+
+          /// Checkbox
+          Checkbox(
+            value: widget.isChecked,
+            onChanged: widget.onChanged,
           )
         ],
       ),

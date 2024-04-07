@@ -27,9 +27,9 @@ class _CardCategoryState extends State<CardCategory> {
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         decoration: BoxDecoration(
-          border: Border.all(color: TColors.base200),
-          color: widget.category.isCheck ? colorScheme.primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(TConstants.cardRadiusLg),
+          // border: Border.all(color: TColors.secondary),
+          color: widget.category.isCheck ? colorScheme.primary : TColors.secondary.withOpacity(.18),
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -37,7 +37,7 @@ class _CardCategoryState extends State<CardCategory> {
             /// Ícone
             Icon(
               TIcons.xMarked,
-              color: widget.category.isCheck ? TColors.base100 : TColors.secondary,
+              color: widget.category.isCheck ? TColors.base100 : TColors.secondary.withOpacity(.80),
               size: TConstants.iconXs,
             ),
             const Gap(4.0),
@@ -47,7 +47,7 @@ class _CardCategoryState extends State<CardCategory> {
               widget.category.name,
               style: TextStyle(
                 fontSize: TConstants.fontSizeMd,
-                color: widget.category.isCheck ? TColors.base100 : null,
+                color: widget.category.isCheck ? TColors.base100 : TColors.secondary.withOpacity(.71),
                 fontWeight: FontWeight.w500,
               ),
             ),
