@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kyw_management/domain/models/project.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
 
 class CardProject extends StatefulWidget {
   const CardProject({
@@ -18,8 +20,6 @@ class CardProject extends StatefulWidget {
 }
 
 class _CardProjectState extends State<CardProject> {
-  final Color primaryColor = const Color.fromRGBO(50, 58, 71, 1);
-
   Widget _getImage() {
     if (widget.project.image != null) {
       return Image.asset(
@@ -47,7 +47,7 @@ class _CardProjectState extends State<CardProject> {
         padding: const EdgeInsets.only(left: 6),
         margin: const EdgeInsets.symmetric(vertical: 2.5),
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: TColors.secondary,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Container(
@@ -75,7 +75,11 @@ class _CardProjectState extends State<CardProject> {
                 borderRadius: BorderRadius.circular(50),
                 child: _getImage(),
               ),
-              _NameGroup(widget: widget, primaryColor: primaryColor),
+
+              /// Nome do grupo
+              _GroupName(project: widget.project),
+
+              /// Está fixado
               _MySufix(widget: widget)
             ],
           ),
@@ -85,46 +89,42 @@ class _CardProjectState extends State<CardProject> {
   }
 }
 
-class _NameGroup extends StatelessWidget {
-  const _NameGroup({
-    required this.widget,
-    required this.primaryColor,
-  });
+class _GroupName extends StatelessWidget {
+  const _GroupName({required this.project});
 
-  final CardProject widget;
-  final Color primaryColor;
+  final Project project;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Group name
-            Text(
-              widget.project.name,
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
-            ),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Row(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                /// Nome do grupo
+                Text(
+                  project.name,
+                  style: const TextStyle(
+                    fontSize: TConstants.fontSizeLg,
+                    fontWeight: FontWeight.bold,
+                    color: TColors.secondary,
+                  ),
+                ),
 
-            // Last message send
-            Text(
-              widget.project.lastMessage ?? 'Você criou este projeto',
-              style: const TextStyle(
-                fontSize: 16,
-                color: CupertinoColors.systemGrey2,
-              ),
+                // Última mensagem enviada
+                Text(
+                  project.lastMessage ?? 'Você criou este projeto',
+                  style: const TextStyle(
+                    fontSize: TConstants.fontSizeMd,
+                    color: TColors.base200,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
-    );
-  }
+      );
 }
 
 class _MySufix extends StatelessWidget {
@@ -136,11 +136,11 @@ class _MySufix extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
-        children: [
+        children: <Widget>[
           // Last message time
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Text(
                 widget.project.lastMessageTime ?? '',
                 style: const TextStyle(
@@ -156,7 +156,7 @@ class _MySufix extends StatelessWidget {
           // IsImportant
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: <Widget>[
               Icon(
                 widget.project.isImportant ? FontAwesomeIcons.thumbtack : null,
                 color: CupertinoColors.systemGrey2,
