@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/card_project.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/my_modal_filter_project.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -16,15 +18,15 @@ import 'package:kyw_management/utils/texts.dart';
 class ProjectList extends StatelessWidget {
   const ProjectList({super.key});
 
-  Future<dynamic> myModalBottom({required BuildContext context}) async {
+  Future<dynamic> myModalBottom(BuildContext context, Widget child) async {
     await showModalBottomSheet(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
       backgroundColor: TColors.base100,
-      builder: (BuildContext context) => const SizedBox(
+      builder: (BuildContext context) => SizedBox(
         height: 665,
-        child: MyModalFilterProject(),
+        child: child,
       ),
     );
   }
@@ -52,8 +54,14 @@ class ProjectList extends StatelessWidget {
 
               /// Filtros
               MyTwoFilters(
-                filterOnTap: () => myModalBottom(context: context),
-                orderOnTap: () {},
+                /// -- Filtrar
+                filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
+
+                /// -- Ordenar
+                orderOnTap: () => myModalBottom(
+                  context,
+                  const MyOrder(currentScreen: Screens.project),
+                ),
               ),
 
               /// Lista de projetos

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/my_modal_filter_task.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -13,15 +15,15 @@ import 'package:kyw_management/utils/texts.dart';
 class TaskList extends StatelessWidget {
   const TaskList({super.key});
 
-  Future<dynamic> myModalBottom({required BuildContext context}) async {
+  Future<dynamic> myModalBottom(BuildContext context, Widget child) async {
     await showModalBottomSheet(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
       backgroundColor: TColors.base100,
-      builder: (BuildContext context) => const SizedBox(
+      builder: (BuildContext context) => SizedBox(
         height: 665,
-        child: MyModalFilterTask(),
+        child: child,
       ),
     );
   }
@@ -53,8 +55,14 @@ class TaskList extends StatelessWidget {
 
           /// Filtros
           MyTwoFilters(
-            filterOnTap: () => myModalBottom(context: context),
-            orderOnTap: () {},
+            /// -- Filtrar
+            filterOnTap: () => myModalBottom(context, const MyModalFilterTask()),
+
+            /// -- Ordenar
+            orderOnTap: () => myModalBottom(
+              context,
+              const MyOrder(currentScreen: Screens.task),
+            ),
           ),
 
           /// Lista de tarefas

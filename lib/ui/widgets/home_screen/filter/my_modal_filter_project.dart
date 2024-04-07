@@ -76,10 +76,7 @@ class MyModalFilterProject extends StatelessWidget {
               ),
 
               // Aplicar filtro
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ApplyButtom(onPressed: () {}),
-              ),
+              ApplyButtom(onPressed: () {}),
             ],
           );
         },

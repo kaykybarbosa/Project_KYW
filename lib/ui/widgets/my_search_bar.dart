@@ -21,7 +21,12 @@ class _MySearchBarState extends State<MySearchBar> {
   Widget build(BuildContext context) => Row(
         children: <Widget>[
           // Input de busca
-          Expanded(child: SearchBar(hintText: widget.hintText)),
+          Expanded(
+            child: SearchBar(
+              hintText: widget.hintText,
+              constraints: const BoxConstraints(minHeight: 40.0),
+            ),
+          ),
 
           // Ícone
           Container(
