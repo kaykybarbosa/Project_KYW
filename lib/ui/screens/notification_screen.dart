@@ -9,6 +9,8 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Notificações')),
       body: ListView.separated(
+        itemCount: 3,
+        padding: EdgeInsets.zero,
         itemBuilder: (BuildContext context, int index) {
           return const MyNotification(
             message:
@@ -16,10 +18,7 @@ class NotificationScreen extends StatelessWidget {
             time: '1 de nov de 2023 as 10:50',
           );
         },
-        separatorBuilder: (__, _) => const Divider(
-          color: Colors.grey,
-        ),
-        itemCount: 3,
+        separatorBuilder: (__, _) => const Divider(),
       ),
     );
   }

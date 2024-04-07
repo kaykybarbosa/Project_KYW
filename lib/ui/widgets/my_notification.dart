@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/texts.dart';
 
 class MyNotification extends StatelessWidget {
-  const MyNotification(
-      {super.key, required String message, required String time})
-      : _message = message,
+  const MyNotification({
+    super.key,
+    required String message,
+    required String time,
+  })  : _message = message,
         _time = time;
 
   final String _message;
@@ -14,22 +20,20 @@ class MyNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        horizontal: 14.0,
+        horizontal: TConstants.defaultMargin,
         vertical: 15.0,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
-        children: [
+        children: <Widget>[
           Row(
-            children: [
-              // Message
+            children: <Widget>[
+              /// Mensagem
               Expanded(
                 child: Text(
                   _message,
-                  style: const TextStyle(fontSize: 18.0),
+                  style: const TextStyle(fontSize: TConstants.fontSizeLg),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
                 ),
               )
             ],
@@ -37,30 +41,40 @@ class MyNotification extends StatelessWidget {
 
           const SizedBox(height: 10.0),
 
-          // Date and To share
+          /// Data da mensagem e Compatilhamento
           Row(
             children: [
+              /// -- Mensagem
               Text(
                 _time,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 15.0,
+                style: const TextStyle(
+                  color: TColors.base200,
+                  fontSize: TConstants.fontSizeMd - 1,
                 ),
               ),
+
+              /// -- Compartilhar
               Expanded(
                 child: GestureDetector(
                   onTap: () {},
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
+                      /// -- Ícone
                       Icon(
-                        CupertinoIcons.arrowshape_turn_up_right_fill,
-                        color: Colors.blue[700],
+                        TIcons.share,
+                        color: TColors.primary,
+                        size: TConstants.iconSm,
                       ),
+                      Gap(3),
+
+                      /// -- Nome
                       Text(
-                        'Compartilhar',
-                        style:
-                            TextStyle(color: Colors.blue[700], fontSize: 18.0),
+                        TTexts.toShared,
+                        style: TextStyle(
+                          color: TColors.primary,
+                          fontSize: TConstants.fontSizeMd,
+                        ),
                       )
                     ],
                   ),
