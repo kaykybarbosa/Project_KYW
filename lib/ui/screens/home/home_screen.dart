@@ -84,11 +84,11 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               const HomeAppBar(),
             ],
             body: Column(
-              children: [
+              children: <Widget>[
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
-                    children: const [
+                    children: const <Widget>[
                       ProjectList(),
                       TaskList(),
                     ],

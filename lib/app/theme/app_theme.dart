@@ -11,22 +11,24 @@ import 'package:kyw_management/app/theme/custom_theme/tab_bar_theme.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
-final theme = ThemeData(
-  useMaterial3: true,
-  colorScheme: TColorScheme.light,
-  appBarTheme: TAppbarTheme.light,
-  elevatedButtonTheme: TElevatedButtonTheme.light,
-  inputDecorationTheme: TInputDecorationTheme.light,
-  searchBarTheme: TSearchBarTheme.light,
-  checkboxTheme: TCheckBoxTheme.light,
-  datePickerTheme: TDatePickerTheme.light,
-  chipTheme: TChipTheme.light,
-  tabBarTheme: TTabBarTheme.light,
-  dividerColor: TColors.base200,
-  dividerTheme: const DividerThemeData(color: TColors.base200),
-  popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
-  iconTheme: const IconThemeData(
-    color: TColors.base100,
-    size: TConstants.iconMd - 2,
-  ),
-);
+abstract class AppTheme {
+  static ThemeData get light => ThemeData(
+        useMaterial3: true,
+        colorScheme: TColorScheme.light,
+        appBarTheme: TAppbarTheme.light,
+        elevatedButtonTheme: TElevatedButtonTheme.light,
+        inputDecorationTheme: TInputDecorationTheme.light,
+        searchBarTheme: TSearchBarTheme.light,
+        checkboxTheme: TCheckBoxTheme.light,
+        datePickerTheme: TDatePickerTheme.light,
+        chipTheme: TChipTheme.light,
+        tabBarTheme: TTabBarTheme.light,
+        dividerColor: TColors.base200,
+        dividerTheme: const DividerThemeData(color: TColors.base200),
+        popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
+        iconTheme: const IconThemeData(
+          color: TColors.base100,
+          size: TConstants.iconMd - 2,
+        ),
+      );
+}

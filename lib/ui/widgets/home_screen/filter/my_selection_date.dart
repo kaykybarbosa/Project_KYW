@@ -7,12 +7,12 @@ class MySelectionDate extends StatelessWidget {
   const MySelectionDate({
     super.key,
     required this.title,
-    required this.showCalendar,
+    required this.onTap,
     this.hintText,
   });
 
   final String title;
-  final Function showCalendar;
+  final Function() onTap;
   final String? hintText;
 
   @override
@@ -24,7 +24,7 @@ class MySelectionDate extends StatelessWidget {
         _dateText(title),
         const Gap(5),
         GestureDetector(
-          onTap: () => showCalendar(),
+          onTap: onTap,
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,

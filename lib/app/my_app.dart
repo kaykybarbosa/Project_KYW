@@ -37,12 +37,12 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => AddProjectBloc()),
       ],
       child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
         title: 'KYW Management',
-        theme: theme,
-        supportedLocales: const [Locale('pt')],
         getPages: AppPages.pages,
         initialRoute: AppRoutes.home,
+        debugShowCheckedModeBanner: false,
+        supportedLocales: const [Locale('pt')],
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

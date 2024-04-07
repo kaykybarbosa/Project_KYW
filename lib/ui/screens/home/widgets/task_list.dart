@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/widgets/card_task.dart';
-import 'package:kyw_management/ui/widgets/home_screen/filter/my_modal_filter.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/my_modal_filter_task.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -22,7 +21,7 @@ class TaskList extends StatelessWidget {
       backgroundColor: TColors.base100,
       builder: (BuildContext context) => const SizedBox(
         height: 665,
-        child: MyModalFilter(currentScreen: Screens.task),
+        child: MyModalFilterTask(),
       ),
     );
   }
