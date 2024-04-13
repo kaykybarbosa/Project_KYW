@@ -27,9 +27,16 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var tasks = [
       Task(
+        isImportant: true,
         title: 'Concluir o Projeto Integrador',
         dateOfConclusion: DateTime(2024, 06, 25),
         status: TaskStatus.pending,
+      ),
+      Task(
+        title: 'Concluir o Projeto Integrador',
+        description: 'Lorem sdjks jdsidj skdi ',
+        dateOfConclusion: DateTime(2024, 06, 25),
+        status: TaskStatus.complete,
       ),
     ];
 
@@ -64,7 +71,10 @@ class TaskScreen extends StatelessWidget {
           Expanded(
             child: MySliverList(
               childCount: tasks.length,
-              builder: (_, index) => CardTask(task: tasks[index]),
+              builder: (_, index) => Padding(
+                padding: EdgeInsets.only(bottom: index != tasks.length - 1 ? 10 : 0),
+                child: CardTask(task: tasks[index]),
+              ),
             ),
           ),
         ],

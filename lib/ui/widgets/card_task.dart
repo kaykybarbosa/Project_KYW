@@ -1,100 +1,121 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/texts.dart';
 
-class CardTask extends StatefulWidget {
+class CardTask extends StatelessWidget {
   const CardTask({super.key, required this.task});
 
   final Task task;
 
   @override
-  State<CardTask> createState() => _CardTaskState();
-}
-
-class _CardTaskState extends State<CardTask> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2.5),
-      decoration: BoxDecoration(
-        border: Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 6)),
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 0.2,
-            blurRadius: 0.5,
-          ),
-        ],
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 8,
-        ),
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.symmetric(vertical: 2.5),
         decoration: BoxDecoration(
-          color: Colors.grey[50],
-          border: const Border(
-            top: BorderSide(color: Colors.grey),
-            right: BorderSide(color: Colors.grey),
-            bottom: BorderSide(color: Colors.grey),
-          ),
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(5),
-            bottomRight: Radius.circular(5),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Task name
-                Text(
-                  widget.task.title,
-                  style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Icon(
-                  widget.task.isImportant ? FontAwesomeIcons.thumbtack : null,
-                  size: 23,
-                  color: CupertinoColors.systemGrey2,
-                ),
-              ],
+          border: Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 6)),
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: TColors.base900.withOpacity(.16),
+              blurRadius: TConstants.blurRadius,
             ),
-            // Task description
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10, right: 35),
-              child: Text(
-                widget.task.description ?? '',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: CupertinoColors.systemGrey,
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //Task category
-                const Text(
-                  'Categoria',
-                  style: TextStyle(fontSize: 17),
-                ),
-                // Status name
-                MyCardStatus(status: widget.task.status)
-              ],
-            )
           ],
         ),
-      ),
-    );
-  }
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 8,
+          ),
+          decoration: const BoxDecoration(
+            color: TColors.base100,
+            border: Border(
+              top: BorderSide(color: TColors.base200),
+              right: BorderSide(color: TColors.base200),
+              bottom: BorderSide(color: TColors.base200),
+            ),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(TConstants.cardRadiusXs),
+              bottomRight: Radius.circular(TConstants.cardRadiusXs),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              /// Nome
+              _TaskName(task: task),
+
+              /// Descrição
+              _TaskDescription(task: task),
+
+              /// Categoria e Status
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  /// -- Título
+                  const Text(
+                    TTexts.category,
+                    style: TextStyle(fontSize: TConstants.fontSizeMd),
+                  ),
+
+                  /// -- Status
+                  MyCardStatus(status: task.status)
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+}
+
+class _TaskName extends StatelessWidget {
+  const _TaskName({required this.task});
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          /// Nome
+          Text(
+            task.title,
+            style: const TextStyle(
+              fontSize: TConstants.fontSizeLg,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          /// Ícone
+          Icon(
+            task.isImportant ? TIcons.isImportant : null,
+            size: TConstants.iconSm + 3,
+            color: TColors.base200,
+          ),
+        ],
+      );
+}
+
+class _TaskDescription extends StatelessWidget {
+  const _TaskDescription({required this.task});
+
+  final Task task;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 10, right: 35),
+        child: Text(
+          task.description ?? '',
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: TConstants.fontSizeMd,
+            color: TColors.base200,
+          ),
+        ),
+      );
 }

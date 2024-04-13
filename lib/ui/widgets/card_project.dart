@@ -43,25 +43,30 @@ class CardProject extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 2.5),
           decoration: BoxDecoration(
             color: TColors.secondary,
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
           ),
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 8,
             ),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(color: TColors.base200),
-                right: BorderSide(color: TColors.base200),
-                bottom: BorderSide(color: TColors.base200),
-              ),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(TConstants.cardRadiusXs),
-                bottomRight: Radius.circular(TConstants.cardRadiusXs),
-              ),
-            ),
+            decoration: BoxDecoration(
+                color: TColors.base100,
+                border: const Border(
+                  top: BorderSide(color: TColors.base200),
+                  right: BorderSide(color: TColors.base200),
+                  bottom: BorderSide(color: TColors.base200),
+                ),
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(TConstants.cardRadiusXs),
+                  bottomRight: Radius.circular(TConstants.cardRadiusXs),
+                ),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: TColors.base900.withOpacity(.16),
+                    blurRadius: TConstants.blurRadius,
+                  )
+                ]),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

@@ -58,7 +58,7 @@ class MyTextField extends StatelessWidget {
               boxShadow: const [
                 BoxShadow(
                   color: TColors.base200,
-                  blurRadius: 6,
+                  blurRadius: TConstants.blurRadius,
                 )
               ],
             ),

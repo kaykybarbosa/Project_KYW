@@ -67,9 +67,12 @@ class ProjectScreen extends StatelessWidget {
               Expanded(
                 child: MySliverList(
                   childCount: projects.length,
-                  builder: (_, index) => CardProject(
-                    project: projects[index],
-                    onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                  builder: (_, index) => Padding(
+                    padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
+                    child: CardProject(
+                      project: projects[index],
+                      onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                    ),
                   ),
                 ),
               ),
