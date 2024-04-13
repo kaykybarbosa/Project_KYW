@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/screens/home/widgets/drawer/my_end_drawer.dart';
 import 'package:kyw_management/ui/screens/home/widgets/home_appbar.dart';
-import 'package:kyw_management/ui/screens/home/widgets/project_list.dart';
-import 'package:kyw_management/ui/screens/home/widgets/task_list.dart';
+import 'package:kyw_management/ui/screens/project/project_screen.dart';
+import 'package:kyw_management/ui/screens/tasks/task_screen.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/home_bloc/home_bloc.dart';
@@ -92,10 +92,10 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
                     controller: tabController,
                     children: const <Widget>[
                       /// -- Projetos
-                      ProjectList(),
+                      ProjectScreen(),
 
                       /// -- Tasks
-                      TaskList(),
+                      TaskScreen(),
                     ],
                   ),
                 ),
