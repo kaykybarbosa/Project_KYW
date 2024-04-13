@@ -2,14 +2,14 @@ part of 'change_password_cubit.dart';
 
 class ChangePasswordState extends Equatable {
   const ChangePasswordState({
-    this.password = const Password.pure(),
-    this.confirmedPassword = const ConfirmedPassword.pure(),
+    this.password = const PasswordInput.pure(),
+    this.confirmedPassword = const ConfirmedPasswordInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Password password;
-  final ConfirmedPassword confirmedPassword;
+  final PasswordInput password;
+  final ConfirmedPasswordInput confirmedPassword;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -17,8 +17,8 @@ class ChangePasswordState extends Equatable {
   List<Object> get props => [password, confirmedPassword, isValid, status];
 
   ChangePasswordState copyWith({
-    Password? password,
-    ConfirmedPassword? confirmedPassword,
+    PasswordInput? password,
+    ConfirmedPasswordInput? confirmedPassword,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

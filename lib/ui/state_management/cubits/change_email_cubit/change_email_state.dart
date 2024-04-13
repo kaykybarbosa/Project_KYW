@@ -3,14 +3,14 @@ part of 'change_email_cubit.dart';
 
 class ChangeEmailState extends Equatable {
   const ChangeEmailState({
-    this.newEmail = const Email.pure(),
-    this.currentEmail = const Email.pure(),
+    this.newEmail = const EmailInput.pure(),
+    this.currentEmail = const EmailInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email newEmail;
-  final Email currentEmail;
+  final EmailInput newEmail;
+  final EmailInput currentEmail;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -18,8 +18,8 @@ class ChangeEmailState extends Equatable {
   List<Object> get props => [newEmail, currentEmail, isValid, status];
 
   ChangeEmailState copyWith({
-    Email? newEmail,
-    Email? currentEmail,
+    EmailInput? newEmail,
+    EmailInput? currentEmail,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

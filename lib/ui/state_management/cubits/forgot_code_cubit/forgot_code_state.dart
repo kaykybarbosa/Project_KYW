@@ -3,12 +3,12 @@ part of 'forgot_code_cubit.dart';
 
 class ForgotCodeState extends Equatable {
   const ForgotCodeState({
-    this.code = const Code.pure(),
+    this.code = const CodeInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Code code;
+  final CodeInput code;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -16,7 +16,7 @@ class ForgotCodeState extends Equatable {
   List<Object> get props => [code, isValid, status];
 
   ForgotCodeState copyWith({
-    Code? code,
+    CodeInput? code,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

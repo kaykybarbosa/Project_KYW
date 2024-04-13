@@ -3,12 +3,12 @@ part of 'forgot_email_cubit.dart';
 
 class ForgotEmailState extends Equatable {
   const ForgotEmailState({
-    this.email = const Email.pure(),
+    this.email = const EmailInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email email;
+  final EmailInput email;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -16,7 +16,7 @@ class ForgotEmailState extends Equatable {
   List<Object> get props => [email, isValid, status];
 
   ForgotEmailState copyWith({
-    Email? email,
+    EmailInput? email,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
@@ -18,7 +18,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     EmailSignInChanged event,
     Emitter<SignInState> emit,
   ) {
-    final email = Email.dirty(event.email);
+    final email = EmailInput.dirty(event.email);
     emit(
       state.copyWith(
         email: email,
@@ -31,7 +31,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     PasswordSignInChanged event,
     Emitter<SignInState> emit,
   ) {
-    final password = Password.dirty(event.password);
+    final password = PasswordInput.dirty(event.password);
     emit(state.copyWith(
       password: password,
       isValid: Formz.validate([state.email, password]),

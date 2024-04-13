@@ -2,14 +2,14 @@ part of 'sign_in_bloc.dart';
 
 class SignInState extends Equatable {
   const SignInState({
-    this.email = const Email.pure(),
-    this.password = const Password.pure(),
+    this.email = const EmailInput.pure(),
+    this.password = const PasswordInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email email;
-  final Password password;
+  final EmailInput email;
+  final PasswordInput password;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -17,8 +17,8 @@ class SignInState extends Equatable {
   List<Object> get props => [email, password, isValid, status];
 
   SignInState copyWith({
-    Email? email,
-    Password? password,
+    EmailInput? email,
+    PasswordInput? password,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

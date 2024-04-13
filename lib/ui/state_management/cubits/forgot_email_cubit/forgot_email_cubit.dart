@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/email.dart';
+import '../../models_input/email_input.dart';
 
 part 'forgot_email_state.dart';
 
@@ -10,7 +10,7 @@ class ForgotEmailCubit extends Cubit<ForgotEmailState> {
   ForgotEmailCubit() : super(const ForgotEmailState());
 
   void emailChanged(String value) {
-    final email = Email.dirty(value);
+    final email = EmailInput.dirty(value);
     emit(
       state.copyWith(
         email: email,

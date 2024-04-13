@@ -1,10 +1,10 @@
 part of 'add_project_bloc.dart';
 
 class AddProjectState extends Equatable {
-  final TitleModel title;
-  final Description description;
-  final Email email;
-  final List<Email> invitedFriends;
+  final TitleInput title;
+  final DescriptionInput description;
+  final EmailInput email;
+  final List<EmailInput> invitedFriends;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -28,10 +28,10 @@ class AddProjectState extends Equatable {
       ];
 
   AddProjectState copyWith({
-    TitleModel? title,
-    Description? description,
-    Email? email,
-    List<Email>? invitedFriends,
+    TitleInput? title,
+    DescriptionInput? description,
+    EmailInput? email,
+    List<EmailInput>? invitedFriends,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {
@@ -41,7 +41,7 @@ class AddProjectState extends Equatable {
       email: email ?? this.email,
       invitedFriends: invitedFriends ?? this.invitedFriends,
       isValid: isValid ?? this.isValid,
-      status: status ?? this.status,
+      status: status ?? FormzSubmissionStatus.initial,
     );
   }
 }

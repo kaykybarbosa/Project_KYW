@@ -4,14 +4,14 @@ import 'package:formz/formz.dart';
 import 'package:kyw_management/domain/models/user_test.dart';
 import 'package:kyw_management/utils/formaters.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'add_task_state.dart';
 
 const AddTaskState addTaskInitial = AddTaskState(
-  title: TitleModel.pure(),
-  category: Category.pure(),
-  description: Description.pure(),
+  title: TitleInput.pure(),
+  category: CategoryInput.pure(),
+  description: DescriptionInput.pure(),
   dateOfConclusion: '',
   users: [],
   arrowDownPressed: false,
@@ -28,7 +28,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   }
 
   void titleChanged(String value) {
-    final title = TitleModel.dirty(value);
+    final title = TitleInput.dirty(value);
 
     emit(
       state.copyWith(
@@ -40,7 +40,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   }
 
   void categoryChanged(String value) {
-    final category = Category.dirty(value);
+    final category = CategoryInput.dirty(value);
 
     emit(
       state.copyWith(
@@ -52,7 +52,7 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   }
 
   void descriptionChanged(String value) {
-    final description = Description.dirty(value);
+    final description = DescriptionInput.dirty(value);
 
     emit(
       state.copyWith(

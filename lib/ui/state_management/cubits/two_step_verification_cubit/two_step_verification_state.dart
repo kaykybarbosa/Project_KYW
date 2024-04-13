@@ -2,12 +2,12 @@ part of 'two_step_verification_cubit.dart';
 
 class TwoStepVerificationState extends Equatable {
   const TwoStepVerificationState({
-    this.email = const Email.pure(),
+    this.email = const EmailInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email email;
+  final EmailInput email;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -15,7 +15,7 @@ class TwoStepVerificationState extends Equatable {
   List<Object> get props => [email, isValid, status];
 
   TwoStepVerificationState copyWith({
-    Email? email,
+    EmailInput? email,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

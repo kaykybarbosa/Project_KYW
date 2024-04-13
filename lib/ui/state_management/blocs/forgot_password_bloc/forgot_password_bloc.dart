@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
@@ -22,10 +22,10 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     EmailForgotPasswordChanged event,
     Emitter<ForgotPasswordState> emit,
   ) {
-    final email = Email.dirty(event.email);
+    final email = EmailInput.dirty(event.email);
 
     emit(state.copyWith(
-      email: email.isValid ? email : Email.pure(event.email),
+      email: email.isValid ? email : EmailInput.pure(event.email),
       isValid: Formz.validate([email]),
       step: StepsForgotPassword.gettingEmail,
       status: FormzSubmissionStatus.initial,
@@ -36,10 +36,10 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     CodeForgotPasswordChanged event,
     Emitter<ForgotPasswordState> emit,
   ) {
-    final code = Code.dirty(event.code);
+    final code = CodeInput.dirty(event.code);
 
     emit(state.copyWith(
-      code: code.isValid ? code : Code.pure(event.code),
+      code: code.isValid ? code : CodeInput.pure(event.code),
       isValid: Formz.validate([code]),
       step: StepsForgotPassword.validationCode,
       status: FormzSubmissionStatus.initial,
@@ -51,7 +51,7 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     Emitter<ForgotPasswordState> emit,
   ) {
     if (state.step != StepsForgotPassword.gettingEmail) {
-      final email = Email.dirty(state.email.value);
+      final email = EmailInput.dirty(state.email.value);
 
       emit(state.copyWith(
         email: email,
@@ -66,7 +66,7 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     CodeForgotPasswordUnfocused event,
     Emitter<ForgotPasswordState> emit,
   ) {
-    final code = Code.dirty(state.code.value);
+    final code = CodeInput.dirty(state.code.value);
 
     emit(state.copyWith(
       code: code,
@@ -101,8 +101,8 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     FormForgotPasswordSubmitted event,
     Emitter<ForgotPasswordState> emit,
   ) async {
-    final email = Email.dirty(state.email.value);
-    final code = Code.dirty(state.code.value);
+    final email = EmailInput.dirty(state.email.value);
+    final code = CodeInput.dirty(state.code.value);
 
     var isValid = state.isValid;
     var step = state.step;

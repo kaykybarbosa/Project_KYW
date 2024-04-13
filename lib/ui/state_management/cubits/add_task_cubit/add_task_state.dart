@@ -2,9 +2,9 @@
 part of 'add_task_cubit.dart';
 
 class AddTaskState extends Equatable {
-  final TitleModel title;
-  final Category category;
-  final Description description;
+  final TitleInput title;
+  final CategoryInput category;
+  final DescriptionInput description;
   final String dateOfConclusion;
   final List<UserTest> users;
   final bool arrowDownPressed;
@@ -37,9 +37,9 @@ class AddTaskState extends Equatable {
       ];
 
   AddTaskState copyWith({
-    TitleModel? title,
-    Category? category,
-    Description? description,
+    TitleInput? title,
+    CategoryInput? category,
+    DescriptionInput? description,
     String? dateOfConclusion,
     List<UserTest>? users,
     bool? arrowDownPressed,

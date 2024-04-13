@@ -2,15 +2,15 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'add_project_event.dart';
 part 'add_project_state.dart';
 
 const addProjectInitial = AddProjectInitial(
-  title: TitleModel.pure(),
-  description: Description.pure(),
-  email: Email.pure(),
+  title: TitleInput.pure(),
+  description: DescriptionInput.pure(),
+  email: EmailInput.pure(),
   invitedFriends: [],
   isValid: false,
   status: FormzSubmissionStatus.initial,
@@ -29,13 +29,12 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     TitleChangedAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    final title = TitleModel.dirty(event.title);
+    final title = TitleInput.dirty(event.title);
 
     emit(
       state.copyWith(
         title: title,
         isValid: Formz.validate([title, state.description]),
-        status: FormzSubmissionStatus.initial,
       ),
     );
   }
@@ -44,13 +43,12 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     DescriptionChangedAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    final description = Description.dirty(event.description);
+    final description = DescriptionInput.dirty(event.description);
 
     emit(
       state.copyWith(
         description: description,
         isValid: Formz.validate([state.title, description]),
-        status: FormzSubmissionStatus.initial,
       ),
     );
   }
@@ -59,13 +57,12 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     EmailChangedAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    final email = Email.dirty(event.email);
+    final email = EmailInput.dirty(event.email);
 
     emit(
       state.copyWith(
         email: email,
         isValid: Formz.validate([state.title, state.description, email]),
-        status: FormzSubmissionStatus.initial,
       ),
     );
   }
@@ -76,7 +73,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   ) {
     if (!state.isValid) return;
 
-    List<Email> invitedFriends = state.invitedFriends;
+    List<EmailInput> invitedFriends = state.invitedFriends;
 
     if (state.email.isValid) {
       invitedFriends = List.from(invitedFriends)..add(state.email);
@@ -84,9 +81,13 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
 
     emit(
       state.copyWith(
+        email: const EmailInput.pure(),
         invitedFriends: invitedFriends,
-        isValid: Formz.validate([state.title, state.description, state.email]),
-        status: FormzSubmissionStatus.initial,
+        isValid: Formz.validate([
+          state.title,
+          state.description,
+          state.email,
+        ]),
       ),
     );
   }

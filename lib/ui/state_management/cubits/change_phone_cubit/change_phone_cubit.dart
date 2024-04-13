@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'change_phone_state.dart';
 
@@ -10,7 +10,7 @@ class ChangePhoneCubit extends Cubit<ChangePhoneState> {
   ChangePhoneCubit() : super(const ChangePhoneState());
 
   void newPhoneChanged(String value) {
-    final newPhone = Phone.dirty(value);
+    final newPhone = PhoneInput.dirty(value);
 
     emit(
       state.copyWith(
@@ -22,7 +22,7 @@ class ChangePhoneCubit extends Cubit<ChangePhoneState> {
   }
 
   void currentPhoneChanged(String value) {
-    final currentPhone = Phone.dirty(value);
+    final currentPhone = PhoneInput.dirty(value);
 
     emit(
       state.copyWith(

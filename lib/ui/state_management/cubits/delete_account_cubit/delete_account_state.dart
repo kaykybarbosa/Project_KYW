@@ -2,12 +2,12 @@ part of 'delete_account_cubit.dart';
 
 class DeleteAccountState extends Equatable {
   const DeleteAccountState({
-    this.email = const Email.pure(),
+    this.email = const EmailInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email email;
+  final EmailInput email;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -15,7 +15,7 @@ class DeleteAccountState extends Equatable {
   List<Object> get props => [email, isValid, status];
 
   DeleteAccountState copyWith({
-    Email? email,
+    EmailInput? email,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:kyw_management/ui/state_management/models_states/email.dart';
+import 'package:kyw_management/ui/state_management/models_input/email_input.dart';
 
 part 'change_email_state.dart';
 
@@ -9,7 +9,7 @@ class ChangeEmailCubit extends Cubit<ChangeEmailState> {
   ChangeEmailCubit() : super(const ChangeEmailState());
 
   void newEmailChanged(String value) {
-    final newEmail = Email.dirty(value);
+    final newEmail = EmailInput.dirty(value);
 
     emit(
       state.copyWith(
@@ -21,7 +21,7 @@ class ChangeEmailCubit extends Cubit<ChangeEmailState> {
   }
 
   void currentEmailChanged(String value) {
-    final currentEmail = Email.dirty(value);
+    final currentEmail = EmailInput.dirty(value);
 
     emit(
       state.copyWith(

@@ -4,15 +4,15 @@ enum StepsForgotPassword { gettingEmail, goToValidationCode, validationCode }
 
 class ForgotPasswordState extends Equatable {
   const ForgotPasswordState({
-    this.email = const Email.pure(),
-    this.code = const Code.pure(),
+    this.email = const EmailInput.pure(),
+    this.code = const CodeInput.pure(),
     this.isValid = false,
     this.step = StepsForgotPassword.gettingEmail,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Email email;
-  final Code code;
+  final EmailInput email;
+  final CodeInput code;
   final bool isValid;
   final StepsForgotPassword step;
   final FormzSubmissionStatus status;
@@ -21,8 +21,8 @@ class ForgotPasswordState extends Equatable {
   List<Object> get props => [email, code, step, status];
 
   ForgotPasswordState copyWith({
-    Email? email,
-    Code? code,
+    EmailInput? email,
+    CodeInput? code,
     bool? isValid,
     StepsForgotPassword? step,
     FormzSubmissionStatus? status,

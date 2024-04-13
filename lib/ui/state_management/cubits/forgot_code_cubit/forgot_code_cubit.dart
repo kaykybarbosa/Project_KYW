@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../models_states/models_states_export.dart';
+import '../../models_input/models_states_export.dart';
 
 part 'forgot_code_state.dart';
 
@@ -10,7 +10,7 @@ class ForgotCodeCubit extends Cubit<ForgotCodeState> {
   ForgotCodeCubit() : super(const ForgotCodeState());
 
   void codeChanged(String value) {
-    final code = Code.dirty(value);
+    final code = CodeInput.dirty(value);
     emit(
       state.copyWith(
         code: code,
@@ -26,7 +26,7 @@ class ForgotCodeCubit extends Cubit<ForgotCodeState> {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     await Future<void>.delayed(const Duration(seconds: 2));
 
-    final code = Code.dirty(state.code.value);
+    final code = CodeInput.dirty(state.code.value);
     String codeValidationExample = '123456';
 
     if (codeValidationExample == code.value) {

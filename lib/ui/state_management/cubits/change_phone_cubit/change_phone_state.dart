@@ -2,14 +2,14 @@ part of 'change_phone_cubit.dart';
 
 class ChangePhoneState extends Equatable {
   const ChangePhoneState({
-    this.newPhone = const Phone.pure(),
-    this.currentPhone = const Phone.pure(),
+    this.newPhone = const PhoneInput.pure(),
+    this.currentPhone = const PhoneInput.pure(),
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
   });
 
-  final Phone newPhone;
-  final Phone currentPhone;
+  final PhoneInput newPhone;
+  final PhoneInput currentPhone;
   final bool isValid;
   final FormzSubmissionStatus status;
 
@@ -17,8 +17,8 @@ class ChangePhoneState extends Equatable {
   List<Object> get props => [newPhone, currentPhone, isValid, status];
 
   ChangePhoneState copyWith({
-    Phone? newPhone,
-    Phone? currentPhone,
+    PhoneInput? newPhone,
+    PhoneInput? currentPhone,
     bool? isValid,
     FormzSubmissionStatus? status,
   }) {
