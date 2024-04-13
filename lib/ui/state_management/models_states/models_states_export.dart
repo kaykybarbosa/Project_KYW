@@ -1,9 +1,0 @@
-export 'category.dart';
-export 'code.dart';
-export 'confirmed_password.dart';
-export 'description.dart';
-export 'email.dart';
-export 'name.dart';
-export 'number.dart';
-export 'password.dart';
-export 'title_model.dart';
