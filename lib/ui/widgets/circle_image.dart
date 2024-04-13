@@ -6,13 +6,13 @@ import 'package:kyw_management/utils/icons.dart';
 class CircleImage extends StatelessWidget {
   const CircleImage({
     super.key,
-    required this.onTap,
+    this.onTap,
     this.iconSize = 45.0,
     this.changeIconVisible = true,
     this.padding = const EdgeInsets.all(38.0),
   });
 
-  final Function() onTap;
+  final Function()? onTap;
   final double iconSize;
   final bool changeIconVisible;
   final EdgeInsetsGeometry padding;
@@ -21,6 +21,7 @@ class CircleImage extends StatelessWidget {
   Widget build(BuildContext context) => Stack(
         alignment: const Alignment(1.1, .6),
         children: <Widget>[
+          /// Circulo
           Container(
             padding: padding,
             decoration: BoxDecoration(
@@ -41,6 +42,8 @@ class CircleImage extends StatelessWidget {
               color: TColors.base100,
             ),
           ),
+
+          /// Ícone de alteração
           Visibility(
             visible: changeIconVisible,
             child: Stack(

@@ -39,7 +39,7 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
       nameColor: Colors.black,
     ),
     MessageModel(
-      userReference: 'Wesly',
+      userReference: 'Wesle',
       message: 'I love java',
       dateSend: DateFormat().add_Hm().format(DateTime.now()),
       isSender: false,

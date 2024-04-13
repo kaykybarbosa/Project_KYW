@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:kyw_management/domain/enums/filters_enum.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_buttons.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/my_selection_date.dart';
-import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/ui/widgets/section_title.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class FilterHeader extends StatelessWidget {
@@ -46,7 +46,7 @@ class FilterHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        /// Botôes de actions
+        /// Botões de actions
         FilterButtons(
           current: currentFilter,
           clearFunction: onClean,
@@ -55,7 +55,7 @@ class FilterHeader extends StatelessWidget {
         const Gap(20.0),
 
         /// Título data de criação
-        const _CreationDate(),
+        const SectionTitle(title: TTexts.criationDate),
 
         const Gap(10.0),
 
@@ -103,17 +103,4 @@ class FilterHeader extends StatelessWidget {
       ],
     );
   }
-}
-
-class _CreationDate extends StatelessWidget {
-  const _CreationDate();
-
-  @override
-  Widget build(BuildContext context) => const Text(
-        TTexts.criationDate,
-        style: TextStyle(
-          fontSize: TConstants.fontSizeLg + 2,
-          fontWeight: FontWeight.w500,
-        ),
-      );
 }
