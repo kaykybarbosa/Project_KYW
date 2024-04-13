@@ -5,5 +5,6 @@ abstract class TColorScheme {
   static ColorScheme light = const ColorScheme.light(
     background: TColors.base100,
     primary: TColors.secondary,
+    error: TColors.warn,
   );
 }

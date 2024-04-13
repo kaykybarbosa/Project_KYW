@@ -24,7 +24,7 @@ abstract class AppTheme {
         chipTheme: TChipTheme.light,
         tabBarTheme: TTabBarTheme.light,
         dividerColor: TColors.base200,
-        dividerTheme: const DividerThemeData(color: TColors.base200),
+        dividerTheme: const DividerThemeData(color: TColors.base200, space: 0),
         popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
         iconTheme: const IconThemeData(
           color: TColors.base100,
