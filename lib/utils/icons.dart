@@ -15,6 +15,7 @@ abstract class TIcons {
   static const IconData singOut = FontAwesomeIcons.rightFromBracket;
   static const IconData pen = FontAwesomeIcons.pen;
   static const IconData check = FontAwesomeIcons.check;
+  static const IconData isImportant = FontAwesomeIcons.thumbtack;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;

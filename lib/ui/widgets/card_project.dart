@@ -1,92 +1,89 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
 
-class CardProject extends StatefulWidget {
+class CardProject extends StatelessWidget {
   const CardProject({
     super.key,
     required this.project,
-    required this.onTap,
+    this.onTap,
   });
 
   final Project project;
-  final Function onTap;
+  final Function()? onTap;
 
-  @override
-  State<CardProject> createState() => _CardProjectState();
-}
-
-class _CardProjectState extends State<CardProject> {
   Widget _getImage() {
-    if (widget.project.image != null) {
+    if (project.image != null) {
       return Image.asset(
-        widget.project.image!,
+        project.image!,
         width: 52,
       );
     } else {
       return Container(
-        color: Colors.grey,
+        color: TColors.base200,
         padding: const EdgeInsets.all(12),
-        child: Icon(
+        child: const Icon(
           Icons.group,
           size: 27,
-          color: Colors.grey[200],
+          color: TColors.base100,
         ),
       );
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => widget.onTap(),
-      child: Container(
-        padding: const EdgeInsets.only(left: 6),
-        margin: const EdgeInsets.symmetric(vertical: 2.5),
-        decoration: BoxDecoration(
-          color: TColors.secondary,
-          borderRadius: BorderRadius.circular(5),
-        ),
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 8,
+          padding: const EdgeInsets.only(left: 6),
+          margin: const EdgeInsets.symmetric(vertical: 2.5),
+          decoration: BoxDecoration(
+            color: TColors.secondary,
+            borderRadius: BorderRadius.circular(5),
           ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: BorderSide(color: Colors.grey),
-              right: BorderSide(color: Colors.grey),
-              bottom: BorderSide(color: Colors.grey),
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 8,
             ),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(5),
-              bottomRight: Radius.circular(5),
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Group image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: _getImage(),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                top: BorderSide(color: TColors.base200),
+                right: BorderSide(color: TColors.base200),
+                bottom: BorderSide(color: TColors.base200),
               ),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(TConstants.cardRadiusXs),
+                bottomRight: Radius.circular(TConstants.cardRadiusXs),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                /// Imagem do grupo
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: _getImage(),
+                ),
 
-              /// Nome do grupo
-              _GroupName(project: widget.project),
+                /// Nome do grupo
+                Expanded(
+                  flex: 5,
+                  child: _GroupName(project: project),
+                ),
 
-              /// Está fixado
-              _MySufix(widget: widget)
-            ],
+                /// Está fixado
+                _MySufix(project: project)
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _GroupName extends StatelessWidget {
@@ -97,27 +94,30 @@ class _GroupName extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(left: 8.0),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                /// Nome do grupo
-                Text(
-                  project.name,
-                  style: const TextStyle(
-                    fontSize: TConstants.fontSizeLg,
-                    fontWeight: FontWeight.bold,
-                    color: TColors.secondary,
-                  ),
-                ),
+            /// Nome do grupo
+            Text(
+              project.name,
+              style: const TextStyle(
+                fontSize: TConstants.fontSizeLg,
+                fontWeight: FontWeight.bold,
+                color: TColors.secondary,
+              ),
+            ),
 
-                // Última mensagem enviada
-                Text(
-                  project.lastMessage ?? 'Você criou este projeto',
-                  style: const TextStyle(
-                    fontSize: TConstants.fontSizeMd,
-                    color: TColors.base200,
+            // Última mensagem enviada
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    project.lastMessage ?? 'Você criou este projeto',
+                    style: const TextStyle(
+                      fontSize: TConstants.fontSizeMd,
+                      color: TColors.base200,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -128,44 +128,42 @@ class _GroupName extends StatelessWidget {
 }
 
 class _MySufix extends StatelessWidget {
-  const _MySufix({required this.widget});
+  const _MySufix({required this.project});
 
-  final CardProject widget;
+  final Project project;
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          // Last message time
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                widget.project.lastMessageTime ?? '',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: CupertinoColors.systemGrey,
+  Widget build(BuildContext context) => Expanded(
+        child: Column(
+          children: <Widget>[
+            /// Horário da última mensagem
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  project.lastMessageTime ?? '',
+                  style: const TextStyle(
+                    fontSize: TConstants.fontSizeSm,
+                    color: TColors.base200,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          const SizedBox(height: 6),
+            const Gap(6),
 
-          // IsImportant
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Icon(
-                widget.project.isImportant ? FontAwesomeIcons.thumbtack : null,
-                color: CupertinoColors.systemGrey2,
-                size: 21.5,
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
+            // Está fixado
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Icon(
+                  project.isImportant ? TIcons.isImportant : null,
+                  color: TColors.base200,
+                  size: TConstants.iconSm + 3,
+                )
+              ],
+            )
+          ],
+        ),
+      );
 }
