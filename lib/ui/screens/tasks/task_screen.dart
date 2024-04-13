@@ -8,7 +8,6 @@ import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
-import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/texts.dart';
 
@@ -18,13 +17,9 @@ class TaskScreen extends StatelessWidget {
   Future<dynamic> myModalBottom(BuildContext context, Widget child) async {
     await showModalBottomSheet(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
-      backgroundColor: TColors.base100,
-      builder: (BuildContext context) => SizedBox(
-        height: 665,
-        child: child,
-      ),
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) => child,
     );
   }
 

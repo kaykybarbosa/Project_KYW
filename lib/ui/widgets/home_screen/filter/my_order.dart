@@ -3,6 +3,8 @@ import 'package:kyw_management/domain/enums/filters_enum.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/widgets/apply_button.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_buttons.dart';
+import 'package:kyw_management/ui/widgets/my_draggable_scroll.dart';
+import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
 class MyOrder extends StatelessWidget {
@@ -12,48 +14,102 @@ class MyOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> optionsOrderProject = ['Mais antigos', 'Mais novos', 'Meus projetos', 'Projetos marcados'];
-    final List<String> optionsOrderTask = ['Mais antigos', 'Mais novos', 'Minhas tarefas', 'Tarefas marcadas'];
+    final List<Map<String, dynamic>> optionsOrderProject = [
+      {
+        'title': 'Mais antigos',
+        'onTap': () {},
+      },
+      {
+        'title': 'Mais novos',
+        'onTap': () {},
+      },
+      {
+        'title': 'Meus projetos',
+        'onTap': () {},
+      },
+      {
+        'title': 'Projetos marcados',
+        'onTap': () {},
+      },
+    ];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                /// Header
-                FilterButtons(
-                  current: FilterEnum.Order,
-                  clearFunction: () {},
-                ),
+    final List<Map<String, dynamic>> optionsOrderTask = [
+      {
+        'title': 'Mais antigos',
+        'onTap': () {},
+      },
+      {
+        'title': 'Mais novos',
+        'onTap': () {},
+      },
+      {
+        'title': 'Minhas tarefas',
+        'onTap': () {},
+      },
+      {
+        'title': 'Tarefas marcadas',
+        'onTap': () {},
+      },
+    ];
 
-                /// Opções
-                Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          currentScreen == Screens.project ? optionsOrderProject[index] : optionsOrderTask[index],
-                          style: const TextStyle(fontSize: TConstants.fontSizeLg),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: MyDraggableScroll(
+            padding: EdgeInsets.zero,
+
+            /// Header
+            header: Padding(
+              padding: const EdgeInsets.only(left: 25, top: 25, right: 25),
+              child: FilterButtons(
+                current: FilterEnum.Order,
+                clearFunction: () {},
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              child: Column(
+                children: List.generate(
+                  currentScreen == Screens.project ? optionsOrderProject.length : optionsOrderTask.length,
+                  (index) {
+                    var options = currentScreen == Screens.project ? optionsOrderProject : optionsOrderTask;
+
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        /// Primeiro divider
+                        index == 0
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: Divider(),
+                              )
+                            : Container(),
+
+                        /// -- Opção
+                        ListTile(
+                          title: Text(
+                            options[index]['title'],
+                            style: const TextStyle(fontSize: TConstants.fontSizeLg),
+                          ),
+                          onTap: options[index]['onTap'],
                         ),
-                        onTap: () {},
-                      );
-                    },
-                    padding: EdgeInsets.zero,
-                    physics: const BouncingScrollPhysics(),
-                    separatorBuilder: (__, _) => const Divider(height: 0),
-                    itemCount: currentScreen == Screens.project ? optionsOrderProject.length : optionsOrderTask.length,
-                  ),
+                        const Divider(),
+                      ],
+                    );
+                  },
                 ),
-              ],
+              ),
             ),
           ),
+        ),
 
-          // Aplicar filtro
-          ApplyButtom(onPressed: () {})
-        ],
-      ),
+        // Aplicar filtro
+        ApplyButtom(
+          color: TColors.base100,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/utils/colors.dart';
-import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class ApplyButtom extends StatelessWidget {
@@ -8,27 +6,21 @@ class ApplyButtom extends StatelessWidget {
     super.key,
     required this.onPressed,
     this.padding,
+    this.color,
   });
 
   final void Function()? onPressed;
   final EdgeInsetsGeometry? padding;
+  final Color? color;
 
   @override
-  Widget build(BuildContext context) => Padding(
+  Widget build(BuildContext context) => Container(
+        color: color,
+        width: double.infinity,
         padding: padding ?? const EdgeInsets.only(bottom: 15),
-        child: SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: onPressed,
-            child: const Text(
-              TTexts.apply,
-              style: TextStyle(
-                color: TColors.base100,
-                fontSize: TConstants.fontSizeLg + 2,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: const Text(TTexts.apply),
         ),
       );
 }

@@ -36,4 +36,5 @@ abstract class TTexts {
   static const inviteFriendsByEmail = 'Convidar amigos por e-mail';
   static const invite = 'Convidar';
   static const guests = 'Membros';
+  static const labelCategory = 'Inserir categoria';
 }

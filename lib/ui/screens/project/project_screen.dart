@@ -18,16 +18,15 @@ import 'package:kyw_management/utils/texts.dart';
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({super.key});
 
-  Future<dynamic> myModalBottom(BuildContext context, Widget child) async {
+  Future<dynamic> myModalBottom(
+    BuildContext context,
+    Widget child,
+  ) async {
     await showModalBottomSheet(
       context: context,
-      showDragHandle: true,
       isScrollControlled: true,
-      backgroundColor: TColors.base100,
-      builder: (BuildContext context) => SizedBox(
-        height: 665,
-        child: child,
-      ),
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) => child,
     );
   }
 

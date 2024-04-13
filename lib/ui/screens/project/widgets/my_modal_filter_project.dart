@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:kyw_management/domain/enums/filters_enum.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/widgets/apply_button.dart';
-import 'package:kyw_management/ui/widgets/home_screen/filter/filter_header.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/filter_buttons.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/filter_projet/filter_with_check.dart';
+import 'package:kyw_management/ui/widgets/home_screen/filter/select_date_create.dart';
+import 'package:kyw_management/ui/widgets/my_draggable_scroll.dart';
+import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/formaters.dart';
 import 'package:kyw_management/utils/texts.dart';
 
@@ -31,19 +36,25 @@ class MyModalFilterProject extends StatelessWidget {
       context.read<FilterProjectBloc>().add(ResetFilterProject());
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: BlocBuilder<FilterProjectBloc, FilterProjectState>(
-        builder: (context, state) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(
+    return BlocBuilder<FilterProjectBloc, FilterProjectState>(
+      builder: (context, state) => Column(
+        children: <Widget>[
+          /// Body
+          Expanded(
+            child: MyDraggableScroll(
+              /// -- Botões de actions
+              header: FilterButtons(
+                current: FilterEnum.Filter,
+                clearFunction: () => clearFilter(context),
+              ),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  const Gap(20),
+
                   /// Filtros e Seleção da data de criação
-                  FilterHeader(
+                  SelectDateCreate(
                     onInitDatePicker: (date) => setDate(
                       isInitDate: state.isInitDate,
                       dateSelected: date,
@@ -52,7 +63,6 @@ class MyModalFilterProject extends StatelessWidget {
                       isInitDate: !state.isInitDate,
                       dateSelected: date,
                     ),
-                    onClean: () => clearFilter(context),
                   ),
 
                   const Gap(30),
@@ -72,14 +82,20 @@ class MyModalFilterProject extends StatelessWidget {
                     isChecked: state.marked,
                     onChanged: (value) => context.read<FilterProjectBloc>().add(MarkedChanged()),
                   ),
+
+                  const Gap(30)
                 ],
               ),
+            ),
+          ),
 
-              // Aplicar filtro
-              ApplyButtom(onPressed: () {}),
-            ],
-          );
-        },
+          /// Aplicar filtro
+          ApplyButtom(
+            color: TColors.base100,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
