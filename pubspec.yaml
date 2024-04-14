@@ -25,6 +25,9 @@ dependencies:
   # Envied
   envied: ^0.5.4+1
 
+  # Programação funcional
+  result_dart: ^1.1.1
+
   # Validator
   formz: ^0.6.1
 
