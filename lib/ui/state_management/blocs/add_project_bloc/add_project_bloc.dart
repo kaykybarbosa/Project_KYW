@@ -22,6 +22,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     on<DescriptionChangedAddProject>(_onDescriptionChangedAddProject);
     on<EmailChangedAddProject>(_onEmailChangedAddProject);
     on<InvitedFriendsAddProject>(_onInvitedFriendsAddProject);
+    on<RemoveFriendsAddProject>(_onRemoveFriends);
     on<FormSubmitteddAddProject>(_onFormSubmitteddAddProject);
   }
 
@@ -62,7 +63,11 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     emit(
       state.copyWith(
         email: email,
-        isValid: Formz.validate([state.title, state.description, email]),
+        isValid: Formz.validate([
+          state.title,
+          state.description,
+          email,
+        ]),
       ),
     );
   }
@@ -83,13 +88,20 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
       state.copyWith(
         email: const EmailInput.pure(),
         invitedFriends: invitedFriends,
-        isValid: Formz.validate([
-          state.title,
-          state.description,
-          state.email,
-        ]),
       ),
     );
+  }
+
+  void _onRemoveFriends(
+    RemoveFriendsAddProject event,
+    Emitter<AddProjectState> emit,
+  ) {
+    List<EmailInput> invitedFriends = state.invitedFriends;
+
+    invitedFriends = List.from(invitedFriends)
+      ..removeWhere((email) => email.value.toLowerCase() == event.email.toLowerCase());
+
+    emit(state.copyWith(invitedFriends: invitedFriends));
   }
 
   void _onFormSubmitteddAddProject(

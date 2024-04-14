@@ -27,6 +27,7 @@ abstract class TTexts {
   static const status = 'Status';
 
   /// Criar Projeto
+  static const newProject = 'Novo projeto';
   static const selectImagemTitle = 'Selecione uma imagem para o projeto';
   static const labelTitle = 'Título';
   static const title = 'Título do Projeto*';
@@ -37,4 +38,5 @@ abstract class TTexts {
   static const invite = 'Convidar';
   static const guests = 'Membros';
   static const labelCategory = 'Inserir categoria';
+  static const remove = 'Remover';
 }

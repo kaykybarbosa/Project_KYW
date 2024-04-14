@@ -37,4 +37,13 @@ class EmailChangedAddProject extends AddProjectEvent {
 
 class InvitedFriendsAddProject extends AddProjectEvent {}
 
+class RemoveFriendsAddProject extends AddProjectEvent {
+  const RemoveFriendsAddProject({required this.email});
+
+  final String email;
+
+  @override
+  List<Object> get props => [email];
+}
+
 class FormSubmitteddAddProject extends AddProjectEvent {}

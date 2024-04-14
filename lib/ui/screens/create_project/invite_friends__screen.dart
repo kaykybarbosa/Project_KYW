@@ -38,7 +38,7 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Novo Projeto')),
+        appBar: AppBar(title: const Text(TTexts.newProject)),
         body: BlocBuilder<AddProjectBloc, AddProjectState>(
           builder: (context, state) => Column(
             children: <Widget>[
@@ -215,15 +215,38 @@ class _ListMembers extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         itemBuilder: ((_, index) => ListTile(
+              contentPadding: const EdgeInsets.only(left: 15),
               title: Text(
                 users[index],
                 style: const TextStyle(fontSize: TConstants.fontSizeLg),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              trailing: const Icon(
-                TIcons.more,
-                color: TColors.primary,
+              trailing: PopupMenuButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(
+                  TIcons.more,
+                  color: TColors.primary,
+                ),
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    child: const Row(
+                      children: <Widget>[
+                        Icon(
+                          TIcons.remove,
+                          size: TConstants.iconSm,
+                          color: TColors.warn,
+                        ),
+                        Gap(5),
+                        Text(
+                          TTexts.remove,
+                          style: TextStyle(color: TColors.warn),
+                        ),
+                      ],
+                    ),
+                    onTap: () => context.read<AddProjectBloc>().add(RemoveFriendsAddProject(email: users[index])),
+                  ),
+                ],
               ),
             )),
         separatorBuilder: (_, __) => const Divider(),

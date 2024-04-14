@@ -34,16 +34,15 @@ class AddProjectState extends Equatable {
     List<EmailInput>? invitedFriends,
     bool? isValid,
     FormzSubmissionStatus? status,
-  }) {
-    return AddProjectState(
-      title: title ?? this.title,
-      description: description ?? this.description,
-      email: email ?? this.email,
-      invitedFriends: invitedFriends ?? this.invitedFriends,
-      isValid: isValid ?? this.isValid,
-      status: status ?? FormzSubmissionStatus.initial,
-    );
-  }
+  }) =>
+      AddProjectState(
+        title: title ?? this.title,
+        description: description ?? this.description,
+        email: email ?? this.email,
+        invitedFriends: invitedFriends ?? this.invitedFriends,
+        isValid: isValid ?? this.isValid,
+        status: status ?? FormzSubmissionStatus.initial,
+      );
 }
 
 final class AddProjectInitial extends AddProjectState {

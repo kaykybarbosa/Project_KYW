@@ -16,6 +16,7 @@ abstract class TIcons {
   static const IconData pen = FontAwesomeIcons.pen;
   static const IconData check = FontAwesomeIcons.check;
   static const IconData isImportant = FontAwesomeIcons.thumbtack;
+  static const IconData remove = FontAwesomeIcons.trash;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
