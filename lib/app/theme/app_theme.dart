@@ -30,6 +30,6 @@ abstract class AppTheme {
           color: TColors.base100,
           size: TConstants.iconMd - 2,
         ),
-        shadowColor: TColors.base900.withOpacity(.20),
+        shadowColor: TColors.base900,
       );
 }

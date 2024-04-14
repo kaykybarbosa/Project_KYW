@@ -7,7 +7,7 @@ import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_modal_filter_project.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/card_project.dart';
-import 'package:kyw_management/ui/widgets/home_screen/filter/my_order.dart';
+import 'package:kyw_management/ui/widgets/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
 import 'package:kyw_management/utils/colors.dart';
