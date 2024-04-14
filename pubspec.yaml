@@ -22,9 +22,11 @@ dependencies:
   # Dio
   dio: ^5.4.3+1
 
+  # Envied
+  envied: ^0.5.4+1
+
   # Validator
   formz: ^0.6.1
-  email_validator: ^2.1.17
 
   # Widgets
   intl: ^0.18.1
@@ -50,6 +52,8 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  envied_generator: ^0.5.4+1
+  build_runner: ^2.4.9
 
 flutter:
   uses-material-design: true
