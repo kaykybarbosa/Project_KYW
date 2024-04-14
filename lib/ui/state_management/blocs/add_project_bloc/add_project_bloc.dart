@@ -1,23 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:get/get.dart';
 
 import '../../models_input/models_states_export.dart';
 
 part 'add_project_event.dart';
 part 'add_project_state.dart';
 
-const addProjectInitial = AddProjectInitial(
-  title: TitleInput.pure(),
-  description: DescriptionInput.pure(),
-  email: EmailInput.pure(),
-  invitedFriends: [],
-  isValid: false,
-  status: FormzSubmissionStatus.initial,
-);
-
 class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
-  AddProjectBloc() : super(addProjectInitial) {
+  AddProjectBloc() : super(const AddProjectState()) {
     on<TitleChangedAddProject>(_onTitleChangedAddProject);
     on<DescriptionChangedAddProject>(_onDescriptionChangedAddProject);
     on<EmailChangedAddProject>(_onEmailChangedAddProject);
@@ -81,6 +73,15 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     List<EmailInput> invitedFriends = state.invitedFriends;
 
     if (state.email.isValid) {
+      /// Verificando se e-mail já se encontra na lista
+      var emailAlreadyExists = invitedFriends.firstWhereOrNull(
+        (email) => email.value.toLowerCase() == state.email.value.toLowerCase(),
+      );
+      if (emailAlreadyExists != null) {
+        emit(state.copyWith(status: AddProjectStatus.emailAlreadyExists));
+        return;
+      }
+
       invitedFriends = List.from(invitedFriends)..add(state.email);
     }
 
@@ -88,6 +89,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
       state.copyWith(
         email: const EmailInput.pure(),
         invitedFriends: invitedFriends,
+        status: AddProjectStatus.emailAdded,
       ),
     );
   }
@@ -108,6 +110,6 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     FormSubmitteddAddProject event,
     Emitter<AddProjectState> emit,
   ) {
-    emit(addProjectInitial);
+    emit(const AddProjectState());
   }
 }

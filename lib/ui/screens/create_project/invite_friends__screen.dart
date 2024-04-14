@@ -4,12 +4,14 @@ import 'package:flutter_guid/flutter_guid.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class InviteFriendsScreen extends StatefulWidget {
@@ -37,10 +39,23 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(TTexts.newProject)),
-        body: BlocBuilder<AddProjectBloc, AddProjectState>(
-          builder: (context, state) => Column(
+  Widget build(BuildContext context) => BlocConsumer<AddProjectBloc, AddProjectState>(
+        listener: (context, state) {
+          if (state.status.isEmailAlreadyExists) {
+            snackBarCustom(
+              title: 'Este e-mail já está na lista de Membros.',
+              showMessageText: false,
+              type: SnackBarType.failure,
+            );
+          }
+
+          if (state.status.isEmailAdded) {
+            setEmailController('');
+          }
+        },
+        builder: (_, state) => Scaffold(
+          appBar: AppBar(title: const Text(TTexts.newProject)),
+          body: Column(
             children: <Widget>[
               /// Convidar amigos
               Container(
@@ -87,8 +102,8 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
               ),
             ],
           ),
+          floatingActionButton: const _MyFloatingButton(),
         ),
-        floatingActionButton: const _MyFloatingButton(),
       );
 }
 
@@ -162,10 +177,7 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
         builder: (context, state) => TextButton(
-          onPressed: () => {
-            context.read<AddProjectBloc>().add(InvitedFriendsAddProject()),
-            context.findAncestorStateOfType<InviteFriendsScreenState>()?.setEmailController(''),
-          },
+          onPressed: () => context.read<AddProjectBloc>().add(InvitedFriendsAddProject()),
           style: ButtonStyle(
             shape: MaterialStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(TConstants.cardRadiusXs))),

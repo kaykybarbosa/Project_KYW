@@ -1,21 +1,21 @@
 part of 'add_project_bloc.dart';
 
 class AddProjectState extends Equatable {
+  const AddProjectState({
+    this.title = const TitleInput.pure(),
+    this.description = const DescriptionInput.pure(),
+    this.email = const EmailInput.pure(),
+    this.invitedFriends = const [],
+    this.isValid = false,
+    this.status = AddProjectStatus.initial,
+  });
+
   final TitleInput title;
   final DescriptionInput description;
   final EmailInput email;
   final List<EmailInput> invitedFriends;
   final bool isValid;
-  final FormzSubmissionStatus status;
-
-  const AddProjectState({
-    required this.title,
-    required this.description,
-    required this.email,
-    required this.invitedFriends,
-    required this.isValid,
-    required this.status,
-  });
+  final AddProjectStatus status;
 
   @override
   List<Object> get props => [
@@ -33,7 +33,7 @@ class AddProjectState extends Equatable {
     EmailInput? email,
     List<EmailInput>? invitedFriends,
     bool? isValid,
-    FormzSubmissionStatus? status,
+    AddProjectStatus? status,
   }) =>
       AddProjectState(
         title: title ?? this.title,
@@ -41,17 +41,24 @@ class AddProjectState extends Equatable {
         email: email ?? this.email,
         invitedFriends: invitedFriends ?? this.invitedFriends,
         isValid: isValid ?? this.isValid,
-        status: status ?? FormzSubmissionStatus.initial,
+        status: status ?? AddProjectStatus.initial,
       );
 }
 
-final class AddProjectInitial extends AddProjectState {
-  const AddProjectInitial({
-    required super.title,
-    required super.description,
-    required super.email,
-    required super.invitedFriends,
-    required super.isValid,
-    required super.status,
-  });
+enum AddProjectStatus {
+  initial,
+  success,
+  failure,
+  inProgress,
+  emailAlreadyExists,
+  emailAdded,
+}
+
+extension AddProjectStatusX on AddProjectStatus {
+  bool get isInitial => this == AddProjectStatus.initial;
+  bool get isInProgress => this == AddProjectStatus.inProgress;
+  bool get isSuccess => this == AddProjectStatus.success;
+  bool get isFailure => this == AddProjectStatus.failure;
+  bool get isEmailAlreadyExists => this == AddProjectStatus.emailAlreadyExists;
+  bool get isEmailAdded => this == AddProjectStatus.emailAdded;
 }
