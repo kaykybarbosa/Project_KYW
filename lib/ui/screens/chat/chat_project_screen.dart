@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:kyw_management/domain/models/project.dart';
 
 import 'widgets/chat_project/button_send_chat.dart';
 import 'widgets/chat_project/message_chat.dart';
 import 'widgets/chat_project/message_input_chat.dart';
-import 'widgets/tasks_project/filters_bar_tasks.dart';
-import 'widgets/tasks_project/list_all_tasks.dart';
 
 class ChatProjectScreen extends StatefulWidget {
   const ChatProjectScreen({super.key, Project? project}) : project = project ?? const Project(id: '1', name: '');
@@ -54,34 +53,33 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: CupertinoTheme.of(context).primaryColor,
-        leading: _Leading(widget: widget),
-        title: _Title(widget: widget),
-        actions: const [_PopupMenuItem()],
-        bottom: TabBar(
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: CupertinoTheme.of(context).primaryColor,
+          leading: _Leading(widget: widget),
+          title: _Title(widget: widget),
+          actions: const [_PopupMenuItem()],
+          bottom: TabBar(
+            controller: _tabController,
+            labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
+            indicatorWeight: 3,
+            tabs: const [
+              Tab(text: 'Chat'),
+              Tab(text: 'Tarefas'),
+            ],
+          ),
+        ),
+        body: TabBarView(
           controller: _tabController,
-          labelStyle: const TextStyle(fontSize: 18),
-          indicatorWeight: 3,
-          tabs: const [
-            Tab(text: 'Chat'),
-            Tab(text: 'Tarefas'),
+          children: [
+            /// Chat
+            _ChatProject(messages: messages),
+
+            /// Tasks
+            _TasksProject(widget: widget),
           ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // Chat screen
-          _ChatProject(messages: messages),
-          // Tasks screen
-          _TasksProject(widget: widget),
-        ],
-      ),
-    );
-  }
+      );
 }
 
 class _PopupMenuItem extends StatelessWidget {
@@ -115,22 +113,23 @@ class _TasksProject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
+    return const Padding(
+      padding: EdgeInsets.symmetric(
         horizontal: 15,
         vertical: 10,
       ),
       child: Column(
         children: [
+          Text('TASKS')
           // Input Search
           // MySearchBar(
           //   hintText: 'Buscar tarefas',
           //   search: () {},
           // ),
           // Filters bar
-          const FiltersBarTasks(),
+          // const FiltersBarTasks(),
           // All tasks
-          ListAllTaks(projectId: widget.project.id),
+          // ListAllTaks(projectId: widget.project.id),
         ],
       ),
     );

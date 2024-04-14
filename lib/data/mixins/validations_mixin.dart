@@ -61,13 +61,13 @@ mixin ValidationsMixin {
     DateTime? date;
 
     try {
-      // first step
+      /// Primeira etapa
       date = DateTime.tryParse(value!);
       if (date == null) {
         return message ?? 'First';
       }
 
-      // secound step
+      /// Segunda etapa
       DateTime now = DateTime.now();
       DateTime firstDate = DateTime(now.year - 2, now.month, now.day);
 
