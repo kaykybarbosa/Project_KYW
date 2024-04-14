@@ -1,4 +1,4 @@
-import 'package:email_validator/email_validator.dart';
+import 'package:get/get.dart';
 
 mixin ValidationsMixin {
   String? isNotEmpty(String? value, [String? message]) {
@@ -9,8 +9,8 @@ mixin ValidationsMixin {
   }
 
   String? isEmailValid(String? email, [String? message]) {
-    if (!EmailValidator.validate(email!)) {
-      return message ?? 'E-mail inválido!';
+    if (!email!.isEmail) {
+      return message ?? 'E-mail inválido.';
     }
     return null;
   }
