@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -9,6 +8,7 @@ import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/button_network.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
@@ -32,22 +32,22 @@ class SignUpScreen extends StatelessWidget {
             );
           }
         },
-        child: const Scaffold(
+        child: Scaffold(
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Gap(10),
+                const Gap(10),
 
                 /// Formulário
-                Flexible(
+                const Flexible(
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         /// -- Título
-                        MyTitle(title: 'REGISTER'),
+                        MyTitle(title: 'Crie sua conta'),
 
                         /// -- Nome
                         _NameInput(),
@@ -78,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
 
                 /// Acessar conta
-                _SignIn()
+                GoToSignIn(onTap: () => Get.back()),
               ],
             ),
           ),
@@ -219,32 +219,4 @@ class _SubmitButton extends StatelessWidget {
           ),
         ),
       );
-}
-
-class _SignIn extends StatelessWidget {
-  const _SignIn();
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle defaultText = const TextStyle(color: Colors.black, fontSize: 16);
-    TextStyle linkText = const TextStyle(color: TColors.primary, fontSize: 16);
-
-    return SizedBox(
-      width: 240,
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-            TextSpan(text: 'Possui uma conta? ', style: defaultText),
-            TextSpan(
-              text: 'Clique aqui ',
-              style: linkText,
-              recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(AppRoutes.signIn),
-            ),
-            TextSpan(text: 'para realizar o login', style: defaultText),
-          ],
-        ),
-      ),
-    );
-  }
 }

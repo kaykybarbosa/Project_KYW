@@ -7,8 +7,7 @@ import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_code_cubit/forgot_code_cubit.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/code_input_forgot.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/submit_code_forgot_button.dart';
-
-import '../../widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
+import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
 
 class CodeForgotScreen extends StatefulWidget {
   const CodeForgotScreen({super.key});
@@ -47,7 +46,7 @@ class _CodeForgotScreenState extends State<CodeForgotScreen> {
                 MyTitle(title: 'FORGOT PASSWORD'),
                 CodeInputForgot(),
                 SubmitCodeForgotButton(),
-                ForgotToGoSignIn(),
+                GoToSignIn(),
               ],
             ),
           ),

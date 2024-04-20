@@ -39,7 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       children: <Widget>[
                         /// -- Título
-                        const MyTitle(title: 'LOGIN'),
+                        const MyTitle(title: 'Acessar conta'),
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             const _PasswordInput(),
 
                             /// -- Esqueceu senha
-                            _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.emailForgotPassword)),
+                            _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.forgotPassword)),
 
                             const Gap(40),
 
@@ -147,7 +147,7 @@ class _SubmitButton extends StatelessWidget {
                     child: const CircularProgressIndicator(color: Colors.white),
                   )
                 : const Text(
-                    'ENTRAR',
+                    'Acessar',
                     style: TextStyle(fontSize: TConstants.fontSizeMd),
                   ),
           ),

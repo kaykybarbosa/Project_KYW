@@ -16,7 +16,7 @@ class ButtonNetwork extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           width: width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
             border: Border.all(color: TColors.primary, width: 1),
           ),
           child: Row(
