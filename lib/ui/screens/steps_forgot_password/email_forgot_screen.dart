@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_email_cubit/forgot_email_cubit.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/email_input_forgot.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/submit_email_forgot_button.dart';
-import 'package:kyw_management/ui/widgets/my_title.dart';
 
 class EmailForgotScreen extends StatefulWidget {
   const EmailForgotScreen({super.key});

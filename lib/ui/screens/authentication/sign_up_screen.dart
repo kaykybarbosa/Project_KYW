@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kyw_management/ui/widgets/my_title.dart';
+import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/widgets/sign_up_form/continue_with.dart';
 import 'package:kyw_management/ui/widgets/sign_up_form/email_sign_up_input.dart';
 import 'package:kyw_management/ui/widgets/sign_up_form/message_to_sign_in.dart';

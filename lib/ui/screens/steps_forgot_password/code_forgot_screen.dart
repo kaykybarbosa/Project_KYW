@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_code_cubit/forgot_code_cubit.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/code_input_forgot.dart';
 import 'package:kyw_management/ui/widgets/forgot_password_screens/submit_code_forgot_button.dart';
-import 'package:kyw_management/ui/widgets/my_title.dart';
 
 import '../../widgets/forgot_password_screens/forgot_to_go_sign_in.dart';
 

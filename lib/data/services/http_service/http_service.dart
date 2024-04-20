@@ -28,9 +28,9 @@ abstract class IHttpService {
 class HttpService implements IHttpService {
   final _options = BaseOptions(
     baseUrl: Env.BASE_URL,
+    maxRedirects: 1,
     connectTimeout: const Duration(seconds: 60),
     receiveTimeout: const Duration(seconds: 60),
-    maxRedirects: 1,
     sendTimeout: const Duration(seconds: 60),
     headers: {
       'content-Type': 'application/json',

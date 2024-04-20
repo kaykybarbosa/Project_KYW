@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/change_password_cubit/change_password_cubit.dart';
 import 'package:kyw_management/ui/widgets/change_password_screen/change_confirmed_password_input.dart';
 import 'package:kyw_management/ui/widgets/change_password_screen/change_password_input.dart';
@@ -8,7 +9,6 @@ import 'package:kyw_management/ui/widgets/change_password_screen/message_dont_ch
 import 'package:kyw_management/ui/widgets/change_password_screen/message_go_to_sign_in.dart';
 import 'package:kyw_management/ui/widgets/change_password_screen/submit_change_password_button.dart';
 import 'package:kyw_management/ui/widgets/change_password_screen/title_input.dart';
-import 'package:kyw_management/ui/widgets/my_title.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
