@@ -2,9 +2,9 @@ class AppRoutes {
   static String home = '/home';
   static String signIn = '/sign-in';
   static String signUp = '/sign_up';
-  static String emailForgotPassword = '/forgot-password/get-email';
+  static String forgotPassword = '/forgot-password';
   static String codeForgotPassword = '/forgot-password/validation-code';
-  static String changePassword = '/change-password';
+  static String changePassword = '/forgot-password/change-password';
   static String notifications = '/notifications';
   static String createProject = '/create-project';
   static String inviteFriends = '/create-project/invited-friends';

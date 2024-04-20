@@ -1,3 +1,5 @@
+import 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
+
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
@@ -11,19 +13,20 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.signUp,
       page: () => const SignUpScreen(),
-      transition: Transition.fade,
+      bindings: [AuthRepositoryBindings()],
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
     ),
     GetPage(
-      name: AppRoutes.emailForgotPassword,
-      page: () => const EmailForgotScreen(),
-      transition: Transition.fade,
+      name: AppRoutes.forgotPassword,
+      page: () => const ForgotPasswordScreen(),
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
     ),
     GetPage(
       name: AppRoutes.codeForgotPassword,
       page: () => const CodeForgotScreen(),
-      transition: Transition.fade,
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
     ),
     GetPage(

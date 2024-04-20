@@ -13,11 +13,11 @@ export 'package:kyw_management/ui/screens/configuration_screens/two_step_verific
 export 'package:kyw_management/ui/screens/contact_us_screen.dart';
 export 'package:kyw_management/ui/screens/create_project/create_project_screen.dart';
 export 'package:kyw_management/ui/screens/create_project/invite_friends__screen.dart';
+export 'package:kyw_management/ui/screens/forgot_password/change_password_screen.dart';
+export 'package:kyw_management/ui/screens/forgot_password/code_forgot_screen.dart';
+export 'package:kyw_management/ui/screens/forgot_password/forgot_password_screen.dart';
 export 'package:kyw_management/ui/screens/help_screen.dart';
 export 'package:kyw_management/ui/screens/home/home_screen.dart';
 export 'package:kyw_management/ui/screens/my_account_screen.dart';
 export 'package:kyw_management/ui/screens/notification_screen.dart';
-export 'package:kyw_management/ui/screens/steps_forgot_password/change_password_screen.dart';
-export 'package:kyw_management/ui/screens/steps_forgot_password/code_forgot_screen.dart';
-export 'package:kyw_management/ui/screens/steps_forgot_password/email_forgot_screen.dart';
 export 'package:kyw_management/utils/constants.dart';
