@@ -12,7 +12,9 @@ class InterceptorRequests extends InterceptorsWrapper {
 
     if (err.type == DioExceptionType.connectionError) {
       message = 'Sem conexão com a internet.';
-    } else if (err.response?.statusCode == 400 || err.response?.statusCode == 500) {}
+    } else {
+      message = err.response?.data['message'];
+    }
 
     return handler.next(
       DioException(

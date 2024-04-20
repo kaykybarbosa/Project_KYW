@@ -33,7 +33,7 @@ SnackbarController snackBarCustom({
 
 Color _backgroundColorType(SnackBarType type) => switch (type) {
       SnackBarType.failure => TColors.warn,
-      SnackBarType.danger => TColors.warn,
+      SnackBarType.danger => TColors.alert,
       _ => TColors.success,
     };
 

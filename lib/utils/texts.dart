@@ -39,4 +39,7 @@ abstract class TTexts {
   static const guests = 'Membros';
   static const labelCategory = 'Inserir categoria';
   static const remove = 'Remover';
+
+  /// Autenticação
+  static const continueWith = 'Ou continue com';
 }

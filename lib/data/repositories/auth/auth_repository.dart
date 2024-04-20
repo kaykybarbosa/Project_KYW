@@ -45,7 +45,18 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  AsyncResult<Unit, ApiException> register(UserRegisterRequest request) {
-    throw UnimplementedError();
+  AsyncResult<Unit, ApiException> register(UserRegisterRequest request) async {
+    try {
+      await _http.post(
+        '${_http.baseUrl}users/register',
+        data: request.toMap(),
+      );
+
+      return const Success(unit);
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
   }
 }

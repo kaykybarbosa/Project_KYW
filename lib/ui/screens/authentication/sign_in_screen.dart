@@ -86,7 +86,7 @@ class _EmailInput extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              hintText: 'E-mail ou Número',
+              hintText: 'E-mail',
               border: const OutlineInputBorder(),
               errorText: state.email.displayError,
             ),

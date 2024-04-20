@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (_) => ProjectBloc()),
         BlocProvider(create: (_) => SignInBloc(authRepository: IAuthRepository.instance)),
-        BlocProvider(create: (_) => SignUpBloc()),
+        BlocProvider(create: (_) => SignUpBloc(authRepository: IAuthRepository.instance)),
         BlocProvider(create: (_) => ForgotPasswordBloc()),
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => AddProjectBloc()),

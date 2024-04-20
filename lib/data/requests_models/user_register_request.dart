@@ -3,13 +3,13 @@ class UserRegisterRequest {
     required this.nickname,
     required this.email,
     required this.password,
-    required this.phone,
+    this.phone,
   });
 
   final String nickname;
   final String email;
   final String password;
-  final String phone;
+  final String? phone;
 
   Map<String, dynamic> toMap() => {
         'nickname': nickname,
