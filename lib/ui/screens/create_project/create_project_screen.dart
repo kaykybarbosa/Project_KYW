@@ -20,42 +20,41 @@ class CreateProjectScreen extends StatefulWidget {
 
 class _CreateProjectScreenState extends State<CreateProjectScreen> {
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AddProjectBloc, AddProjectState>(
-      builder: (_, state) {
-        return Scaffold(
-          appBar: AppBar(title: const Text('Novo Projeto')),
-          body: const Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: TConstants.defaultMargin,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  /// Título
-                  _SelectImagemTitle(),
-                  Gap(15),
+  Widget build(BuildContext context) => BlocProvider(
+        create: (context) => AddProjectBloc(),
+        child: BlocBuilder<AddProjectBloc, AddProjectState>(
+          builder: (_, state) => Scaffold(
+            appBar: AppBar(title: const Text('Novo Projeto')),
+            body: const Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: TConstants.defaultMargin,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    /// Título
+                    _SelectImagemTitle(),
+                    Gap(15),
 
-                  /// Imagem do grupo
-                  CircleImage(),
-                  Gap(30),
+                    /// Imagem do grupo
+                    CircleImage(),
+                    Gap(30),
 
-                  /// Input do título
-                  _TitleInput(),
-                  Gap(30),
+                    /// Input do título
+                    _TitleInput(),
+                    Gap(30),
 
-                  /// Input da descrição
-                  _DescriptionInput(),
-                ],
+                    /// Input da descrição
+                    _DescriptionInput(),
+                  ],
+                ),
               ),
             ),
+            floatingActionButton: const _MyFloatingButton(),
           ),
-          floatingActionButton: const _MyFloatingButton(),
-        );
-      },
-    );
-  }
+        ),
+      );
 }
 
 class _SelectImagemTitle extends StatelessWidget {
@@ -82,7 +81,7 @@ class _TitleInput extends StatelessWidget {
           textInputType: TextInputType.text,
           textInputAction: TextInputAction.next,
           onChange: (value) => context.read<AddProjectBloc>().add(TitleChangedAddProject(title: value)),
-          errorMessage: state.title.displayError,
+          errorText: state.title.displayError,
         ),
       );
 }
@@ -98,7 +97,7 @@ class _DescriptionInput extends StatelessWidget {
           placeHolder: TTexts.labelDescription,
           textInputType: TextInputType.multiline,
           onChange: (value) => context.read<AddProjectBloc>().add(DescriptionChangedAddProject(description: value)),
-          errorMessage: state.description.displayError,
+          errorText: state.description.displayError,
         ),
       );
 }

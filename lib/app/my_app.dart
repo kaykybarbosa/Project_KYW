@@ -32,7 +32,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => SignUpCubit(authRepository: IAuthRepository.instance)),
         BlocProvider(create: (_) => ForgotPasswordBloc()),
         BlocProvider(create: (_) => HomeBloc()),
-        BlocProvider(create: (_) => AddProjectBloc()),
         BlocProvider(create: (_) => FilterProjectBloc()),
         BlocProvider(create: (_) => FilterTaskBloc()),
         BlocProvider(create: (_) => AddProjectBloc()),
@@ -41,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.light,
         title: 'KYW Management',
         getPages: AppPages.pages,
-        initialRoute: AppRoutes.signIn,
+        initialRoute: AppRoutes.home,
         debugShowCheckedModeBanner: false,
         supportedLocales: const [Locale('pt')],
         localizationsDelegates: const [
