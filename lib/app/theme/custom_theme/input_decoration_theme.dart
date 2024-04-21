@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
 
 abstract class TInputDecorationTheme {
-  static InputDecorationTheme light = const InputDecorationTheme(
+  static InputDecorationTheme light = InputDecorationTheme(
     filled: true,
     fillColor: TColors.base100,
-    hintStyle: TextStyle(color: TColors.base150),
-    contentPadding: EdgeInsets.all(12),
-    border: OutlineInputBorder(),
-    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: TColors.base150)),
-    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: TColors.primary)),
+    errorMaxLines: 2,
+    hintStyle: const TextStyle(color: TColors.base150),
+    contentPadding: const EdgeInsets.all(12),
+    border: const OutlineInputBorder(),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: TColors.base150),
+      borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+    ),
+    disabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: TColors.base150),
+      borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: TColors.base150.withOpacity(.7), width: 2),
+      borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+    ),
+    errorBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: TColors.warn),
+      borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+    ),
+    focusedErrorBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: TColors.warn, width: 2),
+      borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+    ),
   );
 }

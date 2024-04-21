@@ -5,14 +5,19 @@ import 'package:kyw_management/utils/constants.dart';
 abstract class TElevatedButtonTheme {
   static ElevatedButtonThemeData light = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      textStyle: const TextStyle(
-        fontSize: TConstants.fontSizeLg + 2,
-        fontWeight: FontWeight.w500,
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      elevation: 0,
       foregroundColor: TColors.base100,
       backgroundColor: TColors.primary,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs))),
+      disabledForegroundColor: TColors.base200.withOpacity(.8),
+      disabledBackgroundColor: TColors.base120,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14.0),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+      ),
+      textStyle: const TextStyle(
+        fontSize: TConstants.fontSizeSm + 2,
+        fontWeight: FontWeight.w500,
+      ),
     ),
   );
 }

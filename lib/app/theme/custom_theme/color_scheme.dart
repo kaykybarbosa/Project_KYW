@@ -6,5 +6,6 @@ abstract class TColorScheme {
     background: TColors.base100,
     primary: TColors.secondary,
     error: TColors.warn,
+    onBackground: TColors.base300,
   );
 }
