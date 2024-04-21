@@ -12,8 +12,8 @@ import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter
 import 'package:kyw_management/ui/state_management/blocs/forgot_password_bloc/forgot_password_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/home_bloc/home_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
-import 'package:kyw_management/ui/state_management/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:kyw_management/ui/state_management/blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'package:kyw_management/ui/state_management/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/sign_up_cubit/sign_up_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -28,8 +28,8 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ProjectBloc()),
-        BlocProvider(create: (_) => SignInBloc(authRepository: IAuthRepository.instance)),
-        BlocProvider(create: (_) => SignUpBloc(authRepository: IAuthRepository.instance)),
+        BlocProvider(create: (_) => SignInCubit(authRepository: IAuthRepository.instance)),
+        BlocProvider(create: (_) => SignUpCubit(authRepository: IAuthRepository.instance)),
         BlocProvider(create: (_) => ForgotPasswordBloc()),
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => AddProjectBloc()),
