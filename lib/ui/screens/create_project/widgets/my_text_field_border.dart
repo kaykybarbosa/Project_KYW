@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
-class MyTextField extends StatelessWidget {
-  const MyTextField({
+class MyTextFieldBorder extends StatelessWidget {
+  const MyTextFieldBorder({
     super.key,
     this.text,
     this.initialValue,
@@ -12,7 +12,7 @@ class MyTextField extends StatelessWidget {
     this.maxLine,
     this.textInputType,
     this.showText = true,
-    this.errorMessage,
+    this.errorText,
     this.suffix,
     this.enable,
     this.controller,
@@ -26,7 +26,7 @@ class MyTextField extends StatelessWidget {
   final int? maxLine;
   final TextInputType? textInputType;
   final bool showText;
-  final String? errorMessage;
+  final String? errorText;
   final Widget? suffix;
   final bool? enable;
   final TextEditingController? controller;
@@ -45,7 +45,7 @@ class MyTextField extends StatelessWidget {
           child: _MyTitle(text: text),
         ),
 
-        // Input
+        /// Input
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: Container(
@@ -76,11 +76,13 @@ class MyTextField extends StatelessWidget {
                 hintText: placeHolder,
                 alignLabelWithHint: true,
                 suffixIcon: suffix,
+                hintStyle:
+                    errorText != null ? TextStyle(color: Theme.of(context).colorScheme.error.withOpacity(.8)) : null,
               ),
               onChanged: onChange,
             ),
           ),
-          subtitle: _ErrorMessage(errorMessage: errorMessage),
+          subtitle: _ErrorMessage(errorMessage: errorText),
         ),
       ],
     );

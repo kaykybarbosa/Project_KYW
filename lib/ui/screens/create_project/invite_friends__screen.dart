@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/domain/models/project.dart';
+import 'package:kyw_management/ui/screens/create_project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
-import 'package:kyw_management/ui/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
@@ -160,13 +160,13 @@ class _EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
-        builder: (context, state) => MyTextField(
+        builder: (context, state) => MyTextFieldBorder(
           controller: context.findAncestorStateOfType<InviteFriendsScreenState>()?.emailController,
           placeHolder: TTexts.labelEmail,
           text: TTexts.inviteFriendsByEmail,
           textInputType: TextInputType.emailAddress,
           onChange: (value) => context.read<AddProjectBloc>().add(EmailChangedAddProject(email: value)),
-          errorMessage: state.email.displayError,
+          errorText: state.email.displayError,
         ),
       );
 }

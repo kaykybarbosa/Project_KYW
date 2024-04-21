@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../state_management/cubits/add_task_cubit/add_task_cubit.dart';
-import '../../../../widgets/create_project_screen.dart/my_text_field.dart';
+import '../../../create_project/widgets/my_text_field_border.dart';
 
 class DateInputTask extends StatelessWidget {
   const DateInputTask({super.key, required TextEditingController controller}) : _controller = controller;
@@ -38,7 +38,7 @@ class DateInputTask extends StatelessWidget {
         },
         child: GestureDetector(
           onTap: () => selectingDate(),
-          child: MyTextField(
+          child: MyTextFieldBorder(
             controller: _controller,
             text: 'Data de conclusão*',
             placeHolder: 'dd/MM/yyyy',

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/ui/screens/create_project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
-import 'package:kyw_management/ui/widgets/create_project_screen.dart/my_text_field.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
@@ -75,7 +75,7 @@ class _TitleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
-        builder: (context, state) => MyTextField(
+        builder: (context, state) => MyTextFieldBorder(
           text: TTexts.title,
           placeHolder: TTexts.labelTitle,
           textInputType: TextInputType.text,
@@ -91,7 +91,7 @@ class _DescriptionInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
-        builder: (context, state) => MyTextField(
+        builder: (context, state) => MyTextFieldBorder(
           maxLine: 5,
           text: TTexts.description,
           placeHolder: TTexts.labelDescription,
