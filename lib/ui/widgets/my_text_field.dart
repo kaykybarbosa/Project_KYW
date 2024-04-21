@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kyw_management/utils/constants.dart';
-import 'package:kyw_management/utils/helper_functions.dart';
 
 class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
@@ -76,9 +75,7 @@ class MyTextFormField extends StatelessWidget {
                   size: suffixIconSize,
                 )
               : null,
-          hintStyle: TextStyle(
-            color: errorText != null ? Theme.of(context).colorScheme.error : HelperFunctions.hintStyle(context).color,
-          ),
+          hintStyle: errorText != null ? TextStyle(color: Theme.of(context).colorScheme.error.withOpacity(.8)) : null,
         ),
         onTap: onTap,
         onEditingComplete: onSubmit,
