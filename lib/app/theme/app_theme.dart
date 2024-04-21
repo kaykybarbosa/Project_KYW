@@ -31,5 +31,12 @@ abstract class AppTheme {
           size: TConstants.iconMd - 2,
         ),
         shadowColor: TColors.base900,
+        textButtonTheme: TextButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(TConstants.cardRadiusXs)),
+          ),
+        ),
       );
 }
