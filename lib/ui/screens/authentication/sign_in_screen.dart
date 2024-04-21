@@ -5,10 +5,14 @@ import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
-import 'package:kyw_management/ui/state_management/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:kyw_management/ui/state_management/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:kyw_management/ui/widgets/my_password_text_field.dart';
+import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -19,10 +23,16 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   @override
-  Widget build(BuildContext context) => BlocListener<SignInBloc, SignInState>(
+  Widget build(BuildContext context) => BlocListener<SignInCubit, SignInState>(
         listener: (_, state) {
           if (state.status.isSuccess) {
             Get.offAllNamed(AppRoutes.home);
+          }
+          if (state.status.isFailure) {
+            snackBarCustom(
+              message: state.errorMessage,
+              type: SnackBarType.danger,
+            );
           }
         },
         child: Scaffold(
@@ -78,20 +88,17 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignInBloc, SignInState>(
-        buildWhen: (previous, current) => previous.email != current.email,
+  Widget build(BuildContext context) => BlocBuilder<SignInCubit, SignInState>(
+        buildWhen: (previous, current) => previous.email.value != current.email.value,
         builder: (context, state) => Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: TextFormField(
+          child: MyTextFormField(
             initialValue: state.email.value,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              hintText: 'E-mail',
-              border: const OutlineInputBorder(),
-              errorText: state.email.displayError,
-            ),
-            onChanged: (email) => context.read<SignInBloc>().add(EmailSignInChanged(email: email)),
+            hintText: 'E-mail',
+            errorText: state.email.displayError,
+            onChanged: (email) => context.read<SignInCubit>().emailChanged(email),
           ),
         ),
       );
@@ -101,18 +108,16 @@ class _PasswordInput extends StatelessWidget {
   const _PasswordInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignInBloc, SignInState>(
-        buildWhen: (previous, current) => previous.password != current.password,
-        builder: (context, state) => TextFormField(
-          obscureText: true,
+  Widget build(BuildContext context) => BlocBuilder<SignInCubit, SignInState>(
+        buildWhen: (previous, current) =>
+            previous.password.value != current.password.value || previous.obscureText != current.obscureText,
+        builder: (context, state) => MyPasswordTextField(
+          hintText: 'Senha',
           initialValue: state.password.value,
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            hintText: 'Senha',
-            border: const OutlineInputBorder(),
-            errorText: state.password.displayError,
-          ),
-          onChanged: (password) => context.read<SignInBloc>().add(PasswordSignInChanged(password: password)),
+          errorText: state.password.displayError,
+          obscureText: state.obscureText,
+          suffixOnTap: () => context.read<SignInCubit>().obscureChanged(),
+          onChanged: (password) => context.read<SignInCubit>().passwordChanged(password),
         ),
       );
 }
@@ -137,11 +142,11 @@ class _SubmitButton extends StatelessWidget {
   const _SubmitButton();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignInBloc, SignInState>(
+  Widget build(BuildContext context) => BlocBuilder<SignInCubit, SignInState>(
         builder: (context, state) => SubmitButton(
           label: 'Acessar',
           isInProgress: state.status.isInProgress,
-          onPressed: state.isValid ? () => context.read<SignInBloc>().add(FormSignInSubmitted()) : null,
+          onPressed: state.isValid ? () => context.read<SignInCubit>().formSubmitted() : null,
         ),
       );
 }

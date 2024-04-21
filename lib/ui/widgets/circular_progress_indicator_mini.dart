@@ -9,7 +9,7 @@ class CircularProgressIndicatorMini extends StatelessWidget {
         scale: 0.4,
         child: const CircularProgressIndicator(
           strokeWidth: 3,
-          valueColor: AlwaysStoppedAnimation(TColors.base200),
+          valueColor: AlwaysStoppedAnimation(TColors.base100),
         ),
       );
 }

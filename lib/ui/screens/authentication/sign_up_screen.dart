@@ -7,8 +7,10 @@ import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/button_network.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
-import 'package:kyw_management/ui/state_management/blocs/sign_up_bloc/sign_up_bloc.dart';
+import 'package:kyw_management/ui/state_management/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
+import 'package:kyw_management/ui/widgets/my_password_text_field.dart';
+import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
@@ -18,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocListener<SignUpBloc, SignUpState>(
+  Widget build(BuildContext context) => BlocListener<SignUpCubit, SignUpState>(
         listener: (context, state) {
           if (state.status.isFailure) {
             snackBarCustom(
@@ -91,18 +93,14 @@ class _NameInput extends StatelessWidget {
   const _NameInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignUpBloc, SignUpState>(
+  Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
         buildWhen: (previous, current) => previous.name.value != current.name.value,
-        builder: (context, state) => TextFormField(
+        builder: (context, state) => MyTextFormField(
           initialValue: state.name.value,
           keyboardType: TextInputType.name,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            hintText: 'Nome',
-            border: const OutlineInputBorder(),
-            errorText: state.name.displayError,
-          ),
-          onChanged: (name) => context.read<SignUpBloc>().add(NameSignUpChanged(name: name)),
+          hintText: 'Nome',
+          errorText: state.name.displayError,
+          onChanged: (name) => context.read<SignUpCubit>().nameChanged(name),
         ),
       );
 }
@@ -111,18 +109,14 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignUpBloc, SignUpState>(
+  Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
         buildWhen: (previous, current) => previous.email.value != current.email.value,
-        builder: (context, state) => TextFormField(
+        builder: (context, state) => MyTextFormField(
+          hintText: 'E-mail',
           initialValue: state.email.value,
           keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(
-            hintText: 'E-mail',
-            border: const OutlineInputBorder(),
-            errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
-          ),
-          onChanged: (email) => context.read<SignUpBloc>().add(EmailSignUpChanged(email: email)),
+          errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
+          onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
         ),
       );
 }
@@ -131,18 +125,16 @@ class _PasswordInput extends StatelessWidget {
   const _PasswordInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignUpBloc, SignUpState>(
-        buildWhen: (previous, current) => previous.password.value != current.password.value,
-        builder: (context, state) => TextFormField(
+  Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) =>
+            previous.password.value != current.password.value || previous.obscureText != current.obscureText,
+        builder: (context, state) => MyPasswordTextField(
+          hintText: 'Senha',
           initialValue: state.password.value,
-          obscureText: true,
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            hintText: 'Senha',
-            border: const OutlineInputBorder(),
-            errorText: state.password.displayError != null ? "Senha inválida!" : null,
-          ),
-          onChanged: (password) => context.read<SignUpBloc>().add(PasswordSignUpChanged(password: password)),
+          errorText: state.password.displayError,
+          obscureText: state.obscureText,
+          suffixOnTap: () => context.read<SignUpCubit>().obscureChanged(),
+          onChanged: (password) => context.read<SignUpCubit>().passwordChanged(password),
         ),
       );
 }
@@ -202,13 +194,13 @@ class _SubmitButton extends StatelessWidget {
   const _SubmitButton();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<SignUpBloc, SignUpState>(
+  Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
         builder: (context, state) => SubmitButton(
           label: 'Criar conta',
           isInProgress: state.status.isInProgress,
           onPressed: state.isValid
               ? () => {
-                    context.read<SignUpBloc>().add(FormSignUpSubmitted()),
+                    context.read<SignUpCubit>().formSubmitted(),
                     FocusScope.of(context).unfocus(),
                   }
               : null,
