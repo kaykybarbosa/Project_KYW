@@ -40,11 +40,6 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  AsyncResult<RefreshTokenModel, ApiException> refreshToken(String token) {
-    throw UnimplementedError();
-  }
-
-  @override
   AsyncResult<Unit, ApiException> register(UserRegisterRequest request) async {
     try {
       await _http.post(
@@ -53,6 +48,19 @@ class AuthRepository implements IAuthRepository {
       );
 
       return const Success(unit);
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<RefreshTokenModel, ApiException> refreshToken(String token) async {
+    try {
+      var result = await _http.post('${_http.baseUrl}auth/refreshtoken', data: token);
+
+      return RefreshTokenModel.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {
