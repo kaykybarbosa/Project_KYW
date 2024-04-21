@@ -5,8 +5,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
-import 'package:kyw_management/ui/state_management/cubits/forgot_email_cubit/forgot_email_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
+import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
@@ -16,8 +17,8 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => ForgotEmailCubit(),
-        child: BlocListener<ForgotEmailCubit, ForgotEmailState>(
+        create: (context) => ForgotPasswordCubit(),
+        child: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
           listener: (context, state) {
             if (state.status.isSuccess) {
               Get.toNamed(AppRoutes.codeForgotPassword);
@@ -65,7 +66,7 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ForgotEmailCubit, ForgotEmailState>(
+  Widget build(BuildContext context) => BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
         buildWhen: (previous, current) => previous.email.value != current.email.value,
         builder: (context, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,15 +85,12 @@ class _EmailInput extends StatelessWidget {
             /// Input
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: TextFormField(
+              child: MyTextFormField(
+                hintText: 'E-mail',
                 initialValue: state.email.value,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'E-mail',
-                  border: const OutlineInputBorder(),
-                  errorText: state.email.displayError,
-                ),
-                onChanged: (email) => context.read<ForgotEmailCubit>().emailChanged(email),
+                errorText: state.email.displayError,
+                onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email),
               ),
             ),
           ],
@@ -104,11 +102,11 @@ class _SubmitButton extends StatelessWidget {
   const _SubmitButton();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ForgotEmailCubit, ForgotEmailState>(
+  Widget build(BuildContext context) => BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
         builder: (context, state) => SubmitButton(
           label: 'Enviar código',
           isInProgress: state.status.isInProgress,
-          onPressed: state.isValid ? () => context.read<ForgotEmailCubit>().formSubmitted() : null,
+          onPressed: state.isValid ? () => context.read<ForgotPasswordCubit>().formSubmitted() : null,
         ),
       );
 }

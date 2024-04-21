@@ -4,10 +4,10 @@ import 'package:formz/formz.dart';
 
 import '../../models_input/email_input.dart';
 
-part 'forgot_email_state.dart';
+part 'forgot_password_state.dart';
 
-class ForgotEmailCubit extends Cubit<ForgotEmailState> {
-  ForgotEmailCubit() : super(const ForgotEmailState());
+class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
+  ForgotPasswordCubit() : super(const ForgotPasswordState());
 
   void emailChanged(String value) {
     final email = EmailInput.dirty(value);
