@@ -7,5 +7,5 @@ abstract class TAppbarTheme {
       elevation: 0,
       backgroundColor: TColors.secondary,
       foregroundColor: TColors.base100,
-      systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent));
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
 }
