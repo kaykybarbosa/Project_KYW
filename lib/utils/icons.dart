@@ -19,6 +19,8 @@ abstract class TIcons {
   static const IconData remove = FontAwesomeIcons.trash;
   static const IconData circleClose = FontAwesomeIcons.circleXmark;
   static const IconData triangleExclamation = FontAwesomeIcons.triangleExclamation;
+  static const IconData eyes = FontAwesomeIcons.solidEye;
+  static const IconData eyesOff = FontAwesomeIcons.solidEyeSlash;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
