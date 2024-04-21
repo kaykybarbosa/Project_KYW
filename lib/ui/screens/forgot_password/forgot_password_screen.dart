@@ -7,6 +7,7 @@ import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_email_cubit/forgot_email_cubit.dart';
 import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
+import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
@@ -104,21 +105,10 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<ForgotEmailCubit, ForgotEmailState>(
-        builder: (context, state) => SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: state.isValid ? () => context.read<ForgotEmailCubit>().formSubmitted() : null,
-            child: state.status.isInProgress
-                ? Transform.scale(
-                    scale: 0.44,
-                    child: const CircularProgressIndicator(color: Colors.white),
-                  )
-                : const Text(
-                    'RECEBER CÓDIGO',
-                    style: TextStyle(fontSize: 18),
-                  ),
-          ),
+        builder: (context, state) => SubmitButton(
+          label: 'Enviar código',
+          isInProgress: state.status.isInProgress,
+          onPressed: state.isValid ? () => context.read<ForgotEmailCubit>().formSubmitted() : null,
         ),
       );
 }

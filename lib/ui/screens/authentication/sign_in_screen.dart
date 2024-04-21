@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -137,20 +138,10 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignInBloc, SignInState>(
-        builder: (context, state) => SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: state.isValid ? () => context.read<SignInBloc>().add(FormSignInSubmitted()) : null,
-            child: state.status.isInProgress
-                ? Transform.scale(
-                    scale: 0.44,
-                    child: const CircularProgressIndicator(color: Colors.white),
-                  )
-                : const Text(
-                    'Acessar',
-                    style: TextStyle(fontSize: TConstants.fontSizeMd),
-                  ),
-          ),
+        builder: (context, state) => SubmitButton(
+          label: 'Acessar',
+          isInProgress: state.status.isInProgress,
+          onPressed: state.isValid ? () => context.read<SignInBloc>().add(FormSignInSubmitted()) : null,
         ),
       );
 }

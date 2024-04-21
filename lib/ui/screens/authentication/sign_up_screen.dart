@@ -9,6 +9,7 @@ import 'package:kyw_management/ui/screens/authentication/widgets/button_network.
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
+import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
@@ -202,21 +203,15 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignUpBloc, SignUpState>(
-        builder: (context, state) => SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: state.isValid ? () => context.read<SignUpBloc>().add(FormSignUpSubmitted()) : null,
-            child: state.status.isInProgress
-                ? Transform.scale(
-                    scale: 0.44,
-                    child: const CircularProgressIndicator(color: Colors.white),
-                  )
-                : const Text(
-                    'REGISTRA-SE',
-                    style: TextStyle(fontSize: 18),
-                  ),
-          ),
+        builder: (context, state) => SubmitButton(
+          label: 'Criar conta',
+          isInProgress: state.status.isInProgress,
+          onPressed: state.isValid
+              ? () => {
+                    context.read<SignUpBloc>().add(FormSignUpSubmitted()),
+                    FocusScope.of(context).unfocus(),
+                  }
+              : null,
         ),
       );
 }
