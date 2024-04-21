@@ -3,28 +3,21 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:kyw_management/data/requests_models/user_login_request.dart';
+import 'package:kyw_management/ui/state_management/models_input/email_input.dart';
+import 'package:kyw_management/ui/state_management/models_input/password_input.dart';
 
-import '../../models_input/models_states_export.dart';
-
-part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 
-class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc({required IAuthRepository authRepository})
+class SignInCubit extends Cubit<SignInState> {
+  SignInCubit({required IAuthRepository authRepository})
       : _repository = authRepository,
-        super(const SignInState()) {
-    on<EmailSignInChanged>(_onEmailSignInChanged);
-    on<PasswordSignInChanged>(_onPasswordSignInChanged);
-    on<FormSignInSubmitted>(_onFormSignInSubmitted);
-  }
+        super(const SignInState());
 
   final IAuthRepository _repository;
 
-  void _onEmailSignInChanged(
-    EmailSignInChanged event,
-    Emitter<SignInState> emit,
-  ) {
-    final email = EmailInput.dirty(event.email);
+  void emailChanged(String value) {
+    final email = EmailInput.dirty(value);
+
     emit(
       state.copyWith(
         email: email,
@@ -33,21 +26,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
   }
 
-  void _onPasswordSignInChanged(
-    PasswordSignInChanged event,
-    Emitter<SignInState> emit,
-  ) {
-    final password = PasswordInput.dirty(event.password);
+  void passwordChanged(String value) {
+    final password = PasswordInput.dirty(value);
+
     emit(state.copyWith(
       password: password,
       isValid: Formz.validate([state.email, password]),
     ));
   }
 
-  void _onFormSignInSubmitted(
-    FormSignInSubmitted event,
-    Emitter<SignInState> emit,
-  ) async {
+  void obscureChanged() => emit(state.copyWith(obscureText: !state.obscureText));
+
+  void formSubmitted() async {
     if (!state.isValid) return;
 
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
