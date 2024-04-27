@@ -5,10 +5,12 @@ class ApplyButtom extends StatelessWidget {
   const ApplyButtom({
     super.key,
     required this.onPressed,
+    this.label = TTexts.apply,
     this.padding,
     this.color,
   });
 
+  final String label;
   final void Function()? onPressed;
   final EdgeInsetsGeometry? padding;
   final Color? color;
@@ -20,7 +22,7 @@ class ApplyButtom extends StatelessWidget {
         padding: padding ?? const EdgeInsets.only(bottom: 15),
         child: ElevatedButton(
           onPressed: onPressed,
-          child: const Text(TTexts.apply),
+          child: Text(label),
         ),
       );
 }

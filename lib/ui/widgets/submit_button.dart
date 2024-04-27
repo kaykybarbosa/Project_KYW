@@ -6,18 +6,20 @@ class SubmitButton extends StatelessWidget {
     super.key,
     required this.label,
     this.isInProgress = false,
+    this.style,
     this.onPressed,
   });
 
   final String label;
   final bool isInProgress;
+  final ButtonStyle? style;
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+          style: style ?? ElevatedButton.styleFrom(padding: EdgeInsets.zero),
           onPressed: onPressed,
           child: isInProgress
               ? const Padding(
