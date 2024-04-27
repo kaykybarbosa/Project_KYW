@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_guid/flutter_guid.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
-import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/ui/screens/create_project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
-import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
@@ -40,6 +36,7 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
 
   @override
   Widget build(BuildContext context) => BlocConsumer<AddProjectBloc, AddProjectState>(
+        // listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isEmailAlreadyExists) {
             snackBarCustom(
@@ -53,56 +50,62 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
             setEmailController('');
           }
         },
-        builder: (_, state) => Scaffold(
-          appBar: AppBar(title: const Text(TTexts.newProject)),
-          body: Column(
-            children: <Widget>[
-              /// Convidar amigos
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: TColors.base120,
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: TColors.base900.withOpacity(.2),
-                      blurRadius: 6,
+        builder: (_, state) => const _InviteFriendsScreen(),
+      );
+}
+
+class _InviteFriendsScreen extends StatelessWidget {
+  const _InviteFriendsScreen();
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+        buildWhen: (previous, current) => current.currentPage == 1,
+        builder: (context, state) => Column(
+          children: <Widget>[
+            /// Convidar amigos
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+              decoration: BoxDecoration(
+                color: TColors.base120,
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: TColors.base900.withOpacity(.2),
+                    blurRadius: 6,
+                  )
+                ],
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  /// -- Input do email
+                  _EmailInput(),
+
+                  /// -- Botão de convidar
+                  _AddButton(),
+                ],
+              ),
+            ),
+
+            /// Membros
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: <Widget>[
+                    /// -- Título membros
+                    const _HeaderInvitedFriends(),
+
+                    /// -- Lista com os membros convidados
+                    Expanded(
+                      flex: 11,
+                      child: _ListMembers(users: state.invitedFriends.map((e) => e.value).toList()),
                     )
                   ],
                 ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    /// -- Input do email
-                    _EmailInput(),
-
-                    /// -- Botão de convidar
-                    _AddButton(),
-                  ],
-                ),
               ),
-
-              /// Membros
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      /// -- Título membros
-                      const _HeaderInvitedFriends(),
-
-                      /// -- Lista com os membros convidados
-                      Expanded(
-                        flex: 11,
-                        child: _ListMembers(users: state.invitedFriends.map((e) => e.value).toList()),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          floatingActionButton: const _MyFloatingButton(),
+            ),
+          ],
         ),
       );
 }
@@ -126,35 +129,6 @@ class _HeaderInvitedFriends extends StatelessWidget {
       );
 }
 
-class _MyFloatingButton extends StatelessWidget {
-  const _MyFloatingButton();
-
-  @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
-        builder: (context, state) => FloatingActionButton(
-          onPressed: state.isValid ? () => _completingAdditionProject(context, state) : null,
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Icon(
-            TIcons.check,
-            color: !state.isValid ? TColors.base300 : null,
-          ),
-        ),
-      );
-
-  void _completingAdditionProject(BuildContext context, AddProjectState state) {
-    context.read<ProjectBloc>().add(
-          AddProject(
-            project: Project(
-              id: Guid.newGuid.toString(),
-              name: state.title.value,
-            ),
-          ),
-        );
-    context.read<AddProjectBloc>().add(FormSubmitteddAddProject());
-    Get.offNamed(AppRoutes.home);
-  }
-}
-
 class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
@@ -165,7 +139,7 @@ class _EmailInput extends StatelessWidget {
           placeHolder: TTexts.labelEmail,
           text: TTexts.inviteFriendsByEmail,
           textInputType: TextInputType.emailAddress,
-          onChange: (value) => context.read<AddProjectBloc>().add(EmailChangedAddProject(email: value)),
+          onChange: (value) => context.read<AddProjectBloc>().add(EmailChanged(email: value)),
           errorText: state.email.displayError,
         ),
       );
@@ -177,7 +151,7 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
         builder: (context, state) => TextButton(
-          onPressed: () => context.read<AddProjectBloc>().add(InvitedFriendsAddProject()),
+          onPressed: () => context.read<AddProjectBloc>().add(InvitedFriends()),
           style: ButtonStyle(
             shape: MaterialStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(TConstants.cardRadiusXs))),
@@ -256,7 +230,7 @@ class _ListMembers extends StatelessWidget {
                         ),
                       ],
                     ),
-                    onTap: () => context.read<AddProjectBloc>().add(RemoveFriendsAddProject(email: users[index])),
+                    onTap: () => context.read<AddProjectBloc>().add(RemoveFriends(email: users[index])),
                   ),
                 ],
               ),

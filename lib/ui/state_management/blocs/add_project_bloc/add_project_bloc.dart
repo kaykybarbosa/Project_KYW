@@ -10,16 +10,17 @@ part 'add_project_state.dart';
 
 class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   AddProjectBloc() : super(const AddProjectState()) {
-    on<TitleChangedAddProject>(_onTitleChangedAddProject);
-    on<DescriptionChangedAddProject>(_onDescriptionChangedAddProject);
-    on<EmailChangedAddProject>(_onEmailChangedAddProject);
-    on<InvitedFriendsAddProject>(_onInvitedFriendsAddProject);
-    on<RemoveFriendsAddProject>(_onRemoveFriends);
-    on<FormSubmitteddAddProject>(_onFormSubmitteddAddProject);
+    on<TitleChanged>(_onTitleChangedAddProject);
+    on<DescriptionChanged>(_onDescriptionChangedAddProject);
+    on<EmailChanged>(_onEmailChangedAddProject);
+    on<InvitedFriends>(_onInvitedFriendsAddProject);
+    on<RemoveFriends>(_onRemoveFriends);
+    on<ChangedCurrentPage>(_onChangePage);
+    on<FormSubmittedd>(_onFormSubmitteddAddProject);
   }
 
   void _onTitleChangedAddProject(
-    TitleChangedAddProject event,
+    TitleChanged event,
     Emitter<AddProjectState> emit,
   ) {
     final title = TitleInput.dirty(event.title);
@@ -33,7 +34,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   }
 
   void _onDescriptionChangedAddProject(
-    DescriptionChangedAddProject event,
+    DescriptionChanged event,
     Emitter<AddProjectState> emit,
   ) {
     final description = DescriptionInput.dirty(event.description);
@@ -47,7 +48,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   }
 
   void _onEmailChangedAddProject(
-    EmailChangedAddProject event,
+    EmailChanged event,
     Emitter<AddProjectState> emit,
   ) {
     final email = EmailInput.dirty(event.email);
@@ -65,7 +66,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   }
 
   void _onInvitedFriendsAddProject(
-    InvitedFriendsAddProject event,
+    InvitedFriends event,
     Emitter<AddProjectState> emit,
   ) {
     if (!state.isValid) return;
@@ -95,7 +96,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   }
 
   void _onRemoveFriends(
-    RemoveFriendsAddProject event,
+    RemoveFriends event,
     Emitter<AddProjectState> emit,
   ) {
     List<EmailInput> invitedFriends = state.invitedFriends;
@@ -106,8 +107,16 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     emit(state.copyWith(invitedFriends: invitedFriends));
   }
 
+  void _onChangePage(
+    _,
+    Emitter<AddProjectState> emit,
+  ) {
+    var page = state.currentPage == 0 ? 1 : 0;
+    emit(state.copyWith(currentPage: page));
+  }
+
   void _onFormSubmitteddAddProject(
-    FormSubmitteddAddProject event,
+    FormSubmittedd event,
     Emitter<AddProjectState> emit,
   ) {
     emit(const AddProjectState());

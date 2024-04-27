@@ -8,8 +8,8 @@ sealed class AddProjectEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TitleChangedAddProject extends AddProjectEvent {
-  const TitleChangedAddProject({required this.title});
+class TitleChanged extends AddProjectEvent {
+  const TitleChanged({required this.title});
 
   final String title;
 
@@ -17,8 +17,8 @@ class TitleChangedAddProject extends AddProjectEvent {
   List<Object> get props => [title];
 }
 
-class DescriptionChangedAddProject extends AddProjectEvent {
-  const DescriptionChangedAddProject({required this.description});
+class DescriptionChanged extends AddProjectEvent {
+  const DescriptionChanged({required this.description});
 
   final String description;
 
@@ -26,8 +26,8 @@ class DescriptionChangedAddProject extends AddProjectEvent {
   List<Object> get props => [description];
 }
 
-class EmailChangedAddProject extends AddProjectEvent {
-  const EmailChangedAddProject({required this.email});
+class EmailChanged extends AddProjectEvent {
+  const EmailChanged({required this.email});
 
   final String email;
 
@@ -35,10 +35,12 @@ class EmailChangedAddProject extends AddProjectEvent {
   List<Object> get props => [email];
 }
 
-class InvitedFriendsAddProject extends AddProjectEvent {}
+class InvitedFriends extends AddProjectEvent {}
 
-class RemoveFriendsAddProject extends AddProjectEvent {
-  const RemoveFriendsAddProject({required this.email});
+class ChangedCurrentPage extends AddProjectEvent {}
+
+class RemoveFriends extends AddProjectEvent {
+  const RemoveFriends({required this.email});
 
   final String email;
 
@@ -46,4 +48,4 @@ class RemoveFriendsAddProject extends AddProjectEvent {
   List<Object> get props => [email];
 }
 
-class FormSubmitteddAddProject extends AddProjectEvent {}
+class FormSubmittedd extends AddProjectEvent {}

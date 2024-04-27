@@ -8,6 +8,7 @@ class AddProjectState extends Equatable {
     this.invitedFriends = const [],
     this.isValid = false,
     this.status = AddProjectStatus.initial,
+    this.currentPage = 0,
   });
 
   final TitleInput title;
@@ -16,6 +17,7 @@ class AddProjectState extends Equatable {
   final List<EmailInput> invitedFriends;
   final bool isValid;
   final AddProjectStatus status;
+  final int currentPage;
 
   @override
   List<Object> get props => [
@@ -25,6 +27,7 @@ class AddProjectState extends Equatable {
         invitedFriends,
         isValid,
         status,
+        currentPage,
       ];
 
   AddProjectState copyWith({
@@ -34,6 +37,7 @@ class AddProjectState extends Equatable {
     List<EmailInput>? invitedFriends,
     bool? isValid,
     AddProjectStatus? status,
+    int? currentPage,
   }) =>
       AddProjectState(
         title: title ?? this.title,
@@ -42,6 +46,7 @@ class AddProjectState extends Equatable {
         invitedFriends: invitedFriends ?? this.invitedFriends,
         isValid: isValid ?? this.isValid,
         status: status ?? AddProjectStatus.initial,
+        currentPage: currentPage ?? this.currentPage,
       );
 }
 
