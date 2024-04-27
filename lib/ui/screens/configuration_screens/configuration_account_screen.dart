@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/utils/colors.dart';
 
 class ConfigurationAccountScreen extends StatelessWidget {
   const ConfigurationAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryColor = Color.fromRGBO(50, 58, 71, 1);
-
     final List<String> optionsTitle = ['Configuração de duas etapas', 'Mudar Número ou E-mail', 'Apagar conta'];
     final List<IconData> optionsIcon = [
       FontAwesomeIcons.shieldHalved,
@@ -41,14 +40,14 @@ class ConfigurationAccountScreen extends StatelessWidget {
           return ListTile(
             leading: Icon(
               optionsIcon[index],
-              color: index != 2 ? primaryColor : CupertinoColors.destructiveRed,
+              color: index != 2 ? TColors.secondary : CupertinoColors.destructiveRed,
             ),
             title: Text(
               optionsTitle[index],
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
-                color: primaryColor,
+                color: TColors.secondary,
               ),
             ),
             onTap: () {
