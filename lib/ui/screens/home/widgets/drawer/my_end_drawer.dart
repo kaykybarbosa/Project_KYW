@@ -13,26 +13,19 @@ class MyEndDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<DrawerOption> options = [
-      /// Configurações
-      DrawerOption(
-        icon: TIcons.configurations,
-        label: TTexts.configurations,
-        onTap: () => Get.toNamed(AppRoutes.configuration),
-      ),
-
-      // Minha conta
-      DrawerOption(
+    final List<_DrawerOption> options = [
+      /// Minha conta
+      _DrawerOption(
         icon: TIcons.user,
         label: TTexts.myAccount,
         onTap: () => Get.toNamed(AppRoutes.myAccount),
       ),
 
-      // Ajuda
-      DrawerOption(
-        icon: TIcons.info,
-        label: TTexts.help,
-        onTap: () => Get.toNamed(AppRoutes.help),
+      /// Configurações
+      _DrawerOption(
+        icon: TIcons.configurations,
+        label: TTexts.configurations,
+        onTap: () => Get.toNamed(AppRoutes.configuration),
       ),
     ];
 
@@ -104,9 +97,8 @@ class MyEndDrawer extends StatelessWidget {
   }
 }
 
-class DrawerOption extends StatelessWidget {
-  const DrawerOption({
-    super.key,
+class _DrawerOption extends StatelessWidget {
+  const _DrawerOption({
     required this.icon,
     required this.label,
     required this.onTap,
