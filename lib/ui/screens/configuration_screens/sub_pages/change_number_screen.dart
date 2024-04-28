@@ -7,41 +7,39 @@ class ChangeNumberScreen extends StatelessWidget {
   const ChangeNumberScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Mudar número')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
-        child: BlocProvider(
-          create: (context) => ChangePhoneCubit(),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Text new number
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _TextTheInput(label: 'Insira seu número novo'),
+  Widget build(BuildContext context) => BlocProvider(
+        create: (context) => ChangePhoneCubit(),
+        child: Scaffold(
+          appBar: AppBar(title: const Text('Mudar número')),
+          body: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                /// Formulário
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    /// -- Número atual
+                    _TextTheInput(label: 'Insira seu número atual '),
 
-                  // Input new number
-                  _NewNumberInput(),
+                    // Imput old number
+                    _CurrentNumberInput(),
 
-                  // Text old number
-                  _TextTheInput(label: 'Insira seu número atual '),
+                    _TextTheInput(label: 'Insira seu número novo'),
 
-                  // Imput old number
-                  _CurrentNumberInput(),
-                ],
-              ),
+                    /// -- Número novo
+                    _NewNumberInput(),
+                  ],
+                ),
 
-              // Button change number
-              _SubmitButton(),
-            ],
+                /// Botão de alterar
+                _SubmitButton(),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _TextTheInput extends StatelessWidget {
@@ -67,26 +65,23 @@ class _NewNumberInput extends StatelessWidget {
   const _NewNumberInput();
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<ChangePhoneCubit, ChangePhoneState>(
-        buildWhen: (previous, current) => previous.newPhone != current.newPhone,
-        builder: (context, state) {
-          return TextFormField(
-              initialValue: state.newPhone.value,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 2.5)),
-                hintText: 'Número novo',
-                border: const OutlineInputBorder(),
-                errorText: state.newPhone.displayError != null ? "Número inválido!" : null,
-              ),
-              onChanged: (number) => context.read<ChangePhoneCubit>().newPhoneChanged(number));
-        },
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: BlocBuilder<ChangePhoneCubit, ChangePhoneState>(
+          buildWhen: (previous, current) => previous.newPhone != current.newPhone,
+          builder: (context, state) => TextFormField(
+            initialValue: state.newPhone.value,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(
+              enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.blue, width: 2.5)),
+              hintText: 'Número novo',
+              border: const OutlineInputBorder(),
+              errorText: state.newPhone.displayError != null ? "Número inválido!" : null,
+            ),
+            onChanged: (number) => context.read<ChangePhoneCubit>().newPhoneChanged(number),
+          ),
+        ),
+      );
 }
 
 class _CurrentNumberInput extends StatelessWidget {

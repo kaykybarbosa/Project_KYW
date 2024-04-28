@@ -10,7 +10,11 @@ class ConfigurationAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> optionsTitle = ['Configuração de duas etapas', 'Mudar Número ou E-mail', 'Apagar conta'];
+    final List<String> optionsTitle = [
+      'Configuração de duas etapas',
+      'Mudar Número ou E-mail',
+      'Apagar conta',
+    ];
     final List<IconData> optionsIcon = [
       FontAwesomeIcons.shieldHalved,
       FontAwesomeIcons.phoneFlip,
