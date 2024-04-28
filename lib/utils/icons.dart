@@ -10,7 +10,8 @@ abstract class TIcons {
   static const IconData order = FontAwesomeIcons.caretDown;
   static const IconData share = FontAwesomeIcons.share;
   static const IconData configurations = FontAwesomeIcons.gear;
-  static const IconData user = FontAwesomeIcons.solidUser;
+  static const IconData user = FontAwesomeIcons.user;
+  static const IconData userSolid = FontAwesomeIcons.solidUser;
   static const IconData info = FontAwesomeIcons.circleInfo;
   static const IconData singOut = FontAwesomeIcons.rightFromBracket;
   static const IconData pen = FontAwesomeIcons.pen;
@@ -21,6 +22,10 @@ abstract class TIcons {
   static const IconData triangleExclamation = FontAwesomeIcons.triangleExclamation;
   static const IconData eyes = FontAwesomeIcons.solidEye;
   static const IconData eyesOff = FontAwesomeIcons.solidEyeSlash;
+  static const IconData question = FontAwesomeIcons.question;
+  static const IconData security = FontAwesomeIcons.shieldHalved;
+  static const IconData trash = FontAwesomeIcons.solidTrashCan;
+  static const IconData comments = FontAwesomeIcons.commentDots;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
