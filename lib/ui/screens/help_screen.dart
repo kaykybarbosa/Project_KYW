@@ -1,71 +1,46 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class HelpScreen extends StatelessWidget {
   HelpScreen({super.key});
 
-  final List<String> optionsTitle = [
-    'Central de ajuda',
-    'Fale conosco',
-    'Dados do aplicativo',
+  final List<Map<String, dynamic>> options = [
+    {
+      'label': 'Central de ajuda',
+      'icon': TIcons.security,
+      'onTap': () => {},
+    },
+    {
+      'label': 'Fale conosco',
+      'icon': TIcons.comments,
+      'onTap': () => Get.toNamed(AppRoutes.contactUs),
+    },
   ];
 
-  final List<IconData> optionsIcons = [
-    FontAwesomeIcons.shieldHalved,
-    FontAwesomeIcons.commentDots,
-    FontAwesomeIcons.circleInfo,
-  ];
   @override
-  Widget build(BuildContext context) {
-    void goHelpCenter() {}
-
-    void goContactUs() => Get.toNamed(AppRoutes.contactUs);
-
-    void goApplicationData() {}
-
-    final List<Function> optionsFunction = [
-      /// If [index] == 0, show HelpCenterScreen
-      /// If [index] == 1, show ContactUsScreen
-      /// If [index] == 2, show ApplicationDataScreen
-
-      goHelpCenter,
-      goContactUs,
-      goApplicationData
-    ];
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Ajuda')),
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {
-              optionsFunction[index]();
-            },
-            leading: Icon(
-              optionsIcons[index],
-              color: CupertinoTheme.of(context).primaryColor,
-            ),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('Ajuda')),
+        body: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+            onTap: options[index]['onTap'],
+            leading: Icon(options[index]['icon']),
             title: Text(
-              optionsTitle[index],
-              style: TextStyle(
-                fontSize: 17.0,
+              options[index]['label'],
+              style: const TextStyle(
+                fontSize: TConstants.fontSizeLg,
                 fontWeight: FontWeight.w600,
-                color: CupertinoTheme.of(context).primaryColor,
               ),
             ),
-          );
-        },
-        separatorBuilder: (__, _) => const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Divider(height: 0.0),
+          ),
+          separatorBuilder: (__, _) => const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: Divider(height: 0.0),
+          ),
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: options.length,
+          padding: EdgeInsets.zero,
         ),
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: optionsTitle.length,
-        padding: EdgeInsets.zero,
-      ),
-    );
-  }
+      );
 }
