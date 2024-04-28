@@ -31,62 +31,60 @@ class ProjectScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (context, state) {
-        var projects = state.allProject;
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        builder: (context, state) {
+          var projects = state.allProject;
 
-        return Scaffold(
-          body: Column(
-            children: <Widget>[
-              /// Buscar projetos
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: TConstants.defaultMargin,
-                  vertical: 10,
+          return Scaffold(
+            body: Column(
+              children: <Widget>[
+                /// Buscar projetos
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: TConstants.defaultMargin,
+                    vertical: 10,
+                  ),
+                  child: MySearchBar(
+                    hintText: TTexts.hintTextProject,
+                    onPressed: () {},
+                  ),
                 ),
-                child: MySearchBar(
-                  hintText: TTexts.hintTextProject,
-                  onPressed: () {},
+
+                /// Filtros
+                MyTwoFilters(
+                  /// -- Filtrar
+                  filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
+
+                  /// -- Ordenar
+                  orderOnTap: () => myModalBottom(
+                    context,
+                    const MyOrder(currentScreen: Screens.project),
+                  ),
                 ),
-              ),
 
-              /// Filtros
-              MyTwoFilters(
-                /// -- Filtrar
-                filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
-
-                /// -- Ordenar
-                orderOnTap: () => myModalBottom(
-                  context,
-                  const MyOrder(currentScreen: Screens.project),
-                ),
-              ),
-
-              /// Lista de projetos
-              Expanded(
-                child: MySliverList(
-                  childCount: projects.length,
-                  builder: (_, index) => Padding(
-                    padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
-                    child: CardProject(
-                      project: projects[index],
-                      onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                /// Lista de projetos
+                Expanded(
+                  child: MySliverList(
+                    childCount: projects.length,
+                    builder: (_, index) => Padding(
+                      padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
+                      child: CardProject(
+                        project: projects[index],
+                        onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          /// Adicionar projetos
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: TColors.primary,
-            child: const Icon(TIcons.add),
-            onPressed: () => Get.toNamed(AppRoutes.createProject),
-          ),
-        );
-      },
-    );
-  }
+            /// Adicionar projetos
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: TColors.primary,
+              child: const Icon(TIcons.add),
+              onPressed: () => Get.toNamed(AppRoutes.createProject),
+            ),
+          );
+        },
+      );
 }

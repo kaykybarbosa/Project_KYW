@@ -5,8 +5,6 @@ import 'package:kyw_management/ui/screens/home/widgets/drawer/my_end_drawer.dart
 import 'package:kyw_management/ui/screens/home/widgets/home_appbar.dart';
 import 'package:kyw_management/ui/screens/project/project_screen.dart';
 import 'package:kyw_management/ui/screens/tasks/task_screen.dart';
-import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
-import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/home_bloc/home_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,44 +40,15 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
     scaffoldKey.currentState?.openEndDrawer();
   }
 
-  void resetBlocCurrentScreen(Screens screen) {
-    if (screen == Screens.project) {
-      context.read<FilterProjectBloc>().add(ResetFilterProject());
-    } else {
-      context.read<FilterTaskBloc>().add(ResetFilterTask());
-    }
-  }
-
-  Future<dynamic> myModalBottom({
-    required BuildContext context,
-    required HomeState state,
-    required Widget child,
-  }) async {
-    await showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      builder: (BuildContext context) => SizedBox(
-        height: 665,
-        child: child,
-      ),
-    );
-
-    resetBlocCurrentScreen(state.currentScreen);
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        return Scaffold(
+  Widget build(BuildContext context) => BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) => Scaffold(
           key: scaffoldKey,
           endDrawer: const MyEndDrawer(),
           body: NestedScrollView(
             floatHeaderSlivers: true,
             physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (context, index) => [
+            headerSliverBuilder: (_, __) => [
               /// AppBar
               const HomeAppBar(),
             ],
@@ -102,8 +71,6 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
               ],
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
 }

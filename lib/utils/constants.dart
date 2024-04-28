@@ -4,7 +4,7 @@ abstract class TConstants {
   static const iconMd = 24.0;
   static const iconLg = 32.0;
 
-  static const defaultMargin = 12.0;
+  static const defaultMargin = 14.0;
 
   static const fontSizeSm = 14.0;
   static const fontSizeMd = 16.0;
