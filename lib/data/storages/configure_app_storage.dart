@@ -5,7 +5,7 @@ import 'package:kyw_management/data/storages/models/configure_app_model.dart';
 abstract class IConfigureAppStorage {
   static IConfigureAppStorage get instance => Get.find<IConfigureAppStorage>();
 
-  ConfigureAppModel? get currentUser;
+  ConfigureAppModel? get configureApp;
 
   Future<void> write(ConfigureAppModel configure);
 
@@ -19,7 +19,7 @@ class ConfigureAppStorage implements IConfigureAppStorage {
   final ISharedPrefsService _storage;
 
   @override
-  ConfigureAppModel? get currentUser {
+  ConfigureAppModel? get configureApp {
     var result = _storage.read(_key);
 
     if (result != null) {

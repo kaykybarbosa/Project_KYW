@@ -1,7 +1,3 @@
-import 'package:kyw_management/data/middlewares/current_user_is_auth.dart';
-import 'package:kyw_management/data/middlewares/first_access.dart';
-import 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
-
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
