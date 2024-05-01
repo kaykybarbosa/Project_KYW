@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class CurrentUserModel {
   CurrentUserModel({
     required this.id,
@@ -36,4 +38,9 @@ class CurrentUserModel {
         email: map['email'],
         roles: map['email'].isNotEmpty ? List<String>.from(map['roles']) : [],
       );
+
+  String toJson() => json.encode(toMap());
+
+  factory CurrentUserModel.fromJson(String source) =>
+      CurrentUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
