@@ -16,7 +16,7 @@ class MyEndDrawer extends StatelessWidget {
     final List<_DrawerOption> options = [
       /// Minha conta
       _DrawerOption(
-        icon: TIcons.user,
+        icon: TIcons.userSolid,
         label: TTexts.myAccount,
         onTap: () => Get.toNamed(AppRoutes.myAccount),
       ),
