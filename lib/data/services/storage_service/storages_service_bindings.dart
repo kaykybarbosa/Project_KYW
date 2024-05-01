@@ -3,7 +3,7 @@ import 'package:kyw_management/data/services/storage_service/security_storage_se
 import 'package:kyw_management/data/services/storage_service/shared_prefs_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SecurityStorageServiceBindings implements Bindings {
+class StoragesServiceBindings implements Bindings {
   @override
   void dependencies() {
     Get.put<ISecurityStorageService>(SecurityStorageService());

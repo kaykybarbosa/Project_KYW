@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:kyw_management/data/requests_models/user_login_request.dart';
 import 'package:kyw_management/data/requests_models/user_register_request.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
+import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
-import 'package:kyw_management/domain/models/current_user_model.dart';
 import 'package:kyw_management/domain/models/refresh_token_model.dart';
 import 'package:result_dart/result_dart.dart';
 

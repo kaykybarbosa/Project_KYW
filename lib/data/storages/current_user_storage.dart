@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kyw_management/data/services/storage_service/security_storage_service.dart';
-import 'package:kyw_management/domain/models/current_user_model.dart';
+import 'package:kyw_management/data/storages/models/current_user_model.dart';
 
 abstract class ICurrentUserStorage {
   static ICurrentUserStorage get instance => Get.find<ICurrentUserStorage>();
