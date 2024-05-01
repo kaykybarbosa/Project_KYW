@@ -1,3 +1,5 @@
+import 'package:kyw_management/data/middlewares/current_user_is_auth.dart';
+import 'package:kyw_management/data/middlewares/first_access.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
 
 import 'app_pages_exports.dart';
@@ -5,8 +7,18 @@ import 'app_pages_exports.dart';
 abstract class AppPages {
   static final List<GetPage> pages = [
     GetPage(
+      name: AppRoutes.home,
+      page: () => const HomeScreen(),
+      middlewares: [
+        FirsAccessMiddleware(),
+        CurrentUserIsAuthMiddleware(priority: 1),
+      ],
+      transition: Transition.fade,
+    ),
+    GetPage(
       name: AppRoutes.signIn,
       page: () => const SignInScreen(),
+      bindings: [AuthRepositoryBindings()],
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
     ),
@@ -34,11 +46,6 @@ abstract class AppPages {
       page: () => const ChangePasswordScreen(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
-    ),
-    GetPage(
-      name: AppRoutes.home,
-      page: () => const HomeScreen(),
-      transition: Transition.fade,
     ),
     GetPage(
       name: AppRoutes.notifications,

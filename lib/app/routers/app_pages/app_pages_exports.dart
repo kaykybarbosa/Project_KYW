@@ -1,5 +1,8 @@
 export 'package:get/get_navigation/get_navigation.dart';
 export 'package:kyw_management/app/routers/my_routes.dart';
+export 'package:kyw_management/data/middlewares/current_user_is_auth.dart';
+export 'package:kyw_management/data/middlewares/first_access.dart';
+export 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
 export 'package:kyw_management/ui/screens/authentication/forgot_password_screen.dart';
 export 'package:kyw_management/ui/screens/authentication/sign_in_screen.dart';
 export 'package:kyw_management/ui/screens/authentication/sign_up_screen.dart';
