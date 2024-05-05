@@ -19,7 +19,7 @@ class CodeForgotScreen extends StatefulWidget {
 class _CodeForgotScreenState extends State<CodeForgotScreen> {
   @override
   Widget build(BuildContext context) {
-    /// TODO: Remover registro do cubit
+    /// TODO: Remover registro do cubit e refatorar tela
     return BlocProvider(
       create: (context) => ForgotCodeCubit(),
       child: Scaffold(

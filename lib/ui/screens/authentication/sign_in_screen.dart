@@ -8,6 +8,7 @@ import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:kyw_management/ui/widgets/back_button_ios.dart';
 import 'package:kyw_management/ui/widgets/my_password_text_field.dart';
 import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
@@ -31,49 +32,57 @@ class SignInScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Gap(0),
+          body: Stack(
+            children: <Widget>[
+              /// Body
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Gap(0),
 
-                /// Formulário
-                Flexible(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: <Widget>[
-                        /// -- Título
-                        const MyTitle(title: 'Acessar conta'),
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    /// Formulário
+                    Flexible(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
                           children: <Widget>[
-                            /// -- E-mail
-                            const _EmailInput(),
+                            /// -- Título
+                            const MyTitle(title: 'Acessar conta'),
 
-                            /// -- Senha
-                            const _PasswordInput(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                /// -- E-mail
+                                const _EmailInput(),
 
-                            /// -- Esqueceu senha
-                            _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.forgotPassword)),
+                                /// -- Senha
+                                const _PasswordInput(),
 
-                            const Gap(40),
+                                /// -- Esqueceu senha
+                                _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.forgotPassword)),
 
-                            /// -- Botão de acesso
-                            const _SubmitButton(),
+                                const Gap(40),
+
+                                /// -- Botão de acesso
+                                const _SubmitButton(),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
 
-                /// Criar conta
-                const _MessageToRegistered()
-              ],
-            ),
+                    /// Criar conta
+                    const _MessageToRegistered()
+                  ],
+                ),
+              ),
+
+              /// Botão de voltar
+              const BackButtonIOS(),
+            ],
           ),
         ),
       );
