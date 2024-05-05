@@ -40,6 +40,8 @@ class AppController extends GetxController {
 
   ConfigureAppModel get configureApp => _configureAppStorage.configureApp ?? ConfigureAppModel.empty();
 
+  Future<AuthUserModel> get authUser async => await _currentUserStorage.authUser ?? const AuthUserModel();
+
   // -- SETTERS
 
   /// Atualiza o status do usuário no app.
@@ -50,8 +52,11 @@ class AppController extends GetxController {
       await _configureAppStorage.write(configureApp);
 
   /// Atualiza o usuário atual.
-  Future<void> setCurrentUser(CurrentUserModel currentUser) async =>
-      await _currentUserStorage.writeCurrentUser(currentUser);
+  Future<void> setCurrentUser(CurrentUserModel currentUser) async {
+    updateStatus(AppStatus.authenticated);
+
+    await _currentUserStorage.writeCurrentUser(currentUser);
+  }
 
   /// Atualiza dados de autenticação do usuário.
   Future<void> setAuthenticationUser(AuthUserModel authUser) async => await _currentUserStorage.writeAuthUser(authUser);
