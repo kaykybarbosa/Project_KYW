@@ -1,29 +1,51 @@
+import 'package:kyw_management/data/services/http_service/http_service_bindings.dart';
+import 'package:kyw_management/ui/screens/authentication/welcome_screen.dart';
+
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
     GetPage(
+      name: AppRoutes.initial,
+      page: () => const WelcomeScreen(),
+      // middlewares: [FirsAccessMiddleware()],
+      transition: Transition.fade,
+    ),
+    GetPage(
       name: AppRoutes.home,
       page: () => const HomeScreen(),
-      middlewares: [
-        FirsAccessMiddleware(),
-        CurrentUserIsAuthMiddleware(priority: 1),
-      ],
       transition: Transition.fade,
     ),
     GetPage(
       name: AppRoutes.signIn,
       page: () => const SignInScreen(),
-      bindings: [AuthRepositoryBindings()],
+      bindings: [
+        HttpServiceBindings(),
+        AuthRepositoryBindings(),
+        ServicesBindings(),
+      ],
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
     ),
     GetPage(
       name: AppRoutes.signUp,
       page: () => const SignUpScreen(),
-      bindings: [AuthRepositoryBindings()],
+      bindings: [
+        HttpServiceBindings(),
+        AuthRepositoryBindings(),
+      ],
       transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+    ),
+    GetPage(
+      name: AppRoutes.automaticSignIn,
+      page: () => const AutomaticSignInScreen(),
+      bindings: [
+        AuthRepositoryBindings(),
+        ServicesBindings(),
+      ],
+      transition: Transition.fade,
+      transitionDuration: Duration.zero,
     ),
     GetPage(
       name: AppRoutes.forgotPassword,

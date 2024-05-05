@@ -1,7 +1,9 @@
 class AppRoutes {
+  static const String initial = '/';
   static const String home = '/home';
   static const String signIn = '/sign-in';
-  static const String signUp = '/sign_up';
+  static const String signUp = '/sign-up';
+  static const String automaticSignIn = '/automatic-sign-in';
   static const String forgotPassword = '/forgot-password';
   static const String codeForgotPassword = '/forgot-password/validation-code';
   static const String changePassword = '/forgot-password/change-password';
