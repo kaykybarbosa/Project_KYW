@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class CurrentUserModel {
@@ -43,4 +44,23 @@ class CurrentUserModel {
 
   factory CurrentUserModel.fromJson(String source) =>
       CurrentUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  CurrentUserModel copyWith({
+    String? id,
+    String? token,
+    String? type,
+    String? refreshToken,
+    String? nickname,
+    String? email,
+    List<String>? roles,
+  }) =>
+      CurrentUserModel(
+        id: id ?? this.id,
+        token: token ?? this.token,
+        type: type ?? this.type,
+        refreshToken: refreshToken ?? this.refreshToken,
+        nickname: nickname ?? this.nickname,
+        email: email ?? this.email,
+        roles: roles ?? this.roles,
+      );
 }
