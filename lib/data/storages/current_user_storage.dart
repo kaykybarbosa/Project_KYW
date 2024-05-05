@@ -42,7 +42,7 @@ class CurrentUserStorage implements ICurrentUserStorage {
     var result = await _storage.read(_authKey);
 
     if (result != null) {
-      AuthUserModel.fromJson(result);
+      return AuthUserModel.fromJson(result);
     }
 
     return null;
