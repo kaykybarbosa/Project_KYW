@@ -6,5 +6,9 @@ class AuthRepositoryBindings implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<IAuthRepository>(() => AuthRepository(httpService: IHttpService.instance));
+    Get.lazyPut<IAuthRepository>(
+      () => AuthRepository(httpService: IHttpService.instanceAuth),
+      tag: IAuthRepository.TAG_AUTH,
+    );
   }
 }
