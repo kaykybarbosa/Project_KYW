@@ -30,4 +30,5 @@ abstract class TIcons {
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
+  static const IconData arrowLeftIOS = FontAwesomeIcons.chevronLeft;
 }
