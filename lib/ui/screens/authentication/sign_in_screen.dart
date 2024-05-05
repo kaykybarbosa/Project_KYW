@@ -14,21 +14,16 @@ import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  @override
   Widget build(BuildContext context) => BlocListener<SignInCubit, SignInState>(
+        listenWhen: (previous, current) => previous.status != current.status,
         listener: (_, state) {
           if (state.status.isSuccess) {
             Get.offAllNamed(AppRoutes.home);
-          }
-          if (state.status.isFailure) {
+          } else if (state.status.isFailure) {
             snackBarCustom(
               message: state.errorMessage,
               type: SnackBarType.danger,
@@ -146,7 +141,9 @@ class _SubmitButton extends StatelessWidget {
         builder: (context, state) => SubmitButton(
           label: 'Acessar',
           isInProgress: state.status.isInProgress,
-          onPressed: state.isValid ? () => context.read<SignInCubit>().formSubmitted() : null,
+          onPressed: state.isValid
+              ? () => {FocusScope.of(context).unfocus(), context.read<SignInCubit>().formSubmitted()}
+              : null,
         ),
       );
 }
