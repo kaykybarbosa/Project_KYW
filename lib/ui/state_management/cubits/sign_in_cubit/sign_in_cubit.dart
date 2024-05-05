@@ -3,17 +3,21 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:kyw_management/data/requests_models/user_login_request.dart';
+import 'package:kyw_management/data/services/configure_login_service.dart';
+import 'package:kyw_management/domain/models/auth_user_model.dart';
 import 'package:kyw_management/ui/state_management/models_input/email_input.dart';
 import 'package:kyw_management/ui/state_management/models_input/password_input.dart';
 
 part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
-  SignInCubit({required IAuthRepository authRepository})
+  SignInCubit({required IAuthRepository authRepository, required IAuthSettingsService authSettings})
       : _repository = authRepository,
+        _settings = authSettings,
         super(const SignInState());
 
   final IAuthRepository _repository;
+  final IAuthSettingsService _settings;
 
   void emailChanged(String value) {
     final email = EmailInput.dirty(value);
@@ -46,7 +50,13 @@ class SignInCubit extends Cubit<SignInState> {
     var result = await _repository.login(request);
 
     result.fold(
-      (success) => emit(state.copyWith(status: FormzSubmissionStatus.success)),
+      (success) async {
+        var authUser = AuthUserModel(email: state.email.value, password: state.password.value);
+
+        await _settings.signIn(authUser: authUser, currentUser: success);
+
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+      },
       (failure) => emit(state.copyWith(status: FormzSubmissionStatus.failure)),
     );
   }
