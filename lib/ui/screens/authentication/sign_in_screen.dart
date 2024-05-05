@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -35,48 +34,37 @@ class SignInScreen extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               /// Body
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    const Gap(0),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: <Widget>[
+                        /// -- Título
+                        const MyTitle(title: 'Acessar conta'),
 
-                    /// Formulário
-                    Flexible(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            /// -- Título
-                            const MyTitle(title: 'Acessar conta'),
+                            /// -- E-mail
+                            const _EmailInput(),
 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                /// -- E-mail
-                                const _EmailInput(),
+                            /// -- Senha
+                            const _PasswordInput(),
 
-                                /// -- Senha
-                                const _PasswordInput(),
+                            /// -- Esqueceu senha
+                            _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.forgotPassword)),
 
-                                /// -- Esqueceu senha
-                                _ForgotPassword(onTap: () => Get.toNamed(AppRoutes.forgotPassword)),
+                            const Gap(40),
 
-                                const Gap(40),
-
-                                /// -- Botão de acesso
-                                const _SubmitButton(),
-                              ],
-                            ),
+                            /// -- Botão de acesso
+                            const _SubmitButton(),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-
-                    /// Criar conta
-                    const _MessageToRegistered()
-                  ],
+                  ),
                 ),
               ),
 
@@ -155,38 +143,4 @@ class _SubmitButton extends StatelessWidget {
               : null,
         ),
       );
-}
-
-class _MessageToRegistered extends StatelessWidget {
-  const _MessageToRegistered();
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle defaultText = const TextStyle(color: Colors.black, fontSize: 16);
-    TextStyle linkText = const TextStyle(color: Colors.blue, fontSize: 16);
-
-    return SizedBox(
-      width: 260,
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Não possui uma conta? ',
-              style: defaultText,
-            ),
-            TextSpan(
-              text: 'Clique aqui ',
-              style: linkText,
-              recognizer: TapGestureRecognizer()..onTap = () => Get.toNamed(AppRoutes.signUp),
-            ),
-            TextSpan(
-              text: 'para criar uma',
-              style: defaultText,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

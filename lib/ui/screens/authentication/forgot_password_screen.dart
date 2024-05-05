@@ -7,7 +7,6 @@ import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:kyw_management/ui/widgets/back_button_ios.dart';
-import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
 import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -26,45 +25,34 @@ class ForgotPasswordScreen extends StatelessWidget {
               Get.toNamed(AppRoutes.codeForgotPassword);
             }
           },
-          child: Scaffold(
+          child: const Scaffold(
             body: Stack(
               children: <Widget>[
                 /// Body
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Gap(10),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          /// -- Título
+                          MyTitle(title: 'Esqueceu a senha'),
 
-                      /// -- Formulário
-                      const Flexible(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              /// -- Título
-                              MyTitle(title: 'Esqueceu a senha'),
+                          /// -- E-mail
+                          _EmailInput(),
+                          Gap(40),
 
-                              /// -- E-mail
-                              _EmailInput(),
-                              Gap(40),
-
-                              /// -- Botão de enviar
-                              _SubmitButton(),
-                            ],
-                          ),
-                        ),
+                          /// -- Botão de enviar
+                          _SubmitButton(),
+                        ],
                       ),
-
-                      /// -- Acessar conta
-                      GoToSignIn(onTap: () => Get.back()),
-                    ],
+                    ),
                   ),
                 ),
 
                 /// Botão de voltar
-                const BackButtonIOS(),
+                BackButtonIOS(),
               ],
             ),
           ),

@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/button_network.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/my_title.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:kyw_management/ui/widgets/back_button_ios.dart';
-import 'package:kyw_management/ui/widgets/go_to_sign_in.dart';
 import 'package:kyw_management/ui/widgets/my_password_text_field.dart';
 import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
@@ -36,62 +34,51 @@ class SignUpScreen extends StatelessWidget {
             );
           }
         },
-        child: Scaffold(
+        child: const Scaffold(
           body: Stack(
             children: <Widget>[
               /// Body
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    const Gap(10),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        /// -- Título
+                        MyTitle(title: 'Crie sua conta'),
 
-                    /// -- Formulário
-                    const Flexible(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            /// -- Título
-                            MyTitle(title: 'Crie sua conta'),
+                        /// -- Nome
+                        _NameInput(),
+                        Gap(20),
 
-                            /// -- Nome
-                            _NameInput(),
-                            Gap(20),
+                        /// -- E-mail
+                        _EmailInput(),
+                        Gap(20),
 
-                            /// -- E-mail
-                            _EmailInput(),
-                            Gap(20),
+                        /// -- Senha
+                        _PasswordInput(),
+                        Gap(15),
 
-                            /// -- Senha
-                            _PasswordInput(),
-                            Gap(15),
+                        /// -- Continue com
+                        _ContinueWith(),
 
-                            /// -- Continue com
-                            _ContinueWith(),
+                        /// -- Google ou Facebook
+                        _SignUpGoogleFacebook(),
 
-                            /// -- Google ou Facebook
-                            _SignUpGoogleFacebook(),
+                        Gap(50),
 
-                            Gap(50),
-
-                            /// Botão de registro
-                            _SubmitButton(),
-                            Gap(15),
-                          ],
-                        ),
-                      ),
+                        /// Botão de registro
+                        _SubmitButton(),
+                        Gap(15),
+                      ],
                     ),
-
-                    /// -- Acessar conta
-                    GoToSignIn(onTap: () => Get.back()),
-                  ],
+                  ),
                 ),
               ),
 
               /// Botão de voltar
-              const BackButtonIOS(),
+              BackButtonIOS(),
             ],
           ),
         ),
