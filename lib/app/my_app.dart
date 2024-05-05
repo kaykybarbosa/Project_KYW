@@ -30,12 +30,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => ProjectBloc()),
-          BlocProvider(create: (_) => SignUpCubit(authRepository: IAuthRepository.instance)),
           BlocProvider(create: (_) => ForgotPasswordBloc()),
           BlocProvider(create: (_) => HomeBloc()),
           BlocProvider(create: (_) => FilterProjectBloc()),
           BlocProvider(create: (_) => FilterTaskBloc()),
           BlocProvider(create: (_) => AddProjectBloc()),
+          BlocProvider(
+            create: (_) => SignUpCubit(
+              authRepository: IAuthRepository.instance,
+              appController: AppController.instance,
+            ),
+          ),
           BlocProvider(
             create: (_) => AuthenticateUserCubit(
               appController: AppController.instance,

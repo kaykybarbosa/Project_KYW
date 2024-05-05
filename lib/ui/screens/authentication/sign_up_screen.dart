@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/button_network.dart';
@@ -28,10 +29,7 @@ class SignUpScreen extends StatelessWidget {
               type: SnackBarType.danger,
             );
           } else if (state.status.isSuccess) {
-            snackBarCustom(
-              title: 'Sucesso!',
-              message: 'Seu cadastro foi realizado.',
-            );
+            Get.offAllNamed(AppRoutes.automaticSignIn);
           }
         },
         child: const Scaffold(
