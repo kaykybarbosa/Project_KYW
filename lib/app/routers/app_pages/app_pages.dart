@@ -8,7 +8,7 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.initial,
       page: () => const WelcomeScreen(),
-      // middlewares: [FirsAccessMiddleware()],
+      middlewares: [FirsAccessMiddleware()],
       transition: Transition.fade,
     ),
     GetPage(
