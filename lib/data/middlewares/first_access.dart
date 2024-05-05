@@ -1,3 +1,5 @@
+// ignore_for_file: overridden_fields
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/route_middleware.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
@@ -12,6 +14,12 @@ class FirsAccessMiddleware extends GetMiddleware {
   var configureApp = AppController.instance.configureApp;
 
   @override
-  RouteSettings? redirect(String? route) =>
-      configureApp.isFirstAccess ? const RouteSettings(name: AppRoutes.signIn) : null;
+  RouteSettings? redirect(String? route) {
+    var appController = AppController.instance;
+    var configureApp = appController.configureApp;
+
+    if (configureApp.isFirstAccess || !configureApp.currentUserIsAuth) return null;
+
+    return const RouteSettings(name: AppRoutes.automaticSignIn);
+  }
 }
