@@ -207,12 +207,7 @@ class _SubmitButton extends StatelessWidget {
         builder: (context, state) => SubmitButton(
           label: 'Criar conta',
           isInProgress: state.status.isInProgress,
-          onPressed: state.isValid
-              ? () => {
-                    context.read<SignUpCubit>().formSubmitted(),
-                    FocusScope.of(context).unfocus(),
-                  }
-              : null,
+          onPressed: state.isValid ? () => context.read<SignUpCubit>().formSubmitted() : null,
         ),
       );
 }

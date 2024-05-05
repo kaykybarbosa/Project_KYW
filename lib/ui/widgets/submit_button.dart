@@ -20,10 +20,12 @@ class SubmitButton extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           style: style ?? ElevatedButton.styleFrom(padding: EdgeInsets.zero),
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            onPressed!();
-          },
+          onPressed: onPressed != null
+              ? () {
+                  FocusScope.of(context).unfocus();
+                  onPressed!();
+                }
+              : null,
           child: isInProgress
               ? const Padding(
                   padding: EdgeInsets.symmetric(vertical: 6.0),
