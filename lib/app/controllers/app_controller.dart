@@ -4,6 +4,7 @@ import 'package:kyw_management/data/storages/current_user_storage.dart';
 import 'package:kyw_management/data/storages/models/configure_app_model.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/domain/enums/app_status.dart';
+import 'package:kyw_management/domain/models/auth_user_model.dart';
 
 export 'package:kyw_management/domain/enums/app_status.dart';
 
@@ -41,9 +42,17 @@ class AppController extends GetxController {
 
   // -- SETTERS
 
+  /// Atualiza o status do usuário no app.
   void updateStatus(AppStatus status) => _status.value = status;
 
   /// Atualiza as configurações do App.
-  Future<void> updateConfigurations(ConfigureAppModel configureApp) async =>
+  Future<void> setConfigurations(ConfigureAppModel configureApp) async =>
       await _configureAppStorage.write(configureApp);
+
+  /// Atualiza o usuário atual.
+  Future<void> setCurrentUser(CurrentUserModel currentUser) async =>
+      await _currentUserStorage.writeCurrentUser(currentUser);
+
+  /// Atualiza dados de autenticação do usuário.
+  Future<void> setAuthenticationUser(AuthUserModel authUser) async => await _currentUserStorage.writeAuthUser(authUser);
 }
