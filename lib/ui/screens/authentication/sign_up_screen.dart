@@ -21,6 +21,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocListener<SignUpCubit, SignUpState>(
+        listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isFailure) {
             snackBarCustom(
