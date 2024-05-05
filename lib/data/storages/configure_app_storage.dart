@@ -23,7 +23,7 @@ class ConfigureAppStorage implements IConfigureAppStorage {
     var result = _storage.read(_key);
 
     if (result != null) {
-      ConfigureAppModel.fromJson(result);
+      return ConfigureAppModel.fromJson(result);
     }
 
     return null;
