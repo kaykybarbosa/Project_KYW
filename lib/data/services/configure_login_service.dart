@@ -18,21 +18,21 @@ abstract class IAuthSettingsService {
   ///
   ///- Atualiza as informações do usuário autenticado.
   ///
-  Future<void> login({
+  Future<void> signIn({
     required AuthUserModel authUser,
-    required CurrentUserModel currentUserModel,
+    required CurrentUserModel currentUser,
   });
 }
 
 class AuthSettingsService implements IAuthSettingsService {
-  AuthSettingsService() : appController = AppController.instance;
+  AuthSettingsService(this.appController);
 
-  late final AppController appController;
+  final AppController appController;
 
   @override
-  Future<void> login({
+  Future<void> signIn({
     required AuthUserModel authUser,
-    required CurrentUserModel currentUserModel,
+    required CurrentUserModel currentUser,
   }) async {
     await Future.wait([
       appController.setConfigurations(appController.configureApp.copyWith(
@@ -40,6 +40,7 @@ class AuthSettingsService implements IAuthSettingsService {
         currentUserIsAuth: true,
       )),
       appController.setAuthenticationUser(authUser),
+      appController.setCurrentUser(currentUser)
     ]);
   }
 }
