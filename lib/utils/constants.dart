@@ -16,6 +16,7 @@ abstract class TConstants {
   static const cardRadiusLg = 20.0;
 
   static const millisecondsAnimation = 400;
+  static const transitionFadeDuration = 300;
 
   static const blurRadius = 6.0;
 }

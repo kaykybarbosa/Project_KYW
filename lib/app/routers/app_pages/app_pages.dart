@@ -24,8 +24,8 @@ abstract class AppPages {
         AuthRepositoryBindings(),
         ServicesBindings(),
       ],
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+      transition: Transition.rightToLeftWithFade,
+      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
     ),
     GetPage(
       name: AppRoutes.signUp,
@@ -35,7 +35,7 @@ abstract class AppPages {
         AuthRepositoryBindings(),
       ],
       transition: Transition.rightToLeftWithFade,
-      transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
     ),
     GetPage(
       name: AppRoutes.automaticSignIn,
@@ -48,22 +48,23 @@ abstract class AppPages {
       transitionDuration: Duration.zero,
     ),
     GetPage(
+      fullscreenDialog: true,
       name: AppRoutes.forgotPassword,
       page: () => const ForgotPasswordScreen(),
-      transition: Transition.rightToLeftWithFade,
-      transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
     ),
     GetPage(
       name: AppRoutes.codeForgotPassword,
       page: () => const CodeForgotScreen(),
       transition: Transition.rightToLeftWithFade,
-      transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
     ),
     GetPage(
       name: AppRoutes.changePassword,
       page: () => const ChangePasswordScreen(),
       transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: TConstants.millisecondsAnimation),
+      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
     ),
     GetPage(
       name: AppRoutes.notifications,
