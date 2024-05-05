@@ -47,6 +47,9 @@ dependencies:
   # Gap
   gap: ^3.0.1
 
+  # Jwt_decoder
+  jwt_decoder: ^2.0.1
+
   # UUID
   flutter_guid: ^0.3.1
 
