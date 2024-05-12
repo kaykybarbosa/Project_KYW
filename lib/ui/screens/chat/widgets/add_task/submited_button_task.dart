@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
-import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 
 import '../../../../../domain/models/task.dart';
 import '../../../../state_management/cubits/add_task_cubit/add_task_cubit.dart';
@@ -20,10 +19,6 @@ class SubmitButtonTask extends StatelessWidget {
         dateOfConclusion: DateTime.tryParse(state.dateOfConclusion),
         description: state.description.value,
       );
-      context.read<ProjectBloc>().add(AddTaskProject(
-            projectId: _projectId,
-            task: task,
-          ));
     }
 
     return BlocBuilder<AddTaskCubit, AddTaskState>(

@@ -10,6 +10,7 @@ abstract class IHttpService {
   static String get AUTH_TAG => 'HTTP_TAG';
 
   static IHttpService get instance => Get.find<IHttpService>();
+
   static IHttpService get instanceAuth => Get.find<IHttpService>(tag: AUTH_TAG);
 
   String get baseUrl;
@@ -32,9 +33,7 @@ class HttpService implements IHttpService {
     connectTimeout: const Duration(seconds: 60),
     receiveTimeout: const Duration(seconds: 60),
     sendTimeout: const Duration(seconds: 60),
-    headers: {
-      'content-Type': 'application/json',
-    },
+    headers: {'content-Type': 'application/json'},
   );
 
   late Dio _dio;

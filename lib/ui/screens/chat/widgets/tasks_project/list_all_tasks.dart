@@ -17,25 +17,12 @@ class ListAllTaks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, state) {
-        List<Task>? allTasks = context.select(
-          (ProjectBloc bloc) => bloc.state.allProject.firstWhere((project) => project.id == _projectId).tasks,
-        );
+        List<Task>? allTasks = [];
         return Expanded(
           child: Stack(
             children: [
               // List tasks
-              if (allTasks != null)
-                ListView(children: allTasks.map((task) => CardTask(task: task)).toList())
-              else
-                Center(
-                  child: Text(
-                    'Sem tarefas ainda!',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+              ListView(children: allTasks.map((task) => CardTask(task: task)).toList()),
               // Add task button
               AddButtonTasks(projectId: _projectId),
             ],

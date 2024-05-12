@@ -4,16 +4,17 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
-import 'package:kyw_management/domain/models/project.dart';
+import 'package:kyw_management/domain/models/project_model.dart';
 
 import 'widgets/chat_project/button_send_chat.dart';
 import 'widgets/chat_project/message_chat.dart';
 import 'widgets/chat_project/message_input_chat.dart';
 
 class ChatProjectScreen extends StatefulWidget {
-  const ChatProjectScreen({super.key, Project? project}) : project = project ?? const Project(id: '1', name: '');
+  const ChatProjectScreen({super.key, ProjectModel? project})
+      : project = project ?? const ProjectModel(id: '1', name: '');
 
-  final Project project;
+  final ProjectModel project;
 
   @override
   State<ChatProjectScreen> createState() => _ChatProjectScreenState();

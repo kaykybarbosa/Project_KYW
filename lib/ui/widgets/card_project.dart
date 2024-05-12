@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/domain/models/project.dart';
+import 'package:kyw_management/data/dtos/all_projects_response.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
@@ -13,26 +13,14 @@ class CardProject extends StatelessWidget {
     this.onTap,
   });
 
-  final Project project;
+  final ProjectResponse project;
   final Function()? onTap;
 
   Widget _getImage() {
-    if (project.image != null) {
-      return Image.asset(
-        project.image!,
-        width: 52,
-      );
-    } else {
-      return Container(
-        color: TColors.base200,
-        padding: const EdgeInsets.all(12),
-        child: const Icon(
-          Icons.group,
-          size: 27,
-          color: TColors.base100,
-        ),
-      );
-    }
+    return Image.asset(
+      'assets/casa-na-arvore.webp',
+      width: 52,
+    );
   }
 
   @override
@@ -94,7 +82,7 @@ class CardProject extends StatelessWidget {
 class _GroupName extends StatelessWidget {
   const _GroupName({required this.project});
 
-  final Project project;
+  final ProjectResponse project;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -113,12 +101,12 @@ class _GroupName extends StatelessWidget {
             ),
 
             // Última mensagem enviada
-            Row(
+            const Row(
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    project.lastMessage ?? 'Você criou este projeto',
-                    style: const TextStyle(
+                    'Você criou este projeto',
+                    style: TextStyle(
                       fontSize: TConstants.fontSizeMd,
                       color: TColors.base200,
                     ),
@@ -135,10 +123,10 @@ class _GroupName extends StatelessWidget {
 class _MySufix extends StatelessWidget {
   const _MySufix({required this.project});
 
-  final Project project;
+  final ProjectResponse project;
 
   @override
-  Widget build(BuildContext context) => Expanded(
+  Widget build(BuildContext context) => const Expanded(
         child: Column(
           children: <Widget>[
             /// Horário da última mensagem
@@ -146,8 +134,8 @@ class _MySufix extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  project.lastMessageTime ?? '',
-                  style: const TextStyle(
+                  '',
+                  style: TextStyle(
                     fontSize: TConstants.fontSizeSm,
                     color: TColors.base200,
                   ),
@@ -155,14 +143,14 @@ class _MySufix extends StatelessWidget {
               ],
             ),
 
-            const Gap(6),
+            Gap(6),
 
             // Está fixado
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Icon(
-                  project.isImportant ? TIcons.isImportant : null,
+                  TIcons.isImportant,
                   color: TColors.base200,
                   size: TConstants.iconSm + 3,
                 )
