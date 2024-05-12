@@ -1,6 +1,3 @@
-import 'package:kyw_management/data/services/http_service/http_service_bindings.dart';
-import 'package:kyw_management/ui/screens/authentication/welcome_screen.dart';
-
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
@@ -134,6 +131,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.chat,
       page: () => const ChatProjectScreen(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.detailTask,
+      page: () => const DetailsTaskScreen(),
       transition: Transition.fade,
     ),
   ];

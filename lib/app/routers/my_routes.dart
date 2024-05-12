@@ -22,4 +22,5 @@ class AppRoutes {
   static const String configurationDeleteAccount = '/configuration/account/delete-account';
   static const String chat = '/home/chat/:projectId';
   static const String addTask = '/add-task';
+  static const String detailTask = '/detail-task';
 }
