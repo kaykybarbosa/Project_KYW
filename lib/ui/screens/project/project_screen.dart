@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/data/dtos/all_projects_response.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_modal_filter_project.dart';
@@ -15,8 +17,36 @@ import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/texts.dart';
 
-class ProjectScreen extends StatelessWidget {
+class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});
+
+  @override
+  State<ProjectScreen> createState() => _ProjectScreenState();
+}
+
+class _ProjectScreenState extends State<ProjectScreen> {
+  void _getAllProjects() => context.read<ProjectBloc>().add(const GetAllProjects());
+
+  @override
+  void initState() {
+    super.initState();
+    _getAllProjects();
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        builder: (context, state) => switch (state.status) {
+          FormzSubmissionStatus.inProgress => const Scaffold(body: Center(child: CircularProgressIndicator())),
+          FormzSubmissionStatus.failure => const Scaffold(body: Center(child: Text('Erro ao buscar os projetos'))),
+          _ => _AllProjects(projects: state.allProjects.content),
+        },
+      );
+}
+
+class _AllProjects extends StatelessWidget {
+  const _AllProjects({required this.projects});
+
+  final List<ProjectResponse> projects;
 
   Future<dynamic> myModalBottom(
     BuildContext context,
@@ -31,60 +61,54 @@ class ProjectScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
-        builder: (context, state) {
-          var projects = state.allProject;
-
-          return Scaffold(
-            body: Column(
-              children: <Widget>[
-                /// Buscar projetos
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: TConstants.defaultMargin,
-                    vertical: 10,
-                  ),
-                  child: MySearchBar(
-                    hintText: TTexts.hintTextProject,
-                    onPressed: () {},
-                  ),
-                ),
-
-                /// Filtros
-                MyTwoFilters(
-                  /// -- Filtrar
-                  filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
-
-                  /// -- Ordenar
-                  orderOnTap: () => myModalBottom(
-                    context,
-                    const MyOrder(currentScreen: Screens.project),
-                  ),
-                ),
-
-                /// Lista de projetos
-                Expanded(
-                  child: MySliverList(
-                    childCount: projects.length,
-                    builder: (_, index) => Padding(
-                      padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
-                      child: CardProject(
-                        project: projects[index],
-                        onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+  Widget build(BuildContext context) => Scaffold(
+        body: Column(
+          children: <Widget>[
+            /// Buscar projetos
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: TConstants.defaultMargin,
+                vertical: 10,
+              ),
+              child: MySearchBar(
+                hintText: TTexts.hintTextProject,
+                onPressed: () {},
+              ),
             ),
 
-            /// Adicionar projetos
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: TColors.primary,
-              child: const Icon(TIcons.add),
-              onPressed: () => Get.toNamed(AppRoutes.createProject),
+            /// Filtros
+            MyTwoFilters(
+              /// -- Filtrar
+              filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
+
+              /// -- Ordenar
+              orderOnTap: () => myModalBottom(
+                context,
+                const MyOrder(currentScreen: Screens.project),
+              ),
             ),
-          );
-        },
+
+            /// Lista de projetos
+            Expanded(
+              child: MySliverList(
+                childCount: projects.length,
+                builder: (_, index) => Padding(
+                  padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
+                  child: CardProject(
+                    project: projects[index],
+                    onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        /// Adicionar projetos
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: TColors.primary,
+          child: const Icon(TIcons.add),
+          onPressed: () => Get.toNamed(AppRoutes.createProject),
+        ),
       );
 }
