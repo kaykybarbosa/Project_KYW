@@ -4,9 +4,14 @@ import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
 class MyCardStatus extends StatelessWidget {
-  MyCardStatus({super.key, required this.status});
+  MyCardStatus({
+    super.key,
+    required this.status,
+    this.fontSize = TConstants.fontSizeMd,
+  });
 
   final TaskStatus status;
+  final double fontSize;
 
   final Map<TaskStatus, Color> color = {
     TaskStatus.complete: TColors.success,
@@ -28,10 +33,10 @@ class MyCardStatus extends StatelessWidget {
               horizontal: 10.0,
             ),
             child: Text(
-              status.name,
+              status.label,
               style: TextStyle(
                 color: color[status],
-                fontSize: TConstants.fontSizeLg,
+                fontSize: fontSize,
                 fontWeight: FontWeight.bold,
               ),
             ),
