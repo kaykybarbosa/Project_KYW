@@ -1,55 +1,36 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kyw_management/domain/models/project.dart';
-import 'package:kyw_management/domain/models/task.dart';
-
-import '../../../../data/repositories/project_repository.dart';
+import 'package:formz/formz.dart';
+import 'package:kyw_management/data/dtos/all_projects_response.dart';
+import 'package:kyw_management/data/repositories/project_repository.dart';
+import 'package:kyw_management/domain/models/project_model.dart';
 
 part 'project_event.dart';
 part 'project_state.dart';
 
-final projects = ProjectRepository().projects;
-
 class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
-  ProjectBloc() : super(ProjectState(allProject: projects)) {
+  ProjectBloc({required IProjectRepository projectRepository})
+      : _repository = projectRepository,
+        super(ProjectState()) {
+    on<GetAllProjects>(_onGetAllProject);
     on<AddProject>(_onAddProject);
-    on<AddProjects>(_onAddListProject);
-    on<UpdateProject>(_onUpdateProject);
-    on<AddTaskProject>(_onAddTaskProject);
   }
 
-  void _onAddProject(AddProject event, Emitter<ProjectState> emit) {
-    emit(
-      ProjectState(
-        allProject: List.from(state.allProject)..insert(0, event.project),
-      ),
+  final IProjectRepository _repository;
+
+  void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+
+    var result = await _repository.getAllProjects();
+
+    result.fold(
+      (success) => emit(state.copyWith(
+        allProjects: success,
+        status: FormzSubmissionStatus.success,
+      )),
+      (failure) => emit(state.copyWith(status: FormzSubmissionStatus.failure)),
     );
   }
 
-  void _onAddListProject(AddProjects event, Emitter<ProjectState> emit) {
-    List<Project> allProject = List.from(state.allProject)..addAll(event.projects);
-
-    emit(ProjectState(allProject: allProject));
-  }
-
-  void _onUpdateProject(UpdateProject event, Emitter<ProjectState> emit) {}
-
-  void _onAddTaskProject(AddTaskProject event, Emitter<ProjectState> emit) {
-    // Finding project
-    Project project = state.allProject.firstWhere((project) => project.id == event.projectId);
-
-    // Getting the index
-    List<Project> allProjects = state.allProject;
-    var index = allProjects.indexOf(project);
-
-    // Emitting new state
-    emit(state.copyWith(allProject: List.from(state.allProject)..insert(index, project)));
-
-    // Updating tasks
-    project.copyWith(tasks: List.from(project.tasks ?? [])..insert(0, event.task));
-
-    allProjects = List.from(state.allProject)..remove(project);
-
-    emit(state.copyWith(allProject: allProjects));
-  }
+  void _onAddProject(AddProject event, Emitter<ProjectState> emit) {}
 }

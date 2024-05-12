@@ -7,39 +7,18 @@ sealed class ProjectEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddProject extends ProjectEvent {
-  const AddProject({required this.project});
-
-  final Project project;
+class GetAllProjects extends ProjectEvent {
+  const GetAllProjects();
 
   @override
-  List<Object> get props => [project];
+  List<Object> get props => [];
 }
 
-class AddProjects extends ProjectEvent {
-  const AddProjects({required this.projects});
+class AddProject extends ProjectEvent {
+  const AddProject({required this.projects});
 
-  final List<Project> projects;
+  final List<ProjectModel> projects;
 
   @override
   List<Object> get props => [projects];
-}
-
-class UpdateProject extends ProjectEvent {
-  const UpdateProject({required this.project});
-
-  final Project project;
-
-  @override
-  List<Object> get props => [project];
-}
-
-class AddTaskProject extends ProjectEvent {
-  const AddTaskProject({required this.projectId, required this.task});
-
-  final String projectId;
-  final Task task;
-
-  @override
-  List<Object> get props => [projectId, task];
 }

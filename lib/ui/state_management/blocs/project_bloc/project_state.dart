@@ -1,18 +1,23 @@
 part of 'project_bloc.dart';
 
 class ProjectState extends Equatable {
-  const ProjectState({required this.allProject});
+  ProjectState({
+    AllProjectsResponse? allProjects,
+    this.status = FormzSubmissionStatus.initial,
+  }) : allProjects = allProjects ?? AllProjectsResponse.empty;
 
-  final List<Project> allProject;
+  final AllProjectsResponse allProjects;
+  final FormzSubmissionStatus status;
 
   @override
-  List<Object?> get props => [allProject];
+  List<Object?> get props => [allProjects, status];
 
   ProjectState copyWith({
-    List<Project>? allProject,
-  }) {
-    return ProjectState(
-      allProject: allProject ?? this.allProject,
-    );
-  }
+    AllProjectsResponse? allProjects,
+    FormzSubmissionStatus? status,
+  }) =>
+      ProjectState(
+        allProjects: allProjects ?? this.allProjects,
+        status: status ?? FormzSubmissionStatus.initial,
+      );
 }
