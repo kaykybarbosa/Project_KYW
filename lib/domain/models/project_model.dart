@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/domain/models/user_test.dart';
 
-class Project extends Equatable {
-  const Project({
+class ProjectModel extends Equatable {
+  const ProjectModel({
     required this.id,
     required this.name,
     this.description,
@@ -41,7 +41,7 @@ class Project extends Equatable {
         isImportant,
       ];
 
-  Project copyWith({
+  ProjectModel copyWith({
     String? id,
     String? name,
     String? description,
@@ -53,7 +53,7 @@ class Project extends Equatable {
     String? inviteLink,
     bool? isImportant,
   }) {
-    return Project(
+    return ProjectModel(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
