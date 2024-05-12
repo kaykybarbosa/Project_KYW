@@ -7,6 +7,7 @@ import 'package:kyw_management/app/routers/app_pages/app_pages.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/app/theme/app_theme.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
+import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/configure_login_service.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
@@ -29,12 +30,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => ProjectBloc()),
           BlocProvider(create: (_) => ForgotPasswordBloc()),
           BlocProvider(create: (_) => HomeBloc()),
           BlocProvider(create: (_) => FilterProjectBloc()),
           BlocProvider(create: (_) => FilterTaskBloc()),
           BlocProvider(create: (_) => AddProjectBloc()),
+          BlocProvider(create: (_) => ProjectBloc(projectRepository: IProjectRepository.instance)),
           BlocProvider(
             create: (_) => SignUpCubit(
               authRepository: IAuthRepository.instance,
