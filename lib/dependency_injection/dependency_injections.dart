@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kyw_management/app/controllers/app_controller_bindings.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
+import 'package:kyw_management/data/repositories/repositories_bindings.dart';
 import 'package:kyw_management/data/services/http_service/http_service_bindings.dart';
 import 'package:kyw_management/data/services/storage_service/storages_service_bindings.dart';
 import 'package:kyw_management/data/storages/storages_bindings.dart';
@@ -14,7 +15,7 @@ Future<void> dependencyInjections() async {
 
   HttpServiceBindings().dependencies();
   AuthRepositoryBindings().dependencies();
-
+  RepositoriesBindings().dependencies();
   AppControllerBindings().dependencies();
 }
 
