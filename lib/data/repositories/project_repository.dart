@@ -1,52 +1,31 @@
-import 'package:flutter_guid/flutter_guid.dart';
-import 'package:kyw_management/domain/enums/status.dart';
-import 'package:kyw_management/domain/models/project.dart';
-import 'package:kyw_management/domain/models/task.dart';
-import 'package:kyw_management/domain/models/user_test.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:kyw_management/data/dtos/all_projects_response.dart';
+import 'package:kyw_management/data/services/http_service/http_service.dart';
+import 'package:kyw_management/domain/exception/api_exception.dart';
+import 'package:result_dart/result_dart.dart';
 
-class ProjectRepository {
-  final List<Project> _projects = [
-    Project(
-      id: Guid.newGuid.toString(),
-      name: 'Casa na Árvore',
-      image: 'assets/casa-na-arvore.webp',
-      lastMessage: 'última mensagem envia...',
-      lastMessageTime: '12:25',
-      isImportant: true,
-      users: [
-        UserTest(name: 'Yuri', email: 'yuri@gamil.com', isAdmin: true),
-        UserTest(name: 'Wesle', email: 'wesle@gamil.com', isAdmin: false),
-        UserTest(name: 'Kayky', email: 'kbuloso@gamil.com', isAdmin: false),
-      ],
-      tasks: [
-        Task(
-          title: 'Escolher os materiais',
-          description: 'Alguma descrição aqui',
-          status: TaskStatus.complete,
-        ),
-        Task(
-          title: 'Pesquisar a cor',
-          description: 'Alguma descrição aqui',
-          isImportant: true,
-        ),
-        Task(
-          title: 'Fazer o acabamento',
-          description: 'Alguma descrição aqui',
-        ),
-        Task(
-          title: 'Realizar a pintura da porta',
-          description: 'Alguma descrição aqui',
-          status: TaskStatus.pending,
-        ),
-      ],
-    ),
-    Project(
-      id: Guid.newGuid.toString(),
-      name: 'Projeto do Milhão',
-      lastMessage: 'última mensagem envia...',
-      lastMessageTime: '14:32',
-    ),
-  ];
+abstract class IProjectRepository {
+  static IProjectRepository get instance => Get.find<IProjectRepository>();
 
-  List<Project> get projects => _projects;
+  AsyncResult<AllProjectsResponse, ApiException> getAllProjects();
+}
+
+class ProjectRepository implements IProjectRepository {
+  ProjectRepository(IHttpService httpService) : _http = httpService;
+
+  final IHttpService _http;
+
+  @override
+  AsyncResult<AllProjectsResponse, ApiException> getAllProjects() async {
+    try {
+      var result = await _http.get('${_http.baseUrl}projects');
+
+      return AllProjectsResponse.fromMap(result.data).toSuccess();
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
 }
