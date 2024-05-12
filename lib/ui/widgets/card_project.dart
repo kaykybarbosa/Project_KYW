@@ -16,12 +16,10 @@ class CardProject extends StatelessWidget {
   final ProjectResponse project;
   final Function()? onTap;
 
-  Widget _getImage() {
-    return Image.asset(
-      'assets/casa-na-arvore.webp',
-      width: 52,
-    );
-  }
+  Widget _getImage() => Image.asset(
+        'assets/casa-na-arvore.webp',
+        width: 52,
+      );
 
   @override
   Widget build(BuildContext context) => GestureDetector(
