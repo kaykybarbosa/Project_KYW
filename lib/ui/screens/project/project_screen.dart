@@ -35,11 +35,20 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
-        builder: (context, state) => switch (state.status) {
-          FormzSubmissionStatus.inProgress => const Scaffold(body: Center(child: CircularProgressIndicator())),
-          FormzSubmissionStatus.failure => const Scaffold(body: Center(child: Text('Erro ao buscar os projetos'))),
-          _ => _AllProjects(projects: state.allProjects.content),
-        },
+        builder: (context, state) => Scaffold(
+          body: switch (state.status) {
+            FormzSubmissionStatus.inProgress => const Center(child: CircularProgressIndicator()),
+            FormzSubmissionStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
+            _ => _AllProjects(projects: state.allProjects.content)
+          },
+
+          /// Adicionar projetos
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: TColors.primary,
+            child: const Icon(TIcons.add),
+            onPressed: () => Get.toNamed(AppRoutes.createProject),
+          ),
+        ),
       );
 }
 
@@ -61,54 +70,45 @@ class _AllProjects extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Column(
-          children: <Widget>[
-            /// Buscar projetos
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: TConstants.defaultMargin,
-                vertical: 10,
-              ),
-              child: MySearchBar(
-                hintText: TTexts.hintTextProject,
-                onPressed: () {},
-              ),
+  Widget build(BuildContext context) => Column(
+        children: <Widget>[
+          /// Buscar projetos
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: TConstants.defaultMargin,
+              vertical: 10,
             ),
-
-            /// Filtros
-            MyTwoFilters(
-              /// -- Filtrar
-              filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
-
-              /// -- Ordenar
-              orderOnTap: () => myModalBottom(
-                context,
-                const MyOrder(currentScreen: Screens.project),
-              ),
+            child: MySearchBar(
+              hintText: TTexts.hintTextProject,
+              onPressed: () {},
             ),
+          ),
 
-            /// Lista de projetos
-            Expanded(
-              child: MySliverList(
-                childCount: projects.length,
-                builder: (_, index) => Padding(
-                  padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
-                  child: CardProject(
-                    project: projects[index],
-                    onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': '$index'}),
-                  ),
+          /// Filtros
+          MyTwoFilters(
+            /// -- Filtrar
+            filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
+
+            /// -- Ordenar
+            orderOnTap: () => myModalBottom(
+              context,
+              const MyOrder(currentScreen: Screens.project),
+            ),
+          ),
+
+          /// Lista de projetos
+          Expanded(
+            child: MySliverList(
+              childCount: projects.length,
+              builder: (_, index) => Padding(
+                padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
+                child: CardProject(
+                  project: projects[index],
+                  onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': projects[index].id}),
                 ),
               ),
             ),
-          ],
-        ),
-
-        /// Adicionar projetos
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: TColors.primary,
-          child: const Icon(TIcons.add),
-          onPressed: () => Get.toNamed(AppRoutes.createProject),
-        ),
+          ),
+        ],
       );
 }

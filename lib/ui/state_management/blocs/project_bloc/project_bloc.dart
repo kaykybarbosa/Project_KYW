@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -19,15 +21,19 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   final IProjectRepository _repository;
 
   void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
+    if (state.allProjects.content.isNotEmpty) return;
+
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
     var result = await _repository.getAllProjects();
 
     result.fold(
-      (success) => emit(state.copyWith(
-        allProjects: success,
-        status: FormzSubmissionStatus.success,
-      )),
+      (success) {
+        emit(state.copyWith(
+          allProjects: success,
+          status: FormzSubmissionStatus.success,
+        ));
+      },
       (failure) => emit(state.copyWith(status: FormzSubmissionStatus.failure)),
     );
   }

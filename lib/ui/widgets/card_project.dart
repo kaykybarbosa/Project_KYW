@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/all_projects_response.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -16,13 +19,26 @@ class CardProject extends StatelessWidget {
   final ProjectResponse project;
   final Function()? onTap;
 
-  Widget _getImage() => Image.asset(
+  Widget _getImage() {
+    if (project.imageUrl == null) {
+      final file = File(AppController.instance.directory.path);
+      file.writeAsString(project.imageUrl!);
+
+      return CircleAvatar(
+        radius: 50,
+        backgroundColor: TColors.base300,
+        backgroundImage: FileImage(File("filePath")),
+      );
+    } else {
+      return Image.asset(
         'assets/casa-na-arvore.webp',
         width: 52,
       );
+    }
+  }
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
+  Widget build(BuildContext context) => InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.only(left: 6),

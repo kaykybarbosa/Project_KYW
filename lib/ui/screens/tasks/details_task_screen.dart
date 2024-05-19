@@ -58,17 +58,35 @@ class DetailsTaskScreen extends StatelessWidget {
               /// Descrição
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     'Descrição',
-                    style: TextStyle(color: TColors.base200),
+                    style: TextStyle(
+                      color: TColors.base200,
+                      fontSize: TConstants.fontSizeMd,
+                    ),
                   ),
-                  Text(
-                    'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
-                    textAlign: TextAlign.justify,
+                  Padding(
+                    padding: EdgeInsets.only(left: 3, top: 5, right: 5),
+                    child: Text(
+                      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
+                      textAlign: TextAlign.justify,
+                    ),
                   )
                 ],
               ),
+
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: TColors.base200.withOpacity(.30),
+                ),
+                child: const Row(
+                  children: [
+                    Text('Membros'),
+                  ],
+                ),
+              )
             ],
           ),
         ),
