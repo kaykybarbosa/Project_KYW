@@ -35,10 +35,9 @@ class ProjectResponse {
   String name;
   String description;
   UserResponse creator;
-  String imageUrl;
+  String? imageUrl;
   String? linkGroup;
   bool pin;
-  List<dynamic> tasks;
   DateTime createAt;
 
   ProjectResponse({
@@ -46,10 +45,9 @@ class ProjectResponse {
     required this.name,
     required this.description,
     required this.creator,
-    required this.imageUrl,
+    this.imageUrl,
     this.linkGroup,
     required this.pin,
-    required this.tasks,
     required this.createAt,
   });
 
@@ -61,7 +59,6 @@ class ProjectResponse {
         imageUrl: map['imageUrl'],
         linkGroup: map['linkGroup'],
         pin: map['pin'],
-        tasks: map['tasks'],
         createAt: DateTime.parse(map['createAt']),
       );
 
@@ -73,7 +70,6 @@ class ProjectResponse {
         'imageUrl': imageUrl,
         'linkGroup': linkGroup,
         'pin': pin,
-        'tasks': tasks,
         'createAt': createAt.toIso8601String(),
       };
 }
