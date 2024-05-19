@@ -16,4 +16,9 @@ class UserResponse {
         'userId': userId,
         'nickname': nickname,
       };
+
+  factory UserResponse.empty() => UserResponse(
+        userId: '',
+        nickname: '',
+      );
 }

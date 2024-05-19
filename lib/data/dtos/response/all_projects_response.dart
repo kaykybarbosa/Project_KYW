@@ -1,4 +1,4 @@
-import 'package:kyw_management/data/dtos/user_response.dart';
+import 'package:kyw_management/data/dtos/response/user_response.dart';
 
 class AllProjectsResponse {
   AllProjectsResponse({
@@ -72,4 +72,13 @@ class ProjectResponse {
         'pin': pin,
         'createAt': createAt.toIso8601String(),
       };
+
+  factory ProjectResponse.empty() => ProjectResponse(
+        id: 'id',
+        name: 'name',
+        description: 'description',
+        creator: UserResponse.empty(),
+        pin: false,
+        createAt: DateTime(0000),
+      );
 }
