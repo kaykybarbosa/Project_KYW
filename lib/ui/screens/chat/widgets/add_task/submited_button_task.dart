@@ -3,23 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 
-import '../../../../../domain/models/task.dart';
 import '../../../../state_management/cubits/add_task_cubit/add_task_cubit.dart';
 
 class SubmitButtonTask extends StatelessWidget {
-  const SubmitButtonTask({super.key, required String projectId}) : _projectId = projectId;
-
-  final String _projectId;
+  const SubmitButtonTask({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void addTask(AddTaskState state) {
-      Task task = Task(
-        title: state.title.value,
-        dateOfConclusion: DateTime.tryParse(state.dateOfConclusion),
-        description: state.description.value,
-      );
-    }
+    void addTask(AddTaskState state) {}
 
     return BlocBuilder<AddTaskCubit, AddTaskState>(
       builder: (context, state) {

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../add_task_screen.dart';
 
 class AddButtonTasks extends StatelessWidget {
-  const AddButtonTasks({super.key, required String projectId}) : _projectId = projectId;
-
-  final String _projectId;
+  const AddButtonTasks({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class AddButtonTasks extends StatelessWidget {
               isScrollControlled: true,
               builder: (context) => SizedBox(
                 height: MediaQuery.of(context).size.height - 35,
-                child: AddTaskScreen(projectId: _projectId),
+                child: const AddTaskScreen(),
               ),
             ),
             backgroundColor: Colors.blue[700],

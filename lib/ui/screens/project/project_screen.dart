@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
@@ -37,8 +36,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         builder: (context, state) => Scaffold(
           body: switch (state.status) {
-            FormzSubmissionStatus.inProgress => const Center(child: CircularProgressIndicator()),
-            FormzSubmissionStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
+            ProjectStatus.inProgress => const Center(child: CircularProgressIndicator()),
+            ProjectStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
             _ => _AllProjects(projects: state.allProjects.content)
           },
 

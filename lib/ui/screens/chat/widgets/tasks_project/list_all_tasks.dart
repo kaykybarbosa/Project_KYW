@@ -6,12 +6,7 @@ import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bl
 import 'package:kyw_management/ui/widgets/card_task.dart';
 
 class ListAllTaks extends StatelessWidget {
-  const ListAllTaks({
-    super.key,
-    required String projectId,
-  }) : _projectId = projectId;
-
-  final String _projectId;
+  const ListAllTaks({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +19,7 @@ class ListAllTaks extends StatelessWidget {
               // List tasks
               ListView(children: allTasks.map((task) => CardTask(task: task)).toList()),
               // Add task button
-              AddButtonTasks(projectId: _projectId),
+              const AddButtonTasks(),
             ],
           ),
         );
