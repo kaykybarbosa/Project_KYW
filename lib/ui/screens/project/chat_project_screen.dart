@@ -6,14 +6,15 @@ import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:kyw_management/domain/models/project_model.dart';
 
-import 'widgets/chat_project/button_send_chat.dart';
-import 'widgets/chat_project/message_chat.dart';
-import 'widgets/chat_project/message_input_chat.dart';
+import '../chat/widgets/chat_project/button_send_chat.dart';
+import '../chat/widgets/chat_project/message_chat.dart';
+import '../chat/widgets/chat_project/message_input_chat.dart';
 
 class ChatProjectScreen extends StatefulWidget {
-  const ChatProjectScreen({super.key, ProjectModel? project})
+  const ChatProjectScreen({super.key, required this.projectId, ProjectModel? project})
       : project = project ?? const ProjectModel(id: '1', name: '');
 
+  final String projectId;
   final ProjectModel project;
 
   @override
@@ -30,20 +31,6 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
       dateSend: DateFormat().add_Hm().format(DateTime.now()),
       isSender: false,
       nameColor: Colors.orange,
-    ),
-    MessageModel(
-      userReference: 'Kayky',
-      message: 'Go vava',
-      dateSend: DateFormat().add_Hm().format(DateTime.now()),
-      isSender: true,
-      nameColor: Colors.black,
-    ),
-    MessageModel(
-      userReference: 'Wesle',
-      message: 'I love java',
-      dateSend: DateFormat().add_Hm().format(DateTime.now()),
-      isSender: false,
-      nameColor: Colors.blue,
     ),
   ];
 
@@ -72,9 +59,9 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
         ),
         body: TabBarView(
           controller: _tabController,
-          children: [
+          children: <Widget>[
             /// Chat
-            _ChatProject(messages: messages),
+            const _ChatProject(messages: []),
 
             /// Tasks
             _TasksProject(widget: widget),
@@ -239,29 +226,27 @@ class _ChatProject extends StatelessWidget {
   final List<MessageModel> messages;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              var message = messages[index];
-              return MessageChat(message: message);
-            },
+  Widget build(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                var message = messages[index];
+                return MessageChat(message: message);
+              },
+            ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            children: [
-              MessageInputChat(),
-              ButtonSendChat(),
-            ],
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                MessageInputChat(),
+                ButtonSendChat(),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }

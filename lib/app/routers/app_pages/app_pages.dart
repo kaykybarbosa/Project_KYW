@@ -1,3 +1,5 @@
+import 'package:get/get_core/src/get_main.dart';
+
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
@@ -130,7 +132,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.chat,
-      page: () => const ChatProjectScreen(),
+      page: () => ChatProjectScreen(projectId: Get.parameters['id']!),
       transition: Transition.fade,
     ),
     GetPage(
