@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/domain/models/task.dart';
-import 'package:kyw_management/domain/models/user_test.dart';
 
 class ProjectModel extends Equatable {
   const ProjectModel({
@@ -23,7 +22,7 @@ class ProjectModel extends Equatable {
   final String? lastMessage;
   final String? lastMessageTime;
   final List<Task>? tasks;
-  final List<UserTest>? users;
+  final List? users;
   final String? inviteLink;
   final bool isImportant;
 
@@ -49,23 +48,22 @@ class ProjectModel extends Equatable {
     String? lastMessage,
     String? lastMessageTime,
     List<Task>? tasks,
-    List<UserTest>? users,
+    List? users,
     String? inviteLink,
     bool? isImportant,
-  }) {
-    return ProjectModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      image: image ?? this.image,
-      lastMessage: lastMessage ?? this.lastMessage,
-      lastMessageTime: lastMessageTime ?? this.lastMessageTime,
-      tasks: tasks ?? this.tasks,
-      users: users ?? this.users,
-      inviteLink: inviteLink ?? this.inviteLink,
-      isImportant: isImportant ?? this.isImportant,
-    );
-  }
+  }) =>
+      ProjectModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        image: image ?? this.image,
+        lastMessage: lastMessage ?? this.lastMessage,
+        lastMessageTime: lastMessageTime ?? this.lastMessageTime,
+        tasks: tasks ?? this.tasks,
+        users: users ?? this.users,
+        inviteLink: inviteLink ?? this.inviteLink,
+        isImportant: isImportant ?? this.isImportant,
+      );
 
   String usersToString() {
     String usersString = '';

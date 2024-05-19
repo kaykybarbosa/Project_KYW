@@ -6,7 +6,7 @@ class AddTaskState extends Equatable {
   final CategoryInput category;
   final DescriptionInput description;
   final String dateOfConclusion;
-  final List<UserTest> users;
+  final List users;
   final bool arrowDownPressed;
   final int heightDescription;
   final bool isValid;
@@ -41,7 +41,7 @@ class AddTaskState extends Equatable {
     CategoryInput? category,
     DescriptionInput? description,
     String? dateOfConclusion,
-    List<UserTest>? users,
+    List? users,
     bool? arrowDownPressed,
     int? heightDescription,
     bool? isValid,

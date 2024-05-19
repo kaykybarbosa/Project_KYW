@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:kyw_management/data/dtos/refresh_token_response.dart';
+import 'package:kyw_management/data/dtos/response/refresh_token_response.dart';
 import 'package:kyw_management/data/requests_models/user_login_request.dart';
 import 'package:kyw_management/data/requests_models/user_register_request.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';

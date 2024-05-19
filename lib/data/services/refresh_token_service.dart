@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
-import 'package:kyw_management/data/dtos/refresh_token_response.dart';
+import 'package:kyw_management/data/dtos/response/refresh_token_response.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:result_dart/result_dart.dart';
 

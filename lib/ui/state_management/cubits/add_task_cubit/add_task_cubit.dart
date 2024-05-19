@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:kyw_management/domain/models/user_test.dart';
 import 'package:kyw_management/utils/formaters.dart';
 
 import '../../models_input/models_states_export.dart';
@@ -75,8 +74,8 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     );
   }
 
-  void usersChanged(UserTest user) {
-    List<UserTest> users = List.from(state.users)..insert(0, user);
+  void usersChanged(user) {
+    List users = List.from(state.users)..insert(0, user);
 
     emit(state.copyWith(
       users: users,

@@ -1,5 +1,4 @@
 import 'package:kyw_management/domain/models/task.dart';
-import 'package:kyw_management/domain/models/user_test.dart';
 
 class Chat {
   Chat({
@@ -11,5 +10,5 @@ class Chat {
   String imageUri;
   String title;
   List<Task> tasks;
-  List<UserTest> members;
+  List members;
 }

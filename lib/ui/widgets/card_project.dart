@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/data/dtos/all_projects_response.dart';
+import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
