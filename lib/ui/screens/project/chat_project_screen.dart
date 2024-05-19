@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
-import 'package:kyw_management/domain/models/project_model.dart';
-
-import '../chat/widgets/chat_project/button_send_chat.dart';
-import '../chat/widgets/chat_project/message_chat.dart';
-import '../chat/widgets/chat_project/message_input_chat.dart';
+import 'package:kyw_management/ui/screens/chat/widgets/chat_project/button_send_chat.dart';
+import 'package:kyw_management/ui/screens/chat/widgets/chat_project/message_chat.dart';
+import 'package:kyw_management/ui/screens/chat/widgets/chat_project/message_input_chat.dart';
+import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 
 class ChatProjectScreen extends StatefulWidget {
-  const ChatProjectScreen({super.key, required this.projectId, ProjectModel? project})
-      : project = project ?? const ProjectModel(id: '1', name: '');
+  const ChatProjectScreen({super.key, required this.projectId});
 
   final String projectId;
-  final ProjectModel project;
 
   @override
   State<ChatProjectScreen> createState() => _ChatProjectScreenState();
@@ -24,48 +22,93 @@ class ChatProjectScreen extends StatefulWidget {
 class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
-  List<MessageModel> messages = [
-    MessageModel(
-      userReference: 'Yuri',
-      message: 'Bom dia pessoal',
-      dateSend: DateFormat().add_Hm().format(DateTime.now()),
-      isSender: false,
-      nameColor: Colors.orange,
-    ),
-  ];
+  void _getProjectById() => context.read<ProjectBloc>().add(GetProjectById(widget.projectId));
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    _getProjectById();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: CupertinoTheme.of(context).primaryColor,
-          leading: _Leading(widget: widget),
-          title: _Title(widget: widget),
-          actions: const [_PopupMenuItem()],
-          bottom: TabBar(
-            controller: _tabController,
-            labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
-            indicatorWeight: 3,
-            tabs: const [
-              Tab(text: 'Chat'),
-              Tab(text: 'Tarefas'),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            /// Chat
-            const _ChatProject(messages: []),
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        builder: (context, state) => state.status.isDetailSuccess
+            ? Scaffold(
+                appBar: AppBar(
+                  backgroundColor: CupertinoTheme.of(context).primaryColor,
+                  leading: _Leading(widget: widget),
+                  title: _Title(widget: widget),
+                  actions: const [_PopupMenuItem()],
+                  bottom: TabBar(
+                    controller: _tabController,
+                    labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
+                    indicatorWeight: 3,
+                    tabs: const <Widget>[
+                      Tab(text: 'Chat'),
+                      Tab(text: 'Tarefas'),
+                    ],
+                  ),
+                ),
+                body: TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    /// Chat
+                    switch (state.status) {
+                      ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
+                      ProjectStatus.detailFailure =>
+                        const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
+                      _ => _ChatProject(messages: [
+                          MessageModel(
+                            userReference: 'Test',
+                            message: state.detailProject.creator.nickname,
+                            dateSend: DateFormat().add_Hm().format(DateTime.now()),
+                            isSender: false,
+                            nameColor: Colors.orange,
+                          ),
+                        ]),
+                    },
 
-            /// Tasks
-            _TasksProject(widget: widget),
-          ],
+                    /// Tasks
+                    _TasksProject(widget: widget),
+                  ],
+                ),
+              )
+            : const Scaffold(body: Center(child: CircularProgressIndicator())),
+      );
+}
+
+class _Leading extends StatelessWidget {
+  const _Leading({required this.widget});
+
+  final ChatProjectScreen widget;
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        builder: (_, state) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: InkWell(
+            onTap: () => Get.back(),
+            borderRadius: const BorderRadius.all(Radius.elliptical(50, 50)),
+            highlightColor: Colors.grey,
+            splashColor: Colors.grey,
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.arrow_back),
+                state.detailProject.imageUrl == null
+                    ? CircleAvatar(
+                        radius: 16,
+                        backgroundImage: AssetImage(state.detailProject.imageUrl!),
+                      )
+                    : const CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.grey,
+                        child: Icon(Icons.group),
+                      )
+              ],
+            ),
+          ),
         ),
       );
 }
@@ -74,24 +117,113 @@ class _PopupMenuItem extends StatelessWidget {
   const _PopupMenuItem();
 
   @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      icon: const Icon(Icons.more_vert),
-      offset: const Offset(0, 95),
-      elevation: 9,
-      itemBuilder: (context) => [
-        const PopupMenuItem(
-          child: ListTile(title: Text('Projeto info')),
+  Widget build(BuildContext context) => PopupMenuButton(
+        icon: const Icon(Icons.more_vert),
+        offset: const Offset(0, 95),
+        elevation: 9,
+        itemBuilder: (context) => [
+          const PopupMenuItem(
+            child: ListTile(title: Text('Projeto info')),
+          ),
+          const PopupMenuItem(
+            child: ListTile(title: Text('Limpar mensagens')),
+          ),
+          const PopupMenuItem(
+            child: ListTile(title: Text('Sair do projeto')),
+          )
+        ],
+      );
+}
+
+class _Title extends StatelessWidget {
+  const _Title({required this.widget});
+
+  final ChatProjectScreen widget;
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        builder: (_, state) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Project name
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Text(
+                state.detailProject.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            // Members the group
+            false
+                ? _Members(widget: widget)
+                : const Text(
+                    'Você',
+                    style: TextStyle(fontSize: 12),
+                  )
+          ],
         ),
-        const PopupMenuItem(
-          child: ListTile(title: Text('Limpar mensagens')),
+      );
+}
+
+class _Members extends StatelessWidget {
+  const _Members({required this.widget});
+
+  final ChatProjectScreen widget;
+
+  @override
+  Widget build(BuildContext context) => const SizedBox(
+        width: 200,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: 2),
+                child: Text(
+                  'Kbuloso, Marquinho...',
+                  style: TextStyle(
+                    fontSize: 12,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        const PopupMenuItem(
-          child: ListTile(title: Text('Sair do projeto')),
-        )
-      ],
-    );
-  }
+      );
+}
+
+class _ChatProject extends StatelessWidget {
+  const _ChatProject({required this.messages});
+
+  final List<MessageModel> messages;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                var message = messages[index];
+                return MessageChat(message: message);
+              },
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: <Widget>[
+                MessageInputChat(),
+                ButtonSendChat(),
+              ],
+            ),
+          ),
+        ],
+      );
 }
 
 class _TasksProject extends StatelessWidget {
@@ -122,131 +254,4 @@ class _TasksProject extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Leading extends StatelessWidget {
-  const _Leading({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: InkWell(
-        onTap: () => Get.back(),
-        borderRadius: const BorderRadius.all(Radius.elliptical(50, 50)),
-        highlightColor: Colors.grey,
-        splashColor: Colors.grey,
-        child: Row(
-          children: [
-            const Icon(Icons.arrow_back),
-            widget.project.image != null
-                ? CircleAvatar(
-                    radius: 16,
-                    backgroundImage: AssetImage(widget.project.image!),
-                  )
-                : const CircleAvatar(
-                    radius: 16,
-                    backgroundColor: Colors.grey,
-                    child: Icon(Icons.group),
-                  )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Title extends StatelessWidget {
-  const _Title({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Project name
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 3),
-          child: Text(
-            widget.project.name,
-            style: const TextStyle(
-              fontSize: 18,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-        // Members the group
-        widget.project.users != null
-            ? _Members(widget: widget)
-            : const Text(
-                'Você',
-                style: TextStyle(fontSize: 12),
-              )
-      ],
-    );
-  }
-}
-
-class _Members extends StatelessWidget {
-  const _Members({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 2),
-              child: Text(
-                widget.project.usersToString(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ChatProject extends StatelessWidget {
-  const _ChatProject({required this.messages});
-
-  final List<MessageModel> messages;
-
-  @override
-  Widget build(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                var message = messages[index];
-                return MessageChat(message: message);
-              },
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                MessageInputChat(),
-                ButtonSendChat(),
-              ],
-            ),
-          ),
-        ],
-      );
 }

@@ -22,3 +22,12 @@ class AddProject extends ProjectEvent {
   @override
   List<Object> get props => [projects];
 }
+
+class GetProjectById extends ProjectEvent {
+  const GetProjectById(this.projectId);
+
+  final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
+}
