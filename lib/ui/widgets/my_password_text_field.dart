@@ -68,6 +68,6 @@ class _SuffixIcon extends StatelessWidget {
   Widget build(BuildContext context) => Icon(
         obscureText ? TIcons.eyesOff : TIcons.eyes,
         size: TConstants.iconSm,
-        color: Theme.of(context).colorScheme.onBackground,
+        color: Theme.of(context).colorScheme.onSurface,
       );
 }

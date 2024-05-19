@@ -153,10 +153,10 @@ class _AddButton extends StatelessWidget {
         builder: (context, state) => TextButton(
           onPressed: () => context.read<AddProjectBloc>().add(InvitedFriends()),
           style: ButtonStyle(
-            shape: MaterialStatePropertyAll(
+            shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(TConstants.cardRadiusXs))),
-            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-            padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
+            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+            padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 10)),
           ),
           child: const Chip(
             padding: EdgeInsets.zero,

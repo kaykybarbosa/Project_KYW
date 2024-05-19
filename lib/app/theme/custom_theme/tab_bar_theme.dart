@@ -8,6 +8,6 @@ abstract class TTabBarTheme {
     indicatorColor: TColors.base100,
     indicatorSize: TabBarIndicatorSize.tab,
     labelStyle: TextStyle(color: TColors.base100, fontSize: TConstants.fontSizeLg),
-    overlayColor: MaterialStatePropertyAll(TColors.base200),
+    overlayColor: WidgetStatePropertyAll(TColors.base200),
   );
 }

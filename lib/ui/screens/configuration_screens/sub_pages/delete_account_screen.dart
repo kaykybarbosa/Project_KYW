@@ -187,9 +187,9 @@ class _SubmitButton extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
+              foregroundColor: WidgetStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
               backgroundColor:
-                  MaterialStatePropertyAll(state.isValid ? Colors.red : const Color.fromARGB(250, 244, 67, 54)),
+                  WidgetStatePropertyAll(state.isValid ? Colors.red : const Color.fromARGB(250, 244, 67, 54)),
             ),
             onPressed: state.isValid ? () => context.read<DeleteAccountCubit>().formDeleteAccountSubimitted() : null,
             child: state.status.isInProgress

@@ -8,7 +8,7 @@ abstract class TChipTheme {
       borderRadius: BorderRadius.circular(TConstants.cardRadiusLg),
       side: const BorderSide(color: Colors.transparent),
     ),
-    color: const MaterialStatePropertyAll(TColors.base200),
+    color: const WidgetStatePropertyAll(TColors.base200),
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
   );
 }

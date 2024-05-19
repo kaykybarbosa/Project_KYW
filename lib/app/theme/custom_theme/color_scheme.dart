@@ -3,9 +3,9 @@ import 'package:kyw_management/utils/colors.dart';
 
 abstract class TColorScheme {
   static ColorScheme light = const ColorScheme.light(
-    background: TColors.base100,
+    surface: TColors.base100,
     primary: TColors.secondary,
     error: TColors.warn,
-    onBackground: TColors.base300,
+    onSurface: TColors.base300,
   );
 }

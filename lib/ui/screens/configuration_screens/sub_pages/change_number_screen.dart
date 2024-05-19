@@ -122,8 +122,8 @@ class _SubmitButton extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             style: ButtonStyle(
-              foregroundColor: MaterialStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
-              backgroundColor: MaterialStatePropertyAll(
+              foregroundColor: WidgetStatePropertyAll(state.isValid ? Colors.white : Colors.white70),
+              backgroundColor: WidgetStatePropertyAll(
                   state.isValid ? const Color.fromARGB(255, 6, 172, 147) : const Color.fromARGB(240, 6, 172, 147)),
             ),
             onPressed: state.isValid ? () => context.read<ChangePhoneCubit>().formChangePhoneSubmitted() : null,
