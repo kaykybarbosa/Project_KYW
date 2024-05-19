@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:kyw_management/data/storages/configure_app_storage.dart';
 import 'package:kyw_management/data/storages/current_user_storage.dart';
@@ -9,8 +11,10 @@ import 'package:kyw_management/domain/models/auth_user_model.dart';
 export 'package:kyw_management/domain/enums/app_status.dart';
 
 class AppController extends GetxController {
-  AppController({required ICurrentUserStorage currentUserStorage, required IConfigureAppStorage configureAppStorage})
-      : _currentUserStorage = currentUserStorage,
+  AppController({
+    required ICurrentUserStorage currentUserStorage,
+    required IConfigureAppStorage configureAppStorage,
+  })  : _currentUserStorage = currentUserStorage,
         _configureAppStorage = configureAppStorage;
 
   /// Instância
@@ -22,6 +26,7 @@ class AppController extends GetxController {
 
   // Props
   late final Rx<AppStatus> _status;
+  late final Directory _directory;
 
   // Estados do controller
   @override
@@ -30,11 +35,13 @@ class AppController extends GetxController {
     _status = AppStatus.unauthenticated.obs;
   }
 
-  // Métodos
+  // M É T O D O S
 
   // -- GETTERS
 
   AppStatus get status => _status.value;
+
+  Directory get directory => _directory;
 
   Future<CurrentUserModel?> get currentUser async => await _currentUserStorage.currentUser;
 
@@ -60,4 +67,7 @@ class AppController extends GetxController {
 
   /// Atualiza dados de autenticação do usuário.
   Future<void> setAuthenticationUser(AuthUserModel authUser) async => await _currentUserStorage.writeAuthUser(authUser);
+
+  /// Adicionar o diretório de documentos do usuário.
+  void setDirectory(Directory directory) => _directory = directory;
 }
