@@ -7,7 +7,7 @@ class MessageInputChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SearchBar(
-        backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
+        backgroundColor: WidgetStatePropertyAll(Colors.grey[300]),
         hintText: 'Mensagem',
         trailing: [
           Transform.rotate(
