@@ -13,7 +13,6 @@ class ConfigurationAccountScreen extends StatelessWidget {
       {
         'label': 'Configuração de duas etapas',
         'icon': TIcons.security,
-        'color': TColors.secondary,
         'onTap': () => Get.toNamed(AppRoutes.twoStepVerification),
       },
       {
@@ -37,7 +36,6 @@ class ConfigurationAccountScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: TConstants.fontSizeLg,
               fontWeight: FontWeight.w500,
-              color: TColors.secondary,
             ),
           ),
           onTap: options[index]['onTap'],

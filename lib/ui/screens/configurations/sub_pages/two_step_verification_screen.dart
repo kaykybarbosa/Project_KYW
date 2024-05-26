@@ -58,7 +58,7 @@ class _TextTheInput extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.0),
         child: Text(
           'Insira seu e-mail',
-          style: TextStyle(fontSize: 19.0),
+          style: TextStyle(fontSize: TConstants.fontSizeMd),
         ),
       );
 }
@@ -67,13 +67,11 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: BlocBuilder<TwoStepVerificationCubit, TwoStepVerificationState>(
-        buildWhen: (previous, current) => previous.email != current.email,
-        builder: (context, state) {
-          return TextFormField(
+  Widget build(BuildContext context) => BlocBuilder<TwoStepVerificationCubit, TwoStepVerificationState>(
+        buildWhen: (previous, current) => previous.email.value != current.email.value,
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: TextFormField(
               initialValue: state.email.value,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
@@ -83,11 +81,9 @@ class _EmailInput extends StatelessWidget {
                 border: const OutlineInputBorder(),
                 errorText: state.email.displayError != null ? "Por favor, informe um e-mail válido!" : null,
               ),
-              onChanged: (email) => context.read<TwoStepVerificationCubit>().emailChanged(email));
-        },
-      ),
-    );
-  }
+              onChanged: (email) => context.read<TwoStepVerificationCubit>().emailChanged(email)),
+        ),
+      );
 }
 
 class _MesssageInfo extends StatelessWidget {
@@ -119,14 +115,12 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<TwoStepVerificationCubit, TwoStepVerificationState>(
         builder: (context, state) => SubmitButton(
+          label: 'Habilitar',
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
             backgroundColor: TColors.success,
-            // disabledForegroundColor: TColors.base100.withOpacity(.5),
-            // disabledBackgroundColor: TColors.success.withOpacity(.9),
           ),
           onPressed: state.isValid ? () => context.read<TwoStepVerificationCubit>().formTwoStepSubmitted() : null,
-          label: 'Habilitar',
         ),
       );
 }

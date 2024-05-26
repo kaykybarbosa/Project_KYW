@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
-import 'package:kyw_management/ui/screens/configuration_screens/widgets/config_option.dart';
+import 'package:kyw_management/ui/screens/configurations/widgets/config_option.dart';
 import 'package:kyw_management/utils/icons.dart';
 
 class ConfigurationScreen extends StatelessWidget {
