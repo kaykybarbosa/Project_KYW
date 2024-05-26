@@ -6,20 +6,16 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc()
-      : super(const HomeState(
-          currentScreen: Screens.project,
-          haveMessage: true,
-        )) {
-    on<ScreenChangedHome>(_onScreenChanged);
-    on<HaveMessageHome>(_onHaveMessage);
+  HomeBloc() : super(const HomeState()) {
+    on<ScreenChanged>(_onScreenChanged);
+    on<HaveMessage>(_onHaveMessage);
   }
 
-  void _onScreenChanged(ScreenChangedHome event, Emitter<HomeState> emit) {
+  void _onScreenChanged(ScreenChanged event, Emitter<HomeState> emit) {
     emit(state.copyWith(currentScreen: event.screen));
   }
 
-  void _onHaveMessage(HaveMessageHome event, Emitter<HomeState> emit) {
+  void _onHaveMessage(HaveMessage event, Emitter<HomeState> emit) {
     emit(state.copyWith(haveMessage: event.haveMessage));
   }
 }

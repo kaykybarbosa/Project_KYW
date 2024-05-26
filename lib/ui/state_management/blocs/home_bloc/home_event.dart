@@ -2,13 +2,10 @@ part of 'home_bloc.dart';
 
 sealed class HomeEvent extends Equatable {
   const HomeEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-class ScreenChangedHome extends HomeEvent {
-  const ScreenChangedHome({required this.screen});
+class ScreenChanged extends HomeEvent {
+  const ScreenChanged({required this.screen});
 
   final Screens screen;
 
@@ -16,8 +13,8 @@ class ScreenChangedHome extends HomeEvent {
   List<Object> get props => [screen];
 }
 
-class HaveMessageHome extends HomeEvent {
-  const HaveMessageHome({required this.haveMessage});
+class HaveMessage extends HomeEvent {
+  const HaveMessage({required this.haveMessage});
 
   final bool haveMessage;
 
