@@ -12,7 +12,7 @@ abstract class TIcons {
   static const IconData share = FontAwesomeIcons.share;
   static const IconData configurations = FontAwesomeIcons.gear;
   static const IconData user = FontAwesomeIcons.user;
-  static const IconData userSolid = FontAwesomeIcons.solidUser;
+  static const IconData solidUser = FontAwesomeIcons.solidUser;
   static const IconData info = FontAwesomeIcons.circleInfo;
   static const IconData singOut = FontAwesomeIcons.rightFromBracket;
   static const IconData pen = FontAwesomeIcons.pen;
@@ -27,8 +27,12 @@ abstract class TIcons {
   static const IconData security = FontAwesomeIcons.shieldHalved;
   static const IconData trash = FontAwesomeIcons.solidTrashCan;
   static const IconData comments = FontAwesomeIcons.commentDots;
+  static const IconData email = FontAwesomeIcons.solidEnvelope;
+  static const IconData phone = FontAwesomeIcons.phone;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
   static const IconData arrowLeftIOS = FontAwesomeIcons.chevronLeft;
+  static const IconData anglesDown = FontAwesomeIcons.anglesDown;
+  static const IconData anglesUp = FontAwesomeIcons.anglesUp;
 }
