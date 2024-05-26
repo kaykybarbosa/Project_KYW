@@ -4,11 +4,14 @@ import 'package:kyw_management/data/services/refresh_token_service.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
 
 class InterceptorRequestsAuth extends InterceptorsWrapper {
-  final AppController _appController = AppController.instance;
-  final IRefreshTokenService _refreshService = IRefreshTokenService.instance;
+  late final AppController _appController;
+  late final IRefreshTokenService _refreshService;
 
   @override
   Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    _appController = AppController.instance;
+    _refreshService = IRefreshTokenService.instance;
+
     CurrentUserModel? currentUser = await _appController.currentUser;
 
     /// Realizar o refresh token se [currentUser] não for null.
