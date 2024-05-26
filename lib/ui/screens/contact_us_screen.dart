@@ -1,6 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/ui/widgets/my_text_field.dart';
+import 'package:kyw_management/ui/widgets/submit_button.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
@@ -10,148 +15,156 @@ class ContactUsScreen extends StatefulWidget {
 }
 
 class _ContactUsScreenState extends State<ContactUsScreen> {
-  final String info =
-      'Estamos aqui para ajudar! Se você tiver alguma dúvida, comentário ou precisa de assistência, por favor, entre em contato conosco. Preencha o formulário abaixo e responderemos o mais rápido possível.';
-
-  final String subInfo = 'Sua responsta irá aparecer na aba de notificações.';
-
-  int heightInput = 5;
+  final valueMax = 10;
+  final valueMin = 3;
+  int maxLines = 3;
 
   void _setHeightInput(double? value) {
     setState(() {
       if (value != null) {
-        if (value > 0 && heightInput != 25) {
-          heightInput += 1;
-        } else if (value < 0 && heightInput != 5) {
-          heightInput -= 1;
+        if (value > 0 && maxLines != valueMax) {
+          maxLines += 1;
+        } else if (value < 0 && maxLines != valueMin) {
+          maxLines -= 1;
         }
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Contate-nos')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
-        child: SingleChildScrollView(
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('Contate-nos')),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Input the description
-              CupertinoTextFormFieldRow(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(5.0),
-                    topRight: Radius.circular(5.0),
-                  ),
-                  border: Border.all(
-                      color: CupertinoTheme.of(context).primaryColor),
-                ),
-                padding: EdgeInsets.zero,
-                placeholder: 'Descrição',
-                maxLines: heightInput,
-              ),
-
-              // Icon for change height the [InputDescription]
-              GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 3.0, horizontal: 25.0),
-                  decoration: const BoxDecoration(
-                    color: CupertinoColors.activeBlue,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5.0),
-                      bottomRight: Radius.circular(5.0),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.anglesDown,
-                        size: 18.0,
-                        color: CupertinoColors.white,
-                      )
-                    ],
-                  ),
-                ),
-                onVerticalDragUpdate: (onLong) {
-                  _setHeightInput(onLong.primaryDelta);
-                },
-              ),
-
-              const SizedBox(height: 60.0),
-
-              // Card the informations
-              Container(
-                padding: const EdgeInsets.only(left: 10.0),
-                decoration: BoxDecoration(
-                  color: CupertinoTheme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: CupertinoColors.systemGrey,
-                      spreadRadius: 0.5,
-                      blurRadius: 4.0,
-                    )
-                  ],
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.white,
-                    border: Border.all(color: CupertinoColors.systemGrey3),
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(5.0),
-                      bottomRight: Radius.circular(5.0),
-                    ),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 20.0),
+            children: <Widget>[
+              Flexible(
+                child: SingleChildScrollView(
                   child: Column(
-                    children: [
-                      Text(
-                        info,
-                        softWrap: true,
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(fontSize: 18.3),
+                    children: <Widget>[
+                      const Gap(10),
+
+                      /// Descrição
+                      MyTextFormField(
+                        keyboardType: TextInputType.multiline,
+                        hintText: 'Descrição',
+                        maxLines: maxLines,
                       ),
-                      const SizedBox(height: 15.0),
-                      Text(
-                        subInfo,
-                        style: const TextStyle(
-                          fontSize: 17.0,
-                          color: CupertinoColors.systemBlue,
+
+                      /// Ícone
+                      GestureDetector(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
+                          decoration: const BoxDecoration(
+                            color: TColors.primary,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(TConstants.cardRadiusXs),
+                              bottomRight: Radius.circular(TConstants.cardRadiusXs),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              AnimatedRotation(
+                                turns: maxLines == valueMax ? -0.5 : 0.0,
+                                duration: const Duration(milliseconds: 200),
+                                child: const Icon(
+                                  TIcons.anglesDown,
+                                  size: TConstants.iconSm,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      )
+                        onVerticalDragUpdate: (onLong) => _setHeightInput(onLong.primaryDelta),
+                      ),
+
+                      const Gap(60.0),
+
+                      /// Card com as informações
+                      const _InformationsCard(),
                     ],
                   ),
                 ),
               ),
 
-              const SizedBox(height: 140.0),
-
-              // Button send message
-              SizedBox(
-                width: double.infinity,
-                child: CupertinoButton(
-                  color: const Color(0xFF06AC93),
-                  child: const Text(
-                    'Enviar Mensagem',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
-              ),
+              /// Enviar mensagem
+              const _SubmitButton(),
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+}
+
+class _InformationsCard extends StatelessWidget {
+  const _InformationsCard();
+
+  final String info =
+      'Estamos aqui para ajudar! Se você tiver alguma dúvida, comentário ou precisa de assistência, por favor, entre em contato conosco. Preencha o formulário abaixo e responderemos o mais rápido possível.';
+
+  final String subInfo = 'Sua responsta irá aparecer na aba de notificações.';
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.only(left: 7.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+          boxShadow: const [
+            BoxShadow(
+              color: TColors.base200,
+              blurRadius: TConstants.blurRadius,
+            )
+          ],
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+          decoration: BoxDecoration(
+            color: TColors.base100,
+            border: Border.all(color: TColors.base200),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(TConstants.cardRadiusXs),
+              bottomRight: Radius.circular(TConstants.cardRadiusXs),
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              /// Informação
+              Text(
+                info,
+                style: const TextStyle(fontSize: TConstants.fontSizeMd),
+              ),
+              const Gap(15),
+
+              /// Descrição
+              Text(
+                subInfo,
+                style: const TextStyle(
+                  fontSize: TConstants.fontSizeMd,
+                  color: TColors.primary,
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+}
+
+class _SubmitButton extends StatelessWidget {
+  const _SubmitButton();
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: SubmitButton(
+          label: 'Enviar mensagem',
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            backgroundColor: const Color(0xFF06AC93),
+          ),
+        ),
+      );
 }
