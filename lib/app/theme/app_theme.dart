@@ -8,6 +8,7 @@ import 'package:kyw_management/app/theme/custom_theme/elevated_button_theme.dart
 import 'package:kyw_management/app/theme/custom_theme/input_decoration_theme.dart';
 import 'package:kyw_management/app/theme/custom_theme/search_bar_theme.dart';
 import 'package:kyw_management/app/theme/custom_theme/tab_bar_theme.dart';
+import 'package:kyw_management/app/theme/custom_theme/text_theme.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
@@ -26,6 +27,11 @@ abstract class AppTheme {
         dividerColor: TColors.base200,
         dividerTheme: const DividerThemeData(color: TColors.base200, space: 0),
         popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
+        textTheme: TTextTheme.light,
+        listTileTheme: const ListTileThemeData(
+          titleTextStyle: TextStyle(color: TColors.secondary),
+          iconColor: TColors.secondary,
+        ),
         iconTheme: const IconThemeData(
           color: TColors.base100,
           size: TConstants.iconMd - 2,
