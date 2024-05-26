@@ -14,6 +14,7 @@ abstract class AppPages {
       name: AppRoutes.home,
       page: () => const HomeScreen(),
       transition: Transition.fade,
+      binding: AppControllerBindings(),
     ),
     GetPage(
       name: AppRoutes.signIn,
