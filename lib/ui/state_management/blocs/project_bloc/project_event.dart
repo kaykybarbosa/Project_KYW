@@ -31,3 +31,7 @@ class GetProjectById extends ProjectEvent {
   @override
   List<Object> get props => [projectId];
 }
+
+class ConnectWebSocket extends ProjectEvent {
+  const ConnectWebSocket();
+}

@@ -25,11 +25,13 @@ class ProjectScreen extends StatefulWidget {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   void _getAllProjects() => context.read<ProjectBloc>().add(const GetAllProjects());
+  void _starWebSocket() => context.read<ProjectBloc>().add(const ConnectWebSocket());
 
   @override
   void initState() {
     super.initState();
     _getAllProjects();
+    _starWebSocket();
   }
 
   @override
