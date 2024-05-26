@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
@@ -43,32 +43,32 @@ class CircleImage extends StatelessWidget {
             ),
           ),
 
-          /// Ícone de alteração
+          /// Ícone de alterar
           Visibility(
             visible: changeIconVisible,
-            child: Stack(
-              alignment: const Alignment(2.5, -2.5),
-              children: <Widget>[
-                Container(
-                  width: 22.0,
-                  height: 22.0,
-                  padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
-                  decoration: BoxDecoration(
-                    color: TColors.base100,
-                    border: Border.all(color: TColors.secondary.withOpacity(.60)),
-                    borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+            child: InkWell(
+              onTap: onTap,
+              child: Stack(
+                alignment: const Alignment(2.5, -2.5),
+                children: <Widget>[
+                  Container(
+                    width: 22.0,
+                    height: 22.0,
+                    padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
+                    decoration: BoxDecoration(
+                      color: TColors.base100,
+                      border: Border.all(color: TColors.base200),
+                      borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+                    ),
+                    child: Container(),
                   ),
-                  child: Container(),
-                ),
-                GestureDetector(
-                  onTap: onTap,
-                  child: const Icon(
+                  const Icon(
                     TIcons.pen,
                     size: TConstants.iconSm + 2,
                     color: TColors.primary,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

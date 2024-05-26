@@ -59,36 +59,38 @@ class MyFilter extends StatelessWidget {
   final double? iconSize;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          margin: const EdgeInsets.only(top: 15.0, bottom: 10.0),
-          padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 4.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
-            border: Border.all(color: TColors.base200),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              /// Nome
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: labelSize,
-                  fontWeight: FontWeight.w600,
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 4.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+              border: Border.all(color: TColors.base200),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                /// Nome
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: labelSize,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const Gap(5),
+                const Gap(5),
 
-              /// Ícone
-              Icon(
-                icon,
-                color: TColors.base200,
-                size: iconSize,
-              ),
-            ],
+                /// Ícone
+                Icon(
+                  icon,
+                  color: TColors.base200,
+                  size: iconSize,
+                ),
+              ],
+            ),
           ),
         ),
       );

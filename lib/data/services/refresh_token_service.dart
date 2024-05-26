@@ -7,7 +7,7 @@ import 'package:result_dart/result_dart.dart';
 
 abstract class IRefreshTokenService {
   /// Instância do service.
-  static IRefreshTokenService get instance => Get.find<IRefreshTokenService>();
+  static IRefreshTokenService get instance => Get.find();
 
   /// Realizar uma requisição para atualizar o token.
   ///

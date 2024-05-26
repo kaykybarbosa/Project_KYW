@@ -22,17 +22,19 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-    tabController.addListener(() => setCurrentScreen());
+    tabController.addListener(() => _setCurrentScreen());
   }
 
-  void setCurrentScreen() {
+  void _setCurrentScreen() {
     /// [value] == 0 => ShowMyProjects and
     /// [value] == 1 => ShowMyTasks
 
+    final homeContext = context.read<HomeBloc>();
+
     if (tabController.index == 0) {
-      context.read<HomeBloc>().add(const ScreenChangedHome(screen: Screens.project));
+      homeContext.add(const ScreenChanged(screen: Screens.project));
     } else {
-      context.read<HomeBloc>().add(const ScreenChangedHome(screen: Screens.task));
+      homeContext.add(const ScreenChanged(screen: Screens.task));
     }
   }
 
