@@ -1,4 +1,5 @@
 import 'package:get/get_core/src/get_main.dart';
+import 'package:kyw_management/data/repositories/repositories_bindings.dart';
 
 import 'app_pages_exports.dart';
 
@@ -14,7 +15,12 @@ abstract class AppPages {
       name: AppRoutes.home,
       page: () => const HomeScreen(),
       transition: Transition.fade,
-      binding: AppControllerBindings(),
+      bindings: [
+        AppControllerBindings(),
+        HttpServiceBindings(),
+        RepositoriesBindings(),
+        AuthRepositoryBindings(),
+      ],
     ),
     GetPage(
       name: AppRoutes.signIn,
