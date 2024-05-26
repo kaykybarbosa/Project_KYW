@@ -1,50 +1,68 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kyw_management/data/dtos/request/message_request.dart';
+import 'package:kyw_management/data/repositories/message_repository.dart';
+import 'package:kyw_management/data/services/web_socket_client.dart';
+import 'package:kyw_management/domain/exception/api_exception.dart';
 import 'package:kyw_management/domain/models/message.dart';
-import 'package:kyw_management/env/env.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class IMessageService {
   static IMessageService get instance => Get.find<IMessageService>();
 
-  Future<void> initConnection();
+  AsyncResult<Unit, ApiException> createMessage(MessageRequest message);
 
-  Future<void> broadcastNotifications({
-    required void Function(Message message) onReceive,
-  });
+  void subscribeToMessageUpdates(Function(Map<String, dynamic>) onMessageReceived);
 
-  void sendMessage(MessageRequest request);
+  void unsubscribeFromMessageUpdates();
 }
 
 class MessageService implements IMessageService {
-  late WebSocketChannel _channel;
+  MessageService({
+    required IMessageRepository messageService,
+    required WebSocketClient websocket,
+  })  : _message = messageService,
+        _ws = websocket;
+
+  final IMessageRepository _message;
+  final WebSocketClient _ws;
+  StreamSubscription? _messageSubscription;
 
   @override
-  Future<void> initConnection() async {
-    Uri wsUrl = Uri.parse('wss://${Env.BASE_URL}messagens/sent/desc');
+  AsyncResult<Unit, ApiException> createMessage(MessageRequest message) async {
+    try {
+      var payload = {'event': 'message.create', 'data': message.toJson()};
 
-    _channel = WebSocketChannel.connect(wsUrl);
+      _ws.send(jsonEncode(payload));
 
-    await _channel.ready;
+      return unit.toSuccess();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  Future<List<Message>> fetchMessages(String chatRoomId) async {
+    final result = await _message.getMessages();
+
+    return result.getOrNull() ?? [];
   }
 
   @override
-  Future<void> broadcastNotifications({
-    required void Function(Message message) onReceive,
-  }) async {
-    _channel.stream.listen(
-      (event) {
-        final message = Message.fromJson(event);
-        onReceive(message);
+  void subscribeToMessageUpdates(
+    void Function(Map<String, dynamic>) onMessageReceived,
+  ) {
+    _messageSubscription = _ws.messageUpdates().listen(
+      (message) {
+        onMessageReceived(message);
       },
-      onError: (_) async {},
-      onDone: () async {},
-      cancelOnError: true,
     );
   }
 
   @override
-  void sendMessage(MessageRequest request) {
-    _channel.sink.add(request.toJson());
+  void unsubscribeFromMessageUpdates() {
+    _messageSubscription?.cancel();
+    _messageSubscription = null;
   }
 }
