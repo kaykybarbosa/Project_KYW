@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
-import 'package:kyw_management/app/controllers/app_controller_bindings.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/repositories/repositories_bindings.dart';
 import 'package:kyw_management/data/services/storage_service/storages_service_bindings.dart';
+import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/data/storages/storages_bindings.dart';
+import 'package:kyw_management/env/env.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ Future<void> dependencyInjections() async {
   AuthRepositoryBindings().dependencies();
 
   _configuration();
+  _initWebSocket();
 }
 
 Future<void> _initSharedPrefs() async {
@@ -32,4 +34,8 @@ Future<void> _configuration() async {
   final directory = await getApplicationDocumentsDirectory();
 
   AppController.instance.setDirectory(directory);
+}
+
+void _initWebSocket() {
+  WebSocketClient.instance.connect(Env.WEBSOCKET);
 }
