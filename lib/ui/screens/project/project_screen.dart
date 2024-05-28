@@ -25,18 +25,23 @@ class ProjectScreen extends StatefulWidget {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   void _getAllProjects() => context.read<ProjectBloc>().add(const GetAllProjects());
-  void _starWebSocket() => context.read<ProjectBloc>().add(const ConnectWebSocket());
+  void _subscribeInProjectWS() => context.read<ProjectBloc>().add(const ConnectWebSocket());
 
   @override
   void initState() {
     super.initState();
     _getAllProjects();
-    _starWebSocket();
   }
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
-        builder: (context, state) => Scaffold(
+  Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
+        listenWhen: (previous, current) => previous.status != current.status,
+        listener: (_, state) {
+          if (state.status.isSuccess) {
+            _subscribeInProjectWS();
+          }
+        },
+        builder: (_, state) => Scaffold(
           body: switch (state.status) {
             ProjectStatus.inProgress => const Center(child: CircularProgressIndicator()),
             ProjectStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
