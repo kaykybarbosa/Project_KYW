@@ -27,6 +27,6 @@ export 'package:kyw_management/ui/screens/create_project/invite_friends__screen.
 export 'package:kyw_management/ui/screens/home/home_screen.dart';
 export 'package:kyw_management/ui/screens/my_account/my_account_screen.dart';
 export 'package:kyw_management/ui/screens/notification_screen.dart';
-export 'package:kyw_management/ui/screens/project/chat_project_screen.dart';
+export 'package:kyw_management/ui/screens/project/sub_pages/chat_project_screen.dart';
 export 'package:kyw_management/ui/screens/tasks/details_task_screen.dart';
 export 'package:kyw_management/utils/constants.dart';
