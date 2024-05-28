@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
               projectRepository: IProjectRepository.instance,
               webSocket: WebSocketClient.instance,
               messageService: IMessageService.instance,
+              appController: AppController.instance,
             ),
           ),
           BlocProvider(
