@@ -1,18 +1,17 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/services/refresh_token_service.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
 
 class InterceptorRequestsAuth extends InterceptorsWrapper {
-  late final AppController _appController;
-  late final IRefreshTokenService _refreshService;
-
   @override
   Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    _appController = AppController.instance;
-    _refreshService = IRefreshTokenService.instance;
+    final appController = AppController.instance;
+    final refreshService = IRefreshTokenService.instance;
 
-    CurrentUserModel? currentUser = await _appController.currentUser;
+    CurrentUserModel? currentUser = await appController.currentUser;
 
     /// Realizar o refresh token se [currentUser] não for null.
     if (currentUser == null) {
@@ -22,13 +21,13 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
     String? token = currentUser.token;
 
     /// Caso o token esteja inválido, solicitar refresh token
-    if (!_refreshService.tokenIsValid(token: token)) {
-      var response = await _refreshService.isAuthenticated(token: token);
+    if (!refreshService.tokenIsValid(token: token)) {
+      var response = await refreshService.isAuthenticated(token: token);
 
       if (response.isSuccess()) {
-        response.map((success) async => await _refreshService.updateTokens(response: success));
+        response.map((success) async => await refreshService.updateTokens(response: success));
 
-        currentUser = await _appController.currentUser;
+        currentUser = await appController.currentUser;
 
         token = currentUser?.token;
       }
@@ -42,6 +41,11 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     String message = 'Erro enquanto enviava seus dados!';
+
+    log(
+      'Message: $message, Request: {data: ${err.requestOptions.data}, baseUrl: ${err.requestOptions.baseUrl}}, Response: {data: ${err.response?.data}}',
+      name: 'ERROR',
+    );
 
     return handler.next(DioException(
       requestOptions: RequestOptions(),
