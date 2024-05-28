@@ -10,7 +10,7 @@ class MessageRequest {
   String message;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-        'userId': userId,
+        'sender': userId,
         'content': message,
       };
 

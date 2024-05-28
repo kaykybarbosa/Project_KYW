@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 class InterceptorRequests extends InterceptorsWrapper {
@@ -12,6 +14,11 @@ class InterceptorRequests extends InterceptorsWrapper {
     } else {
       message = err.response?.data['message'] ?? message;
     }
+
+    log(
+      'Message: $message, Request: {data: ${err.requestOptions.data}, baseUrl: ${err.requestOptions.baseUrl}}, Response: {data: ${err.response?.data}}',
+      name: 'ERROR',
+    );
 
     return handler.next(
       DioException(
