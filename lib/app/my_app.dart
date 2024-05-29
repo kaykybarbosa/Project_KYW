@@ -10,7 +10,6 @@ import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/configure_login_service.dart';
 import 'package:kyw_management/data/services/message_service.dart';
-import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_project_bloc/filter_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
@@ -40,7 +39,6 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => ProjectBloc(
               projectRepository: IProjectRepository.instance,
-              webSocket: WebSocketClient.instance,
               messageService: IMessageService.instance,
               appController: AppController.instance,
             ),
