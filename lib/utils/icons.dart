@@ -29,6 +29,8 @@ abstract class TIcons {
   static const IconData comments = FontAwesomeIcons.commentDots;
   static const IconData email = FontAwesomeIcons.solidEnvelope;
   static const IconData phone = FontAwesomeIcons.phone;
+  static const IconData camera = FontAwesomeIcons.camera;
+  static const IconData attachment = FontAwesomeIcons.paperclip;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
