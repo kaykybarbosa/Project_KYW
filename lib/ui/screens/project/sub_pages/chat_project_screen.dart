@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
-import 'package:kyw_management/ui/screens/chat/widgets/chat_project/button_send_chat.dart';
 import 'package:kyw_management/ui/screens/chat/widgets/chat_project/message_chat.dart';
-import 'package:kyw_management/ui/screens/chat/widgets/chat_project/message_input_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/icons.dart';
 
 class ChatProjectScreen extends StatefulWidget {
   const ChatProjectScreen({super.key, required this.projectId});
@@ -59,15 +59,17 @@ class _ChatProjectScreenState extends State<ChatProjectScreen> with SingleTicker
                       ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
                       ProjectStatus.detailFailure =>
                         const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
-                      _ => _ChatProject(messages: [
-                          MessageModel(
-                            userReference: 'Test',
-                            message: state.detailProject.creator.nickname,
-                            dateSend: DateFormat().add_Hm().format(DateTime.now()),
-                            isSender: false,
-                            nameColor: Colors.orange,
-                          ),
-                        ]),
+                      _ => _ChatProject(
+                          messages: [
+                            MessageModel(
+                              userReference: 'Test',
+                              message: state.detailProject.creator.nickname,
+                              dateSend: DateFormat().add_Hm().format(DateTime.now()),
+                              isSender: false,
+                              nameColor: Colors.orange,
+                            ),
+                          ],
+                        ),
                     },
 
                     /// Tasks
@@ -204,6 +206,7 @@ class _ChatProject extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          /// Mensagens
           Expanded(
             child: ListView.builder(
               itemCount: messages.length,
@@ -213,15 +216,9 @@ class _ChatProject extends StatelessWidget {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: <Widget>[
-                MessageInputChat(),
-                ButtonSendChat(),
-              ],
-            ),
-          ),
+
+          /// Enviar mensagem
+          const _MessageInput(),
         ],
       );
 }
@@ -232,26 +229,101 @@ class _TasksProject extends StatelessWidget {
   final ChatProjectScreen widget;
 
   @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 10,
-      ),
-      child: Column(
-        children: [
-          Text('TASKS')
-          // Input Search
-          // MySearchBar(
-          //   hintText: 'Buscar tarefas',
-          //   search: () {},
-          // ),
-          // Filters bar
-          // const FiltersBarTasks(),
-          // All tasks
-          // ListAllTaks(projectId: widget.project.id),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 10,
+        ),
+        child: Column(
+          children: [
+            Text('TASKS')
+            // Input Search
+            // MySearchBar(
+            //   hintText: 'Buscar tarefas',
+            //   search: () {},
+            // ),
+            // Filters bar
+            // const FiltersBarTasks(),
+            // All tasks
+            // ListAllTaks(projectId: widget.project.id),
+          ],
+        ),
+      );
+}
+
+class _MessageInput extends StatelessWidget {
+  const _MessageInput();
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: <Widget>[
+            /// Input
+            Flexible(
+              child: SearchBar(
+                backgroundColor: WidgetStatePropertyAll(Colors.grey[300]),
+                hintText: 'Mensagem',
+                trailing: [
+                  /// Anexo
+                  _MessageIcon(
+                    TIcons.attachment,
+                    onTap: () {},
+                  ),
+
+                  /// Câmera
+                  _MessageIcon(
+                    TIcons.camera,
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+
+            /// Enviar
+            const _SendMessageBtn(),
+          ],
+        ),
+      );
+}
+
+class _MessageIcon extends StatelessWidget {
+  const _MessageIcon(this.icon, {this.onTap});
+
+  final IconData icon;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+        onPressed: onTap,
+        highlightColor: TColors.base300.withOpacity(.5),
+        icon: Icon(
+          icon,
+          color: TColors.base300,
+          size: TConstants.iconMd - 4,
+        ),
+      );
+}
+
+class _SendMessageBtn extends StatelessWidget {
+  const _SendMessageBtn();
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: 40,
+        height: 40,
+        margin: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: TColors.primary,
+        ),
+        child: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.send_rounded,
+            color: Colors.white,
+          ),
+        ),
+      );
 }
