@@ -9,9 +9,6 @@ sealed class ProjectEvent extends Equatable {
 
 class GetAllProjects extends ProjectEvent {
   const GetAllProjects();
-
-  @override
-  List<Object> get props => [];
 }
 
 class AddProject extends ProjectEvent {
@@ -34,4 +31,14 @@ class GetProjectById extends ProjectEvent {
 
 class ConnectWebSocket extends ProjectEvent {
   const ConnectWebSocket();
+}
+
+class SendMessage extends ProjectEvent {
+  const SendMessage(this.projectId,{ required this.message});
+
+  final String projectId;
+  final String message;
+
+    @override
+  List<Object> get props => [message];
 }
