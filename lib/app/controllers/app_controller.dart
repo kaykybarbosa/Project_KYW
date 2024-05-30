@@ -15,7 +15,8 @@ class AppController extends GetxController {
     required ICurrentUserStorage currentUserStorage,
     required IConfigureAppStorage configureAppStorage,
   })  : _currentUserStorage = currentUserStorage,
-        _configureAppStorage = configureAppStorage;
+        _configureAppStorage = configureAppStorage,
+        _currentUser = CurrentUserModel();
 
   /// Instância
   static AppController get instance => Get.find<AppController>();
@@ -27,7 +28,7 @@ class AppController extends GetxController {
   // Props
   late final Rx<AppStatus> _status;
   late final Directory _directory;
-  late final CurrentUserModel? _currentUser;
+  CurrentUserModel _currentUser;
 
   // Estados do controller
   @override
@@ -35,7 +36,7 @@ class AppController extends GetxController {
     super.onInit();
     _status = AppStatus.unauthenticated.obs;
 
-    _initCurrentUser();
+    _setCurrentUser();
   }
 
   // M É T O D O S
@@ -46,7 +47,7 @@ class AppController extends GetxController {
 
   Directory get directory => _directory;
 
-  CurrentUserModel? get currentUser => _currentUser;
+  CurrentUserModel get currentUser => _currentUser;
 
   ConfigureAppModel get configureApp => _configureAppStorage.configureApp ?? ConfigureAppModel.empty();
 
@@ -54,8 +55,8 @@ class AppController extends GetxController {
 
   // -- SETTERS
 
-  void _initCurrentUser() async {
-    await _currentUserStorage.currentUser.then((value) => _currentUser = value);
+  Future _setCurrentUser() async {
+    await _currentUserStorage.currentUser.then((value) => _currentUser = value ?? CurrentUserModel());
   }
 
   /// Atualiza o status do usuário no app.
@@ -70,6 +71,8 @@ class AppController extends GetxController {
     updateStatus(AppStatus.authenticated);
 
     await _currentUserStorage.writeCurrentUser(currentUser);
+
+    await _setCurrentUser();
   }
 
   /// Atualiza dados de autenticação do usuário.
