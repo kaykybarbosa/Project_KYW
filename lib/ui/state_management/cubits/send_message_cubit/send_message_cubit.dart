@@ -46,7 +46,7 @@ class SendMessageCubit extends Cubit<SendMessageState> {
 
     if (message == null || message.value.isEmpty) return;
 
-    final currentUser = await _controller.currentUser;
+    final currentUser = _controller.currentUser;
 
     final request = MessageRequest(
       userId: '${currentUser?.id}',

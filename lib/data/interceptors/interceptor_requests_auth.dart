@@ -11,7 +11,7 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
     final appController = AppController.instance;
     final refreshService = IRefreshTokenService.instance;
 
-    CurrentUserModel? currentUser = await appController.currentUser;
+    CurrentUserModel? currentUser = appController.currentUser;
 
     /// Realizar o refresh token se [currentUser] não for null.
     if (currentUser == null) {
@@ -27,7 +27,7 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
       if (response.isSuccess()) {
         response.map((success) async => await refreshService.updateTokens(response: success));
 
-        currentUser = await appController.currentUser;
+        currentUser = appController.currentUser;
 
         token = currentUser?.token;
       }

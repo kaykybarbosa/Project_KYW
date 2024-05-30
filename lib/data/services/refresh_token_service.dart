@@ -45,7 +45,7 @@ class RefreshTokenService implements IRefreshTokenService {
   Future<void> updateTokens({required RefreshTokenResponse response}) async {
     var appController = AppController.instance;
 
-    var currentUser = await appController.currentUser;
+    var currentUser = appController.currentUser;
 
     if (currentUser != null) {
       await appController.setCurrentUser(
