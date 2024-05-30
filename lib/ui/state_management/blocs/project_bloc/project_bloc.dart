@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kyw_management/app/controllers/app_controller.dart';
-import 'package:kyw_management/data/dtos/request/message_request.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/message_service.dart';
@@ -16,21 +14,21 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   ProjectBloc({
     required IProjectRepository projectRepository,
     required IMessageService messageService,
-    required AppController appController,
   })  : _repository = projectRepository,
         _messageService = messageService,
-        _controller = appController,
         super(ProjectState()) {
     on<GetAllProjects>(_onGetAllProject);
     on<AddProject>(_onAddProject);
     on<GetProjectById>(_onGetById);
-    on<ConnectWebSocket>(_connectWebSocket);
-    on<SendMessage>(_sendMessage);
+    on<SubscribeInProjectsWs>(_subscribeInProjectsWs);
   }
 
   final IProjectRepository _repository;
   final IMessageService _messageService;
-  final AppController _controller;
+
+  ProjectResponse getProjectById(String projectId) {
+    return state.allProjects.content.firstWhere((project) => project.id == projectId);
+  }
 
   void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
     if (state.allProjects.content.isNotEmpty) return;
@@ -66,8 +64,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     );
   }
 
-  void _connectWebSocket(ConnectWebSocket event, Emitter<ProjectState> emit) {
+  void _subscribeInProjectsWs(SubscribeInProjectsWs event, Emitter<ProjectState> emit) {
     final projects = state.allProjects.content;
+
     if (projects.isNotEmpty) {
       for (var project in projects) {
         log('Subscribe in project: ${project.id}', name: 'WEBSOCKET');
@@ -75,19 +74,9 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         _messageService.subscribeToMessageUpdates(
             projectId: project.id,
             onMessageReceived: (value) {
-              log('$value', name: 'WEBSOCKET');
+              log('Message received: $value', name: 'WEBSOCKET');
             });
       }
     }
-  }
-
-  void _sendMessage(SendMessage event, Emitter<ProjectState> emit) async {
-    final currentUser = await _controller.currentUser;
-    final message = MessageRequest(
-      userId: currentUser!.id,
-      message: event.message,
-    );
-
-    _messageService.sendMessage(projectId: event.projectId, message: message);
   }
 }

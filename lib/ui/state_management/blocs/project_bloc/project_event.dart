@@ -29,16 +29,6 @@ class GetProjectById extends ProjectEvent {
   List<Object> get props => [projectId];
 }
 
-class ConnectWebSocket extends ProjectEvent {
-  const ConnectWebSocket();
-}
-
-class SendMessage extends ProjectEvent {
-  const SendMessage(this.projectId,{ required this.message});
-
-  final String projectId;
-  final String message;
-
-    @override
-  List<Object> get props => [message];
+class SubscribeInProjectsWs extends ProjectEvent {
+  const SubscribeInProjectsWs();
 }

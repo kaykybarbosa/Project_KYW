@@ -23,6 +23,7 @@ class ProjectState extends Equatable {
     AllProjectsResponse? allProjects,
     ProjectResponse? detailProject,
     ProjectStatus? status,
+    String? message,
   }) =>
       ProjectState(
         allProjects: allProjects ?? this.allProjects,
