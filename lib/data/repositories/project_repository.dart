@@ -21,7 +21,7 @@ class ProjectRepository implements IProjectRepository {
   @override
   AsyncResult<AllProjectsResponse, ApiException> getAllProjects() async {
     try {
-      var result = await _http.get('${_http.baseUrl}projects');
+      var result = await _http.get('${_http.baseUrl}/projects');
 
       return AllProjectsResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
@@ -34,7 +34,7 @@ class ProjectRepository implements IProjectRepository {
   @override
   AsyncResult<ProjectResponse, ApiException> getProjectById(String projectId) async {
     try {
-      var result = await _http.get('${_http.baseUrl}projects/$projectId');
+      var result = await _http.get('${_http.baseUrl}/projects/$projectId');
 
       return ProjectResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {

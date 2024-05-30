@@ -33,7 +33,7 @@ class AuthRepository implements IAuthRepository {
   AsyncResult<CurrentUserModel, ApiException> login(UserLoginRequest request) async {
     try {
       var result = await _http.post(
-        '${_http.baseUrl}auth/signin',
+        '${_http.baseUrl}/auth/signin',
         data: request.toMap(),
       );
 
@@ -49,7 +49,7 @@ class AuthRepository implements IAuthRepository {
   AsyncResult<Unit, ApiException> register(UserRegisterRequest request) async {
     try {
       await _http.post(
-        '${_http.baseUrl}users/register',
+        '${_http.baseUrl}/users/register',
         data: request.toMap(),
       );
 
@@ -64,7 +64,7 @@ class AuthRepository implements IAuthRepository {
   @override
   AsyncResult<RefreshTokenResponse, ApiException> refreshToken(String token) async {
     try {
-      var result = await _http.post('${_http.baseUrl}auth/refreshtoken', data: token);
+      var result = await _http.post('${_http.baseUrl}/auth/refreshtoken', data: token);
 
       return RefreshTokenResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
