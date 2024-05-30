@@ -3,13 +3,13 @@ import 'dart:convert';
 
 class CurrentUserModel {
   CurrentUserModel({
-    required this.id,
-    required this.token,
-    required this.type,
-    required this.refreshToken,
-    required this.nickname,
-    required this.email,
-    required this.roles,
+    this.id = '',
+    this.token = '',
+    this.type = '',
+    this.refreshToken = '',
+    this.nickname = '',
+    this.email = '',
+    this.roles = const [],
   });
 
   final String id;
