@@ -13,12 +13,11 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
 
     CurrentUserModel? currentUser = appController.currentUser;
 
-    /// Realizar o refresh token se [currentUser] não for null.
-    if (currentUser == null) {
+    if (currentUser.token.isEmpty) {
       return handler.next(options);
     }
 
-    String? token = currentUser.token;
+    String token = currentUser.token;
 
     /// Caso o token esteja inválido, solicitar refresh token
     if (!refreshService.tokenIsValid(token: token)) {
@@ -29,7 +28,7 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
 
         currentUser = appController.currentUser;
 
-        token = currentUser?.token;
+        token = currentUser.token;
       }
     }
 

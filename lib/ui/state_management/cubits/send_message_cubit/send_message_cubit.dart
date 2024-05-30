@@ -49,7 +49,7 @@ class SendMessageCubit extends Cubit<SendMessageState> {
     final currentUser = _controller.currentUser;
 
     final request = MessageRequest(
-      userId: '${currentUser?.id}',
+      userId: currentUser.id,
       message: message.value,
     );
 

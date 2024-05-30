@@ -47,14 +47,12 @@ class RefreshTokenService implements IRefreshTokenService {
 
     var currentUser = appController.currentUser;
 
-    if (currentUser != null) {
-      await appController.setCurrentUser(
-        currentUser.copyWith(
-          token: response.token,
-          refreshToken: response.refreshToken,
-        ),
-      );
-    }
+    await appController.setCurrentUser(
+      currentUser.copyWith(
+        token: response.token,
+        refreshToken: response.refreshToken,
+      ),
+    );
   }
 
   @override
