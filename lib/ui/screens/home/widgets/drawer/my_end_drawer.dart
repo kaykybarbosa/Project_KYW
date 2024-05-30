@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
+import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/ui/screens/home/widgets/drawer/sign_out_button.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -11,8 +13,12 @@ import 'package:kyw_management/utils/texts.dart';
 class MyEndDrawer extends StatelessWidget {
   const MyEndDrawer({super.key});
 
+  static late final CurrentUserModel? _currentUser;
+
   @override
   Widget build(BuildContext context) {
+    _currentUser = AppController.instance.currentUser;
+
     final List<_DrawerOption> options = [
       /// Minha conta
       _DrawerOption(
@@ -56,9 +62,9 @@ class MyEndDrawer extends StatelessWidget {
                   ),
 
                   /// Nome do usuário
-                  const Text(
-                    'Joãozin',
-                    style: TextStyle(
+                  Text(
+                    '${_currentUser?.nickname}',
+                    style: const TextStyle(
                       color: TColors.base100,
                       fontWeight: FontWeight.bold,
                       fontSize: TConstants.fontSizeLg,
