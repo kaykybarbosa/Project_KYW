@@ -31,6 +31,7 @@ abstract class TIcons {
   static const IconData phone = FontAwesomeIcons.phone;
   static const IconData camera = FontAwesomeIcons.camera;
   static const IconData attachment = FontAwesomeIcons.paperclip;
+  static const IconData send = FontAwesomeIcons.solidPaperPlane;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
