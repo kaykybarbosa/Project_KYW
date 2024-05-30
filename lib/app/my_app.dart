@@ -17,6 +17,7 @@ import 'package:kyw_management/ui/state_management/blocs/forgot_password_bloc/fo
 import 'package:kyw_management/ui/state_management/blocs/home_bloc/home_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/authenticate_user_cubit/authenticate_user_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_up_cubit/sign_up_cubit.dart';
 
@@ -40,7 +41,6 @@ class _MyAppState extends State<MyApp> {
             create: (_) => ProjectBloc(
               projectRepository: IProjectRepository.instance,
               messageService: IMessageService.instance,
-              appController: AppController.instance,
             ),
           ),
           BlocProvider(
@@ -60,6 +60,12 @@ class _MyAppState extends State<MyApp> {
             create: (_) => SignInCubit(
               authRepository: IAuthRepository.instance,
               authSettings: IAuthSettingsService.instance,
+            ),
+          ),
+          BlocProvider(
+            create: (_) => SendMessageCubit(
+              appController: AppController.instance,
+              messageService: IMessageService.instance,
             ),
           ),
         ],
