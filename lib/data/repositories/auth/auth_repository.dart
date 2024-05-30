@@ -64,7 +64,9 @@ class AuthRepository implements IAuthRepository {
   @override
   AsyncResult<RefreshTokenResponse, ApiException> refreshToken(String token) async {
     try {
-      var result = await _http.post('${_http.baseUrl}/auth/refreshtoken', data: token);
+      final request = {'refreshToken': token};
+
+      final result = await _http.post('${_http.baseUrl}/auth/refreshtoken', data: request);
 
       return RefreshTokenResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
