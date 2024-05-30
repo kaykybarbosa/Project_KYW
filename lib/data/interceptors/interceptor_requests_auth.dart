@@ -22,7 +22,7 @@ class InterceptorRequestsAuth extends InterceptorsWrapper {
 
     /// Caso o token esteja inválido, solicitar refresh token
     if (!refreshService.tokenIsValid(token: token)) {
-      var response = await refreshService.isAuthenticated(token: token);
+      final response = await refreshService.isAuthenticated(token: token);
 
       if (response.isSuccess()) {
         response.map((success) async => await refreshService.updateTokens(response: success));

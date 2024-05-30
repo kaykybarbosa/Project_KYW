@@ -40,6 +40,7 @@ class CardProject extends StatelessWidget {
   @override
   Widget build(BuildContext context) => InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
         child: Container(
           padding: const EdgeInsets.only(left: 6),
           margin: const EdgeInsets.symmetric(vertical: 2.5),

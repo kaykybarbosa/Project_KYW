@@ -25,7 +25,7 @@ class ProjectScreen extends StatefulWidget {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   void _getAllProjects() => context.read<ProjectBloc>().add(const GetAllProjects());
-  void _subscribeInProjectWS() => context.read<ProjectBloc>().add(const ConnectWebSocket());
+  void _subscribeInProjectWS() => context.read<ProjectBloc>().add(const SubscribeInProjectsWs());
 
   @override
   void initState() {
