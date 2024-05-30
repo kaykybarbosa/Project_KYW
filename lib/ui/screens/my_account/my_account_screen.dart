@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
+import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
@@ -8,15 +10,17 @@ import 'package:kyw_management/utils/icons.dart';
 class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({super.key});
 
-  final List<Map<String, dynamic>> options = const [
+  static final CurrentUserModel _currentUser = AppController.instance.currentUser;
+
+  static final List<Map<String, dynamic>> options = [
     {
       'title': 'Nome',
-      'label': 'Joãozin',
+      'label': _currentUser.nickname,
       'icon': TIcons.solidUser,
     },
     {
       'title': 'E-mail',
-      'label': 'joao@gmail.com',
+      'label': _currentUser.email,
       'icon': TIcons.email,
     },
     {
