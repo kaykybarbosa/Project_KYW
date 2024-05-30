@@ -27,12 +27,15 @@ class AppController extends GetxController {
   // Props
   late final Rx<AppStatus> _status;
   late final Directory _directory;
+  late final CurrentUserModel? _currentUser;
 
   // Estados do controller
   @override
   void onInit() {
     super.onInit();
     _status = AppStatus.unauthenticated.obs;
+
+    _initCurrentUser();
   }
 
   // M É T O D O S
@@ -43,13 +46,17 @@ class AppController extends GetxController {
 
   Directory get directory => _directory;
 
-  Future<CurrentUserModel?> get currentUser async => await _currentUserStorage.currentUser;
+  CurrentUserModel? get currentUser => _currentUser;
 
   ConfigureAppModel get configureApp => _configureAppStorage.configureApp ?? ConfigureAppModel.empty();
 
   Future<AuthUserModel> get authUser async => await _currentUserStorage.authUser ?? const AuthUserModel();
 
   // -- SETTERS
+
+  void _initCurrentUser() async {
+    await _currentUserStorage.currentUser.then((value) => _currentUser = value);
+  }
 
   /// Atualiza o status do usuário no app.
   void updateStatus(AppStatus status) => _status.value = status;
