@@ -8,5 +8,6 @@ abstract class TSearchBarTheme {
     side: WidgetStatePropertyAll(BorderSide(color: TColors.base200)),
     hintStyle: WidgetStatePropertyAll(TextStyle(color: TColors.base300)),
     textStyle: WidgetStatePropertyAll(TextStyle(color: TColors.secondary)),
+    constraints: BoxConstraints(maxHeight: 45),
   );
 }

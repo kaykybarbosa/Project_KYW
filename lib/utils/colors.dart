@@ -12,6 +12,8 @@ abstract class TColors {
   static const Color base300 = Color(0xFF989A9E);
   static const Color base900 = Color(0xFF000000);
 
+  static const Color searchBackground = Color(0xFFD9DADE);
+
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
   static const Color alert = Color(0xFFFABD52);
