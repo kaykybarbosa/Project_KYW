@@ -10,6 +10,7 @@ import 'package:objectbox/objectbox.dart';
 class MessageModel extends Equatable {
   MessageModel({
     this.id = 0,
+    this.currentUserId = '',
     this.messageId = '',
     UserResponse? sender,
     ProjectMessage? project,
@@ -20,6 +21,7 @@ class MessageModel extends Equatable {
         sendIn = sendIn ?? DateTime.now();
 
   int id;
+  String currentUserId;
   String messageId;
   UserResponse sender;
   ProjectMessage project;
@@ -30,6 +32,7 @@ class MessageModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        currentUserId,
         messageId,
         sender,
         project,

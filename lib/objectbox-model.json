@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:3694419320491295600",
-      "lastPropertyId": "4:6543103656144520450",
+      "lastPropertyId": "5:7228614411897435110",
       "name": "MessageModel",
       "properties": [
         {
@@ -28,6 +28,11 @@
           "id": "4:6543103656144520450",
           "name": "sendIn",
           "type": 10
+        },
+        {
+          "id": "5:7228614411897435110",
+          "name": "currentUserId",
+          "type": 9
         }
       ],
       "relations": []
