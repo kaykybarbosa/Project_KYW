@@ -1,11 +1,11 @@
 class UserResponse {
-  UserResponse({
-    required this.userId,
-    required this.nickname,
+  const UserResponse({
+    this.userId = '',
+    this.nickname = '',
   });
 
-  String userId;
-  String nickname;
+  final String userId;
+  final String nickname;
 
   factory UserResponse.fromMap(Map<String, dynamic> map) => UserResponse(
         userId: map['userId'],
@@ -16,9 +16,4 @@ class UserResponse {
         'userId': userId,
         'nickname': nickname,
       };
-
-  factory UserResponse.empty() => UserResponse(
-        userId: '',
-        nickname: '',
-      );
 }

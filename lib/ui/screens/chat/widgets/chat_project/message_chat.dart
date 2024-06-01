@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyw_management/utils/formaters.dart';
 
 import '../../../../../domain/models/message_model.dart';
 
@@ -10,27 +11,27 @@ class MessageChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: message.isSender ? Alignment.centerRight : Alignment.centerLeft,
-      margin: EdgeInsets.only(
-        right: message.isSender ? 8 : 75,
-        left: message.isSender ? 75 : 8,
+      alignment: false ? Alignment.centerRight : Alignment.centerLeft,
+      margin: const EdgeInsets.only(
+        right: false ? 8 : 75,
+        left: false ? 75 : 8,
         top: 5,
       ),
       child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 7,
           bottom: 7,
-          left: message.isSender ? 10 : 15,
-          right: message.isSender ? 15 : 10,
+          left: false ? 10 : 15,
+          right: false ? 15 : 10,
         ),
         decoration: BoxDecoration(
           color: Colors.grey[350],
           border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.only(
-            topLeft: message.isSender ? const Radius.circular(10) : Radius.zero,
-            topRight: message.isSender ? Radius.zero : const Radius.circular(10),
-            bottomLeft: const Radius.circular(10),
-            bottomRight: const Radius.circular(10),
+          borderRadius: const BorderRadius.only(
+            topLeft: false ? Radius.circular(10) : Radius.zero,
+            topRight: false ? Radius.zero : Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
           ),
         ),
         child: Column(
@@ -38,11 +39,10 @@ class MessageChat extends StatelessWidget {
           children: [
             // User name
             Visibility(
-              visible: !message.isSender,
+              visible: !false,
               child: Text(
-                message.userReference,
-                style: TextStyle(
-                  color: message.nameColor,
+                message.content,
+                style: const TextStyle(
                   fontSize: 17,
                 ),
               ),
@@ -53,7 +53,7 @@ class MessageChat extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    '${message.message}           ',
+                    '${message.content}           ',
                     textAlign: TextAlign.justify,
                     style: const TextStyle(fontSize: 16),
                   ),
@@ -62,7 +62,7 @@ class MessageChat extends StatelessWidget {
                   bottom: 0,
                   right: 0,
                   child: Text(
-                    message.dateSend,
+                    Formaters.formatDate(message.sendIn),
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                 ),

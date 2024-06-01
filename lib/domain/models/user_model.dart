@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-// ignore: must_be_immutable
 class UserModel extends Equatable {
   final String id;
   final String name;
@@ -8,19 +7,17 @@ class UserModel extends Equatable {
   final String number;
   final String password;
   final String confirmPassword;
-  bool? isActive;
+  final bool isActive;
 
-  UserModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.number,
-    required this.password,
-    required this.confirmPassword,
-    this.isActive,
-  }) {
-    isActive = isActive ?? true;
-  }
+  const UserModel({
+    this.id = '',
+    this.name = '',
+    this.email = '',
+    this.number = '',
+    this.password = '',
+    this.confirmPassword = '',
+    this.isActive = true,
+  });
 
   UserModel pure({
     String? id,
@@ -78,13 +75,13 @@ class UserModel extends Equatable {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      email: map['email'] as String,
-      number: map['number'] as String,
-      password: map['password'] as String,
-      confirmPassword: map['confirmPassword'] as String,
-      isActive: map['isActive'] != null ? map['isActive'] as bool : null,
+      id: map['id'],
+      name: map['name'],
+      email: map['email'],
+      number: map['number'],
+      password: map['password'],
+      confirmPassword: map['confirmPassword'],
+      isActive: map['isActive'] ?? true,
     );
   }
 }
