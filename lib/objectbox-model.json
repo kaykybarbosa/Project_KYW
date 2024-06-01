@@ -1,0 +1,95 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3694419320491295600",
+      "lastPropertyId": "4:6543103656144520450",
+      "name": "MessageModel",
+      "properties": [
+        {
+          "id": "1:4753695960815210549",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3037320259593609535",
+          "name": "messageId",
+          "type": 9
+        },
+        {
+          "id": "3:6847899715388605132",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "4:6543103656144520450",
+          "name": "sendIn",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:632816148333431856",
+      "lastPropertyId": "3:8816725207231477272",
+      "name": "ProjectMessage",
+      "properties": [
+        {
+          "id": "1:4412632841902862663",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5841859942318752357",
+          "name": "projectId",
+          "type": 9
+        },
+        {
+          "id": "3:8816725207231477272",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:2613446829570482106",
+      "lastPropertyId": "3:6581292721200000415",
+      "name": "UserResponse",
+      "properties": [
+        {
+          "id": "1:5591223865823536897",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4267189600675961536",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "3:6581292721200000415",
+          "name": "nickname",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:2613446829570482106",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
