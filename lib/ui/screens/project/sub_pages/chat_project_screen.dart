@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
@@ -35,6 +34,13 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    _tabController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) => Scaffold(
@@ -61,16 +67,8 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
                 ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
                 ProjectStatus.detailFailure =>
                   const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
-                _ => _ChatProject(
-                    messages: [
-                      MessageModel(
-                        userReference: 'Test',
-                        message: state.detailProject.creator.nickname,
-                        dateSend: DateFormat().add_Hm().format(DateTime.now()),
-                        isSender: false,
-                        nameColor: Colors.orange,
-                      ),
-                    ],
+                _ => const _ChatProject(
+                    messages: [],
                   ),
               },
 
@@ -278,6 +276,13 @@ class _MessageInputState extends State<_MessageInput> {
     }
   }
 
+  void _sendMessage() {
+    if (_projectId != null) {
+      context.read<SendMessageCubit>().sendMessage(_projectId!);
+      _controller.text = '';
+    }
+  }
+
   void _initController() {
     _controller = TextEditingController();
 
@@ -331,7 +336,7 @@ class _MessageInputState extends State<_MessageInput> {
             const Gap(10),
 
             /// Enviar
-            const _SendMessageBtn(),
+            _SendMessageBtn(_sendMessage),
           ],
         ),
       );
@@ -357,35 +362,27 @@ class _MessageIcon extends StatelessWidget {
 }
 
 class _SendMessageBtn extends StatelessWidget {
-  const _SendMessageBtn();
+  const _SendMessageBtn(this.onSendMessage);
+
+  final Function()? onSendMessage;
 
   @override
-  Widget build(BuildContext context) {
-    void sendMessage() {
-      final projectId = context.findAncestorStateOfType<ChatProjectScreenState>()?.widget.projectId;
-
-      if (projectId != null) {
-        context.read<SendMessageCubit>().sendMessage(projectId);
-      }
-    }
-
-    return InkWell(
-      onTap: sendMessage,
-      borderRadius: BorderRadius.circular(30),
-      child: Container(
-        width: 45,
-        height: 45,
-        padding: const EdgeInsets.only(bottom: 2, right: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: TColors.primary,
+  Widget build(BuildContext context) => InkWell(
+        onTap: onSendMessage,
+        borderRadius: BorderRadius.circular(30),
+        child: Container(
+          width: 45,
+          height: 45,
+          padding: const EdgeInsets.only(bottom: 2, right: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: TColors.primary,
+          ),
+          child: const Icon(
+            TIcons.send,
+            color: Colors.white,
+            size: TConstants.iconMd - 5,
+          ),
         ),
-        child: const Icon(
-          TIcons.send,
-          color: Colors.white,
-          size: TConstants.iconMd - 5,
-        ),
-      ),
-    );
-  }
+      );
 }
