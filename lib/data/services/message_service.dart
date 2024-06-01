@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:kyw_management/data/dtos/request/message_request.dart';
+import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/message_repository.dart';
 import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
-import 'package:kyw_management/domain/models/message.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class IMessageService {
@@ -52,7 +52,7 @@ class MessageService implements IMessageService {
     }
   }
 
-  Future<List<Message>> getMessages(String projectId) async {
+  Future<List<MessageResponse>> getMessages(String projectId) async {
     final result = await _message.getMessages();
 
     return result.getOrNull() ?? [];

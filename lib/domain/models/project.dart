@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:kyw_management/domain/models/message.dart';
+import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/domain/models/task.dart';
 import 'package:kyw_management/domain/models/user.dart';
 
@@ -16,7 +16,7 @@ class Project {
   DateTime createAt;
   bool deleted;
   List<TaskModel> tasks;
-  List<Message> messages;
+  List<MessageResponse> messages;
   List<User> members;
 
   Project({
@@ -60,7 +60,7 @@ class Project {
         createAt: DateTime.parse(map['createAt']),
         deleted: map['deleted'],
         tasks: List<TaskModel>.from((map['tasks']).map<TaskModel>((x) => TaskModel.fromMap(x))),
-        messages: List<Message>.from((map['messages']).map<Message>((x) => Message.fromMap(x))),
+        messages: List<MessageResponse>.from((map['messages']).map<MessageResponse>((x) => MessageResponse.fromMap(x))),
         members: List<User>.from((map['members']).map<User>((x) => User.fromMap(x))),
       );
 

@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:kyw_management/domain/models/project.dart';
 import 'package:kyw_management/domain/models/user.dart';
 
-class Message {
+class MessageResponse {
   final String id;
   final User sender;
   final Project project;
   final String content;
   final DateTime sentIn;
 
-  Message({
+  MessageResponse({
     required this.id,
     required this.sender,
     required this.project,
@@ -26,7 +26,7 @@ class Message {
         'sentIn': sentIn.millisecondsSinceEpoch,
       };
 
-  factory Message.fromMap(Map<String, dynamic> map) => Message(
+  factory MessageResponse.fromMap(Map<String, dynamic> map) => MessageResponse(
         id: map['id'],
         sender: User.fromMap(map['sender']),
         project: Project.fromMap(map['project']),
@@ -36,5 +36,6 @@ class Message {
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory MessageResponse.fromJson(String source) =>
+      MessageResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }
