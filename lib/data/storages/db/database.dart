@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:objectbox/objectbox.dart';
 
 abstract class IDatabase {
-  static IDatabase get to => Get.find<IDatabase>();
+  static IDatabase get instance => Get.find<IDatabase>();
 
   Box<T> getBox<T>();
   T? getById<T>(int id);
