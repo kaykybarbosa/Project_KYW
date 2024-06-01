@@ -77,7 +77,7 @@ class ProjectResponse {
         id: 'id',
         name: 'name',
         description: 'description',
-        creator: const UserResponse(),
+        creator: UserResponse(),
         pin: false,
         createAt: DateTime(0000),
       );
