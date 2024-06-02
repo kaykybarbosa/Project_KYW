@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/domain/models/message_model.dart';
-import 'package:kyw_management/ui/screens/chat/widgets/chat_project/message_chat.dart';
+import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -42,7 +42,8 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
 
   @override
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
-        buildWhen: (previous, current) => previous.status != current.status,
+        buildWhen: (previous, current) =>
+            previous.status != current.status || previous.messages.length != current.messages.length,
         builder: (context, state) => Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColor,
@@ -67,9 +68,7 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
                 ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
                 ProjectStatus.detailFailure =>
                   const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
-                _ => const _ChatProject(
-                    messages: [],
-                  ),
+                _ => _ChatProject(messages: state.messages),
               },
 
               /// Tasks
@@ -85,10 +84,12 @@ class _Leading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        buildWhen: (previous, current) => previous.status != current.status,
         builder: (_, state) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 6),
           child: InkWell(
             onTap: () => Get.back(),
+            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
             borderRadius: const BorderRadius.all(Radius.elliptical(50, 50)),
             highlightColor: Colors.grey,
             splashColor: Colors.grey,
@@ -116,22 +117,57 @@ class _PopupMenuItem extends StatelessWidget {
   const _PopupMenuItem();
 
   @override
-  Widget build(BuildContext context) => PopupMenuButton(
-        icon: const Icon(Icons.more_vert),
-        offset: const Offset(0, 95),
-        elevation: 9,
-        itemBuilder: (context) => [
-          const PopupMenuItem(
-            child: ListTile(title: Text('Projeto info')),
-          ),
-          const PopupMenuItem(
-            child: ListTile(title: Text('Limpar mensagens')),
-          ),
-          const PopupMenuItem(
-            child: ListTile(title: Text('Sair do projeto')),
+  Widget build(BuildContext context) {
+    void deleteMessages() {
+      final projectId = context.findAncestorStateOfType<ChatProjectScreenState>()?.widget.projectId;
+
+      if (projectId != null) {
+        context.read<ProjectBloc>().add(DeleteMessages(projectId));
+      }
+    }
+
+    final List<Map<String, dynamic>> options = [
+      {
+        'label': 'Projeto info',
+        'onTap': () {},
+      },
+      {
+        'label': 'Limpar mensagens',
+        'onTap': deleteMessages,
+      },
+      {
+        'label': 'Sair do projeto',
+        'onTap': () {},
+      },
+    ];
+
+    return PopupMenuButton(
+      icon: const Icon(
+        TIcons.more,
+        size: TConstants.iconMd - 4,
+      ),
+      offset: const Offset(0, 95),
+      elevation: 9,
+      itemBuilder: (_) => options
+          .map(
+            (value) => PopupMenuItem(
+              padding: EdgeInsets.zero,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                title: Text(
+                  value['label'],
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+                onTap: () => {
+                  value['onTap'](),
+                  Get.back(),
+                },
+              ),
+            ),
           )
-        ],
-      );
+          .toList(),
+    );
+  }
 }
 
 class _Title extends StatelessWidget {
@@ -197,10 +233,45 @@ class _Members extends StatelessWidget {
       );
 }
 
-class _ChatProject extends StatelessWidget {
+class _ChatProject extends StatefulWidget {
   const _ChatProject({required this.messages});
 
   final List<MessageModel> messages;
+
+  @override
+  State<_ChatProject> createState() => _ChatProjectState();
+}
+
+class _ChatProjectState extends State<_ChatProject> {
+  late final ScrollController _controller;
+
+  void _scrollToEnd() {
+    Future.delayed(Duration.zero, () {
+      if (_controller.hasClients) {
+        _controller.animateTo(
+          _controller.position.maxScrollExtent,
+          duration: const Duration(microseconds: 1),
+          curve: Curves.easeIn,
+        );
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = ScrollController();
+
+    _scrollToEnd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Column(
@@ -208,12 +279,24 @@ class _ChatProject extends StatelessWidget {
         children: <Widget>[
           /// Mensagens
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                var message = messages[index];
-                return MessageChat(message: message);
-              },
+            child: Scrollbar(
+              child: ListView.builder(
+                controller: _controller,
+                itemCount: widget.messages.length,
+                itemBuilder: (_, index) {
+                  final message = widget.messages[index];
+
+                  final hasNip = (index == 0) ||
+                      (index == widget.messages.length - 1 &&
+                          message.getSender.userId != widget.messages[index - 1].getSender.userId) ||
+                      (message.getSender.userId != widget.messages[index - 1].getSender.userId &&
+                          message.getSender.userId == widget.messages[index + 1].getSender.userId) ||
+                      (message.getSender.userId != widget.messages[index - 1].getSender.userId &&
+                          message.getSender.userId != widget.messages[index + 1].getSender.userId);
+
+                  return MessageChat(message: message, hasNip: hasNip);
+                },
+              ),
             ),
           ),
 
@@ -306,7 +389,12 @@ class _MessageInputState extends State<_MessageInput> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(
+          left: 3,
+          top: 3,
+          right: 3,
+          bottom: 6,
+        ),
         child: Row(
           children: <Widget>[
             /// Input
