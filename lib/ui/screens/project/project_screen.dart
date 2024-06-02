@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
+import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:kyw_management/ui/screens/home/widgets/my_sliver_list.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_modal_filter_project.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
@@ -25,7 +26,10 @@ class ProjectScreen extends StatefulWidget {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   void _getAllProjects() => context.read<ProjectBloc>().add(const GetAllProjects());
-  void _subscribeInProjectWS() => context.read<ProjectBloc>().add(const SubscribeInProjectsWs());
+
+  void _onReceivedMessage(MessageModel message) => context.read<ProjectBloc>().add(HasNewMessage(message));
+
+  void _subscribeInProjectWS() => context.read<ProjectBloc>().add(SubscribeInProjectsWs(_onReceivedMessage));
 
   @override
   void initState() {
