@@ -2,18 +2,21 @@
 part of 'send_message_cubit.dart';
 
 class SendMessageState extends Equatable {
-  const SendMessageState({this.messages = const []});
+  const SendMessageState({
+    this.messages = const [],
+    this.status = FormzSubmissionStatus.initial,
+  });
 
   final List<MessageCubit> messages;
+  final FormzSubmissionStatus status;
 
   @override
-  List<Object> get props => [messages];
+  List<Object> get props => [messages, status];
 
-  SendMessageState copyWith({
-    List<MessageCubit>? messages,
-  }) {
+  SendMessageState copyWith({List<MessageCubit>? messages, FormzSubmissionStatus? status}) {
     return SendMessageState(
       messages: messages ?? this.messages,
+      status: status ?? FormzSubmissionStatus.initial,
     );
   }
 }
