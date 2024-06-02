@@ -5,6 +5,7 @@ import 'package:kyw_management/data/repositories/repositories_bindings.dart';
 import 'package:kyw_management/data/services/storage_service/storages_service_bindings.dart';
 import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/data/storages/db/database_bindings.dart';
+import 'package:kyw_management/data/storages/message_storage/message_storage_bindings.dart';
 import 'package:kyw_management/data/storages/storages_bindings.dart';
 import 'package:kyw_management/env/env.dart';
 import 'package:kyw_management/objectbox.g.dart';
@@ -20,6 +21,8 @@ Future<void> dependencyInjections() async {
   StoragesBindings().dependencies();
 
   AppControllerBindings().dependencies();
+  MessageStorageBindings().dependencies();
+
   HttpServiceBindings().dependencies();
   RepositoriesBindings().dependencies();
   ServicesBindings().dependencies();
