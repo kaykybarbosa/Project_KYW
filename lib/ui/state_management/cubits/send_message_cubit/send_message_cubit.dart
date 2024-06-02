@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/dtos/request/message_request.dart';
@@ -53,8 +54,20 @@ class SendMessageCubit extends Cubit<SendMessageState> {
       message: message.value,
     );
 
-    _service.sendMessage(projectId: projectId, message: request);
+    var result = await _service.sendMessage(projectId: projectId, message: request);
 
-    log('Message sended: $message', name: 'WEBSOCKET');
+    result.fold(
+      (_) {
+        final messages = List<MessageCubit>.from(state.messages)..remove(message);
+
+        emit(state.copyWith(messages: messages));
+
+        log('Message sended: $message', name: 'WEBSOCKET');
+      },
+      (failure) => {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure)),
+        log('Message not sended: $message', name: 'WEBSOCKET'),
+      },
+    );
   }
 }
