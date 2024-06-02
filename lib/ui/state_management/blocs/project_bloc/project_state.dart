@@ -5,30 +5,34 @@ class ProjectState extends Equatable {
     AllProjectsResponse? allProjects,
     ProjectResponse? detailProject,
     this.status = ProjectStatus.initial,
+    this.messages = const [],
   })  : allProjects = allProjects ?? AllProjectsResponse.empty,
         detailProject = detailProject ?? ProjectResponse.empty();
 
   final AllProjectsResponse allProjects;
   final ProjectResponse detailProject;
   final ProjectStatus status;
+  final List<MessageModel> messages;
 
   @override
   List<Object?> get props => [
         allProjects,
         status,
         detailProject,
+        messages,
       ];
 
   ProjectState copyWith({
     AllProjectsResponse? allProjects,
     ProjectResponse? detailProject,
     ProjectStatus? status,
-    String? message,
+    List<MessageModel>? messages,
   }) =>
       ProjectState(
         allProjects: allProjects ?? this.allProjects,
         detailProject: detailProject ?? this.detailProject,
         status: status ?? ProjectStatus.initial,
+        messages: messages ?? [],
       );
 }
 
@@ -42,6 +46,8 @@ enum ProjectStatus {
   detailInProgress,
   detailSuccess,
   detailFailure,
+
+  newMessage,
 }
 
 extension ProjectStatusX on ProjectStatus {

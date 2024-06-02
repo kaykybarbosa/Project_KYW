@@ -11,15 +11,6 @@ class GetAllProjects extends ProjectEvent {
   const GetAllProjects();
 }
 
-class AddProject extends ProjectEvent {
-  const AddProject({required this.projects});
-
-  final List<ProjectModel> projects;
-
-  @override
-  List<Object> get props => [projects];
-}
-
 class GetProjectById extends ProjectEvent {
   const GetProjectById(this.projectId);
 
@@ -30,5 +21,19 @@ class GetProjectById extends ProjectEvent {
 }
 
 class SubscribeInProjectsWs extends ProjectEvent {
-  const SubscribeInProjectsWs();
+  const SubscribeInProjectsWs(this.onReceivedMessage);
+
+  final Function(MessageModel) onReceivedMessage;
+}
+
+class HasNewMessage extends ProjectEvent {
+  const HasNewMessage(this.message);
+
+  final MessageModel message;
+}
+
+class DeleteMessages extends ProjectEvent {
+  const DeleteMessages(this.projectId);
+
+  final String projectId;
 }
