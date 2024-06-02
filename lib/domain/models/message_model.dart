@@ -3,7 +3,9 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/dtos/response/user_response.dart';
+import 'package:kyw_management/utils/formaters.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -15,19 +17,19 @@ class MessageModel extends Equatable {
     UserResponse? sender,
     ProjectMessage? project,
     this.content = '',
-    DateTime? sendIn,
-  })  : sender = sender ?? UserResponse(),
-        project = project ?? ProjectMessage(),
-        sendIn = sendIn ?? DateTime.now();
+    DateTime? sentIn,
+  })  : sender = ToOne(target: sender),
+        project = ToOne(target: project),
+        sentIn = sentIn ?? DateTime.now();
 
   int id;
   String currentUserId;
   String messageId;
-  UserResponse sender;
-  ProjectMessage project;
+  ToOne<UserResponse> sender;
+  ToOne<ProjectMessage> project;
   String content;
   @Property(type: PropertyType.date)
-  DateTime sendIn;
+  DateTime sentIn;
 
   @override
   List<Object?> get props => [
@@ -37,26 +39,44 @@ class MessageModel extends Equatable {
         sender,
         project,
         content,
-        sendIn,
+        sentIn,
       ];
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
-        'id': messageId,
-        'sender': sender.toMap(),
-        'project': project.toMap(),
-        'content': content,
-        'sendIn': sendIn.toString(),
-      };
+  // G E T T E R S
+
+  UserResponse get getSender => sender.target ?? UserResponse();
+
+  bool get isSender => currentUserId == AppController.instance.currentUser.id;
+
+  String get hourSentIn => Formaters.formatDateHours(sentIn);
+
+  MessageModel copyWith({
+    int? id,
+    String? currentUserId,
+    String? messageId,
+    UserResponse? sender,
+    ProjectMessage? project,
+    String? content,
+    DateTime? sentIn,
+  }) {
+    return MessageModel(
+      id: id ?? this.id,
+      currentUserId: currentUserId ?? this.currentUserId,
+      messageId: messageId ?? this.messageId,
+      sender: sender,
+      project: project,
+      content: content ?? this.content,
+      sentIn: sentIn ?? this.sentIn,
+    );
+  }
 
   factory MessageModel.fromMap(Map<String, dynamic> map) => MessageModel(
         messageId: map['id'],
         sender: UserResponse.fromMap(map['sender']),
         project: ProjectMessage.fromMap(map['project']),
         content: map['content'],
-        sendIn: DateTime.tryParse(map['sendIn']),
+        sentIn: DateTime.tryParse(map['sentIn']),
       );
-
-  String toJson() => json.encode(toMap());
 
   factory MessageModel.fromJson(String source) => MessageModel.fromMap(json.decode(source));
 }
