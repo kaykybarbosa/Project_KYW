@@ -14,6 +14,9 @@ abstract class TColors {
 
   static const Color searchBackground = Color(0xFFD9DADE);
 
+  static const Color chatBackground = Color(0xFFEFEFF0);
+  static const Color timeColor = Color(0xFF767676);
+
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
   static const Color alert = Color(0xFFFABD52);
