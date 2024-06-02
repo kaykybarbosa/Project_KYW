@@ -6,6 +6,7 @@ import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/message_repository.dart';
 import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
+import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class IMessageService {
@@ -18,7 +19,7 @@ abstract class IMessageService {
 
   void subscribeToMessageUpdates({
     required String projectId,
-    required Function(Map<String, dynamic>) onMessageReceived,
+    required Function(MessageModel) onMessageReceived,
   });
 
   void unsubscribeFromMessageUpdates();
@@ -61,13 +62,14 @@ class MessageService implements IMessageService {
   @override
   void subscribeToMessageUpdates({
     required String projectId,
-    required Function(Map<String, dynamic>) onMessageReceived,
+    required Function(MessageModel) onMessageReceived,
   }) {
-    _messageSubscription = _ws.messageUpdates().listen((message) => onMessageReceived(message));
+    /// TODO: Sem utilidade
+    _messageSubscription = _ws.messageUpdates().listen((message) => onMessageReceived(MessageModel.fromMap(message)));
 
     _ws.subscribe(
       '/project/$projectId',
-      callback: (frame) => onMessageReceived({'body': frame.body}),
+      callback: (frame) => onMessageReceived(MessageModel.fromJson(frame.body ?? '')),
     );
   }
 
