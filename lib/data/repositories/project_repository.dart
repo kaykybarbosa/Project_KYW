@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
+import 'package:kyw_management/data/dtos/response/detail_project_response.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
 import 'package:result_dart/result_dart.dart';
@@ -8,9 +9,13 @@ import 'package:result_dart/result_dart.dart';
 abstract class IProjectRepository {
   static IProjectRepository get instance => Get.find<IProjectRepository>();
 
-  AsyncResult<AllProjectsResponse, ApiException> getAllProjects();
+  AsyncResult<AllProjectsResponse, ApiException> getAllProjects(String userId);
 
-  AsyncResult<ProjectResponse, ApiException> getProjectById(String projectId);
+  AsyncResult<DetailProjectResponse, ApiException> getProjectById(String projectId);
+
+  AsyncResult<Unit, ApiException> addMemberByUserId(String projectId, {required String userId});
+
+  AsyncResult<Unit, ApiException> addMemberByEmail(String projectId, {required String email});
 }
 
 class ProjectRepository implements IProjectRepository {
@@ -19,9 +24,9 @@ class ProjectRepository implements IProjectRepository {
   final IHttpService _http;
 
   @override
-  AsyncResult<AllProjectsResponse, ApiException> getAllProjects() async {
+  AsyncResult<AllProjectsResponse, ApiException> getAllProjects(String userId) async {
     try {
-      var result = await _http.get('${_http.baseUrl}/projects');
+      final result = await _http.get('${_http.baseUrl}/projects/roles/$userId');
 
       return AllProjectsResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
@@ -32,11 +37,45 @@ class ProjectRepository implements IProjectRepository {
   }
 
   @override
-  AsyncResult<ProjectResponse, ApiException> getProjectById(String projectId) async {
+  AsyncResult<DetailProjectResponse, ApiException> getProjectById(String projectId) async {
     try {
-      var result = await _http.get('${_http.baseUrl}/projects/$projectId');
+      final result = await _http.get('${_http.baseUrl}/projects/$projectId');
 
-      return ProjectResponse.fromMap(result.data).toSuccess();
+      return DetailProjectResponse.fromMap(result.data).toSuccess();
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<Unit, ApiException> addMemberByUserId(
+    String projectId, {
+    required String userId,
+  }) async {
+    try {
+      String url = '$userId/$projectId';
+
+      await _http.post('${_http.baseUrl}/members/add/$url');
+
+      return const Success(unit);
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<Unit, ApiException> addMemberByEmail(String projectId, {required String email}) async {
+    try {
+      await _http.post(
+        '${_http.baseUrl}/members/add/$projectId',
+        params: {'email': email},
+      );
+
+      return const Success(unit);
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {
