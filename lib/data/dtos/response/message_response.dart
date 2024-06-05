@@ -1,12 +1,14 @@
 import 'dart:convert';
 
-import 'package:kyw_management/domain/models/project.dart';
-import 'package:kyw_management/domain/models/user.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
+import 'package:kyw_management/data/dtos/response/user_response.dart';
+import 'package:kyw_management/domain/models/message_model.dart';
+import 'package:kyw_management/utils/formaters.dart';
 
 class MessageResponse {
   final String id;
-  final User sender;
-  final Project project;
+  final UserResponse sender;
+  final ProjectMessage project;
   final String content;
   final DateTime sentIn;
 
@@ -18,6 +20,10 @@ class MessageResponse {
     required this.sentIn,
   });
 
+  bool get isSender => sender.userId == AppController.instance.currentUser.id;
+
+  String get hourSentIn => Formaters.formatDateHours(sentIn);
+
   Map<String, dynamic> toMap() => {
         'id': id,
         'sender': sender.toMap(),
@@ -28,8 +34,8 @@ class MessageResponse {
 
   factory MessageResponse.fromMap(Map<String, dynamic> map) => MessageResponse(
         id: map['id'],
-        sender: User.fromMap(map['sender']),
-        project: Project.fromMap(map['project']),
+        sender: UserResponse.fromMap(map['sender']),
+        project: ProjectMessage.fromMap(map['project']),
         content: map['content'],
         sentIn: DateTime.parse(map['sentIn']),
       );
