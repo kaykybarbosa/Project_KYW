@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:kyw_management/data/dtos/response/user_response.dart';
 
 class AllProjectsResponse {
@@ -30,51 +31,62 @@ class AllProjectsResponse {
       );
 }
 
-class ProjectResponse {
-  String id;
-  String name;
-  String description;
-  UserResponse creator;
-  String? imageUrl;
-  String? linkGroup;
-  bool pin;
-  DateTime createAt;
+class ProjectResponse extends Equatable {
+  final String id;
+  final String title;
+  final String projectId;
+  final String name;
+  final String description;
+  final UserResponse? creator;
+  final String? imageUrl;
+  final String? linkGroup;
+  final bool pin;
+  final DateTime createAt;
 
-  ProjectResponse({
+  const ProjectResponse({
     required this.id,
+    required this.title,
+    required this.projectId,
     required this.name,
     required this.description,
-    required this.creator,
+    this.creator,
     this.imageUrl,
     this.linkGroup,
     required this.pin,
     required this.createAt,
   });
 
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        projectId,
+        name,
+        description,
+        creator,
+        imageUrl,
+        linkGroup,
+        pin,
+        createAt,
+      ];
+
   factory ProjectResponse.fromMap(Map<String, dynamic> map) => ProjectResponse(
         id: map['id'],
-        name: map['name'],
-        description: map['description'],
-        creator: UserResponse.fromMap(map['creator']),
-        imageUrl: map['imageUrl'],
-        linkGroup: map['linkGroup'],
-        pin: map['pin'],
-        createAt: DateTime.parse(map['createAt']),
+        title: map['title'],
+        projectId: map['project']['id'],
+        name: map['project']['name'],
+        description: map['project']['description'],
+        creator: map['project']['creator'] != null ? UserResponse.fromMap(map['project']['creator']) : null,
+        imageUrl: map['project']['imageUrl'],
+        linkGroup: map['project']['linkGroup'],
+        pin: map['project']['pin'],
+        createAt: DateTime.parse(map['project']['createAt']),
       );
-
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'creator': creator.toMap(),
-        'imageUrl': imageUrl,
-        'linkGroup': linkGroup,
-        'pin': pin,
-        'createAt': createAt.toIso8601String(),
-      };
 
   factory ProjectResponse.empty() => ProjectResponse(
         id: 'id',
+        title: 'title',
+        projectId: 'projectId',
         name: 'name',
         description: 'description',
         creator: UserResponse(),
