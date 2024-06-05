@@ -17,7 +17,12 @@ abstract class IHttpService {
 
   Future get<T>(String path);
 
-  Future post<T>(String path, {Object? data, Options? options});
+  Future post<T>(
+    String path, {
+    Object? data,
+    Options? options,
+    Map<String, dynamic>? params,
+  });
 
   Future put<T>(String path, {Object? data});
 
@@ -57,8 +62,18 @@ class HttpService implements IHttpService {
   }
 
   @override
-  Future post<T>(String path, {Object? data, Options? options}) async =>
-      await _dio.post<T>(path, data: data, options: options);
+  Future post<T>(
+    String path, {
+    Object? data,
+    Options? options,
+    Map<String, dynamic>? params,
+  }) async =>
+      await _dio.post<T>(
+        path,
+        data: data,
+        options: options,
+        queryParameters: params,
+      );
 
   @override
   Future put<T>(String path, {Object? data}) async => await _dio.put<T>(path, data: data);
