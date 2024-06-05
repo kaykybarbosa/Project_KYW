@@ -3,16 +3,16 @@ part of 'project_bloc.dart';
 class ProjectState extends Equatable {
   ProjectState({
     AllProjectsResponse? allProjects,
-    ProjectResponse? detailProject,
+    DetailProjectResponse? detailProject,
     this.status = ProjectStatus.initial,
     this.messages = const [],
   })  : allProjects = allProjects ?? AllProjectsResponse.empty,
-        detailProject = detailProject ?? ProjectResponse.empty();
+        detailProject = detailProject ?? DetailProjectResponse.empty();
 
   final AllProjectsResponse allProjects;
-  final ProjectResponse detailProject;
+  final DetailProjectResponse detailProject;
   final ProjectStatus status;
-  final List<MessageModel> messages;
+  final List<MessageResponse> messages;
 
   @override
   List<Object?> get props => [
@@ -24,9 +24,9 @@ class ProjectState extends Equatable {
 
   ProjectState copyWith({
     AllProjectsResponse? allProjects,
-    ProjectResponse? detailProject,
+    DetailProjectResponse? detailProject,
     ProjectStatus? status,
-    List<MessageModel>? messages,
+    List<MessageResponse>? messages,
   }) =>
       ProjectState(
         allProjects: allProjects ?? this.allProjects,
@@ -58,4 +58,6 @@ extension ProjectStatusX on ProjectStatus {
   bool get isDetailsInProgress => this == ProjectStatus.detailInProgress;
   bool get isDetailSuccess => this == ProjectStatus.detailSuccess;
   bool get isDetailFailure => this == ProjectStatus.detailFailure;
+
+  bool get isNewMessage => this == ProjectStatus.newMessage;
 }

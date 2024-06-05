@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
+import 'package:kyw_management/data/dtos/response/detail_project_response.dart';
+import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/message_service.dart';
 import 'package:kyw_management/data/storages/message_storage/message_storage.dart';
@@ -38,7 +40,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   String get _currentUserId => _controller.currentUser.id;
 
   ProjectResponse getProjectById(String projectId) {
-    return state.allProjects.content.firstWhere((project) => project.id == projectId);
+    return state.allProjects.content.firstWhere((project) => project.projectId == projectId);
   }
 
   void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
@@ -46,7 +48,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     emit(state.copyWith(status: ProjectStatus.inProgress));
 
-    var result = await _repository.getAllProjects();
+    var result = await _repository.getAllProjects(_currentUserId);
 
     result.fold(
       (success) {
@@ -62,21 +64,21 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   void _onGetById(GetProjectById event, Emitter<ProjectState> emit) async {
     emit(state.copyWith(status: ProjectStatus.detailInProgress));
 
-    var result = await _repository.getProjectById(event.projectId);
+    List<MessageResponse> messages = [];
+    final result = await _repository.getProjectById(event.projectId);
+
+    if (result.isSuccess()) {
+      messages = await _messageService.getMessages(
+        event.projectId,
+      );
+    }
 
     result.fold(
-      (success) {
-        final messages = _storage.getMessages(
-          event.projectId,
-          currentUserId: _currentUserId,
-        );
-
-        emit(state.copyWith(
-          detailProject: success,
-          status: ProjectStatus.detailSuccess,
-          messages: messages,
-        ));
-      },
+      (success) => emit(state.copyWith(
+        detailProject: success,
+        status: ProjectStatus.detailSuccess,
+        messages: messages,
+      )),
       (failure) => emit(state.copyWith(status: ProjectStatus.detailFailure)),
     );
   }
@@ -86,10 +88,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     if (projects.isNotEmpty) {
       for (var project in projects) {
-        log('Subscribe in project: ${project.id}', name: 'WEBSOCKET');
+        log('Subscribe in project: ${project.projectId}', name: 'WEBSOCKET');
 
         _messageService.subscribeToMessageUpdates(
-          projectId: project.id,
+          projectId: project.projectId,
           onMessageReceived: (message) {
             log('Message received: $message', name: 'WEBSOCKET');
             event.onReceivedMessage(message);
@@ -99,8 +101,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     }
   }
 
-  void _hasNewMessage(HasNewMessage event, Emitter<ProjectState> emit) {
-    final messages = _saveMessageToDB(event.message);
+  void _hasNewMessage(HasNewMessage event, Emitter<ProjectState> emit) async {
+    // final messages = _saveMessageToDB(event.message);
+
+    final messages = await _messageService.getMessages(event.message.project.projectId);
 
     emit(state.copyWith(
       messages: messages,

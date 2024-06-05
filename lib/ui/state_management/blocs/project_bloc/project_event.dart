@@ -23,13 +23,13 @@ class GetProjectById extends ProjectEvent {
 class SubscribeInProjectsWs extends ProjectEvent {
   const SubscribeInProjectsWs(this.onReceivedMessage);
 
-  final Function(MessageModel) onReceivedMessage;
+  final Function(MessageResponse) onReceivedMessage;
 }
 
 class HasNewMessage extends ProjectEvent {
   const HasNewMessage(this.message);
 
-  final MessageModel message;
+  final MessageResponse message;
 }
 
 class DeleteMessages extends ProjectEvent {
