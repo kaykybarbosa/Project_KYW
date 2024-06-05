@@ -6,7 +6,6 @@ import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/message_repository.dart';
 import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
-import 'package:kyw_management/domain/models/message_model.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class IMessageService {
@@ -17,9 +16,11 @@ abstract class IMessageService {
     required MessageRequest message,
   });
 
+  Future<List<MessageResponse>> getMessages(String projectId);
+
   void subscribeToMessageUpdates({
     required String projectId,
-    required Function(MessageModel) onMessageReceived,
+    required Function(MessageResponse) onMessageReceived,
   });
 
   void unsubscribeFromMessageUpdates();
@@ -53,8 +54,9 @@ class MessageService implements IMessageService {
     }
   }
 
+  @override
   Future<List<MessageResponse>> getMessages(String projectId) async {
-    final result = await _message.getMessages();
+    final result = await _message.getMessages(projectId);
 
     return result.getOrNull() ?? [];
   }
@@ -62,14 +64,15 @@ class MessageService implements IMessageService {
   @override
   void subscribeToMessageUpdates({
     required String projectId,
-    required Function(MessageModel) onMessageReceived,
+    required Function(MessageResponse) onMessageReceived,
   }) {
     /// TODO: Sem utilidade
-    _messageSubscription = _ws.messageUpdates().listen((message) => onMessageReceived(MessageModel.fromMap(message)));
+    _messageSubscription =
+        _ws.messageUpdates().listen((message) => onMessageReceived(MessageResponse.fromMap(message)));
 
     _ws.subscribe(
       '/project/$projectId',
-      callback: (frame) => onMessageReceived(MessageModel.fromJson(frame.body ?? '')),
+      callback: (frame) => onMessageReceived(MessageResponse.fromJson(frame.body ?? '')),
     );
   }
 
