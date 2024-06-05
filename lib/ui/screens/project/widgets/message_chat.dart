@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
-
-import '../../../../domain/models/message_model.dart';
 
 class MessageChat extends StatelessWidget {
   const MessageChat({super.key, required this.message, required this.hasNip});
 
-  final MessageModel message;
+  final MessageResponse message;
   final bool hasNip;
   static const _kRadius = Radius.circular(10);
 
@@ -44,9 +43,9 @@ class MessageChat extends StatelessWidget {
               Visibility(
                 visible: !message.isSender,
                 child: Text(
-                  message.getSender.nickname,
+                  message.sender.nickname,
                   style: const TextStyle(
-                    fontSize: TConstants.fontSizeMd,
+                    fontSize: TConstants.fontSizeSm,
                   ),
                 ),
               ),

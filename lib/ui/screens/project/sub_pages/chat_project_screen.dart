@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
-import 'package:kyw_management/domain/models/message_model.dart';
+import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
@@ -236,7 +236,7 @@ class _Members extends StatelessWidget {
 class _ChatProject extends StatefulWidget {
   const _ChatProject({required this.messages});
 
-  final List<MessageModel> messages;
+  final List<MessageResponse> messages;
 
   @override
   State<_ChatProject> createState() => _ChatProjectState();
@@ -274,35 +274,42 @@ class _ChatProjectState extends State<_ChatProject> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          /// Mensagens
-          Expanded(
-            child: Scrollbar(
-              child: ListView.builder(
-                controller: _controller,
-                itemCount: widget.messages.length,
-                itemBuilder: (_, index) {
-                  final message = widget.messages[index];
+  Widget build(BuildContext context) => BlocListener<ProjectBloc, ProjectState>(
+        listener: (context, state) {
+          if (state.status.isNewMessage) {
+            _scrollToEnd();
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            /// Mensagens
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                  controller: _controller,
+                  itemCount: widget.messages.length,
+                  itemBuilder: (_, index) {
+                    final message = widget.messages[index];
 
-                  final hasNip = (index == 0) ||
-                      (index == widget.messages.length - 1 &&
-                          message.getSender.userId != widget.messages[index - 1].getSender.userId) ||
-                      (message.getSender.userId != widget.messages[index - 1].getSender.userId &&
-                          message.getSender.userId == widget.messages[index + 1].getSender.userId) ||
-                      (message.getSender.userId != widget.messages[index - 1].getSender.userId &&
-                          message.getSender.userId != widget.messages[index + 1].getSender.userId);
+                    final hasNip = (index == 0) ||
+                        (index == widget.messages.length - 1 &&
+                            message.sender.userId != widget.messages[index - 1].sender.userId) ||
+                        (message.sender.userId != widget.messages[index - 1].sender.userId &&
+                            message.sender.userId == widget.messages[index + 1].sender.userId) ||
+                        (message.sender.userId != widget.messages[index - 1].sender.userId &&
+                            message.sender.userId != widget.messages[index + 1].sender.userId);
 
-                  return MessageChat(message: message, hasNip: hasNip);
-                },
+                    return MessageChat(message: message, hasNip: hasNip);
+                  },
+                ),
               ),
             ),
-          ),
 
-          /// Enviar mensagem
-          const _MessageInput(),
-        ],
+            /// Enviar mensagem
+            const _MessageInput(),
+          ],
+        ),
       );
 }
 
