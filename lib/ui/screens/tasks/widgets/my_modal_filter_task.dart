@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/domain/enums/filters_enum.dart';
 import 'package:kyw_management/domain/enums/status.dart';
-import 'package:kyw_management/ui/screens/create_project/widgets/my_text_field_border.dart';
+import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/filter_task_bloc/filter_task_bloc.dart';
 import 'package:kyw_management/ui/widgets/apply_button.dart';
 import 'package:kyw_management/ui/widgets/home_screen/filter/card_category.dart';

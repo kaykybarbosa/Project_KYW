@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
-import 'package:kyw_management/ui/screens/create_project/widgets/my_text_field_border.dart';
+import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';

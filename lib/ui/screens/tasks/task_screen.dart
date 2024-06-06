@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 import 'package:kyw_management/domain/models/task.dart';
@@ -10,9 +8,7 @@ import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
-import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
-import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class TaskScreen extends StatelessWidget {
@@ -57,14 +53,6 @@ class TaskScreen extends StatelessWidget {
             child: MySearchBar(
               hintText: TTexts.hintTextTask,
               onPressed: () {},
-            ),
-          ),
-
-          IconButton(
-            onPressed: () => Get.toNamed(AppRoutes.detailTask),
-            icon: const Icon(
-              TIcons.add,
-              color: TColors.alert,
             ),
           ),
 
