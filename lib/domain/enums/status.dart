@@ -7,3 +7,11 @@ extension TaskStatusX on TaskStatus {
         _ => 'Completo',
       };
 }
+
+class TaskStatusM {
+  static TaskStatus fromMap(String value) => switch (value) {
+        'OPEN' => TaskStatus.incomplete,
+        'PENDING' => TaskStatus.pending,
+        _ => TaskStatus.complete,
+      };
+}

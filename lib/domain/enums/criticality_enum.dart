@@ -11,3 +11,11 @@ extension CriticalityEnumX on CriticalityEnum {
 
   bool get isLow => this == CriticalityEnum.low;
 }
+
+class CriticalityEnumM {
+  static CriticalityEnum fromMap(String value) => switch (value) {
+        'HIGH' => CriticalityEnum.high,
+        'MEDIUM' => CriticalityEnum.medium,
+        _ => CriticalityEnum.low,
+      };
+}
