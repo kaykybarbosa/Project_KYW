@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class UserResponse extends Equatable {
-  UserResponse({
+class UserIncludeResponse extends Equatable {
+  UserIncludeResponse({
     this.id = 0,
     this.userId = '',
     this.nickname = '',
@@ -18,7 +18,7 @@ class UserResponse extends Equatable {
   @override
   List<Object?> get props => [id, userId, nickname];
 
-  factory UserResponse.fromMap(Map<String, dynamic> map) => UserResponse(
+  factory UserIncludeResponse.fromMap(Map<String, dynamic> map) => UserIncludeResponse(
         userId: map['userId'],
         nickname: map['nickname'],
       );

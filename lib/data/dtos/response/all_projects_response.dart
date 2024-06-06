@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kyw_management/data/dtos/response/user_response.dart';
+import 'package:kyw_management/data/dtos/user_include_response.dart';
 
 class AllProjectsResponse {
   AllProjectsResponse({
@@ -37,7 +37,7 @@ class ProjectResponse extends Equatable {
   final String projectId;
   final String name;
   final String description;
-  final UserResponse? creator;
+  final UserIncludeResponse? creator;
   final String? imageUrl;
   final String? linkGroup;
   final bool pin;
@@ -76,7 +76,7 @@ class ProjectResponse extends Equatable {
         projectId: map['project']['id'],
         name: map['project']['name'],
         description: map['project']['description'],
-        creator: map['project']['creator'] != null ? UserResponse.fromMap(map['project']['creator']) : null,
+        creator: map['project']['creator'] != null ? UserIncludeResponse.fromMap(map['project']['creator']) : null,
         imageUrl: map['project']['imageUrl'],
         linkGroup: map['project']['linkGroup'],
         pin: map['project']['pin'],
@@ -89,7 +89,7 @@ class ProjectResponse extends Equatable {
         projectId: 'projectId',
         name: 'name',
         description: 'description',
-        creator: UserResponse(),
+        creator: UserIncludeResponse(),
         pin: false,
         createAt: DateTime(0000),
       );
