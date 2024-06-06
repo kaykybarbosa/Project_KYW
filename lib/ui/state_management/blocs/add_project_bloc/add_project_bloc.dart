@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models_input/models_states_export.dart';
 
@@ -10,6 +13,8 @@ part 'add_project_state.dart';
 
 class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   AddProjectBloc() : super(const AddProjectState()) {
+    on<PickerImage>(_onPickerImageFile);
+    on<RemoveImage>(_onRemoveImage);
     on<TitleChanged>(_onTitleChangedAddProject);
     on<DescriptionChanged>(_onDescriptionChangedAddProject);
     on<EmailChanged>(_onEmailChangedAddProject);
@@ -17,6 +22,35 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     on<RemoveFriends>(_onRemoveFriends);
     on<ChangedCurrentPage>(_onChangePage);
     on<FormSubmittedd>(_onFormSubmitteddAddProject);
+  }
+
+  void _onPickerImageFile(PickerImage event, Emitter<AddProjectState> emit) async {
+    try {
+      final source = event.fromGallery ? ImageSource.gallery : ImageSource.camera;
+
+      XFile? result = await ImagePicker().pickImage(source: source);
+
+      if (result != null) {
+        final image = File(result.path);
+
+        emit(state.copyWith(image: image));
+      } else {
+        emit(state.copyWith());
+      }
+    } catch (e) {
+      emit(state.copyWith());
+    }
+  }
+
+  void _onRemoveImage(RemoveImage _, Emitter<AddProjectState> emit) {
+    emit(AddProjectState(
+      title: state.title,
+      description: state.description,
+      email: state.email,
+      invitedFriends: state.invitedFriends,
+      isValid: state.isValid,
+      currentPage: state.currentPage,
+    ));
   }
 
   void _onTitleChangedAddProject(
@@ -118,7 +152,5 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   void _onFormSubmitteddAddProject(
     FormSubmittedd event,
     Emitter<AddProjectState> emit,
-  ) {
-    emit(const AddProjectState());
-  }
+  ) async {}
 }

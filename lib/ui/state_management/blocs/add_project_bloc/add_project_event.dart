@@ -8,6 +8,17 @@ sealed class AddProjectEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class PickerImage extends AddProjectEvent {
+  const PickerImage({this.fromGallery = false});
+
+  final bool fromGallery;
+
+  @override
+  List<Object> get props => [fromGallery];
+}
+
+class RemoveImage extends AddProjectEvent {}
+
 class TitleChanged extends AddProjectEvent {
   const TitleChanged({required this.title});
 

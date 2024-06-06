@@ -2,6 +2,7 @@ part of 'add_project_bloc.dart';
 
 class AddProjectState extends Equatable {
   const AddProjectState({
+    this.image,
     this.title = const TitleInput.pure(),
     this.description = const DescriptionInput.pure(),
     this.email = const EmailInput.pure(),
@@ -11,6 +12,7 @@ class AddProjectState extends Equatable {
     this.currentPage = 0,
   });
 
+  final File? image;
   final TitleInput title;
   final DescriptionInput description;
   final EmailInput email;
@@ -20,7 +22,8 @@ class AddProjectState extends Equatable {
   final int currentPage;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        image,
         title,
         description,
         email,
@@ -31,6 +34,7 @@ class AddProjectState extends Equatable {
       ];
 
   AddProjectState copyWith({
+    File? image,
     TitleInput? title,
     DescriptionInput? description,
     EmailInput? email,
@@ -40,6 +44,7 @@ class AddProjectState extends Equatable {
     int? currentPage,
   }) =>
       AddProjectState(
+        image: image ?? this.image,
         title: title ?? this.title,
         description: description ?? this.description,
         email: email ?? this.email,
@@ -57,6 +62,9 @@ enum AddProjectStatus {
   inProgress,
   emailAlreadyExists,
   emailAdded,
+
+  pickerImageSuccess,
+  pickerImageFailure,
 }
 
 extension AddProjectStatusX on AddProjectStatus {
@@ -66,4 +74,7 @@ extension AddProjectStatusX on AddProjectStatus {
   bool get isFailure => this == AddProjectStatus.failure;
   bool get isEmailAlreadyExists => this == AddProjectStatus.emailAlreadyExists;
   bool get isEmailAdded => this == AddProjectStatus.emailAdded;
+
+  bool get isPickerImageSuccess => this == AddProjectStatus.pickerImageSuccess;
+  bool get isPickerImageFailure => this == AddProjectStatus.pickerImageFailure;
 }
