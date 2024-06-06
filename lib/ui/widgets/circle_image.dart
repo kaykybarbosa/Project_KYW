@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
@@ -6,40 +8,43 @@ import 'package:kyw_management/utils/icons.dart';
 class CircleImage extends StatelessWidget {
   const CircleImage({
     super.key,
+    this.image,
     this.onTap,
-    this.iconSize = 45.0,
+    this.firstRadius = 65,
+    this.secoundRadius = 60,
+    this.iconSize = 35.0,
     this.changeIconVisible = true,
-    this.padding = const EdgeInsets.all(38.0),
   });
 
+  final double firstRadius;
+  final double secoundRadius;
+  final File? image;
   final Function()? onTap;
   final double iconSize;
   final bool changeIconVisible;
-  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) => Stack(
         alignment: const Alignment(1.1, .6),
         children: <Widget>[
-          /// Circulo
-          Container(
-            padding: padding,
-            decoration: BoxDecoration(
-              color: TColors.base200,
-              borderRadius: BorderRadius.circular(60.0),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: TColors.base900.withOpacity(.33),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-
-            /// Ícone
-            child: Icon(
-              TIcons.user,
-              size: iconSize,
-              color: TColors.base100,
+          /// Imagem
+          CircleAvatar(
+            radius: firstRadius,
+            backgroundColor: TColors.base200.withOpacity(.2),
+            child: CircleAvatar(
+              radius: secoundRadius,
+              backgroundColor: TColors.base200,
+              backgroundImage: image != null ? FileImage(image!) : null,
+              child: image == null
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Icon(
+                        TIcons.userGroup,
+                        size: iconSize,
+                        color: TColors.base100,
+                      ),
+                    )
+                  : null,
             ),
           ),
 
