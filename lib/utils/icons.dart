@@ -32,6 +32,7 @@ abstract class TIcons {
   static const IconData camera = FontAwesomeIcons.camera;
   static const IconData attachment = FontAwesomeIcons.paperclip;
   static const IconData send = FontAwesomeIcons.solidPaperPlane;
+  static const IconData message = FontAwesomeIcons.solidCommentDots;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;

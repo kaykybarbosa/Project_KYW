@@ -12,7 +12,7 @@ class DetailsTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Detalhes')),
+        appBar: AppBar(title: const Text('Projeto integrador')),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
           child: Column(
@@ -106,6 +106,12 @@ class DetailsTaskScreen extends StatelessWidget {
               const _Members(),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: TColors.primary,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          child: const Icon(TIcons.message),
+          onPressed: () {},
         ),
       );
 }
