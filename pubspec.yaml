@@ -66,6 +66,10 @@ dependencies:
 
   # Websocket
   stomp_dart_client: ^2.0.0
+
+  # Image picker
+  image_picker: ^1.1.2
+
   
   flutter_localizations:
     sdk: flutter
