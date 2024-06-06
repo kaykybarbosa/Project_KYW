@@ -13,6 +13,7 @@ abstract class TIcons {
   static const IconData configurations = FontAwesomeIcons.gear;
   static const IconData user = FontAwesomeIcons.user;
   static const IconData solidUser = FontAwesomeIcons.solidUser;
+  static const IconData userGroup = FontAwesomeIcons.userGroup;
   static const IconData info = FontAwesomeIcons.circleInfo;
   static const IconData singOut = FontAwesomeIcons.rightFromBracket;
   static const IconData pen = FontAwesomeIcons.pen;
@@ -30,6 +31,7 @@ abstract class TIcons {
   static const IconData email = FontAwesomeIcons.solidEnvelope;
   static const IconData phone = FontAwesomeIcons.phone;
   static const IconData camera = FontAwesomeIcons.camera;
+  static const IconData gallery = FontAwesomeIcons.solidImage;
   static const IconData attachment = FontAwesomeIcons.paperclip;
   static const IconData send = FontAwesomeIcons.solidPaperPlane;
   static const IconData message = FontAwesomeIcons.solidCommentDots;
