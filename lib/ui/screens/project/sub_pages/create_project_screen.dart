@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class CreateProjectScreen extends StatefulWidget {
@@ -70,7 +72,7 @@ class CreateProjectScreenState extends State<CreateProjectScreen> {
               physics: const NeverScrollableScrollPhysics(),
               controller: pageController,
               children: const [
-                /// Título e Descrição
+                /// Imagem, Título e Descrição
                 _NameAndDescriptionScreen(),
 
                 /// Convidar amigos
@@ -92,14 +94,14 @@ class _NameAndDescriptionScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
           child: Column(
             children: <Widget>[
-              Gap(10),
-
               /// Título
-              _SelectImagemTitle(),
-              Gap(15),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: _SelectImagemTitle(),
+              ),
 
               /// Imagem do grupo
-              CircleImage(),
+              _Image(),
               Gap(30),
 
               /// Input do título
@@ -109,6 +111,95 @@ class _NameAndDescriptionScreen extends StatelessWidget {
               /// Input da descrição
               _DescriptionInput(),
             ],
+          ),
+        ),
+      );
+}
+
+class _Image extends StatelessWidget {
+  const _Image();
+
+  @override
+  Widget build(BuildContext context) => BlocConsumer<AddProjectBloc, AddProjectState>(
+        buildWhen: (previous, current) => previous.image != current.image,
+        listener: (context, state) {
+          if (state.status.isPickerImageFailure) {
+            snackBarCustom(title: 'Erro ao selecionar image..', type: SnackBarType.failure);
+          } else if (state.status.isPickerImageSuccess) {
+            snackBarCustom(title: 'Imagem selecionada.');
+          }
+        },
+        builder: (context, state) => CircleImage(
+          image: state.image,
+          onTap: () => showModalBottomSheet(
+            context: context,
+            showDragHandle: true,
+            builder: (_) => Padding(
+              padding: const EdgeInsets.only(
+                left: TConstants.defaultMargin,
+                right: TConstants.defaultMargin,
+                bottom: 20,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  /// Título
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      /// -- label
+                      const Text(
+                        'Imagem do projeto',
+                        style: TextStyle(fontSize: TConstants.fontSizeLg + 1),
+                      ),
+
+                      /// -- ícone
+                      Visibility(
+                        visible: state.image != null,
+                        child: IconButton(
+                          onPressed: () => {
+                            Get.back(),
+                            context.read<AddProjectBloc>().add(RemoveImage()),
+                          },
+                          constraints: const BoxConstraints(maxHeight: 20, maxWidth: 20),
+                          icon: const Icon(
+                            TIcons.trash,
+                            color: TColors.secondary,
+                            size: TConstants.iconSm + 1,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+
+                  const Gap(15),
+
+                  /// Opções
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      PickerIcon(
+                        label: 'Câmera',
+                        icon: TIcons.camera,
+                        onTap: () => {
+                          Get.back(),
+                          context.read<AddProjectBloc>().add(const PickerImage()),
+                        },
+                      ),
+                      PickerIcon(
+                        label: 'Galeria',
+                        icon: TIcons.gallery,
+                        onTap: () => {
+                          Get.back(),
+                          context.read<AddProjectBloc>().add(const PickerImage(fromGallery: true)),
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       );
@@ -132,6 +223,7 @@ class _TitleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+        buildWhen: (previous, current) => previous.title.value != current.title.value,
         builder: (context, state) => MyTextFieldBorder(
           text: TTexts.title,
           initialValue: state.title.value,
@@ -149,6 +241,7 @@ class _DescriptionInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+        buildWhen: (previous, current) => previous.description.value != current.description.value,
         builder: (context, state) => MyTextFieldBorder(
           maxLine: 5,
           initialValue: state.description.value,
@@ -176,6 +269,7 @@ class _MyFloatingButton extends StatelessWidget {
     }
 
     return BlocBuilder<AddProjectBloc, AddProjectState>(
+      buildWhen: (previous, current) => previous.isValid != current.isValid,
       builder: (context, state) => FloatingActionButton(
         onPressed: state.isValid ? () => changePage(state.currentPage) : null,
         backgroundColor: Theme.of(context).primaryColor,
@@ -186,4 +280,49 @@ class _MyFloatingButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class PickerIcon extends StatelessWidget {
+  const PickerIcon({
+    super.key,
+    required this.label,
+    required this.icon,
+    this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final Function()? onTap;
+
+  BoxDecoration _buildDecoration(context) => BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: TColors.base150.withOpacity(.5),
+      );
+
+  Icon _buildIcon(context) {
+    return Icon(
+      icon,
+      size: TConstants.iconMd,
+      color: TColors.base300,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(30),
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              decoration: _buildDecoration(context),
+              child: _buildIcon(context),
+            ),
+          ),
+          const Gap(10),
+          Text(label),
+        ],
+      );
 }
