@@ -3,7 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/screens/home/widgets/drawer/sign_out_button.dart';
-import 'package:kyw_management/ui/widgets/circle_image.dart';
+import 'package:kyw_management/ui/widgets/app_logo.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
@@ -48,24 +48,23 @@ class MyEndDrawer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  /// Imagem de perfil
-                  CircleImage(
-                    iconSize: TConstants.iconLg - 3,
-                    padding: const EdgeInsets.all(18.0),
-                    changeIconVisible: false,
-                    onTap: () {},
-                  ),
+                  /// Logo
+                  const AppLogo(),
 
                   /// Nome do usuário
-                  Text(
-                    currentUser.nickname,
-                    style: const TextStyle(
-                      color: TColors.base100,
-                      fontWeight: FontWeight.bold,
-                      fontSize: TConstants.fontSizeLg,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        currentUser.nickname,
+                        style: const TextStyle(
+                          color: TColors.base100,
+                          fontWeight: FontWeight.bold,
+                          fontSize: TConstants.fontSizeLg,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
