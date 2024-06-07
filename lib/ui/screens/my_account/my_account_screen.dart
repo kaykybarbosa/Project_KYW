@@ -39,7 +39,10 @@ class MyAccountScreen extends StatelessWidget {
             const SizedBox(height: 20.0),
 
             // Profile image
-            CircleImage(onTap: () {}),
+            const CircleImage.medium(
+              icon: TIcons.solidUser,
+              iconWithPadding: false,
+            ),
 
             // Informations the user
             Expanded(
