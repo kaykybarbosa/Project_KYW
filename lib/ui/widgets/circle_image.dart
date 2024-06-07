@@ -10,22 +10,47 @@ class CircleImage extends StatelessWidget {
     super.key,
     this.image,
     this.onTap,
+    this.icon = TIcons.userGroup,
     this.firstRadius = 65,
     this.secoundRadius = 60,
     this.iconSize = 35.0,
     this.changeIconVisible = true,
+    this.containerSize = 22,
+    this.iconContainerSize = TConstants.iconSm + 2,
+    this.iconWithPadding = true,
+    this.align = 1.0,
+  });
+
+  const CircleImage.medium({
+    super.key,
+    this.image,
+    this.onTap,
+    this.icon = TIcons.userGroup,
+    this.firstRadius = 55,
+    this.secoundRadius = 50,
+    this.iconSize = 30.0,
+    this.changeIconVisible = true,
+    this.containerSize = 18,
+    this.iconContainerSize = TConstants.iconXs + 2,
+    this.iconWithPadding = true,
+    this.align = .95,
   });
 
   final double firstRadius;
   final double secoundRadius;
   final File? image;
-  final Function()? onTap;
   final double iconSize;
+  final IconData icon;
   final bool changeIconVisible;
+  final bool iconWithPadding;
+  final double containerSize;
+  final double iconContainerSize;
+  final double align;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) => Stack(
-        alignment: const Alignment(1.1, .6),
+        alignment: Alignment(align, .6),
         children: <Widget>[
           /// Imagem
           CircleAvatar(
@@ -37,9 +62,9 @@ class CircleImage extends StatelessWidget {
               backgroundImage: image != null ? FileImage(image!) : null,
               child: image == null
                   ? Padding(
-                      padding: const EdgeInsets.only(right: 5),
+                      padding: EdgeInsets.only(right: iconWithPadding ? 5 : 0),
                       child: Icon(
-                        TIcons.userGroup,
+                        icon,
                         size: iconSize,
                         color: TColors.base100,
                       ),
@@ -57,8 +82,8 @@ class CircleImage extends StatelessWidget {
                 alignment: const Alignment(2.5, -2.5),
                 children: <Widget>[
                   Container(
-                    width: 22.0,
-                    height: 22.0,
+                    width: containerSize,
+                    height: containerSize,
                     padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
                     decoration: BoxDecoration(
                       color: TColors.base100,
@@ -67,9 +92,9 @@ class CircleImage extends StatelessWidget {
                     ),
                     child: Container(),
                   ),
-                  const Icon(
+                  Icon(
                     TIcons.pen,
-                    size: TConstants.iconSm + 2,
+                    size: iconContainerSize,
                     color: TColors.primary,
                   ),
                 ],
