@@ -38,6 +38,12 @@ class TaskScreen extends StatelessWidget {
         dateOfConclusion: DateTime(2024, 06, 25),
         status: TaskStatus.complete,
       ),
+      Task(
+        title: 'Concluir o Projeto Integrador',
+        description: 'Lorem sdjks jdsidj skdi ',
+        dateOfConclusion: DateTime(2024, 06, 25),
+        status: TaskStatus.incomplete,
+      ),
     ];
 
     return Scaffold(
