@@ -7,12 +7,12 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({
     super.key,
     this.padding,
-    this.size,
+    this.size = 110,
     this.progressVisible,
   });
 
   /// Valor padrão: 110.0.
-  final double? size;
+  final double size;
 
   /// Valor padrão: EdgeInsets.only(top: 27.0).
   final EdgeInsetsGeometry? padding;
@@ -29,7 +29,7 @@ class SplashScreen extends StatelessWidget {
             Container(color: TColors.secondary),
 
             /// Logo
-            AppLogo(padding: padding, size: size, isDarkMode: true),
+            AppLogo(padding: padding, iconSize: size, isDarkMode: true),
 
             /// Progress indicator
             Visibility(
