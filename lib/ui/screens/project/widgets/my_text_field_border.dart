@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyw_management/ui/widgets/text_field/title_text_field.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
@@ -34,7 +35,8 @@ class MyTextFieldBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var border = const BorderSide(color: TColors.base150);
+    const border = BorderSide(color: TColors.base150);
+    final theme = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,44 +44,47 @@ class MyTextFieldBorder extends StatelessWidget {
         /// Título
         Visibility(
           visible: showText,
-          child: _MyTitle(text: text),
+          child: TitleTextField(text),
         ),
 
         /// Input
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: Container(
-            padding: const EdgeInsets.only(left: 5),
             margin: const EdgeInsets.symmetric(horizontal: 3),
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              border: Border(top: border, right: border, bottom: border),
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: const [
-                BoxShadow(
-                  color: TColors.base200,
-                  blurRadius: TConstants.blurRadius,
-                )
-              ],
+              borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+              border: const Border(top: border, right: border, bottom: border),
             ),
-            child: TextFormField(
-              initialValue: initialValue,
-              controller: controller,
-              enabled: enable,
-              maxLines: maxLine,
-              keyboardType: textInputType,
-              textInputAction: textInputAction,
-              style: TextStyle(color: Theme.of(context).primaryColor),
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-                enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
-                hintText: placeHolder,
-                alignLabelWithHint: true,
-                suffixIcon: suffix,
-                hintStyle:
-                    errorText != null ? TextStyle(color: Theme.of(context).colorScheme.error.withOpacity(.8)) : null,
+            child: Container(
+              padding: const EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                color: theme.primaryColor,
+                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+                boxShadow: const [
+                  BoxShadow(
+                    color: TColors.base200,
+                    blurRadius: TConstants.blurRadius,
+                  )
+                ],
               ),
-              onChanged: onChange,
+              child: TextFormField(
+                initialValue: initialValue,
+                controller: controller,
+                enabled: enable,
+                maxLines: maxLine,
+                keyboardType: textInputType,
+                textInputAction: textInputAction,
+                style: TextStyle(color: theme.primaryColor),
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: theme.primaryColor)),
+                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  hintText: placeHolder,
+                  alignLabelWithHint: true,
+                  suffixIcon: suffix,
+                  hintStyle: errorText != null ? TextStyle(color: theme.colorScheme.error.withOpacity(.8)) : null,
+                ),
+              ),
             ),
           ),
           subtitle: _ErrorMessage(errorMessage: errorText),
@@ -87,25 +92,6 @@ class MyTextFieldBorder extends StatelessWidget {
       ],
     );
   }
-}
-
-class _MyTitle extends StatelessWidget {
-  const _MyTitle({required this.text});
-
-  final String? text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: 2, bottom: 4),
-        child: Text(
-          text!,
-          style: TextStyle(
-            fontSize: TConstants.fontSizeLg,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-      );
 }
 
 class _ErrorMessage extends StatelessWidget {
