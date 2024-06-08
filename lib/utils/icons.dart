@@ -35,10 +35,14 @@ abstract class TIcons {
   static const IconData attachment = FontAwesomeIcons.paperclip;
   static const IconData send = FontAwesomeIcons.solidPaperPlane;
   static const IconData message = FontAwesomeIcons.solidCommentDots;
+  static const IconData calendar = FontAwesomeIcons.calendarDays;
+  static const IconData bold = FontAwesomeIcons.bold;
+  static const IconData italic = FontAwesomeIcons.italic;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
   static const IconData arrowLeftIOS = FontAwesomeIcons.chevronLeft;
+  static const IconData arrowUpIOS = FontAwesomeIcons.chevronUp;
   static const IconData anglesDown = FontAwesomeIcons.anglesDown;
   static const IconData anglesUp = FontAwesomeIcons.anglesUp;
   static const IconData arrowTop = FontAwesomeIcons.arrowUp;

@@ -39,10 +39,8 @@ class _SubmitChangeEmailButton extends StatelessWidget {
   const _SubmitChangeEmailButton();
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
-      builder: (context, state) {
-        return SizedBox(
+  Widget build(BuildContext context) => BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
+        builder: (context, state) => SizedBox(
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
@@ -62,10 +60,8 @@ class _SubmitChangeEmailButton extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
 }
 
 class _CurrentEmailInput extends StatelessWidget {

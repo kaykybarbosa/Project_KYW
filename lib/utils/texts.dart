@@ -30,9 +30,9 @@ abstract class TTexts {
   static const newProject = 'Novo projeto';
   static const selectImagemTitle = 'Selecione uma imagem para o projeto';
   static const labelTitle = 'Título';
-  static const title = 'Título do Projeto*';
+  static const title = 'Título*';
   static const labelDescription = 'Descrição';
-  static const description = 'Descrição do Projeto*';
+  static const description = 'Descrição*';
   static const labelEmail = 'Inserir e-mail';
   static const inviteFriendsByEmail = 'Convidar amigos por e-mail';
   static const invite = 'Convidar';
