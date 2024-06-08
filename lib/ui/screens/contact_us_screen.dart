@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/ui/widgets/my_icon_drag.dart';
 import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
-import 'package:kyw_management/utils/icons.dart';
 
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
@@ -53,32 +53,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       ),
 
                       /// Ícone
-                      GestureDetector(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 25.0),
-                          decoration: const BoxDecoration(
-                            color: TColors.primary,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(TConstants.cardRadiusXs),
-                              bottomRight: Radius.circular(TConstants.cardRadiusXs),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              AnimatedRotation(
-                                turns: maxLines == valueMax ? -0.5 : 0.0,
-                                duration: const Duration(milliseconds: 200),
-                                child: const Icon(
-                                  TIcons.anglesDown,
-                                  size: TConstants.iconSm,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        onVerticalDragUpdate: (onLong) => _setHeightInput(onLong.primaryDelta),
+                      MyIconDrag(
+                        isDrag: maxLines == valueMax,
+                        onVerticalDragUpdate: _setHeightInput,
                       ),
 
                       const Gap(60.0),
@@ -163,7 +140,7 @@ class _SubmitButton extends StatelessWidget {
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
-            backgroundColor: const Color(0xFF06AC93),
+            backgroundColor: TColors.success,
           ),
         ),
       );
