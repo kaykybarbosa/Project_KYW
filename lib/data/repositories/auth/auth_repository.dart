@@ -1,7 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:kyw_management/data/dtos/response/refresh_token_response.dart';
 import 'package:kyw_management/data/requests_models/user_login_request.dart';
 import 'package:kyw_management/data/requests_models/user_register_request.dart';
@@ -48,9 +49,19 @@ class AuthRepository implements IAuthRepository {
   @override
   AsyncResult<Unit, ApiException> register(UserRegisterRequest request) async {
     try {
+      FormData data = FormData();
+
+      if (request.image != null) {
+        final image = await MultipartFile.fromFile(request.image!.path);
+
+        data = FormData.fromMap(request.toMapImage(image));
+      } else {
+        data = FormData.fromMap(request.toMap());
+      }
+
       await _http.post(
         '${_http.baseUrl}/users/register',
-        data: request.toMap(),
+        data: data,
       );
 
       return const Success(unit);
