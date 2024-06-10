@@ -89,17 +89,17 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
-    var request = UserRegisterRequest(
+    final request = UserRegisterRequest(
       nickname: state.name.value,
       email: state.email.value,
       phone: state.phone.value,
       password: state.password.value,
     );
-    var result = await _repository.register(request);
+    final result = await _repository.register(request);
 
     result.fold(
       (success) async {
-        var authUser = AuthUserModel(
+        final authUser = AuthUserModel(
           email: state.email.value,
           password: state.password.value,
         );
