@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/data/dtos/project_include_reponse.dart';
 import 'package:kyw_management/data/dtos/user_include_response.dart';
@@ -34,27 +37,29 @@ class AllTasksResponse {
 }
 
 class TaskResponse extends Equatable {
-  final String id;
-  final TaskStatus status;
-  final CriticalityEnum criticality;
-  final String description;
-  final String? attachments;
-  final UserIncludeResponse? attributedTo;
-  final ProjectIncludeResponse? project;
-  final bool pin;
-  final DateTime createAt;
-
   const TaskResponse({
     required this.id,
     required this.status,
-    required this.criticality,
+    this.criticality,
     required this.description,
     this.attachments,
     this.attributedTo,
     required this.pin,
     required this.project,
     required this.createAt,
+    this.completedAt,
   });
+
+  final String id;
+  final TaskStatus status;
+  final CriticalityEnum? criticality;
+  final String description;
+  final String? attachments;
+  final UserIncludeResponse? attributedTo;
+  final ProjectIncludeResponse? project;
+  final bool pin;
+  final DateTime createAt;
+  final DateTime? completedAt;
 
   @override
   List<Object?> get props => [
@@ -66,6 +71,7 @@ class TaskResponse extends Equatable {
         attachments,
         pin,
         createAt,
+        completedAt,
       ];
 
   factory TaskResponse.fromMap(Map<String, dynamic> map) => TaskResponse(
@@ -90,4 +96,23 @@ class TaskResponse extends Equatable {
         pin: false,
         createAt: DateTime(0000),
       );
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'status': '',
+      'criticality': CriticalityEnumM.toMap(criticality),
+      'description': description,
+      'attachments': attachments,
+      'attributedTo': attributedTo?.toMap(),
+      'project': project?.toMap(),
+      'pin': pin,
+      'createAt': createAt.millisecondsSinceEpoch,
+      'completedAt': completedAt?.millisecondsSinceEpoch,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TaskResponse.fromJson(String source) => TaskResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }
