@@ -19,7 +19,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   final AppController _controller;
 
   void nameChanged(String value) {
-    final name = Name.dirty(value);
+    final name = NameInput.dirty(value);
 
     emit(
       state.copyWith(
@@ -27,6 +27,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         isValid: Formz.validate([
           name,
           state.email,
+          state.phone,
           state.password,
         ]),
       ),
@@ -42,6 +43,23 @@ class SignUpCubit extends Cubit<SignUpState> {
         isValid: Formz.validate([
           state.name,
           email,
+          state.phone,
+          state.password,
+        ]),
+      ),
+    );
+  }
+
+  void phoneChanged(String value) {
+    final phone = PhoneInput.dirty(value);
+
+    emit(
+      state.copyWith(
+        phone: phone,
+        isValid: Formz.validate([
+          state.name,
+          state.email,
+          phone,
           state.password,
         ]),
       ),
@@ -57,6 +75,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         isValid: Formz.validate([
           state.name,
           state.email,
+          state.phone,
           password,
         ]),
       ),
@@ -73,6 +92,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     var request = UserRegisterRequest(
       nickname: state.name.value,
       email: state.email.value,
+      phone: state.phone.value,
       password: state.password.value,
     );
     var result = await _repository.register(request);

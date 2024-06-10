@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/authentication/widgets/button_network.dart';
@@ -13,6 +12,7 @@ import 'package:kyw_management/ui/widgets/my_password_text_field.dart';
 import 'package:kyw_management/ui/widgets/my_text_field.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/input_formatters.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
 
@@ -47,22 +47,26 @@ class SignUpScreen extends StatelessWidget {
                         MyTitle(title: 'Crie sua conta'),
 
                         /// -- Nome
-                        _NameInput(),
+                        _Name(),
                         Gap(20),
 
                         /// -- E-mail
-                        _EmailInput(),
+                        _Email(),
+                        Gap(20),
+
+                        /// -- Telefone
+                        _Phone(),
                         Gap(20),
 
                         /// -- Senha
-                        _PasswordInput(),
+                        _Password(),
                         Gap(15),
 
-                        /// -- Continue com
-                        _ContinueWith(),
+                        // /// -- Continue com
+                        // _ContinueWith(),
 
-                        /// -- Google ou Facebook
-                        _SignUpGoogleFacebook(),
+                        // /// -- Google ou Facebook
+                        // _SignUpGoogleFacebook(),
 
                         Gap(50),
 
@@ -83,8 +87,8 @@ class SignUpScreen extends StatelessWidget {
       );
 }
 
-class _NameInput extends StatelessWidget {
-  const _NameInput();
+class _Name extends StatelessWidget {
+  const _Name();
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
@@ -99,8 +103,8 @@ class _NameInput extends StatelessWidget {
       );
 }
 
-class _EmailInput extends StatelessWidget {
-  const _EmailInput();
+class _Email extends StatelessWidget {
+  const _Email();
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
@@ -115,8 +119,25 @@ class _EmailInput extends StatelessWidget {
       );
 }
 
-class _PasswordInput extends StatelessWidget {
-  const _PasswordInput();
+class _Phone extends StatelessWidget {
+  const _Phone();
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) => previous.phone.value != current.phone.value,
+        builder: (context, state) => MyTextFormField(
+          hintText: 'Telefone',
+          inputFormatters: [InputFormatters.phone],
+          initialValue: state.phone.value,
+          keyboardType: TextInputType.number,
+          errorText: state.phone.displayError,
+          onChanged: (phone) => context.read<SignUpCubit>().phoneChanged(InputFormatters.phone.unmaskText(phone)),
+        ),
+      );
+}
+
+class _Password extends StatelessWidget {
+  const _Password();
 
   @override
   Widget build(BuildContext context) => BlocBuilder<SignUpCubit, SignUpState>(
