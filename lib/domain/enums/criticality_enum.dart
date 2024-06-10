@@ -23,9 +23,9 @@ class CriticalityEnumM {
         _ => CriticalityEnum.low,
       };
 
-  static String toMap(String value) => switch (value) {
-        CriticalityEnumM.urgent => 'HIGH',
-        CriticalityEnumM.important => 'MEDIUM',
+  static String toMap(CriticalityEnum? value) => switch (value) {
+        CriticalityEnum.high => 'HIGH',
+        CriticalityEnum.medium => 'MEDIUM',
         _ => 'LOW',
       };
 }
