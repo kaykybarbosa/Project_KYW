@@ -80,4 +80,9 @@ class AppController extends GetxController {
 
   /// Adicionar o diretório de documentos do usuário.
   void setDirectory(Directory directory) => _directory = directory;
+
+  void logOut() {
+    updateStatus(AppStatus.unauthenticated);
+    setConfigurations(configureApp.copyWith(currentUserIsAuth: false));
+  }
 }

@@ -14,7 +14,8 @@ class MyEndDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = AppController.instance.currentUser;
+    final controller = AppController.instance;
+    final currentUser = controller.currentUser;
 
     final List<_DrawerOption> options = [
       /// Minha conta
@@ -88,7 +89,12 @@ class MyEndDrawer extends StatelessWidget {
                   ),
 
                   /// Sair do app
-                  SignOutButton(onTap: () => Get.offAllNamed(AppRoutes.signIn)),
+                  SignOutButton(
+                    onTap: () => {
+                      controller.logOut(),
+                      Get.offAllNamed(AppRoutes.initial),
+                    },
+                  ),
                 ],
               ),
             ),
