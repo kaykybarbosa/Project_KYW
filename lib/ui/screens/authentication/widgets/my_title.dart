@@ -13,7 +13,7 @@ class MyTitle extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            fontSize: 35.0,
+            fontSize: 30.0,
             fontWeight: FontWeight.bold,
             color: TColors.secondary,
           ),

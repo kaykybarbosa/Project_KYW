@@ -10,7 +10,7 @@ abstract class TConstants {
   static const fontSizeMd = 16.0;
   static const fontSizeLg = 18.0;
 
-  static const cardRadiusXs = 5.0;
+  static const cardRadiusXs = 12.0;
   static const cardRadiusSm = 10.0;
   static const cardRadiusMd = 15.0;
   static const cardRadiusLg = 20.0;
