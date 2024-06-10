@@ -19,6 +19,7 @@ class SelectDateCreate extends StatelessWidget {
   final Function(DateTime?) onFinalDatePicker;
 
   /// TODO: Alterar cor do barrier
+  /// TODO: Corrigir tema do calendário
   /// Dialog para escolher a data
   Future<DateTime?> _showCalendar(BuildContext context) async {
     final now = DateTime.now();
