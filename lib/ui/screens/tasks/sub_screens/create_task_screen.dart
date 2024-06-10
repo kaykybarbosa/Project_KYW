@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/data/repositories/task_repository.dart';
+import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/cubits/create_task_cubit/create_task_cubit.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
@@ -13,56 +16,70 @@ import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/formaters.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/input_formatters.dart';
+import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 
 class CreateTaskScreen extends StatelessWidget {
   const CreateTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => CreateTaskCubit(),
-        child: Scaffold(
-          appBar: AppBar(title: const Text('Criar task')),
-          body: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
-            child: Column(
-              children: <Widget>[
-                /// -- Campos
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Gap(10),
+        create: (context) => CreateTaskCubit(ITaskRepository.instance),
+        child: BlocListener<CreateTaskCubit, CreateTaskState>(
+          listenWhen: (previous, current) => previous.status != current.status,
+          listener: (context, state) {
+            if (state.status.isFailure) {
+              snackBarCustom(
+                message: state.errorMessage ?? 'Não foi possível criar a task.',
+                type: SnackBarType.failure,
+              );
+            } else if (state.status.isSuccess) {
+              snackBarCustom(title: 'Sucesso.', message: 'Task criada com sucesso.');
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(title: const Text('Criar task')),
+            body: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
+              child: Column(
+                children: <Widget>[
+                  /// -- Campos
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Gap(10),
 
-                        /// Título
-                        _Title(),
+                          /// Título
+                          _Title(),
 
-                        /// Categoria
-                        _Category(),
+                          /// Categoria
+                          _Category(),
 
-                        Gap(10),
+                          Gap(10),
 
-                        /// Data de conclusão
-                        _DateOfConclusion(),
+                          /// Data de conclusão
+                          _DateOfConclusion(),
 
-                        Gap(20),
+                          Gap(20),
 
-                        /// Selecionar membros
-                        _SelectMembers(),
+                          /// Selecionar membros
+                          _SelectMembers(),
 
-                        Gap(40),
+                          Gap(40),
 
-                        /// Descrição
-                        _Description(),
+                          /// Descrição
+                          _Description(),
 
-                        Gap(10),
-                      ],
+                          Gap(10),
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                /// -- Criar task btn
-                _SubmitBtn(),
-              ],
+                  /// -- Criar task btn
+                  _SubmitBtn(),
+                ],
+              ),
             ),
           ),
         ),
@@ -344,8 +361,14 @@ class _DescriptionState extends State<_Description> {
                 maxLines: maxLines,
                 decoration: const InputDecoration(
                   hintText: 'Descrição',
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                  ),
                 ),
               ),
             ),
@@ -366,14 +389,18 @@ class _SubmitBtn extends StatelessWidget {
   const _SubmitBtn();
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 10),
-        child: SubmitButton(
-          label: 'Criar task',
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.zero,
-            backgroundColor: TColors.success,
+  Widget build(BuildContext context) => BlocBuilder<CreateTaskCubit, CreateTaskState>(
+        buildWhen: (previous, current) => previous.status != current.status || previous.isValid != current.isValid,
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.only(top: 5, bottom: 10),
+          child: SubmitButton(
+            label: 'Criar task',
+            onPressed: state.isValid ? () {} : null,
+            isInProgress: state.status.isInProgress,
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              backgroundColor: TColors.success,
+            ),
           ),
         ),
       );
