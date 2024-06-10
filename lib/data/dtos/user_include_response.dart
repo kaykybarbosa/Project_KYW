@@ -9,11 +9,13 @@ class UserIncludeResponse extends Equatable {
     this.id = 0,
     this.userId = '',
     this.nickname = '',
+    this.avatarUrl,
   });
 
   int id;
   final String userId;
   final String nickname;
+  final String? avatarUrl;
 
   @override
   List<Object?> get props => [id, userId, nickname];
@@ -21,10 +23,12 @@ class UserIncludeResponse extends Equatable {
   factory UserIncludeResponse.fromMap(Map<String, dynamic> map) => UserIncludeResponse(
         userId: map['userId'],
         nickname: map['nickname'],
+        avatarUrl: map['avatarUrl'],
       );
 
   Map<String, dynamic> toMap() => {
         'userId': userId,
         'nickname': nickname,
+        'avatarUrl': avatarUrl,
       };
 }
