@@ -13,7 +13,7 @@ abstract class IProjectRepository {
 
   AsyncResult<Unit, ApiException> createProject(CreateProjectRequest request);
 
-  AsyncResult<AllProjectsResponse, ApiException> getAllProjects(String userId);
+  AsyncResult<List<ProjectResponse>, ApiException> getAllProjects();
 
   AsyncResult<DetailProjectResponse, ApiException> getProjectById(String projectId);
 
@@ -30,11 +30,15 @@ class ProjectRepository implements IProjectRepository {
   @override
   AsyncResult<Unit, ApiException> createProject(CreateProjectRequest request) async {
     try {
+      FormData formData = FormData();
+
       if (request.image != null) {
         final image = await MultipartFile.fromFile(request.image!.path);
-      }
 
-      final formData = FormData.fromMap(request.toMap(''));
+        formData = FormData.fromMap(request.toMap(image: image));
+      } else {
+        formData = FormData.fromMap(request.toMap());
+      }
 
       await _http.post(
         '${_http.baseUrl}/projects',
@@ -50,11 +54,13 @@ class ProjectRepository implements IProjectRepository {
   }
 
   @override
-  AsyncResult<AllProjectsResponse, ApiException> getAllProjects(String userId) async {
+  AsyncResult<List<ProjectResponse>, ApiException> getAllProjects() async {
     try {
-      final result = await _http.get('${_http.baseUrl}/projects/roles/$userId');
+      final result = await _http.get('${_http.baseUrl}/users/projects');
 
-      return AllProjectsResponse.fromMap(result.data).toSuccess();
+      final projects = result.data['projects'];
+
+      return Success(projects.map<ProjectResponse>((project) => ProjectResponse.fromMap(project)).toList());
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {
