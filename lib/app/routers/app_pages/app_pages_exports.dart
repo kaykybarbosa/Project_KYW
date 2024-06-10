@@ -1,9 +1,11 @@
+export 'package:get/get_core/src/get_main.dart';
 export 'package:get/get_navigation/get_navigation.dart';
 export 'package:kyw_management/app/controllers/app_controller_bindings.dart';
 export 'package:kyw_management/app/routers/my_routes.dart';
 export 'package:kyw_management/data/middlewares/current_user_is_auth.dart';
 export 'package:kyw_management/data/middlewares/first_access.dart';
 export 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
+export 'package:kyw_management/data/repositories/repositories_bindings.dart';
 export 'package:kyw_management/data/services/http_service/http_service_bindings.dart';
 export 'package:kyw_management/data/services/services_bindings.dart';
 export 'package:kyw_management/ui/screens/authentication/automatic_sign_in_screen.dart';
@@ -28,5 +30,6 @@ export 'package:kyw_management/ui/screens/notification_screen.dart';
 export 'package:kyw_management/ui/screens/project/sub_screens/chat_project_screen.dart';
 export 'package:kyw_management/ui/screens/project/sub_screens/create_project_screen.dart';
 export 'package:kyw_management/ui/screens/project/sub_screens/invite_friends_screen.dart';
+export 'package:kyw_management/ui/screens/tasks/sub_screens/create_task_screen.dart';
 export 'package:kyw_management/ui/screens/tasks/sub_screens/details_task_screen.dart';
 export 'package:kyw_management/utils/constants.dart';

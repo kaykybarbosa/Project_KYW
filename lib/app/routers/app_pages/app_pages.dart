@@ -1,6 +1,3 @@
-import 'package:get/get_core/src/get_main.dart';
-import 'package:kyw_management/data/repositories/repositories_bindings.dart';
-
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
@@ -8,7 +5,7 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.initial,
       page: () => const WelcomeScreen(),
-      middlewares: [FirsAccessMiddleware()],
+      middlewares: [FirsAccessMiddleware(priority: 0)],
       transition: Transition.fade,
     ),
     GetPage(
@@ -146,6 +143,12 @@ abstract class AppPages {
       name: AppRoutes.detailTask,
       page: () => const DetailsTaskScreen(),
       transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.createTask,
+      page: () => const CreateTaskScreen(),
+      transition: Transition.fade,
+      fullscreenDialog: true,
     ),
   ];
 }

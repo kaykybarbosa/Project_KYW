@@ -23,4 +23,5 @@ class AppRoutes {
   static const String chat = '/home/chat/:projectId';
   static const String addTask = '/add-task';
   static const String detailTask = '/detail-task';
+  static const String createTask = '/create-task';
 }
