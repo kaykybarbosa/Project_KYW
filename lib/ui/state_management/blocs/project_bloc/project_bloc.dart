@@ -40,20 +40,20 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   String get _currentUserId => _controller.currentUser.id;
 
   ProjectResponse getProjectById(String projectId) {
-    return state.allProjects.content.firstWhere((project) => project.projectId == projectId);
+    return state.projects.firstWhere((project) => project.id == projectId);
   }
 
   void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
-    if (state.allProjects.content.isNotEmpty) return;
+    if (state.projects.isNotEmpty) return;
 
     emit(state.copyWith(status: ProjectStatus.inProgress));
 
-    var result = await _repository.getAllProjects(_currentUserId);
+    var result = await _repository.getAllProjects();
 
     result.fold(
       (success) {
         emit(state.copyWith(
-          allProjects: success,
+          projects: success,
           status: ProjectStatus.success,
         ));
       },
@@ -84,14 +84,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   void _subscribeInProjectsWs(SubscribeInProjectsWs event, Emitter<ProjectState> emit) {
-    final projects = state.allProjects.content;
+    final projects = state.projects;
 
     if (projects.isNotEmpty) {
       for (var project in projects) {
-        log('Subscribe in project: ${project.projectId}', name: 'WEBSOCKET');
+        log('Subscribe in project: ${project.id}', name: 'WEBSOCKET');
 
         _messageService.subscribeToMessageUpdates(
-          projectId: project.projectId,
+          projectId: project.id,
           onMessageReceived: (message) {
             log('Message received: $message', name: 'WEBSOCKET');
             event.onReceivedMessage(message);

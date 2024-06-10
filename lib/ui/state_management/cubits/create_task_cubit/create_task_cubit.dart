@@ -19,6 +19,9 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
 
   final ITaskRepository _repository;
 
+  /// TODO: Adicionar membros do projeto.
+  void addProjectMembers() {}
+
   void titleChanged(String value) {
     final title = TaskTitleInput.dirty(value);
 

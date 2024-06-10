@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/repositories/task_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
@@ -282,107 +283,108 @@ class _DescriptionState extends State<_Description> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<CreateTaskCubit, CreateTaskState>(
-      builder: (context, state) {
-        TextStyle style = const TextStyle();
-        bool isBold = false;
-        bool isItalic = false;
+  Widget build(BuildContext context) => BlocBuilder<CreateTaskCubit, CreateTaskState>(
+        buildWhen: (previous, current) =>
+            previous.description != current.description || previous.descriptionStyles != current.descriptionStyles,
+        builder: (context, state) {
+          TextStyle style = const TextStyle();
+          bool isBold = false;
+          bool isItalic = false;
 
-        if (state.descriptionStyles.contains(TaskDescriptionStyle.bold)) {
-          style = style.copyWith(fontWeight: FontWeight.bold);
-          isBold = true;
-        }
-
-        if (state.descriptionStyles.contains(TaskDescriptionStyle.italic)) {
-          style = style.copyWith(fontStyle: FontStyle.italic);
-          isItalic = true;
-        }
-
-        final List<Map<String, dynamic>> icons = [
-          {
-            'icon': TIcons.bold,
-            'toolTip': 'Negrito',
-            'isSelected': isBold,
-            'onTap': () => _descriptionStyleChanged(true),
-          },
-          {
-            'icon': TIcons.italic,
-            'toolTip': 'Itálico',
-            'isSelected': isItalic,
-            'onTap': () => _descriptionStyleChanged(false),
-          },
-          {
-            'icon': TIcons.attachment,
-            'toolTip': 'Anexos',
-            'isSelected': false,
-            'onTap': () {},
+          if (state.descriptionStyles.contains(TaskDescriptionStyle.bold)) {
+            style = style.copyWith(fontWeight: FontWeight.bold);
+            isBold = true;
           }
-        ];
 
-        return Column(
-          children: <Widget>[
-            /// Ícones
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: TColors.base150),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(TConstants.cardRadiusXs)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: TConstants.defaultMargin,
+          if (state.descriptionStyles.contains(TaskDescriptionStyle.italic)) {
+            style = style.copyWith(fontStyle: FontStyle.italic);
+            isItalic = true;
+          }
+
+          final List<Map<String, dynamic>> icons = [
+            {
+              'icon': TIcons.bold,
+              'toolTip': 'Negrito',
+              'isSelected': isBold,
+              'onTap': () => _descriptionStyleChanged(true),
+            },
+            {
+              'icon': TIcons.italic,
+              'toolTip': 'Itálico',
+              'isSelected': isItalic,
+              'onTap': () => _descriptionStyleChanged(false),
+            },
+            {
+              'icon': TIcons.attachment,
+              'toolTip': 'Anexos',
+              'isSelected': false,
+              'onTap': () {},
+            }
+          ];
+
+          return Column(
+            children: <Widget>[
+              /// Ícones
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: TColors.base150),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(TConstants.cardRadiusXs)),
                 ),
-                child: Row(
-                  children: icons
-                      .map(
-                        (icon) => IconButton(
-                          highlightColor: TColors.base120,
-                          icon: Icon(
-                            icon['icon'],
-                            color: icon['isSelected'] ? TColors.primary : TColors.base900,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: TConstants.defaultMargin,
+                  ),
+                  child: Row(
+                    children: icons
+                        .map(
+                          (icon) => IconButton(
+                            highlightColor: TColors.base120,
+                            icon: Icon(
+                              icon['icon'],
+                              color: icon['isSelected'] ? TColors.primary : TColors.base900,
+                            ),
+                            tooltip: icon['toolTip'],
+                            onPressed: icon['onTap'],
                           ),
-                          tooltip: icon['toolTip'],
-                          onPressed: icon['onTap'],
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-
-            /// Descrição
-            Container(
-              decoration: BoxDecoration(
-                border: Border(left: border, right: border, bottom: border),
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
-              ),
-              child: TextFormField(
-                style: style,
-                maxLines: maxLines,
-                decoration: const InputDecoration(
-                  hintText: 'Descrição',
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                        )
+                        .toList(),
                   ),
                 ),
               ),
-            ),
 
-            /// Ícone
-            MyIconDrag(
-              isDrag: maxLines == valueMax,
-              onVerticalDragUpdate: _setHeightInput,
-            ),
-          ],
-        );
-      },
-    );
-  }
+              /// Descrição
+              AnimatedContainer(
+                duration: 200.milliseconds,
+                decoration: BoxDecoration(
+                  border: Border(left: border, right: border, bottom: border),
+                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                ),
+                child: TextFormField(
+                  style: style,
+                  maxLines: maxLines,
+                  decoration: const InputDecoration(
+                    hintText: 'Descrição',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
+                    ),
+                  ),
+                ),
+              ),
+
+              /// Ícone
+              MyIconDrag(
+                isDrag: maxLines == valueMax,
+                onVerticalDragUpdate: _setHeightInput,
+              ),
+            ],
+          );
+        },
+      );
 }
 
 class _SubmitBtn extends StatelessWidget {

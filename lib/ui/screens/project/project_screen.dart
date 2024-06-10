@@ -49,7 +49,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
           body: switch (state.status) {
             ProjectStatus.inProgress => const Center(child: CircularProgressIndicator()),
             ProjectStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
-            _ => _AllProjects(projects: state.allProjects.content)
+            _ => _AllProjects(projects: state.projects)
           },
 
           /// Adicionar projetos
@@ -114,7 +114,7 @@ class _AllProjects extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
                 child: CardProject(
                   project: projects[index],
-                  onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': projects[index].projectId}),
+                  onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': projects[index].id}),
                 ),
               ),
             ),

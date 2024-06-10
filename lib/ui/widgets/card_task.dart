@@ -5,7 +5,6 @@ import 'package:kyw_management/ui/widgets/my_card_status.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
-import 'package:kyw_management/utils/texts.dart';
 
 class CardTask extends StatelessWidget {
   const CardTask({super.key, required this.task});
@@ -65,7 +64,7 @@ class CardTask extends StatelessWidget {
                 children: <Widget>[
                   /// -- Título
                   const Text(
-                    TTexts.category,
+                    'Status',
                     style: TextStyle(fontSize: TConstants.fontSizeMd),
                   ),
 

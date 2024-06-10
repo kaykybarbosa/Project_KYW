@@ -3,7 +3,7 @@ import 'package:kyw_management/data/dtos/user_include_response.dart';
 
 class DetailProjectResponse extends Equatable {
   const DetailProjectResponse({
-    required this.projectId,
+    required this.id,
     required this.name,
     required this.description,
     required this.creator,
@@ -13,7 +13,7 @@ class DetailProjectResponse extends Equatable {
     required this.createAt,
   });
 
-  final String projectId;
+  final String id;
   final String name;
   final String description;
   final UserIncludeResponse creator;
@@ -24,7 +24,7 @@ class DetailProjectResponse extends Equatable {
 
   @override
   List<Object?> get props => [
-        projectId,
+        id,
         name,
         description,
         creator,
@@ -35,7 +35,7 @@ class DetailProjectResponse extends Equatable {
       ];
 
   factory DetailProjectResponse.fromMap(Map<String, dynamic> map) => DetailProjectResponse(
-        projectId: map['id'],
+        id: map['id'],
         name: map['name'],
         description: map['description'],
         creator: UserIncludeResponse.fromMap(map['creator']),
@@ -46,7 +46,7 @@ class DetailProjectResponse extends Equatable {
       );
 
   factory DetailProjectResponse.empty() => DetailProjectResponse(
-        projectId: '',
+        id: '',
         name: '',
         description: '',
         creator: UserIncludeResponse(),

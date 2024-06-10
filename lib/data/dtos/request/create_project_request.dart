@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 class CreateProjectRequest extends Equatable {
@@ -23,7 +24,7 @@ class CreateProjectRequest extends Equatable {
         members,
       ];
 
-  Map<String, dynamic> toMap(String image) => <String, dynamic>{
+  Map<String, dynamic> toMap({MultipartFile? image}) => {
         'image': image,
         'name': name,
         'description': description,
