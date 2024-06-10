@@ -5,4 +5,8 @@ abstract class InputFormatters {
     mask: '##/##/####',
     type: MaskAutoCompletionType.lazy,
   );
+  static MaskTextInputFormatter phone = MaskTextInputFormatter(
+    mask: '(##) #####-####',
+    type: MaskAutoCompletionType.lazy,
+  );
 }
