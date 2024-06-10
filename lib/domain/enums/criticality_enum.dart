@@ -13,9 +13,19 @@ extension CriticalityEnumX on CriticalityEnum {
 }
 
 class CriticalityEnumM {
+  static const String urgent = 'Urgente';
+  static const String important = 'Importante';
+  static const String standard = 'Normal';
+
   static CriticalityEnum fromMap(String value) => switch (value) {
         'HIGH' => CriticalityEnum.high,
         'MEDIUM' => CriticalityEnum.medium,
         _ => CriticalityEnum.low,
+      };
+
+  static String toMap(String value) => switch (value) {
+        CriticalityEnumM.urgent => 'HIGH',
+        CriticalityEnumM.important => 'MEDIUM',
+        _ => 'LOW',
       };
 }
