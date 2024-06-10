@@ -88,7 +88,7 @@ class _InformationsCard extends StatelessWidget {
         padding: const EdgeInsets.only(left: 7.0),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs - 5),
           boxShadow: const [
             BoxShadow(
               color: TColors.base200,
@@ -102,8 +102,8 @@ class _InformationsCard extends StatelessWidget {
             color: TColors.base100,
             border: Border.all(color: TColors.base200),
             borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(TConstants.cardRadiusXs),
-              bottomRight: Radius.circular(TConstants.cardRadiusXs),
+              topRight: Radius.circular(TConstants.cardRadiusXs - 5),
+              bottomRight: Radius.circular(TConstants.cardRadiusXs - 5),
             ),
           ),
           child: Column(

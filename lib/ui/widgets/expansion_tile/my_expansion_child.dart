@@ -18,8 +18,8 @@ class MyExpansionChild extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
           color: TColors.base100,
-          borderRadius: BorderRadius.vertical(
-            bottom: isLast ? const Radius.circular(TConstants.cardRadiusXs) : Radius.zero,
+          borderRadius: BorderRadius.only(
+            bottomLeft: isLast ? const Radius.circular(TConstants.cardRadiusXs) : Radius.zero,
           ),
           border: Border(
             top: isFirst ? const BorderSide(color: TColors.base200) : BorderSide.none,

@@ -16,7 +16,12 @@ class CardTask extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(vertical: 2.5),
         decoration: BoxDecoration(
-          border: Border(left: BorderSide(color: Theme.of(context).primaryColor, width: 6)),
+          border: Border(
+            left: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 6,
+            ),
+          ),
           borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -38,6 +43,8 @@ class CardTask extends StatelessWidget {
               bottom: BorderSide(color: TColors.base200),
             ),
             borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(TConstants.radiusLeftInput),
+              bottomLeft: Radius.circular(TConstants.radiusLeftInput),
               topRight: Radius.circular(TConstants.cardRadiusXs),
               bottomRight: Radius.circular(TConstants.cardRadiusXs),
             ),

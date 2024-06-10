@@ -71,7 +71,12 @@ class _MembersState extends State<MyExpansionTile> {
                   margin: widget.margin ?? const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
                     border: Border(
-                        left: widget.showBorder ? BorderSide(width: 5, color: theme.primaryColor) : BorderSide.none),
+                        left: widget.showBorder
+                            ? BorderSide(
+                                width: 6,
+                                color: theme.primaryColor,
+                              )
+                            : BorderSide.none),
                     borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
                   ),
                   child: Container(
@@ -83,7 +88,9 @@ class _MembersState extends State<MyExpansionTile> {
                         bottom: border,
                       ),
                       borderRadius: BorderRadius.horizontal(
-                        left: widget.showBorder ? Radius.zero : const Radius.circular(TConstants.cardRadiusXs),
+                        left: widget.showBorder
+                            ? const Radius.circular(TConstants.radiusLeftInput)
+                            : const Radius.circular(TConstants.cardRadiusXs),
                         right: const Radius.circular(TConstants.cardRadiusXs),
                       ),
                     ),

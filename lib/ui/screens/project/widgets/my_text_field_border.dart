@@ -39,6 +39,8 @@ class MyTextFieldBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const border = BorderSide(color: TColors.base150);
+    const radiusRight = Radius.circular(TConstants.cardRadiusXs);
+    const radiusLeftInput = Radius.circular(TConstants.radiusLeftInput);
     final theme = Theme.of(context);
 
     return Column(
@@ -57,19 +59,32 @@ class MyTextFieldBorder extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
-              border: const Border(top: border, right: border, bottom: border),
+              border: Border(
+                left: BorderSide(
+                  color: theme.primaryColor,
+                  width: 6,
+                ),
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: TColors.base200,
+                  blurRadius: TConstants.blurRadius,
+                )
+              ],
             ),
             child: Container(
-              padding: const EdgeInsets.only(left: 5),
-              decoration: BoxDecoration(
-                color: theme.primaryColor,
-                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
-                boxShadow: const [
-                  BoxShadow(
-                    color: TColors.base200,
-                    blurRadius: TConstants.blurRadius,
-                  )
-                ],
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: radiusLeftInput,
+                  bottomLeft: radiusLeftInput,
+                  topRight: radiusRight,
+                  bottomRight: radiusRight,
+                ),
+                border: Border(
+                  top: border,
+                  right: border,
+                  bottom: border,
+                ),
               ),
               child: TextFormField(
                 initialValue: initialValue,
@@ -82,8 +97,24 @@ class MyTextFieldBorder extends StatelessWidget {
                 inputFormatters: inputFormatter != null ? [inputFormatter!] : [],
                 onChanged: onChanged,
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: theme.primaryColor)),
-                  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: theme.primaryColor),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: radiusLeftInput,
+                      bottomLeft: radiusLeftInput,
+                      topRight: radiusRight,
+                      bottomRight: radiusRight,
+                    ),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.only(
+                      topLeft: radiusLeftInput,
+                      bottomLeft: radiusLeftInput,
+                      topRight: radiusRight,
+                      bottomRight: radiusRight,
+                    ),
+                  ),
                   hintText: placeHolder,
                   alignLabelWithHint: true,
                   suffixIcon: suffix,
