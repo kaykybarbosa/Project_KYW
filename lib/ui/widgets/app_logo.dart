@@ -4,22 +4,27 @@ class AppLogo extends StatelessWidget {
   const AppLogo({
     super.key,
     this.padding,
-    this.iconSize = 110,
-    this.fontSize = 45,
+    this.width = 100,
+    this.height = 100,
     this.isDarkMode = false,
   });
 
   final EdgeInsetsGeometry? padding;
-  final double iconSize;
-  final double fontSize;
   final bool isDarkMode;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/logo.png',
-      fit: BoxFit.cover,
-      width: 100,
+    final image = isDarkMode ? 'logo_dark.png' : 'logo.png';
+
+    return Center(
+      child: Image.asset(
+        'assets/$image',
+        fit: BoxFit.cover,
+        width: width,
+        height: height,
+      ),
     );
   }
 

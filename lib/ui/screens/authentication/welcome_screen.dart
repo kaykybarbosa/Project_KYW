@@ -18,7 +18,11 @@ class WelcomeScreen extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               /// App name
-              const AppLogo(),
+              const AppLogo(
+                width: 150,
+                height: 150,
+                isDarkMode: true,
+              ),
 
               /// Botões
               Align(

@@ -37,7 +37,8 @@ class _AutomaticSignInScreenState extends State<AutomaticSignInScreen> {
         },
         child: const Scaffold(
           body: SplashScreen(
-            size: 122,
+            width: 122,
+            height: 122,
             progressVisible: true,
           ),
         ),
