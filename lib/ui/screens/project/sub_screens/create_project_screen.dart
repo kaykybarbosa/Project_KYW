@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
@@ -19,6 +20,32 @@ class CreateProjectScreen extends StatefulWidget {
 }
 
 class CreateProjectScreenState extends State<CreateProjectScreen> {
+  @override
+  Widget build(BuildContext context) => BlocProvider(
+        create: (context) => AddProjectBloc(IProjectRepository.instance),
+        child: BlocConsumer<AddProjectBloc, AddProjectState>(
+          listener: (context, state) {
+            if (state.status.isSuccess) {
+              snackBarCustom(title: 'Sucesso.');
+            } else if (state.status.isFailure) {
+              snackBarCustom(
+                title: 'Falha.',
+                message: state.errorMessage ?? 'Erro ao criar projeto.',
+                type: SnackBarType.failure,
+              );
+            }
+          },
+          builder: (context, state) => _Body(),
+        ),
+      );
+}
+
+class _Body extends StatefulWidget {
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
   late PageController pageController;
 
   @override
@@ -50,38 +77,35 @@ class CreateProjectScreenState extends State<CreateProjectScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => AddProjectBloc(),
-        child: BlocBuilder<AddProjectBloc, AddProjectState>(
-          builder: (context, state) => Scaffold(
-            appBar: AppBar(
-              leading: BackButton(
-                onPressed: () {
-                  if (pageController.page?.toInt() == 1) {
-                    context.read<AddProjectBloc>().add(ChangedCurrentPage());
-                    changePage();
-                  } else {
-                    Get.back();
-                  }
-                },
-              ),
-              title: const Text('Novo Projeto'),
-            ),
-            body: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
-              children: const [
-                /// Imagem, Título e Descrição
-                _NameAndDescriptionScreen(),
-
-                /// Convidar amigos
-                InviteFriendsScreen(),
-              ],
-            ),
-            floatingActionButton: const _MyFloatingButton(),
-          ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            if (pageController.page?.toInt() == 1) {
+              context.read<AddProjectBloc>().add(ChangedCurrentPage());
+              changePage();
+            } else {
+              Get.back();
+            }
+          },
         ),
-      );
+        title: const Text('Novo Projeto'),
+      ),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        children: const [
+          /// Imagem, Título e Descrição
+          _NameAndDescriptionScreen(),
+
+          /// Convidar amigos
+          InviteFriendsScreen(),
+        ],
+      ),
+      floatingActionButton: const _MyFloatingButton(),
+    );
+  }
 }
 
 class _NameAndDescriptionScreen extends StatelessWidget {
@@ -261,14 +285,15 @@ class _MyFloatingButton extends StatelessWidget {
     void changePage(int currentPage) {
       if (currentPage == 0) {
         context.read<AddProjectBloc>().add(ChangedCurrentPage());
-        context.findAncestorStateOfType<CreateProjectScreenState>()?.changePage();
+        context.findAncestorStateOfType<_BodyState>()?.changePage();
       } else {
         context.read<AddProjectBloc>().add(FormSubmittedd());
       }
     }
 
     return BlocBuilder<AddProjectBloc, AddProjectState>(
-      buildWhen: (previous, current) => previous.isValid != current.isValid,
+      buildWhen: (previous, current) =>
+          previous.isValid != current.isValid || previous.currentPage != current.currentPage,
       builder: (context, state) => FloatingActionButton(
         onPressed: state.isValid ? () => changePage(state.currentPage) : null,
         backgroundColor: Theme.of(context).primaryColor,
