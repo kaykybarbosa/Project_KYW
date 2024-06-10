@@ -20,9 +20,9 @@ class CardProject extends StatelessWidget {
   final Function()? onTap;
 
   Widget _getImage() {
-    if (project.imageUrl == null) {
+    if (project.imageUrl != null) {
       final file = File(AppController.instance.directory.path);
-      file.writeAsString(project.imageUrl!);
+      file.writeAsString(project.imageUrl ?? '');
 
       return CircleAvatar(
         radius: 50,
@@ -31,8 +31,9 @@ class CardProject extends StatelessWidget {
       );
     } else {
       return Image.asset(
-        'assets/casa-na-arvore.webp',
-        width: 52,
+        'assets/group.png',
+        width: 50,
+        fit: BoxFit.cover,
       );
     }
   }
@@ -42,10 +43,14 @@ class CardProject extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
         child: Container(
-          padding: const EdgeInsets.only(left: 6),
           margin: const EdgeInsets.symmetric(vertical: 2.5),
           decoration: BoxDecoration(
-            color: TColors.secondary,
+            border: const Border(
+              left: BorderSide(
+                color: TColors.secondary,
+                width: 6,
+              ),
+            ),
             borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
           ),
           child: Container(
@@ -61,6 +66,8 @@ class CardProject extends StatelessWidget {
                   bottom: BorderSide(color: TColors.base200),
                 ),
                 borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(TConstants.radiusLeftInput),
+                  bottomLeft: Radius.circular(TConstants.radiusLeftInput),
                   topRight: Radius.circular(TConstants.cardRadiusXs),
                   bottomRight: Radius.circular(TConstants.cardRadiusXs),
                 ),
