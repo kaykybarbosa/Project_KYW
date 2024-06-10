@@ -23,7 +23,7 @@ class MyModalFilterProject extends StatelessWidget {
       DateTime? dateSelected,
     }) {
       if (dateSelected != null) {
-        var date = Formaters.formatDate(dateSelected);
+        var date = Formatters.formatDate(dateSelected);
         if (isInitDate) {
           context.read<FilterProjectBloc>().add(InitDateChanged(initDate: date));
         } else {

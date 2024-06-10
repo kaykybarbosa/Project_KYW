@@ -3,9 +3,9 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:kyw_management/data/dtos/request/user_login_request.dart';
+import 'package:kyw_management/data/dtos/request/user_register_request.dart';
 import 'package:kyw_management/data/dtos/response/refresh_token_response.dart';
-import 'package:kyw_management/data/requests_models/user_login_request.dart';
-import 'package:kyw_management/data/requests_models/user_register_request.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';

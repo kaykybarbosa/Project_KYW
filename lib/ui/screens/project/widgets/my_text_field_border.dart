@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kyw_management/ui/widgets/text_field/title_text_field.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
@@ -8,7 +9,7 @@ class MyTextFieldBorder extends StatelessWidget {
     super.key,
     this.text,
     this.initialValue,
-    this.onChange,
+    this.onChanged,
     this.placeHolder,
     this.maxLine,
     this.textInputType,
@@ -18,9 +19,10 @@ class MyTextFieldBorder extends StatelessWidget {
     this.enable,
     this.controller,
     this.textInputAction,
+    this.inputFormatter,
   });
 
-  final Function(String)? onChange;
+  final Function(String)? onChanged;
   final String? text;
   final String? initialValue;
   final String? placeHolder;
@@ -32,6 +34,7 @@ class MyTextFieldBorder extends StatelessWidget {
   final bool? enable;
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
+  final TextInputFormatter? inputFormatter;
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,8 @@ class MyTextFieldBorder extends StatelessWidget {
                 keyboardType: textInputType,
                 textInputAction: textInputAction,
                 style: TextStyle(color: theme.primaryColor),
+                inputFormatters: inputFormatter != null ? [inputFormatter!] : [],
+                onChanged: onChanged,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: theme.primaryColor)),
                   enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),

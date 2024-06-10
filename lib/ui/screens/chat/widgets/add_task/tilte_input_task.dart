@@ -15,7 +15,7 @@ class TitleInputTask extends StatelessWidget {
         return MyTextFieldBorder(
           text: 'Título*',
           placeHolder: 'Título',
-          onChange: (value) => context.read<AddTaskCubit>().titleChanged(value),
+          onChanged: (value) => context.read<AddTaskCubit>().titleChanged(value),
           errorText: state.title.displayError != null ? 'Título é obrigatório!' : null,
         );
       },

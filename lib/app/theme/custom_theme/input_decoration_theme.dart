@@ -10,6 +10,7 @@ abstract class TInputDecorationTheme {
     hintStyle: const TextStyle(color: TColors.base150),
     contentPadding: const EdgeInsets.all(12),
     border: const OutlineInputBorder(),
+    suffixIconColor: TColors.base200,
     enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: TColors.base150),
       borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),

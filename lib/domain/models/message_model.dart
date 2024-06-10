@@ -49,7 +49,7 @@ class MessageModel extends Equatable {
 
   bool get isSender => currentUserId == AppController.instance.currentUser.id;
 
-  String get hourSentIn => Formaters.formatDateHours(sentIn);
+  String get hourSentIn => Formatters.formatDateHours(sentIn);
 
   MessageModel copyWith({
     int? id,

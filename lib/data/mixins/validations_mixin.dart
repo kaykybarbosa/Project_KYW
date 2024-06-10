@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kyw_management/utils/formaters.dart';
 
 mixin ValidationsMixin {
   String? isNotEmpty(String? value, [String? message]) {
@@ -57,30 +58,12 @@ mixin ValidationsMixin {
     return null;
   }
 
-  String? dateIsValid(String? value, [String? message]) {
-    DateTime? date;
+  String? dateIsValid(String? value, [String? message, int? firstDate]) {
+    final date = Formatters.tryParseDate(value!);
+    final minDate = firstDate ?? 1900;
 
-    try {
-      /// Primeira etapa
-      date = DateTime.tryParse(value!);
-      if (date == null) {
-        return message ?? 'First';
-      }
+    if (date == null || date.year < minDate) return message ?? 'Data inválida.';
 
-      /// Segunda etapa
-      DateTime now = DateTime.now();
-      DateTime firstDate = DateTime(now.year - 2, now.month, now.day);
-
-      if (date.isBefore(firstDate)) {
-        return message ?? 'Data é antiga!';
-      }
-      if (date.isAfter(now)) {
-        return message ?? 'Data é posterior!';
-      }
-
-      return null;
-    } catch (e) {
-      return e.toString();
-    }
+    return null;
   }
 }

@@ -139,7 +139,7 @@ class _EmailInput extends StatelessWidget {
           placeHolder: TTexts.labelEmail,
           text: TTexts.inviteFriendsByEmail,
           textInputType: TextInputType.emailAddress,
-          onChange: (value) => context.read<AddProjectBloc>().add(EmailChanged(email: value)),
+          onChanged: (value) => context.read<AddProjectBloc>().add(EmailChanged(email: value)),
           errorText: state.email.displayError,
         ),
       );

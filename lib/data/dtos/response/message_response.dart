@@ -22,7 +22,7 @@ class MessageResponse {
 
   bool get isSender => sender.userId == AppController.instance.currentUser.id;
 
-  String get hourSentIn => Formaters.formatDateHours(sentIn);
+  String get hourSentIn => Formatters.formatDateHours(sentIn);
 
   Map<String, dynamic> toMap() => {
         'id': id,

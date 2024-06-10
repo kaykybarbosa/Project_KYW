@@ -47,7 +47,7 @@ class DateInputTask extends StatelessWidget {
               Icons.calendar_today_rounded,
               color: Colors.grey,
             ),
-            onChange: (value) {},
+            onChanged: (value) {},
           ),
         ),
       ),

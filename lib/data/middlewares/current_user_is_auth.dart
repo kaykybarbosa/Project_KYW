@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/routes/route_middleware.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 
+// TODO: Remove this
 class CurrentUserIsAuthMiddleware extends GetMiddleware {
   @override
   int? priority = 0;
@@ -15,5 +16,5 @@ class CurrentUserIsAuthMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) =>
-      appController.status.isUnauthenticated ? const RouteSettings(name: AppRoutes.signIn) : null;
+      appController.status.isUnauthenticated ? const RouteSettings(name: AppRoutes.initial) : null;
 }

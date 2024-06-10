@@ -16,6 +16,7 @@ class MyExpansionTile extends StatefulWidget {
     this.icon,
     this.isWithBorder = false,
     this.showBorder = false,
+    this.controller,
   });
 
   const MyExpansionTile.border({
@@ -29,6 +30,7 @@ class MyExpansionTile extends StatefulWidget {
     this.icon,
     this.isWithBorder = true,
     this.showBorder = true,
+    this.controller,
   });
 
   final String? title;
@@ -40,6 +42,7 @@ class MyExpansionTile extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final Icon? icon;
   final bool showBorder;
+  final ExpansionTileController? controller;
 
   @override
   State<MyExpansionTile> createState() => _MembersState();
@@ -85,6 +88,7 @@ class _MembersState extends State<MyExpansionTile> {
                       ),
                     ),
                     child: ExpansionTile(
+                      controller: widget.controller,
                       tilePadding: const EdgeInsets.only(left: 12, right: 16),
                       visualDensity: VisualDensity.compact,
                       trailing: TrailingRotation(

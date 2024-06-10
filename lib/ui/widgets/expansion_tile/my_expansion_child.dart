@@ -3,7 +3,12 @@ import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 
 class MyExpansionChild extends StatelessWidget {
-  const MyExpansionChild({super.key, required this.child, this.isFirst = true, this.isLast = true});
+  const MyExpansionChild({
+    super.key,
+    required this.child,
+    this.isFirst = true,
+    this.isLast = true,
+  });
 
   final bool isFirst;
   final bool isLast;

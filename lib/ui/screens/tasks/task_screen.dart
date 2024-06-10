@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/screens.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 import 'package:kyw_management/domain/models/task.dart';
@@ -8,7 +9,7 @@ import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/my_order.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/my_two_filters.dart';
-import 'package:kyw_management/utils/constants.dart';
+import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/texts.dart';
 
 class TaskScreen extends StatelessWidget {
@@ -25,7 +26,7 @@ class TaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tasks = [
+    final tasks = [
       Task(
         isImportant: true,
         title: 'Concluir o Projeto Integrador',
@@ -85,6 +86,10 @@ class TaskScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(AppRoutes.createTask),
+        child: const Icon(TIcons.check),
       ),
     );
   }

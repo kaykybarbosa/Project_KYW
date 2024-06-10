@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
@@ -230,7 +229,7 @@ class _TitleInput extends StatelessWidget {
           placeHolder: TTexts.labelTitle,
           textInputType: TextInputType.text,
           textInputAction: TextInputAction.next,
-          onChange: (value) => context.read<AddProjectBloc>().add(TitleChanged(title: value)),
+          onChanged: (value) => context.read<AddProjectBloc>().add(TitleChanged(title: value)),
           errorText: state.title.displayError,
         ),
       );
@@ -248,7 +247,7 @@ class _DescriptionInput extends StatelessWidget {
           text: TTexts.description,
           placeHolder: TTexts.labelDescription,
           textInputType: TextInputType.multiline,
-          onChange: (value) => context.read<AddProjectBloc>().add(DescriptionChanged(description: value)),
+          onChanged: (value) => context.read<AddProjectBloc>().add(DescriptionChanged(description: value)),
           errorText: state.description.displayError,
         ),
       );
