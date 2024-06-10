@@ -28,6 +28,7 @@ abstract class AppTheme {
         dividerTheme: const DividerThemeData(color: TColors.base200, space: 0),
         popupMenuTheme: const PopupMenuThemeData(color: TColors.base100),
         textTheme: TTextTheme.light,
+        shadowColor: TColors.base900,
         listTileTheme: const ListTileThemeData(
           titleTextStyle: TextStyle(color: TColors.secondary),
           iconColor: TColors.secondary,
@@ -36,7 +37,6 @@ abstract class AppTheme {
           color: TColors.base100,
           size: TConstants.iconMd - 2,
         ),
-        shadowColor: TColors.base900,
         textButtonTheme: TextButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 0,

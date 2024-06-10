@@ -19,4 +19,6 @@ abstract class TConstants {
   static const transitionFadeDuration = 300;
 
   static const blurRadius = 6.0;
+
+  static const radiusLeftInput = 7.0;
 }
