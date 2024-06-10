@@ -5,14 +5,19 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kyw_management/data/dtos/request/create_project_request.dart';
+import 'package:kyw_management/data/repositories/project_repository.dart';
 
 import '../../models_input/models_states_export.dart';
 
 part 'add_project_event.dart';
 part 'add_project_state.dart';
 
+/// TODO: Converter em cubit
 class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
-  AddProjectBloc() : super(const AddProjectState()) {
+  AddProjectBloc(IProjectRepository projectRepository)
+      : _repository = projectRepository,
+        super(const AddProjectState()) {
     on<PickerImage>(_onPickerImageFile);
     on<RemoveImage>(_onRemoveImage);
     on<TitleChanged>(_onTitleChangedAddProject);
@@ -23,6 +28,8 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     on<ChangedCurrentPage>(_onChangePage);
     on<FormSubmittedd>(_onFormSubmitteddAddProject);
   }
+
+  final IProjectRepository _repository;
 
   void _onPickerImageFile(PickerImage event, Emitter<AddProjectState> emit) async {
     try {
@@ -152,5 +159,24 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
   void _onFormSubmitteddAddProject(
     FormSubmittedd event,
     Emitter<AddProjectState> emit,
-  ) async {}
+  ) async {
+    emit(state.copyWith(status: AddProjectStatus.inProgress));
+
+    final request = CreateProjectRequest(
+      name: state.title.value,
+      description: state.description.value,
+      members: state.invitedFriends.map((member) => member.value).toList(),
+      image: state.image,
+    );
+
+    final result = await _repository.createProject(request);
+
+    result.fold(
+      (success) => emit(state.copyWith(status: AddProjectStatus.success)),
+      (failure) => emit(state.copyWith(
+        status: AddProjectStatus.failure,
+        errorMessage: failure.message,
+      )),
+    );
+  }
 }

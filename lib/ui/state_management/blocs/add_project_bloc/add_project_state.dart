@@ -10,6 +10,7 @@ class AddProjectState extends Equatable {
     this.isValid = false,
     this.status = AddProjectStatus.initial,
     this.currentPage = 0,
+    this.errorMessage,
   });
 
   final File? image;
@@ -20,6 +21,7 @@ class AddProjectState extends Equatable {
   final bool isValid;
   final AddProjectStatus status;
   final int currentPage;
+  final String? errorMessage;
 
   @override
   List<Object?> get props => [
@@ -31,6 +33,7 @@ class AddProjectState extends Equatable {
         isValid,
         status,
         currentPage,
+        errorMessage,
       ];
 
   AddProjectState copyWith({
@@ -42,6 +45,7 @@ class AddProjectState extends Equatable {
     bool? isValid,
     AddProjectStatus? status,
     int? currentPage,
+    String? errorMessage,
   }) =>
       AddProjectState(
         image: image ?? this.image,
@@ -52,6 +56,7 @@ class AddProjectState extends Equatable {
         isValid: isValid ?? this.isValid,
         status: status ?? AddProjectStatus.initial,
         currentPage: currentPage ?? this.currentPage,
+        errorMessage: errorMessage,
       );
 }
 
