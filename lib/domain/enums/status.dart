@@ -14,4 +14,10 @@ class TaskStatusM {
         'PENDING' => TaskStatus.pending,
         _ => TaskStatus.complete,
       };
+
+  static String toMap(TaskStatus value) => switch (value) {
+        TaskStatus.incomplete => 'OPEN',
+        TaskStatus.pending => 'PENDING',
+        _ => 'COMPLETE',
+      };
 }
