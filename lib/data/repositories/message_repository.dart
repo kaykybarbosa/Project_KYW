@@ -21,9 +21,9 @@ class MessageRepository implements IMessageRepository {
   @override
   AsyncResult<List<MessageResponse>, ApiException> getMessages(String projectId) async {
     try {
-      final result = await _http.get('${_http.baseUrl}/messages/project/$projectId');
+      final result = await _http.get('${_http.baseUrl}/messages/project/$projectId?sort=asc');
 
-      final messages = result.data['content'];
+      final messages = result.data;
 
       return Success(messages.map<MessageResponse>((m) => MessageResponse.fromMap(m)).toList());
     } on DioException catch (e) {
