@@ -57,7 +57,10 @@ class SignInCubit extends Cubit<SignInState> {
 
         emit(state.copyWith(status: FormzSubmissionStatus.success));
       },
-      (failure) => emit(state.copyWith(status: FormzSubmissionStatus.failure)),
+      (failure) => emit(state.copyWith(
+        status: FormzSubmissionStatus.failure,
+        errorMessage: failure.message,
+      )),
     );
   }
 }

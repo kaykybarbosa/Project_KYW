@@ -33,7 +33,7 @@ class AuthRepository implements IAuthRepository {
   @override
   AsyncResult<CurrentUserModel, ApiException> login(UserLoginRequest request) async {
     try {
-      var result = await _http.post(
+      final result = await _http.post(
         '${_http.baseUrl}/auth/signin',
         data: request.toMap(),
       );

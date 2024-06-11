@@ -29,7 +29,7 @@ class _AutomaticSignInScreenState extends State<AutomaticSignInScreen> {
           if (state.status.isSuccess) {
             Get.offAllNamed(AppRoutes.home);
           } else if (state.status.isFailure) {
-            var controller = AppController.instance;
+            final controller = AppController.instance;
 
             controller.setConfigurations(controller.configureApp.copyWith(currentUserIsAuth: false));
             Get.offAllNamed(AppRoutes.initial);

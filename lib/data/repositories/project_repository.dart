@@ -69,9 +69,10 @@ class ProjectRepository implements IProjectRepository {
     try {
       final result = await _http.get('${_http.baseUrl}/users/projects');
 
-      final projects = result.data['projects'];
+      final projectsResult = result.data['projects'];
+      final projects = projectsResult.map<ProjectResponse>((project) => ProjectResponse.fromMap(project)).toList();
 
-      return Success(projects.map<ProjectResponse>((project) => ProjectResponse.fromMap(project)).toList());
+      return Success(projects);
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {

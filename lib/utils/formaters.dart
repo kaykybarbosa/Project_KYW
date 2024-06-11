@@ -7,7 +7,7 @@ abstract class Formatters {
   static String formatDate(DateTime date) => _formatter.format(date);
 
   static DateTime? tryParseDate(String date, {bool dateDefault = false}) =>
-      dateDefault ? DateTime.tryParse(date) : _formatter.tryParse(date);
+      dateDefault ? DateTime.tryParse(date) : _formatter.tryParseUtc(date);
 
   static String formatDateHours(DateTime date) => DateFormat("HH:mm").format(date);
 }

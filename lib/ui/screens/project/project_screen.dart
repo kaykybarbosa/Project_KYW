@@ -80,45 +80,47 @@ class _AllProjects extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: <Widget>[
-          /// Buscar projetos
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: TConstants.defaultMargin,
-              vertical: 10,
-            ),
-            child: MySearchBar(
-              hintText: TTexts.hintTextProject,
-              onPressed: () {},
-            ),
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        /// Buscar projetos
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: TConstants.defaultMargin,
+            vertical: 10,
           ),
-
-          /// Filtros
-          MyTwoFilters(
-            /// -- Filtrar
-            filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
-
-            /// -- Ordenar
-            orderOnTap: () => myModalBottom(
-              context,
-              const MyOrder(currentScreen: Screens.project),
-            ),
+          child: MySearchBar(
+            hintText: TTexts.hintTextProject,
+            onPressed: () {},
           ),
+        ),
 
-          /// Lista de projetos
-          Expanded(
-            child: MySliverList(
-              childCount: projects.length,
-              builder: (_, index) => Padding(
-                padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
-                child: CardProject(
-                  project: projects[index],
-                  onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': projects[index].id}),
-                ),
+        /// Filtros
+        MyTwoFilters(
+          /// -- Filtrar
+          filterOnTap: () => myModalBottom(context, const MyModalFilterProject()),
+
+          /// -- Ordenar
+          orderOnTap: () => myModalBottom(
+            context,
+            const MyOrder(currentScreen: Screens.project),
+          ),
+        ),
+
+        /// Lista de projetos
+        Expanded(
+          child: MySliverList(
+            childCount: projects.length,
+            builder: (_, index) => Padding(
+              padding: EdgeInsets.only(bottom: index != projects.length - 1 ? 10 : 0),
+              child: CardProject(
+                project: projects[index],
+                onTap: () => Get.toNamed(AppRoutes.chat, parameters: {'id': projects[index].id}),
               ),
             ),
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 }

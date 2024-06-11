@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/domain/models/task.dart';
+import 'package:kyw_management/data/dtos/response/all_tasks_response.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
@@ -9,7 +9,7 @@ import 'package:kyw_management/utils/icons.dart';
 class CardTask extends StatelessWidget {
   const CardTask({super.key, required this.task});
 
-  final Task task;
+  final TaskResponse task;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -81,15 +81,15 @@ class CardTask extends StatelessWidget {
 class _TaskName extends StatelessWidget {
   const _TaskName({required this.task});
 
-  final Task task;
+  final TaskResponse task;
 
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+        children: <Widget>[
           /// Nome
           Text(
-            task.title,
+            task.description,
             style: const TextStyle(
               fontSize: TConstants.fontSizeLg,
               fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class _TaskName extends StatelessWidget {
 
           /// Ícone
           Icon(
-            task.isImportant ? TIcons.isImportant : null,
+            task.pin ? TIcons.isImportant : null,
             size: TConstants.iconSm + 3,
             color: TColors.base200,
           ),
@@ -109,13 +109,13 @@ class _TaskName extends StatelessWidget {
 class _TaskDescription extends StatelessWidget {
   const _TaskDescription({required this.task});
 
-  final Task task;
+  final TaskResponse task;
 
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: 10, right: 35),
         child: Text(
-          task.description ?? '',
+          task.description,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(

@@ -26,7 +26,7 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
   Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
-          if (state.status.isSuccess) {
+          if (state.status.isDetailSuccess) {
             context.read<TaskCubit>().getAllTasks();
           }
         },
@@ -67,40 +67,38 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         buildWhen: (previous, current) =>
             previous.status != current.status || previous.messages.length != current.messages.length,
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              leading: const _Leading(),
-              title: _Title(projectId: widget.projectId),
-              actions: const [_PopupMenuItem()],
-              bottom: TabBar(
-                controller: _tabController,
-                labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
-                indicatorWeight: 3,
-                tabs: const <Widget>[
-                  Tab(text: 'Chat'),
-                  Tab(text: 'Tasks'),
-                ],
-              ),
-            ),
-            body: TabBarView(
+        builder: (context, state) => Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            leading: const _Leading(),
+            title: _Title(projectId: widget.projectId),
+            actions: const [_PopupMenuItem()],
+            bottom: TabBar(
               controller: _tabController,
-              children: <Widget>[
-                /// Chat
-                switch (state.status) {
-                  ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
-                  ProjectStatus.detailFailure =>
-                    const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
-                  _ => _ChatProject(messages: state.messages),
-                },
-
-                /// Tasks
-                const TasksProjectScreen(),
+              labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
+              indicatorWeight: 3,
+              tabs: const <Widget>[
+                Tab(text: 'Chat'),
+                Tab(text: 'Tasks'),
               ],
             ),
-          );
-        },
+          ),
+          body: TabBarView(
+            controller: _tabController,
+            children: <Widget>[
+              /// Chat
+              switch (state.status) {
+                ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
+                ProjectStatus.detailFailure =>
+                  const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
+                _ => _ChatProject(messages: state.messages),
+              },
+
+              /// Tasks
+              TasksProjectScreen(projectId: widget.projectId),
+            ],
+          ),
+        ),
       );
 }
 
