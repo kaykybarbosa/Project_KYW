@@ -146,7 +146,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.createTask,
-      page: () => const CreateTaskScreen(),
+      page: () => CreateTaskScreen(projectId: Get.parameters['id']!),
       transition: Transition.fade,
       fullscreenDialog: true,
     ),

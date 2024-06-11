@@ -8,6 +8,7 @@ import 'package:kyw_management/data/repositories/task_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/cubits/create_task_cubit/create_task_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_title.dart';
@@ -20,11 +21,19 @@ import 'package:kyw_management/utils/input_formatters.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 
 class CreateTaskScreen extends StatelessWidget {
-  const CreateTaskScreen({super.key});
+  const CreateTaskScreen({
+    super.key,
+    required this.projectId,
+  });
+
+  final String projectId;
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => CreateTaskCubit(ITaskRepository.instance),
+        create: (context) => CreateTaskCubit(
+          ITaskRepository.instance,
+          projectId: projectId,
+        ),
         child: BlocListener<CreateTaskCubit, CreateTaskState>(
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
@@ -34,6 +43,8 @@ class CreateTaskScreen extends StatelessWidget {
                 type: SnackBarType.failure,
               );
             } else if (state.status.isSuccess) {
+              context.read<TaskCubit>().getAllTasks();
+              Get.back();
               snackBarCustom(title: 'Sucesso.', message: 'Task criada com sucesso.');
             }
           },
@@ -373,6 +384,7 @@ class _DescriptionState extends State<_Description> {
                       borderRadius: BorderRadius.vertical(bottom: Radius.circular(TConstants.cardRadiusXs)),
                     ),
                   ),
+                  onChanged: (value) => context.read<CreateTaskCubit>().descriptionChanged(value),
                 ),
               ),
 
@@ -397,7 +409,7 @@ class _SubmitBtn extends StatelessWidget {
           padding: const EdgeInsets.only(top: 5, bottom: 10),
           child: SubmitButton(
             label: 'Criar task',
-            onPressed: state.isValid ? () {} : null,
+            onPressed: state.isValid ? () => context.read<CreateTaskCubit>().submitForm() : null,
             isInProgress: state.status.isInProgress,
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.zero,
