@@ -24,7 +24,7 @@ class FilterButtons extends StatelessWidget {
             label: TTexts.cancel,
           ),
           _Button(
-            label: current == FilterEnum.Filter ? '${TTexts.filter} ' : '${TTexts.order} ',
+            label: current.isFilter ? '${TTexts.filter} ' : '${TTexts.order} ',
             color: TColors.secondary,
           ),
           _Button(
@@ -47,7 +47,7 @@ class _Button extends StatelessWidget {
   final Function()? onTap;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
+  Widget build(BuildContext context) => InkWell(
         onTap: onTap,
         child: Text(
           label,

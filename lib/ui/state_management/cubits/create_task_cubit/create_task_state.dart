@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'create_task_cubit.dart';
 
+// ignore: must_be_immutable
 class CreateTaskState extends Equatable {
   CreateTaskState({
     this.title = const TaskTitleInput.pure(),

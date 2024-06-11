@@ -63,6 +63,7 @@ class MyFilter extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
         child: InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 4.0),
             decoration: BoxDecoration(

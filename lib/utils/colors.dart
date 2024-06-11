@@ -20,6 +20,8 @@ abstract class TColors {
   static const Color borderSideColor = Color(0xff949AA5);
   static const Color expansionTileTextColor = Color(0xff7D838B);
 
+  static const Color clipBackground = Color(0xFFECECEC);
+
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
   static const Color alert = Color(0xFFFABD52);

@@ -9,7 +9,6 @@ import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/message_service.dart';
 import 'package:kyw_management/data/storages/message_storage/message_storage.dart';
-import 'package:kyw_management/domain/models/message_model.dart';
 
 part 'project_event.dart';
 part 'project_state.dart';
@@ -118,13 +117,5 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     _storage.deleteAllMessage(messages.map<int>((e) => e.id).toList());
 
     emit(state.copyWith());
-  }
-
-  List<MessageModel> _saveMessageToDB(MessageModel message) {
-    message.currentUserId = _currentUserId;
-
-    _storage.addMessage(message);
-
-    return List<MessageModel>.from(state.messages)..add(message);
   }
 }

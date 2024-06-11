@@ -8,11 +8,11 @@ import 'package:kyw_management/domain/enums/criticality_enum.dart';
 import 'package:kyw_management/domain/enums/status.dart';
 
 class AllTasksResponse {
-  AllTasksResponse({
-    required this.totalPages,
-    required this.totalElements,
-    required this.size,
-    required this.tasks,
+  const AllTasksResponse({
+    this.totalPages = 0,
+    this.totalElements = 0,
+    this.size = 0,
+    this.tasks = const [],
   });
 
   final int totalPages;
@@ -28,7 +28,7 @@ class AllTasksResponse {
             map['content'].isNotEmpty ? map['content'].map<TaskResponse>((e) => TaskResponse.fromMap(e)).toList() : [],
       );
 
-  static AllTasksResponse get empty => AllTasksResponse(
+  static AllTasksResponse get empty => const AllTasksResponse(
         totalPages: 0,
         totalElements: 0,
         size: 0,
@@ -38,15 +38,15 @@ class AllTasksResponse {
 
 class TaskResponse extends Equatable {
   const TaskResponse({
-    required this.id,
-    required this.status,
+    this.id = '',
+    this.status = TaskStatus.incomplete,
     this.criticality,
-    required this.description,
+    this.description = '',
     this.attachments,
     this.attributedTo,
-    required this.pin,
-    required this.project,
-    required this.createAt,
+    this.pin = false,
+    this.project,
+    this.createAt,
     this.completedAt,
   });
 
@@ -58,7 +58,7 @@ class TaskResponse extends Equatable {
   final UserIncludeResponse? attributedTo;
   final ProjectIncludeResponse? project;
   final bool pin;
-  final DateTime createAt;
+  final DateTime? createAt;
   final DateTime? completedAt;
 
   @override
@@ -81,6 +81,7 @@ class TaskResponse extends Equatable {
         description: map['description'],
         attachments: map['attachments'],
         createAt: DateTime.parse(map['createAt']),
+        completedAt: DateTime.parse(map['completedAt']),
         project: map['project'] != null ? ProjectIncludeResponse.fromMap(map['project']) : null,
         attributedTo: map['attributedTo'] != null ? UserIncludeResponse.fromMap(map['attributedTo']) : null,
         pin: map['pin'],
@@ -97,20 +98,18 @@ class TaskResponse extends Equatable {
         createAt: DateTime(0000),
       );
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'status': '',
-      'criticality': CriticalityEnumM.toMap(criticality),
-      'description': description,
-      'attachments': attachments,
-      'attributedTo': attributedTo?.toMap(),
-      'project': project?.toMap(),
-      'pin': pin,
-      'createAt': createAt.millisecondsSinceEpoch,
-      'completedAt': completedAt?.millisecondsSinceEpoch,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'status': '',
+        'criticality': CriticalityEnumM.toMap(criticality),
+        'description': description,
+        'attachments': attachments,
+        'attributedTo': attributedTo?.toMap(),
+        'project': project?.toMap(),
+        'pin': pin,
+        'createAt': createAt?.millisecondsSinceEpoch,
+        'completedAt': completedAt?.millisecondsSinceEpoch,
+      };
 
   String toJson() => json.encode(toMap());
 
