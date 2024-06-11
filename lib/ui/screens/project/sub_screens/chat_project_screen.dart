@@ -4,9 +4,11 @@ import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/message_response.dart';
+import 'package:kyw_management/ui/screens/project/sub_screens/tasks_project_screen.dart';
 import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
@@ -20,6 +22,28 @@ class ChatProjectScreen extends StatefulWidget {
 }
 
 class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
+        listenWhen: (previous, current) => previous.status != current.status,
+        listener: (context, state) {
+          if (state.status.isSuccess) {
+            context.read<TaskCubit>().getAllTasks();
+          }
+        },
+        builder: (context, state) => _Body(widget.projectId),
+      );
+}
+
+class _Body extends StatefulWidget {
+  const _Body(this.projectId);
+
+  final String projectId;
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
   void _getProjectById() => context.read<ProjectBloc>().add(GetProjectById(widget.projectId));
@@ -43,38 +67,40 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
   Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         buildWhen: (previous, current) =>
             previous.status != current.status || previous.messages.length != current.messages.length,
-        builder: (context, state) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            leading: const _Leading(),
-            title: _Title(projectId: widget.projectId),
-            actions: const [_PopupMenuItem()],
-            bottom: TabBar(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              leading: const _Leading(),
+              title: _Title(projectId: widget.projectId),
+              actions: const [_PopupMenuItem()],
+              bottom: TabBar(
+                controller: _tabController,
+                labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
+                indicatorWeight: 3,
+                tabs: const <Widget>[
+                  Tab(text: 'Chat'),
+                  Tab(text: 'Tasks'),
+                ],
+              ),
+            ),
+            body: TabBarView(
               controller: _tabController,
-              labelStyle: const TextStyle(fontSize: TConstants.fontSizeMd),
-              indicatorWeight: 3,
-              tabs: const <Widget>[
-                Tab(text: 'Chat'),
-                Tab(text: 'Tarefas'),
+              children: <Widget>[
+                /// Chat
+                switch (state.status) {
+                  ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
+                  ProjectStatus.detailFailure =>
+                    const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
+                  _ => _ChatProject(messages: state.messages),
+                },
+
+                /// Tasks
+                const TasksProjectScreen(),
               ],
             ),
-          ),
-          body: TabBarView(
-            controller: _tabController,
-            children: <Widget>[
-              /// Chat
-              switch (state.status) {
-                ProjectStatus.detailInProgress => const Center(child: CircularProgressIndicator()),
-                ProjectStatus.detailFailure =>
-                  const Center(child: Text('Ops... Não foi possível realizar sua solicitação.')),
-                _ => _ChatProject(messages: state.messages),
-              },
-
-              /// Tasks
-              _TasksProject(widget: widget),
-            ],
-          ),
-        ),
+          );
+        },
       );
 }
 
@@ -90,15 +116,13 @@ class _Leading extends StatelessWidget {
             onTap: () => Get.back(),
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
             borderRadius: const BorderRadius.all(Radius.elliptical(50, 50)),
-            highlightColor: Colors.grey,
-            splashColor: Colors.grey,
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
                 state.detailProject.imageUrl == null
                     ? CircleAvatar(
                         radius: 16,
-                        backgroundImage: AssetImage(state.detailProject.imageUrl ?? 'assets/casa-na-arvore.webp'),
+                        backgroundImage: AssetImage(state.detailProject.imageUrl ?? 'assets/group.png'),
                       )
                     : const CircleAvatar(
                         radius: 16,
@@ -307,34 +331,6 @@ class _ChatProjectState extends State<_ChatProject> {
 
             /// Enviar mensagem
             const _MessageInput(),
-          ],
-        ),
-      );
-}
-
-class _TasksProject extends StatelessWidget {
-  const _TasksProject({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) => const Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 10,
-        ),
-        child: Column(
-          children: [
-            Text('TASKS')
-            // Input Search
-            // MySearchBar(
-            //   hintText: 'Buscar tarefas',
-            //   search: () {},
-            // ),
-            // Filters bar
-            // const FiltersBarTasks(),
-            // All tasks
-            // ListAllTaks(projectId: widget.project.id),
           ],
         ),
       );
