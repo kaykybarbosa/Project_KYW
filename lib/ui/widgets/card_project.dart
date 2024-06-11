@@ -20,6 +20,11 @@ class CardProject extends StatelessWidget {
   final Function()? onTap;
 
   Widget _getImage() {
+    return Image.asset(
+      'assets/group.png',
+      width: 50,
+      fit: BoxFit.cover,
+    );
     if (project.imageUrl != null) {
       final file = File(AppController.instance.directory.path);
       file.writeAsString(project.imageUrl ?? '');

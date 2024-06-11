@@ -88,7 +88,7 @@ class CircleImage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: TColors.base100,
                       border: Border.all(color: TColors.base200),
-                      borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: Container(),
                   ),
