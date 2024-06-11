@@ -44,7 +44,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   void _onGetAllProject(GetAllProjects event, Emitter<ProjectState> emit) async {
-    if (state.projects.isNotEmpty) return;
+    if (state.projects.isNotEmpty && !event.canGetAll) return;
 
     emit(state.copyWith(status: ProjectStatus.inProgress));
 

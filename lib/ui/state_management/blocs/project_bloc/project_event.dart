@@ -8,7 +8,12 @@ sealed class ProjectEvent extends Equatable {
 }
 
 class GetAllProjects extends ProjectEvent {
-  const GetAllProjects();
+  const GetAllProjects({this.canGetAll = false});
+
+  final bool canGetAll;
+
+  @override
+  List<Object> get props => [canGetAll];
 }
 
 class GetProjectById extends ProjectEvent {
