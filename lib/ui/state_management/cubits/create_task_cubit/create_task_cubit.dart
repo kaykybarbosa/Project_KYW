@@ -13,9 +13,9 @@ import 'package:result_dart/result_dart.dart';
 part 'create_task_state.dart';
 
 class CreateTaskCubit extends Cubit<CreateTaskState> {
-  CreateTaskCubit(ITaskRepository taskRepository)
+  CreateTaskCubit(ITaskRepository taskRepository, {required String projectId})
       : _repository = taskRepository,
-        super(CreateTaskState());
+        super(CreateTaskState(projectId: projectId));
 
   final ITaskRepository _repository;
 
@@ -107,13 +107,16 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
   void submitForm() {
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
-    final date = Formatters.tryParseDate(state.dateOfConclusion.value);
+    DateTime? date = Formatters.tryParseDate(state.dateOfConclusion.value);
+
+    date ??= DateTime.now();
 
     final request = CreateTaskRequest(
       title: state.title.value,
       criticality: state.category.value,
-      deadline: date.toString(),
+      deadline: date.toIso8601String(),
       description: state.description,
+      projectId: state.projectId,
     );
 
     final result = _repository.createTask(request);

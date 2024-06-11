@@ -4,6 +4,7 @@ part of 'create_task_cubit.dart';
 // ignore: must_be_immutable
 class CreateTaskState extends Equatable {
   CreateTaskState({
+    required this.projectId,
     this.title = const TaskTitleInput.pure(),
     this.category = const TaskCategoryInput.pure(),
     this.dateOfConclusion = const TaskDateOfConclusionInput.pure(),
@@ -15,6 +16,7 @@ class CreateTaskState extends Equatable {
     this.errorMessage,
   });
 
+  final String projectId;
   final TaskTitleInput title;
   final TaskCategoryInput category;
   final TaskDateOfConclusionInput dateOfConclusion;
@@ -32,6 +34,7 @@ class CreateTaskState extends Equatable {
 
   @override
   List<Object?> get props => [
+        projectId,
         title,
         category,
         dateOfConclusion,
@@ -45,6 +48,7 @@ class CreateTaskState extends Equatable {
       ];
 
   CreateTaskState copyWith({
+    String? projectId,
     TaskTitleInput? title,
     TaskCategoryInput? category,
     TaskDateOfConclusionInput? dateOfConclusion,
@@ -56,6 +60,7 @@ class CreateTaskState extends Equatable {
     String? errorMessage,
   }) {
     return CreateTaskState(
+      projectId: projectId ?? this.projectId,
       title: title ?? this.title,
       category: category ?? this.category,
       dateOfConclusion: dateOfConclusion ?? this.dateOfConclusion,
