@@ -6,30 +6,33 @@ import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
+import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 import 'package:kyw_management/utils/texts.dart';
 
-class CreateProjectScreen extends StatefulWidget {
+class CreateProjectScreen extends StatelessWidget {
   const CreateProjectScreen({super.key});
 
-  @override
-  State<CreateProjectScreen> createState() => CreateProjectScreenState();
-}
-
-class CreateProjectScreenState extends State<CreateProjectScreen> {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => AddProjectBloc(IProjectRepository.instance),
         child: BlocConsumer<AddProjectBloc, AddProjectState>(
+          listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isSuccess) {
-              snackBarCustom(title: 'Sucesso.');
+              context.read<ProjectBloc>().add(const GetAllProjects(canGetAll: true));
+
+              snackBarCustom(
+                title: 'Sucesso.',
+                message: 'Projeto criado.',
+              );
+
+              Get.offAndToNamed(AppRoutes.home);
             } else if (state.status.isFailure) {
               snackBarCustom(
-                title: 'Falha.',
                 message: state.errorMessage ?? 'Erro ao criar projeto.',
                 type: SnackBarType.failure,
               );
