@@ -30,15 +30,26 @@ class ProjectRepository implements IProjectRepository {
   @override
   AsyncResult<Unit, ApiException> createProject(CreateProjectRequest request) async {
     try {
-      FormData formData = FormData();
+      final members = request.members.isNotEmpty ? request.members : null;
+
+      Map<String, dynamic> map = {
+        'name': request.name,
+        'description': request.description,
+        'members': members,
+      };
 
       if (request.image != null) {
         final image = await MultipartFile.fromFile(request.image!.path);
 
-        formData = FormData.fromMap(request.toMap(image: image));
-      } else {
-        formData = FormData.fromMap(request.toMap());
+        map = {
+          'image': image,
+          'name': request.name,
+          'description': request.description,
+          'members': members,
+        };
       }
+
+      FormData formData = FormData.fromMap(map);
 
       await _http.post(
         '${_http.baseUrl}/projects',
