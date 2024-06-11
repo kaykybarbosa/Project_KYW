@@ -8,6 +8,7 @@ import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/app/theme/app_theme.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
+import 'package:kyw_management/data/repositories/task_repository.dart';
 import 'package:kyw_management/data/services/configure_login_service.dart';
 import 'package:kyw_management/data/services/message_service.dart';
 import 'package:kyw_management/data/storages/message_storage/message_storage.dart';
@@ -20,6 +21,7 @@ import 'package:kyw_management/ui/state_management/cubits/authenticate_user_cubi
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:kyw_management/ui/state_management/cubits/sign_up_cubit/sign_up_cubit.dart';
+import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -68,6 +70,9 @@ class _MyAppState extends State<MyApp> {
               appController: AppController.instance,
               messageService: IMessageService.instance,
             ),
+          ),
+          BlocProvider(
+            create: (_) => TaskCubit(ITaskRepository.instance),
           ),
         ],
         child: GetMaterialApp(
