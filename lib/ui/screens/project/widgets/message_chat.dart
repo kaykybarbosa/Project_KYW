@@ -27,7 +27,7 @@ class MessageChat extends StatelessWidget {
             right: message.isSender ? 15 : 10,
           ),
           decoration: BoxDecoration(
-            color: TColors.chatBackground,
+            color: message.isSender ? TColors.chatSenderBackground.withOpacity(.27) : TColors.chatBackground,
             border: Border.all(color: TColors.base200),
             borderRadius: BorderRadius.only(
               topLeft: hasNip ? (message.isSender ? _kRadius : Radius.zero) : _kRadius,
