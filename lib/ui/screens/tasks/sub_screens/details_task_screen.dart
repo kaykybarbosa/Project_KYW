@@ -1,117 +1,186 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/domain/enums/status.dart';
+import 'package:kyw_management/env/env.dart';
+import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
+import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
-class DetailsTaskScreen extends StatelessWidget {
-  const DetailsTaskScreen({super.key});
+class DetailsTaskScreen extends StatefulWidget {
+  const DetailsTaskScreen({super.key, required this.taskId});
+
+  final String taskId;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Projeto integrador')),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Gap(10),
+  State<DetailsTaskScreen> createState() => _DetailsTaskScreenState();
+}
 
-                  /// -- Data da criação
-                  const Text(
-                    '1 de nov de 2023 as 00:23',
-                    style: TextStyle(color: TColors.base200),
-                  ),
+class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
+  void _getTaskById(String taskId) => context.read<TaskCubit>().getTaskById(taskId);
 
-                  /// -- Detalhes
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: TColors.base200),
-                      borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Flexible(
-                          child: _Card(
-                            title: 'Admin',
-                            info: 'Elon Musk ds s ',
-                          ),
-                        ),
-                        Flexible(
-                          child: _Card(
-                            title: 'Projeto',
-                            info: 'Projeto Integrado sd ssd sd s ds ds d drds',
-                            isRight: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+  @override
+  void initState() {
+    super.initState();
 
-              const Gap(20),
+    _getTaskById(widget.taskId);
+  }
 
-              /// Categoria
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    'Categoria',
-                    style: TextStyle(fontSize: TConstants.fontSizeMd),
-                  ),
-
-                  /// -- Status
-                  MyCardStatus(status: TaskStatus.incomplete)
-                ],
-              ),
-
-              const Gap(20),
-
-              /// Descrição
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Descrição',
-                    style: TextStyle(
-                      color: TColors.base200,
-                      fontSize: TConstants.fontSizeMd,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 3, top: 5, right: 5),
-                    child: Text(
-                      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: TConstants.fontSizeMd + 1,
-                      ),
-                    ),
+  @override
+  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+        builder: (context, state) => Scaffold(
+          appBar: AppBar(
+            title: state.status.isInProgress
+                ? const SkeltonIndicator(
+                    width: 120,
+                    height: 20,
                   )
-                ],
-              ),
+                : const Text('Task name'),
+          ),
+          body: switch (state.status) {
+            TaskCubitStatus.inProgress => const _TaskDetailsInProgress(),
+            _ => const _Body(),
+          },
+          floatingActionButton: state.status.isInProgress
+              ? const SkeltonIndicator(width: 55, height: 55)
+              : FloatingActionButton(
+                  backgroundColor: TColors.primary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                  child: const Icon(TIcons.message),
+                  onPressed: () {},
+                ),
+        ),
+      );
+}
 
-              const Gap(20),
+class _Body extends StatelessWidget {
+  const _Body();
 
-              /// -- Membros
-              const _Members(),
-            ],
+  @override
+  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const _ProjectDetails(),
+
+                const Gap(20),
+
+                /// Categoria
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      'Categoria',
+                      style: TextStyle(fontSize: TConstants.fontSizeMd),
+                    ),
+
+                    /// -- Status
+                    MyCardStatus(status: state.taskDetails.status),
+                  ],
+                ),
+
+                const Gap(20),
+
+                /// Descrição
+                const _Description(),
+
+                const Gap(20),
+
+                /// -- Membros
+                const _Members(),
+              ],
+            ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: TColors.primary,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          child: const Icon(TIcons.message),
-          onPressed: () {},
+      );
+}
+
+class _ProjectDetails extends StatelessWidget {
+  const _ProjectDetails();
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+      buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
+      builder: (context, state) {
+        final task = state.taskDetails;
+
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Gap(10),
+
+              /// -- Data da criação
+              Text(
+                task.createAtWithOptions,
+                style: const TextStyle(color: TColors.base200),
+              ),
+
+              /// -- Detalhes
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: TColors.base200),
+                  borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                      child: _Card(
+                        title: 'Admin',
+                        info: 'Elon Musk ds s ',
+                      ),
+                    ),
+                    Flexible(
+                      child: _Card(
+                        title: 'Projeto',
+                        info: 'Projeto Integrado sd ssd sd s ds ds d drds',
+                        isRight: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+}
+
+class _Description extends StatelessWidget {
+  const _Description();
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+        buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
+        builder: (context, state) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Descrição',
+              style: TextStyle(
+                color: TColors.base200,
+                fontSize: TConstants.fontSizeMd,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 3, top: 5, right: 5),
+              child: Text(
+               '${state.taskDetails.description}',
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontSize: TConstants.fontSizeMd + 1,
+                ),
+              ),
+            )
+          ],
         ),
       );
 }
@@ -128,59 +197,115 @@ class _MembersState extends State<_Members> {
 
   void _changedExpansion(bool value) => setState(() => _isExpanded = value);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
-        border: Border.all(color: TColors.borderSideColor),
-      ),
-      child: ExpansionTile(
-        trailing: AnimatedRotation(
-          turns: _isExpanded ? 0 : .5,
-          duration: const Duration(milliseconds: 200),
-          child: const Icon(
-            TIcons.arrowTop,
-            color: TColors.primary,
-          ),
+  Widget _buildAvatarUrl(String? avatarUrl) {
+    const imageCircular = TConstants.imageCircular;
+
+    if (avatarUrl != null) {
+      final image = avatarUrl.replaceAll(RegExp(r'localhost'), Env.LOCALHOST);
+
+      return Container(
+        color: TColors.base120,
+        width: imageCircular,
+        height: imageCircular,
+        child: Image.network(
+          image,
+          width: imageCircular,
+          height: imageCircular,
+          cacheWidth: 123,
+          cacheHeight: 123,
+          fit: BoxFit.cover,
         ),
-        backgroundColor: TColors.base200.withOpacity(.30),
-        collapsedBackgroundColor: TColors.base200.withOpacity(.30),
-        collapsedShape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
-          side: BorderSide(color: TColors.borderSideColor, width: 0),
+      );
+    } else {
+      return Container(
+        color: TColors.base200,
+        width: TConstants.imageCircular,
+        height: TConstants.imageCircular,
+        child: const Icon(
+          TIcons.solidUser,
+          color: TColors.base100,
         ),
-        onExpansionChanged: _changedExpansion,
-        title: const Text(
-          'Membros',
-          style: TextStyle(
-            color: TColors.expansionTileTextColor,
-            fontSize: TConstants.fontSizeMd,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        children: List.generate(
-          2,
-          (index) => Container(
-            decoration: BoxDecoration(
-              color: TColors.base100,
-              borderRadius: BorderRadius.vertical(
-                bottom: index == 1 ? const Radius.circular(TConstants.cardRadiusXs) : Radius.zero,
-              ),
-              border: Border(
-                top: index == 1 ? BorderSide.none : const BorderSide(color: TColors.base200),
-                bottom: index == 1 ? BorderSide.none : const BorderSide(color: TColors.base200),
-              ),
-            ),
-            child: const ListTile(
-              leading: Icon(TIcons.solidUser),
-              title: Text('Kbuloso'),
-            ),
-          ),
-        ),
-      ),
-    );
+      );
+    }
   }
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+        buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
+        builder: (context, state) {
+          // final members = context.select((ProjectBloc bloc) => bloc.state.members);
+          final members = state.taskDetails.attributedTo;
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
+              border: Border.all(color: TColors.borderSideColor),
+            ),
+            child: ExpansionTile(
+              onExpansionChanged: _changedExpansion,
+              trailing: AnimatedRotation(
+                turns: _isExpanded ? 0 : .5,
+                duration: const Duration(milliseconds: 200),
+                child: const Icon(
+                  TIcons.arrowTop,
+                  color: TColors.primary,
+                ),
+              ),
+              backgroundColor: TColors.base200.withOpacity(.30),
+              collapsedBackgroundColor: TColors.base200.withOpacity(.30),
+              shape: RoundedRectangleBorder(
+                side: BorderSide.none,
+                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+              ),
+              collapsedShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+              ),
+              title: const Text(
+                'Membros',
+                style: TextStyle(
+                  color: TColors.expansionTileTextColor,
+                  fontSize: TConstants.fontSizeMd,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              children: List.generate(
+                members.length,
+                (index) {
+                  final member = members[index];
+                  final lastMember = members.first;
+
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: TColors.base100,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: lastMember == member ? const Radius.circular(TConstants.cardRadiusXs) : Radius.zero,
+                      ),
+                      border: Border(
+                        top: const BorderSide(color: TColors.base200),
+                        bottom: lastMember == member ? BorderSide.none : const BorderSide(color: TColors.base200),
+                      ),
+                    ),
+                    child: ListTile(
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: _buildAvatarUrl(member.avatarUrl),
+                      ),
+                      title: Text(
+                        member.nickname,
+                        style: const TextStyle(
+                          fontSize: TConstants.fontSizeMd,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      );
 }
 
 class _Card extends StatelessWidget {
@@ -259,6 +384,43 @@ class _InfoChild extends StatelessWidget {
         child: Text(
           info,
           style: const TextStyle(fontSize: TConstants.fontSizeLg),
+        ),
+      );
+}
+
+class _TaskDetailsInProgress extends StatelessWidget {
+  const _TaskDetailsInProgress();
+
+  @override
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.all(TConstants.defaultMargin),
+        child: Column(
+          children: <Widget>[
+            /// Detalhes
+            SkeltonIndicator(height: 120),
+
+            /// Categoria / Status
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SkeltonIndicator(width: 100, height: 25),
+                  SkeltonIndicator(width: 100, height: 25),
+                ],
+              ),
+            ),
+
+            /// Descrição
+            SkeltonIndicator(
+              height: 100,
+            ),
+
+            Gap(20),
+
+            /// Membros
+            SkeltonIndicator(height: 50)
+          ],
         ),
       );
 }
