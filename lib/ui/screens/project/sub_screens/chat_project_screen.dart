@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/message_response.dart';
@@ -71,6 +73,7 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
           appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColor,
             leading: const _Leading(),
+            leadingWidth: 65,
             title: _Title(projectId: widget.projectId),
             actions: const [_PopupMenuItem()],
             bottom: TabBar(
@@ -117,16 +120,40 @@ class _Leading extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
-                state.detailProject.imageUrl == null
-                    ? CircleAvatar(
-                        radius: 16,
-                        backgroundImage: AssetImage(state.detailProject.imageUrl ?? 'assets/group.png'),
+                state.detailProject.imageUrl != null
+                    ? Hero(
+                        tag: 'details_project',
+                        child: Container(
+                          width: TConstants.imageCircular - 5,
+                          decoration: BoxDecoration(
+                            color: TColors.base150,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                state.detailProject.imageUrlLocal!,
+                                maxWidth: 157,
+                                maxHeight: 217,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       )
-                    : const CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.grey,
-                        child: Icon(Icons.group),
-                      )
+                    : Hero(
+                        tag: 'details_project',
+                        child: Container(
+                          width: TConstants.imageCircular - 5,
+                          decoration: const BoxDecoration(
+                            color: TColors.base200,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            'assets/group.png',
+                            width: TConstants.imageCircular - 5,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),
@@ -149,12 +176,11 @@ class _PopupMenuItem extends StatelessWidget {
 
     final List<Map<String, dynamic>> options = [
       {
-        'label': 'Projeto info',
-        'onTap': () {},
-      },
-      {
         'label': 'Limpar mensagens',
-        'onTap': deleteMessages,
+        'onTap': () => {
+              deleteMessages(),
+              Get.back(),
+            },
       },
       {
         'label': 'Sair do projeto',
@@ -179,10 +205,7 @@ class _PopupMenuItem extends StatelessWidget {
                   value['label'],
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                onTap: () => {
-                  value['onTap'](),
-                  Get.back(),
-                },
+                onTap: value['onTap'],
               ),
             ),
           )
@@ -202,26 +225,30 @@ class _Title extends StatelessWidget {
     _project = context.read<ProjectBloc>().getProjectById(projectId);
 
     return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (_, state) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Project name
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(
-              _project.name,
-              style: const TextStyle(
-                fontSize: 18,
-                overflow: TextOverflow.ellipsis,
+      builder: (_, state) => GestureDetector(
+        onTap: () => Get.toNamed(AppRoutes.detailsProject),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            /// Nome
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3),
+              child: Text(
+                _project.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-          ),
-          // Members the group
-          const Text(
-            'Você',
-            style: TextStyle(fontSize: 12),
-          )
-        ],
+
+            /// Membros
+            const Text(
+              'Você',
+              style: TextStyle(fontSize: 12),
+            )
+          ],
+        ),
       ),
     );
   }
