@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:get/route_manager.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
@@ -49,7 +50,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
           body: switch (state.status) {
             ProjectStatus.inProgress => const Center(child: CircularProgressIndicator()),
             ProjectStatus.failure => const Center(child: Text('Erro ao buscar os projetos')),
-            _ => _AllProjects(projects: state.projects)
+            _ => state.projects.isNotEmpty ? _AllProjects(projects: state.projects) : const _ProjectEmpty()
           },
 
           /// Adicionar projetos
@@ -123,4 +124,31 @@ class _AllProjects extends StatelessWidget {
       ],
     );
   }
+}
+
+class _ProjectEmpty extends StatelessWidget {
+  const _ProjectEmpty();
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Nenhuma projeto encontrado',
+              style: TextStyle(
+                fontSize: TConstants.fontSizeLg,
+                color: TColors.base300,
+              ),
+            ),
+            const Gap(15),
+            Image.asset(
+              'assets/projects_empty.png',
+              fit: BoxFit.cover,
+              width: Get.width * .7,
+              height: Get.width * .7,
+            ),
+          ],
+        ),
+      );
 }
