@@ -18,8 +18,7 @@ class CardProject extends StatelessWidget {
   final Function()? onTap;
 
   Widget _getImage() {
-    const width = 45.0;
-    const height = 45.0;
+    const imageCircular = TConstants.imageCircular;
 
     if (project.imageUrl != null) {
       final image = project.imageUrl!.replaceAll(
@@ -29,12 +28,12 @@ class CardProject extends StatelessWidget {
 
       return Container(
         color: TColors.base120,
-        width: width,
-        height: height,
+        width: imageCircular,
+        height: imageCircular,
         child: Image.network(
           image,
-          width: width,
-          height: height,
+          width: imageCircular,
+          height: imageCircular,
           cacheWidth: 123,
           cacheHeight: 123,
           fit: BoxFit.cover,
@@ -43,8 +42,8 @@ class CardProject extends StatelessWidget {
     } else {
       return Image.asset(
         'assets/group.png',
-        width: width,
-        height: height,
+        width: imageCircular,
+        height: imageCircular,
         fit: BoxFit.cover,
       );
     }

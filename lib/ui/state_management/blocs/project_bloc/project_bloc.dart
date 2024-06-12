@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/detail_project_response.dart';
+import 'package:kyw_management/data/dtos/response/member_of_project_response.dart';
 import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/data/services/message_service.dart';
@@ -64,12 +65,17 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     emit(state.copyWith(status: ProjectStatus.detailInProgress));
 
     List<MessageResponse> messages = [];
+    List<MemberOfProjectResponse> members = [];
     final result = await _repository.getProjectById(event.projectId);
 
     if (result.isSuccess()) {
       messages = await _messageService.getMessages(
         event.projectId,
       );
+
+      final result = await _repository.getAllMembers(event.projectId);
+
+      members = result.getOrDefault([]);
     }
 
     result.fold(
@@ -77,6 +83,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
         detailProject: success,
         status: ProjectStatus.detailSuccess,
         messages: messages,
+        members: members,
       )),
       (failure) => emit(state.copyWith(status: ProjectStatus.detailFailure)),
     );

@@ -6,12 +6,14 @@ class ProjectState extends Equatable {
     DetailProjectResponse? detailProject,
     this.status = ProjectStatus.initial,
     this.messages = const [],
+    this.members = const [],
   }) : detailProject = detailProject ?? DetailProjectResponse.empty();
 
   final List<ProjectResponse> projects;
   final DetailProjectResponse detailProject;
   final ProjectStatus status;
   final List<MessageResponse> messages;
+  final List<MemberOfProjectResponse> members;
 
   @override
   List<Object?> get props => [
@@ -26,12 +28,14 @@ class ProjectState extends Equatable {
     DetailProjectResponse? detailProject,
     ProjectStatus? status,
     List<MessageResponse>? messages,
+    List<MemberOfProjectResponse>? members,
   }) =>
       ProjectState(
         projects: projects ?? this.projects,
         detailProject: detailProject ?? this.detailProject,
         status: status ?? ProjectStatus.initial,
         messages: messages ?? [],
+        members: members ?? [],
       );
 }
 

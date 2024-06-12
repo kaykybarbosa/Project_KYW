@@ -21,4 +21,6 @@ abstract class TConstants {
   static const blurRadius = 6.0;
 
   static const radiusLeftInput = 7.0;
+
+  static const imageCircular = 45.0;
 }

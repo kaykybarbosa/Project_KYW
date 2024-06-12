@@ -34,7 +34,7 @@ class TaskState extends Equatable {
   }) {
     return TaskState(
       tasksOficial: tasksOficial ?? this.tasksOficial,
-      tasks: tasks ?? this.tasksOficial,
+      tasks: tasks ?? (tasksOficial ?? this.tasksOficial),
       taskDetails: taskDetails ?? this.taskDetails,
       status: status ?? TaskCubitStatus.initial,
       errorMessage: errorMessage ?? this.errorMessage,
