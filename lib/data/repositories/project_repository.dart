@@ -4,6 +4,7 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:kyw_management/data/dtos/request/create_project_request.dart';
 import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/detail_project_response.dart';
+import 'package:kyw_management/data/dtos/response/member_of_project_response.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
 import 'package:result_dart/result_dart.dart';
@@ -20,6 +21,8 @@ abstract class IProjectRepository {
   AsyncResult<Unit, ApiException> addMemberByUserId(String projectId, {required String userId});
 
   AsyncResult<Unit, ApiException> addMemberByEmail(String projectId, {required String email});
+
+  AsyncResult<List<MemberOfProjectResponse>, ApiException> getAllMembers(String projectId);
 }
 
 class ProjectRepository implements IProjectRepository {
@@ -69,7 +72,7 @@ class ProjectRepository implements IProjectRepository {
     try {
       final result = await _http.get('${_http.baseUrl}/users/projects');
 
-      final projectsResult = result.data['projects'];
+      final projectsResult = result.data;
       final projects = projectsResult.map<ProjectResponse>((project) => ProjectResponse.fromMap(project)).toList();
 
       return Success(projects);
@@ -120,6 +123,26 @@ class ProjectRepository implements IProjectRepository {
       );
 
       return const Success(unit);
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<List<MemberOfProjectResponse>, ApiException> getAllMembers(String projectId) async {
+    try {
+      final result = await _http.get('${_http.baseUrl}/members/$projectId');
+
+      final membersResult = result.data['members'];
+      final members = membersResult
+          .map<MemberOfProjectResponse>(
+            (member) => MemberOfProjectResponse.fromMap(member),
+          )
+          .toList();
+
+      return Success(members);
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {
