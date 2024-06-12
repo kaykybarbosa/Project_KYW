@@ -1,4 +1,3 @@
-export 'package:get/get_core/src/get_main.dart';
 export 'package:get/get_navigation/get_navigation.dart';
 export 'package:kyw_management/app/controllers/app_controller_bindings.dart';
 export 'package:kyw_management/app/routers/my_routes.dart';

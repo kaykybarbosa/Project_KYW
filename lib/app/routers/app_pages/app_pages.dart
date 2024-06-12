@@ -1,3 +1,6 @@
+import 'package:get/get.dart';
+import 'package:kyw_management/ui/screens/project/sub_screens/project_details_screen.dart';
+
 import 'app_pages_exports.dart';
 
 abstract class AppPages {
@@ -55,19 +58,19 @@ abstract class AppPages {
       name: AppRoutes.forgotPassword,
       page: () => const ForgotPasswordScreen(),
       transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
+      transitionDuration: TConstants.transitionFadeDuration.milliseconds,
     ),
     GetPage(
       name: AppRoutes.codeForgotPassword,
       page: () => const CodeForgotScreen(),
       transition: Transition.rightToLeftWithFade,
-      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
+      transitionDuration: TConstants.transitionFadeDuration.milliseconds,
     ),
     GetPage(
       name: AppRoutes.changePassword,
       page: () => const ChangePasswordScreen(),
       transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: TConstants.transitionFadeDuration),
+      transitionDuration: TConstants.transitionFadeDuration.milliseconds,
     ),
     GetPage(
       name: AppRoutes.notifications,
@@ -77,6 +80,12 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.createProject,
       page: () => const CreateProjectScreen(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.detailsProject,
+      page: () => const ProjectDetailsScreen(),
+      transitionDuration: 600.milliseconds,
       transition: Transition.fade,
     ),
     GetPage(
@@ -141,7 +150,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.detailTask,
-      page: () => const DetailsTaskScreen(),
+      page: () => DetailsTaskScreen(taskId: Get.parameters['id']!),
       transition: Transition.fade,
     ),
     GetPage(
