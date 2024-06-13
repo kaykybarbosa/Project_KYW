@@ -40,6 +40,7 @@ abstract class TIcons {
   static const IconData bold = FontAwesomeIcons.bold;
   static const IconData italic = FontAwesomeIcons.italic;
   static const IconData link = FontAwesomeIcons.link;
+  static const IconData edit = FontAwesomeIcons.pen;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;

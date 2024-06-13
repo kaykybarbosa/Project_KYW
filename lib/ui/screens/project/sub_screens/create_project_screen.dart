@@ -81,35 +81,33 @@ class _BodyState extends State<_Body> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            if (pageController.page?.toInt() == 1) {
-              context.read<AddProjectBloc>().add(ChangedCurrentPage());
-              changePage();
-            } else {
-              Get.back();
-            }
-          },
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              if (pageController.page?.toInt() == 1) {
+                context.read<AddProjectBloc>().add(ChangedCurrentPage());
+                changePage();
+              } else {
+                Get.back();
+              }
+            },
+          ),
+          title: const Text('Novo Projeto'),
         ),
-        title: const Text('Novo Projeto'),
-      ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: const [
-          /// Imagem, Título e Descrição
-          _NameAndDescriptionScreen(),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: const [
+            /// Imagem, Título e Descrição
+            _NameAndDescriptionScreen(),
 
-          /// Convidar amigos
-          InviteFriendsScreen(),
-        ],
-      ),
-      floatingActionButton: const _MyFloatingButton(),
-    );
-  }
+            /// Convidar amigos
+            InviteFriendsScreen(),
+          ],
+        ),
+        floatingActionButton: const _MyFloatingButton(),
+      );
 }
 
 class _NameAndDescriptionScreen extends StatelessWidget {

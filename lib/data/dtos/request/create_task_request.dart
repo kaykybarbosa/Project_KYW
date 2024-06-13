@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:kyw_management/data/dtos/user_include_response.dart';
 import 'package:kyw_management/domain/enums/criticality_enum.dart';
 
 class CreateTaskRequest {
@@ -11,7 +10,7 @@ class CreateTaskRequest {
   final String attachments;
   final String projectId;
   final String completedAt;
-  final List<UserIncludeResponse> attributedTo;
+  final List<String> attributedTo;
 
   CreateTaskRequest({
     this.title = '',

@@ -119,7 +119,7 @@ class _Tasks extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: TConstants.defaultMargin,
-                  vertical: 10,
+                  vertical: 5,
                 ),
                 child: CardTask(
                   task: task,

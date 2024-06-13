@@ -91,10 +91,8 @@ class TaskResponse extends Equatable {
         createAt: map['createAt'] != null ? DateTime.parse(map['createAt']) : null,
         completedAt: map['completedAt'] != null ? DateTime.parse(map['completedAt']) : null,
         project: map['project'] != null ? ProjectIncludeResponse.fromMap(map['project']) : null,
-        attributedTo: map['attributedTo'] != null
-            ? map['attributedTo']
-                .map<UserIncludeResponse>((member) => UserIncludeResponse.fromMap(map['attributedTo']))
-                .toList()
+        attributedTo: map['attributedTo'].isNotEmpty
+            ? map['attributedTo'].map<UserIncludeResponse>((member) => UserIncludeResponse.fromMap(member)).toList()
             : [],
         pin: map['pin'],
       );
