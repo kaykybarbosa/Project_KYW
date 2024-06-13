@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:kyw_management/app/controllers/app_controller.dart';
+import 'package:kyw_management/env/env.dart';
 
 class MemberOfProjectResponse extends Equatable {
   const MemberOfProjectResponse({
@@ -19,6 +21,10 @@ class MemberOfProjectResponse extends Equatable {
   final String phone;
   final List? notifications;
   final String? avatarUrl;
+
+  String? get avatarUrlLocal => avatarUrl?.replaceAll(RegExp(r'localhost'), Env.LOCALHOST);
+
+  bool get isCurrentUser => AppController.instance.currentUser.id == id;
 
   @override
   List<Object?> get props => [
