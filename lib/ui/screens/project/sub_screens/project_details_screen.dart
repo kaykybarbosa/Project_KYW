@@ -24,42 +24,43 @@ class ProjectDetailsScreen extends StatelessWidget {
     return BlocBuilder<ProjectBloc, ProjectState>(
       builder: (context, state) {
         return Scaffold(
-            body: CustomScrollView(
-          slivers: <Widget>[
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SliverPersistentDelegate(),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: <Widget>[
-                  /// Nome
-                  _ProjectName(state.projectDetails.name),
-
-                  /// Quantidade de membros
-                  const _NumberOfMembers(),
-
-                  const _Divider(),
-
-                  /// Descrição
-                  _Description(state.projectDetails.description),
-
-                  const Gap(20),
-
-                  /// Opções
-                  const _Options(),
-
-                  const _Divider(),
-
-                  /// Membros
-                  const _Members(),
-
-                  const SizedBox(height: 10),
-                ],
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverPersistentDelegate(),
               ),
-            )
-          ],
-        ));
+              SliverToBoxAdapter(
+                child: Column(
+                  children: <Widget>[
+                    /// Nome
+                    _ProjectName(state.projectDetails.name),
+
+                    /// Quantidade de membros
+                    const _NumberOfMembers(),
+
+                    const _Divider(),
+
+                    /// Descrição
+                    _Description(state.projectDetails.description),
+
+                    const Gap(20),
+
+                    /// Opções
+                    const _Options(),
+
+                    const _Divider(),
+
+                    /// Membros
+                    const _Members(),
+
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
       },
     );
   }

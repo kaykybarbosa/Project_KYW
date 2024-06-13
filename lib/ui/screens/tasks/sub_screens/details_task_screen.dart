@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/env/env.dart';
+import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
 import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
@@ -105,7 +106,10 @@ class _ProjectDetails extends StatelessWidget {
   const _ProjectDetails();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+  Widget build(BuildContext context) {
+    final project = context.select((ProjectBloc bloc) => bloc.state.projectDetails);
+
+    return BlocBuilder<TaskCubit, TaskState>(
       buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
       builder: (context, state) {
         final task = state.taskDetails;
@@ -128,20 +132,20 @@ class _ProjectDetails extends StatelessWidget {
                   border: Border.all(color: TColors.base200),
                   borderRadius: const BorderRadius.all(Radius.circular(TConstants.cardRadiusXs)),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Flexible(
                       child: _Card(
                         title: 'Admin',
-                        info: 'Elon Musk ds s ',
+                        info: project.creator.nickname,
                       ),
                     ),
                     Flexible(
                       child: _Card(
                         title: 'Projeto',
-                        info: 'Projeto Integrado sd ssd sd s ds ds d drds',
+                        info: project.name,
                         isRight: true,
                       ),
                     ),
@@ -151,7 +155,9 @@ class _ProjectDetails extends StatelessWidget {
             ],
           ),
         );
-      });
+      },
+    );
+  }
 }
 
 class _Description extends StatelessWidget {
@@ -173,7 +179,7 @@ class _Description extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 3, top: 5, right: 5),
               child: Text(
-               '${state.taskDetails.description}',
+                '${state.taskDetails.description}',
                 textAlign: TextAlign.justify,
                 style: const TextStyle(
                   fontSize: TConstants.fontSizeMd + 1,
