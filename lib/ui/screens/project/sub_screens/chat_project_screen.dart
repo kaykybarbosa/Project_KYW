@@ -1,15 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/ui/screens/project/sub_screens/tasks_project_screen.dart';
 import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
+import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
+import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
@@ -27,7 +27,7 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
   Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
-          if (state.status.isDetailSuccess) {
+          if (state.status.isDetailsSuccess) {
             context.read<ProjectBloc>().add(GetAllTasks(widget.projectId));
           }
         },
@@ -71,7 +71,15 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
         builder: (context, state) => Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColor,
-            leading: const _Leading(),
+            leading: state.status.isDetailsInProgress
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: const SkeltonIndicator(),
+                    ),
+                  )
+                : const _Leading(),
             leadingWidth: 65,
             title: _Title(projectId: widget.projectId),
             actions: const [_PopupMenuItem()],
@@ -119,40 +127,49 @@ class _Leading extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
-                state.projectDetails.imageUrl != null
-                    ? Hero(
-                        tag: 'details_project',
-                        child: Container(
-                          width: TConstants.imageCircular - 5,
-                          decoration: BoxDecoration(
-                            color: TColors.base150,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                state.projectDetails.imageUrlLocal!,
-                                maxWidth: 157,
-                                maxHeight: 217,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Hero(
-                        tag: 'details_project',
-                        child: Container(
-                          width: TConstants.imageCircular - 5,
-                          decoration: const BoxDecoration(
-                            color: TColors.base200,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            'assets/group.png',
-                            width: TConstants.imageCircular - 5,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+
+                MyImageNetwork(
+                  width: TConstants.imageCircular - 5,
+                  assetsReplace: 'assets/group.png',
+                  image: state.projectDetails.imageUrlLocal,
+                  cacheWidth: 157,
+                  cacheHeight: 217,
+                ),
+
+                // state.projectDetails.imageUrl != null
+                //     ? Hero(
+                //         tag: 'details_project',
+                //         child: Container(
+                //           width: TConstants.imageCircular - 5,
+                //           decoration: BoxDecoration(
+                //             color: TColors.base150,
+                //             shape: BoxShape.circle,
+                //             image: DecorationImage(
+                //               image: CachedNetworkImageProvider(
+                //                 state.projectDetails.imageUrlLocal!,
+                //                 maxWidth: 157,
+                //                 maxHeight: 217,
+                //               ),
+                //               fit: BoxFit.cover,
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     : Hero(
+                //         tag: 'details_project',
+                //         child: Container(
+                //           width: TConstants.imageCircular - 5,
+                //           decoration: const BoxDecoration(
+                //             color: TColors.base200,
+                //             shape: BoxShape.circle,
+                //           ),
+                //           child: Image.asset(
+                //             'assets/group.png',
+                //             width: TConstants.imageCircular - 5,
+                //             fit: BoxFit.cover,
+                //           ),
+                //         ),
+                //       ),
               ],
             ),
           ),
@@ -217,74 +234,58 @@ class _Title extends StatelessWidget {
   const _Title({required this.projectId});
 
   final String projectId;
-  static late ProjectResponse _project;
 
   @override
-  Widget build(BuildContext context) {
-    _project = context.read<ProjectBloc>().getProjectById(projectId);
-
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (_, state) => InkWell(
-        onTap: () => Get.toNamed(AppRoutes.detailsProject),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            /// Nome
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Row(
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        buildWhen: (previous, current) => previous.status != current.status,
+        builder: (_, state) => state.status.isDetailsInProgress
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      _project.name,
-                      style: const TextStyle(
-                        fontSize: TConstants.fontSizeLg + 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  SkeltonIndicator(
+                    width: Get.width * .3,
+                    height: 20,
+                  ),
+                  const Gap(2),
+                  SkeltonIndicator(
+                    width: Get.width * .4,
+                    height: 10,
                   ),
                 ],
-              ),
-            ),
+              )
+            : InkWell(
+                onTap: () => Get.toNamed(AppRoutes.detailsProject),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    /// Nome
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              state.projectDetails.name,
+                              style: const TextStyle(
+                                fontSize: TConstants.fontSizeLg + 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
-            /// Membros
-            const Text(
-              'Você',
-              style: TextStyle(fontSize: 12),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Members extends StatelessWidget {
-  const _Members({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) => const SizedBox(
-        width: 200,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 2),
-                child: Text(
-                  'Kbuloso, Marquinho...',
-                  style: TextStyle(
-                    fontSize: 12,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                    /// Membros
+                    Text(
+                      state.getNicknamesOfMembers(),
+                      style: const TextStyle(fontSize: 12),
+                    )
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
       );
 }
 
