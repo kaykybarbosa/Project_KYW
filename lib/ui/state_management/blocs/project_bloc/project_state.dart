@@ -27,6 +27,27 @@ class ProjectState extends Equatable {
         tasks,
       ];
 
+  ///
+
+  String getNicknamesOfMembers() {
+    final currentUserId = AppController.instance.currentUser.id;
+    final currentUser = members.firstWhereOrNull((member) => member.id == currentUserId);
+
+    List<MemberOfProjectResponse> newMembers = [];
+
+    if (currentUser != null) {
+      newMembers = List.from(members)..remove(currentUser);
+    }
+
+    List<String> nicknames = newMembers.map((member) => member.nickname).toList();
+
+    if (currentUser != null) {
+      nicknames.add('Você');
+    }
+
+    return nicknames.join(', ');
+  }
+
   ProjectState copyWith({
     List<ProjectResponse>? projects,
     DetailProjectResponse? projectDetails,
@@ -69,8 +90,8 @@ extension ProjectStatusX on ProjectStatus {
   bool get isFailure => this == ProjectStatus.failure;
 
   bool get isDetailsInProgress => this == ProjectStatus.detailInProgress;
-  bool get isDetailSuccess => this == ProjectStatus.detailSuccess;
-  bool get isDetailFailure => this == ProjectStatus.detailFailure;
+  bool get isDetailsSuccess => this == ProjectStatus.detailSuccess;
+  bool get isDetailsFailure => this == ProjectStatus.detailFailure;
 
   bool get isNewMessage => this == ProjectStatus.newMessage;
 
