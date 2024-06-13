@@ -6,6 +6,7 @@ import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/env/env.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
+import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
 import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -39,7 +40,21 @@ class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
                     width: 120,
                     height: 20,
                   )
-                : const Text('Task name'),
+                : Text(
+                    state.taskDetails.title,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+            actions: [
+              IconButton(
+                tooltip: 'Editar',
+                onPressed: () {},
+                icon: const Icon(
+                  TIcons.edit,
+                  size: TConstants.iconSm + 4,
+                ),
+              ),
+            ],
           ),
           body: switch (state.status) {
             TaskCubitStatus.inProgress => const _TaskDetailsInProgress(),
@@ -279,19 +294,12 @@ class _MembersState extends State<_Members> {
                 members.length,
                 (index) {
                   final member = members[index];
-                  final lastMember = members.first;
+                  final isFirst = members.first == member;
+                  final isLast = members.last == member;
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: TColors.base100,
-                      borderRadius: BorderRadius.vertical(
-                        bottom: lastMember == member ? const Radius.circular(TConstants.cardRadiusXs) : Radius.zero,
-                      ),
-                      border: Border(
-                        top: const BorderSide(color: TColors.base200),
-                        bottom: lastMember == member ? BorderSide.none : const BorderSide(color: TColors.base200),
-                      ),
-                    ),
+                  return MyExpansionChild(
+                    isFirst: isFirst,
+                    isLast: isLast,
                     child: ListTile(
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
@@ -303,6 +311,8 @@ class _MembersState extends State<_Members> {
                           fontSize: TConstants.fontSizeMd,
                           fontWeight: FontWeight.w600,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   );
@@ -387,9 +397,17 @@ class _InfoChild extends StatelessWidget {
           ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        child: Text(
-          info,
-          style: const TextStyle(fontSize: TConstants.fontSizeLg),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Flexible(
+              child: Text(
+                info,
+                style: const TextStyle(fontSize: TConstants.fontSizeLg),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       );
 }
