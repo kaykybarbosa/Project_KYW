@@ -11,7 +11,7 @@ class TitleTextField extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: padding ?? const EdgeInsets.only(left: 2, bottom: 4),
         child: Text(
-          text!,
+          text ?? '',
           style: TextStyle(
             fontSize: TConstants.fontSizeLg - 1,
             fontWeight: FontWeight.w500,

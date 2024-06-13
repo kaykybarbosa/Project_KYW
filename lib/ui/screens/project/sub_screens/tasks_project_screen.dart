@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/ui/screens/tasks/widgets/filters_bar_tasks.dart';
-import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
+import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
@@ -17,11 +17,11 @@ class TasksProjectScreen extends StatelessWidget {
   final String projectId;
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<TaskCubit, TaskState>(
+  Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
         listener: (context, state) {},
         builder: (context, state) => Scaffold(
           body: const _Body(),
-          floatingActionButton: state.status.isInProgress
+          floatingActionButton: state.status.isTaskInProgress
               ? const SkeltonIndicator(
                   width: 55,
                   height: 55,
@@ -43,18 +43,18 @@ class _Body extends StatelessWidget {
   const _Body();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         builder: (context, state) => Padding(
           padding: const EdgeInsets.symmetric(
               // horizontal: 15,
               // vertical: 10
               ),
           child: switch (state.status) {
-            TaskCubitStatus.inProgress => const _TasksInProgress(),
+            ProjectStatus.taskInProgress => const _TasksInProgress(),
             _ => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  state.tasksOficial.tasks.isNotEmpty
+                  state.tasks.isNotEmpty
                       ? const Expanded(
                           child: CustomScrollView(
                             slivers: <Widget>[
@@ -110,11 +110,11 @@ class _Tasks extends StatelessWidget {
   const _Tasks();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
         builder: (context, state) => SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              final task = state.tasks.tasks[index];
+              final task = state.tasks[index];
 
               return Padding(
                 padding: const EdgeInsets.symmetric(
@@ -130,7 +130,7 @@ class _Tasks extends StatelessWidget {
                 ),
               );
             },
-            childCount: state.tasks.tasks.length,
+            childCount: state.tasks.length,
           ),
         ),
       );

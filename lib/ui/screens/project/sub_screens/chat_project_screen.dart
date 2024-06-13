@@ -10,7 +10,6 @@ import 'package:kyw_management/ui/screens/project/sub_screens/tasks_project_scre
 import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
-import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
@@ -29,7 +28,7 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isDetailSuccess) {
-            context.read<TaskCubit>().getAllTasks();
+            context.read<ProjectBloc>().add(GetAllTasks(widget.projectId));
           }
         },
         builder: (context, state) => _Body(widget.projectId),
@@ -120,7 +119,7 @@ class _Leading extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
-                state.detailProject.imageUrl != null
+                state.projectDetails.imageUrl != null
                     ? Hero(
                         tag: 'details_project',
                         child: Container(
@@ -130,7 +129,7 @@ class _Leading extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                state.detailProject.imageUrlLocal!,
+                                state.projectDetails.imageUrlLocal!,
                                 maxWidth: 157,
                                 maxHeight: 217,
                               ),
@@ -225,7 +224,7 @@ class _Title extends StatelessWidget {
     _project = context.read<ProjectBloc>().getProjectById(projectId);
 
     return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (_, state) => GestureDetector(
+      builder: (_, state) => InkWell(
         onTap: () => Get.toNamed(AppRoutes.detailsProject),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,12 +232,20 @@ class _Title extends StatelessWidget {
             /// Nome
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Text(
-                _project.name,
-                style: const TextStyle(
-                  fontSize: 18,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      _project.name,
+                      style: const TextStyle(
+                        fontSize: TConstants.fontSizeLg + 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
             ),
 

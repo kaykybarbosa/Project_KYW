@@ -97,7 +97,7 @@ class _TaskName extends StatelessWidget {
         children: <Widget>[
           /// Nome
           Text(
-            '${task.description}',
+            task.title,
             style: const TextStyle(
               fontSize: TConstants.fontSizeLg,
               fontWeight: FontWeight.bold,

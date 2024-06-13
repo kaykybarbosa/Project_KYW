@@ -23,6 +23,8 @@ abstract class TColors {
 
   static const Color clipBackground = Color(0xFFECECEC);
 
+  static const Color descriptions = Color(0xFF5D5E63);
+
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
   static const Color alert = Color(0xFFFABD52);
