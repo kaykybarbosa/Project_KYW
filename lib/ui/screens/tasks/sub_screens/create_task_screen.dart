@@ -4,14 +4,16 @@ import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
+import 'package:kyw_management/data/dtos/response/member_of_project_response.dart';
 import 'package:kyw_management/data/repositories/task_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
+import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_title.dart';
+import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
 import 'package:kyw_management/ui/widgets/my_icon_drag.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -43,7 +45,7 @@ class CreateTaskScreen extends StatelessWidget {
                 type: SnackBarType.failure,
               );
             } else if (state.status.isSuccess) {
-              context.read<TaskCubit>().getAllTasks();
+              context.read<ProjectBloc>().add(GetAllTasks(projectId));
               Get.back();
               snackBarCustom(title: 'Sucesso.', message: 'Task criada com sucesso.');
             }
@@ -139,6 +141,7 @@ class _CategoryState extends State<_Category> {
         buildWhen: (previous, current) => previous.category.value != current.category.value,
         builder: (context, state) {
           final categoryValue = state.category.value;
+          final categories = state.categories;
 
           return MyExpansionTile.border(
             controller: _controller,
@@ -148,7 +151,6 @@ class _CategoryState extends State<_Category> {
                     ? Theme.of(context).textTheme.displayLarge
                     : Theme.of(context).inputDecorationTheme.hintStyle),
             children: state.categories.map((category) {
-              final categories = state.categories;
               final isFirst = categories.first == category;
               final isLast = categories.last == category;
 
@@ -157,9 +159,7 @@ class _CategoryState extends State<_Category> {
                 isLast: isLast,
                 child: ListTile(
                   contentPadding: const EdgeInsets.only(left: 16, right: 16),
-                  title: Text(
-                    category,
-                  ),
+                  title: Text(category),
                   onTap: () => _categoryOnTap(category),
                 ),
               );
@@ -242,24 +242,98 @@ class _DateOfConclusionState extends State<_DateOfConclusion> {
   }
 }
 
-class _SelectMembers extends StatelessWidget {
+class _SelectMembers extends StatefulWidget {
   const _SelectMembers();
 
   @override
-  Widget build(BuildContext context) => const MyExpansionTile.border(
-        showBorder: false,
-        borderColor: TColors.base100,
-        backgroundColor: TColors.primary,
-        icon: Icon(
-          TIcons.arrowUpIOS,
-          color: TColors.base100,
-        ),
-        placeHolder: Text(
-          'Selecionar membros',
-          style: TextStyle(
-            color: TColors.base100,
-          ),
-        ),
+  State<_SelectMembers> createState() => _SelectMembersState();
+}
+
+class _SelectMembersState extends State<_SelectMembers> {
+  List<MemberOfProjectResponse> get _members => context.read<ProjectBloc>().state.members;
+
+  void _addMembersToCubit() => context.read<CreateTaskCubit>().addMembersOfProject(_members);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _addMembersToCubit();
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<CreateTaskCubit, CreateTaskState>(
+        buildWhen: (previous, current) => previous.attributedTo != current.attributedTo,
+        builder: (context, state) {
+          final members = state.members;
+
+          return MyExpansionTile.border(
+            showBorder: false,
+            borderColor: TColors.base100,
+            backgroundColor: TColors.primary,
+            icon: const Icon(
+              TIcons.arrowUpIOS,
+              color: TColors.base100,
+            ),
+            placeHolder: const Text(
+              'Selecionar membros',
+              style: TextStyle(
+                color: TColors.base100,
+              ),
+            ),
+            children: state.members.map(
+              (member) {
+                final isFirst = members.first == member;
+                final isLast = members.last == member;
+
+                return MyExpansionChild(
+                  isFirst: isFirst,
+                  isLast: isLast,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.only(left: 16, right: 5),
+                    leading: member.avatarUrlLocal != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Container(
+                              color: TColors.base150,
+                              child: Image.network(
+                                member.avatarUrlLocal!,
+                                width: 45,
+                                height: 45,
+                                cacheWidth: 157,
+                                cacheHeight: 157,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : const MyImageNetwork(
+                            cacheWidth: 157,
+                            cacheHeight: 157,
+                            assetsReplace: 'assets/user.png',
+                          ),
+                    title: Text(
+                      member.isCurrentUser ? 'Você' : member.nickname,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Checkbox(
+                      value: state.memberIsSelected(member),
+                      onChanged: (isSelected) {
+                        final createContext = context.read<CreateTaskCubit>();
+
+                        if (isSelected!) {
+                          createContext.addAttributedTo(member);
+                        } else {
+                          createContext.removeAttributedTo(member);
+                        }
+                      },
+                    ),
+                  ),
+                );
+              },
+            ).toList(),
+          );
+        },
       );
 }
 
