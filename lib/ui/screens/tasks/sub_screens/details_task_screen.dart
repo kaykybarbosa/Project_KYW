@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
+import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
-import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
 import 'package:kyw_management/ui/widgets/my_card_status.dart';
 import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -218,31 +218,6 @@ class _MembersState extends State<_Members> {
 
   void _changedExpansion(bool value) => setState(() => _isExpanded = value);
 
-  Widget _buildAvatarUrl(String? avatarUrl) {
-    if (avatarUrl != null) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: Container(
-          color: TColors.base150,
-          child: Image.network(
-            avatarUrl,
-            width: TConstants.imageCircular,
-            height: TConstants.imageCircular,
-            cacheWidth: 157,
-            cacheHeight: 157,
-            fit: BoxFit.cover,
-          ),
-        ),
-      );
-    } else {
-      return const MyImageNetwork(
-        cacheWidth: 157,
-        cacheHeight: 157,
-        assetsReplace: 'assets/user.png',
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
         buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
@@ -297,7 +272,7 @@ class _MembersState extends State<_Members> {
                     child: ListTile(
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
-                        child: _buildAvatarUrl(member.avatarUrlLocal),
+                        child: AvatarUrlTile(avatarUrl: member.avatarUrlLocal),
                       ),
                       title: Text(
                         member.isCurrentUser ? 'Você' : member.nickname,

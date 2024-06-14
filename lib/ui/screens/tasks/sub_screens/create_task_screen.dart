@@ -10,10 +10,10 @@ import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/create_task_cubit/create_task_cubit.dart';
+import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_title.dart';
-import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
 import 'package:kyw_management/ui/widgets/my_icon_drag.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -267,71 +267,64 @@ class _SelectMembersState extends State<_SelectMembers> {
         builder: (context, state) {
           final members = state.members;
 
-          return MyExpansionTile.border(
-            showBorder: false,
-            borderColor: TColors.base100,
-            backgroundColor: TColors.primary,
-            icon: const Icon(
-              TIcons.arrowUpIOS,
-              color: TColors.base100,
+          return Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: TColors.base900.withOpacity(.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
             ),
-            placeHolder: const Text(
-              'Selecionar membros',
-              style: TextStyle(
+            child: MyExpansionTile.border(
+              showBorder: false,
+              borderColor: TColors.base100,
+              backgroundColor: TColors.primary,
+              icon: const Icon(
+                TIcons.arrowUpIOS,
                 color: TColors.base100,
               ),
+              placeHolder: const Text(
+                'Selecionar membros',
+                style: TextStyle(
+                  color: TColors.base100,
+                ),
+              ),
+              children: state.members.map(
+                (member) {
+                  final isFirst = members.first == member;
+                  final isLast = members.last == member;
+
+                  return MyExpansionChild(
+                    isFirst: isFirst,
+                    isLast: isLast,
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.only(left: 16, right: 5),
+                      leading: AvatarUrlTile(avatarUrl: member.avatarUrlLocal),
+                      title: Text(
+                        member.isCurrentUser ? 'Você' : member.nickname,
+                        maxLines: 1,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Checkbox(
+                        value: state.memberIsSelected(member),
+                        onChanged: (isSelected) {
+                          final createContext = context.read<CreateTaskCubit>();
+
+                          if (isSelected!) {
+                            createContext.addAttributedTo(member);
+                          } else {
+                            createContext.removeAttributedTo(member);
+                          }
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ).toList(),
             ),
-            children: state.members.map(
-              (member) {
-                final isFirst = members.first == member;
-                final isLast = members.last == member;
-
-                return MyExpansionChild(
-                  isFirst: isFirst,
-                  isLast: isLast,
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.only(left: 16, right: 5),
-                    leading: member.avatarUrlLocal != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Container(
-                              color: TColors.base150,
-                              child: Image.network(
-                                member.avatarUrlLocal!,
-                                width: 45,
-                                height: 45,
-                                cacheWidth: 157,
-                                cacheHeight: 157,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                        : const MyImageNetwork(
-                            cacheWidth: 157,
-                            cacheHeight: 157,
-                            assetsReplace: 'assets/user.png',
-                          ),
-                    title: Text(
-                      member.isCurrentUser ? 'Você' : member.nickname,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: Checkbox(
-                      value: state.memberIsSelected(member),
-                      onChanged: (isSelected) {
-                        final createContext = context.read<CreateTaskCubit>();
-
-                        if (isSelected!) {
-                          createContext.addAttributedTo(member);
-                        } else {
-                          createContext.removeAttributedTo(member);
-                        }
-                      },
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
           );
         },
       );

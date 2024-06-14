@@ -10,6 +10,7 @@ import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/add_member_project_cubit/add_member_project_cubit.dart';
+import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
@@ -54,7 +55,25 @@ class ProjectDetailsScreen extends StatelessWidget {
                     /// Membros
                     const _Members(),
 
-                    const SizedBox(height: 10),
+                    const _Divider(),
+
+                    /// Sair do Projeto
+                    ListTile(
+                      leading: const Icon(
+                        TIcons.singOut,
+                        color: TColors.warn,
+                      ),
+                      title: const Text(
+                        'Sair do projeto',
+                        style: TextStyle(
+                          color: TColors.warn,
+                          fontSize: TConstants.fontSizeMd + 1,
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+
+                    const Gap(10),
                   ],
                 ),
               )
@@ -315,7 +334,7 @@ class _Members extends StatelessWidget {
                   .map<Widget>(
                     (member) => Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
+                      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         color: TColors.base100,
                         borderRadius: BorderRadius.circular(10),
@@ -329,26 +348,7 @@ class _Members extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           /// Avatar
-                          member.avatarUrlLocal != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Container(
-                                    color: TColors.base150,
-                                    child: Image.network(
-                                      member.avatarUrlLocal!,
-                                      width: 45,
-                                      height: 45,
-                                      cacheWidth: 157,
-                                      cacheHeight: 157,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                )
-                              : const MyImageNetwork(
-                                  cacheWidth: 157,
-                                  cacheHeight: 157,
-                                  assetsReplace: 'assets/user.png',
-                                ),
+                          AvatarUrlTile(avatarUrl: member.avatarUrlLocal),
 
                           const Gap(10),
 
@@ -417,7 +417,7 @@ class _SliverPersistentDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     final topPositioned = MediaQuery.of(context).viewPadding.top + 5;
-    final percent = shrinkOffset / (maxHeaderHeight - 80);
+    final percent = shrinkOffset / (maxHeaderHeight - 85);
     final percent2 = shrinkOffset / (maxHeaderHeight - 35);
     final currentImageSize = (maxImageSize * (1 - percent)).clamp(
       minImageSize,
