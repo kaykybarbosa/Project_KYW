@@ -12,12 +12,19 @@ class ServicesBindings implements Bindings {
   void dependencies() {
     Get.put(WebSocketClient());
     Get.put<IMessageService>(
-        MessageService(
-          messageService: IMessageRepository.instance,
-          websocket: WebSocketClient.instance,
-        ),
-        permanent: true);
-    Get.lazyPut<IRefreshTokenService>(() => RefreshTokenService(authRepository: IAuthRepository.instance));
-    Get.lazyPut<IAuthSettingsService>(() => AuthSettingsService(AppController.instance));
+      MessageService(
+        messageService: IMessageRepository.instance,
+        websocket: WebSocketClient.instance,
+      ),
+      permanent: true,
+    );
+    Get.lazyPut<IRefreshTokenService>(
+      () => RefreshTokenService(authRepository: IAuthRepository.instance),
+      fenix: true,
+    );
+    Get.lazyPut<IAuthSettingsService>(
+      () => AuthSettingsService(AppController.instance),
+      fenix: true,
+    );
   }
 }
