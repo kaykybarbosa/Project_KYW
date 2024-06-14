@@ -9,7 +9,7 @@ import 'package:result_dart/result_dart.dart';
 abstract class ITaskRepository {
   static ITaskRepository get instance => Get.find();
 
-  AsyncResult<AllTasksResponse, ApiException> getAllTasks();
+  AsyncResult<List<TaskResponse>, ApiException> getAllTasks();
 
   AsyncResult<TaskResponse, ApiException> getTaskById(String taskId);
 
@@ -23,11 +23,13 @@ class TaskRepository implements ITaskRepository {
 
   final IHttpService _http;
   @override
-  AsyncResult<AllTasksResponse, ApiException> getAllTasks() async {
+  AsyncResult<List<TaskResponse>, ApiException> getAllTasks() async {
     try {
-      final result = await _http.get('${_http.baseUrl}/tasks');
+      final result = await _http.get('${_http.baseUrl}/users/tasks');
 
-      return AllTasksResponse.fromMap(result.data).toSuccess();
+      final tasks = result.data.map<TaskResponse>((task) => TaskResponse.fromMap(task)).toList();
+
+      return Success(tasks);
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {

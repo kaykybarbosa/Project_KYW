@@ -149,7 +149,7 @@ abstract class AppPages {
       transition: Transition.fade,
     ),
     GetPage(
-      name: AppRoutes.detailTask,
+      name: AppRoutes.taskDetails,
       page: () => DetailsTaskScreen(taskId: Get.parameters['id']!),
       transition: Transition.fade,
     ),

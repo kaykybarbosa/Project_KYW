@@ -8,6 +8,7 @@ import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bl
 import 'package:kyw_management/ui/widgets/card_task.dart';
 import 'package:kyw_management/ui/widgets/my_search_bar.dart';
 import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
+import 'package:kyw_management/ui/widgets/tasks_in_progress.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
@@ -50,7 +51,7 @@ class _Body extends StatelessWidget {
               // vertical: 10
               ),
           child: switch (state.status) {
-            ProjectStatus.taskInProgress => const _TasksInProgress(),
+            ProjectStatus.taskInProgress => const TasksInProgress(),
             _ => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -124,7 +125,7 @@ class _Tasks extends StatelessWidget {
                 child: CardTask(
                   task: task,
                   onTap: () => Get.toNamed(
-                    AppRoutes.detailTask,
+                    AppRoutes.taskDetails,
                     parameters: {'id': task.id},
                   ),
                 ),
@@ -158,74 +159,6 @@ class _TasksEmpty extends StatelessWidget {
             Image.asset(
               'assets/tasks_empty.png',
               fit: BoxFit.cover,
-            ),
-          ],
-        ),
-      );
-}
-
-class _TasksInProgress extends StatelessWidget {
-  const _TasksInProgress();
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
-        child: Column(
-          children: <Widget>[
-            const Gap(10),
-
-            /// Buscar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SkeltonIndicator(
-                  width: Get.width * .8,
-                  height: 40,
-                ),
-                const SkeltonIndicator(
-                  width: 40,
-                  height: 40,
-                ),
-              ],
-            ),
-
-            const Gap(15),
-
-            /// Filtros
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SkeltonIndicator(
-                  width: 100,
-                  height: 35,
-                ),
-                SkeltonIndicator(
-                  width: 100,
-                  height: 35,
-                ),
-                SkeltonIndicator(
-                  width: 100,
-                  height: 35,
-                ),
-              ],
-            ),
-
-            const Gap(10),
-
-            /// Tasks
-            Column(
-              children: List.generate(
-                3,
-                (index) => const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5,
-                  ),
-                  child: SkeltonIndicator(
-                    width: double.infinity,
-                    height: 90,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

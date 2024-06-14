@@ -45,7 +45,7 @@ class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
                     textAlign: TextAlign.center,
                     maxLines: 2,
                   ),
-            actions: [
+            actions: <Widget>[
               IconButton(
                 tooltip: 'Editar',
                 onPressed: () {},
@@ -265,6 +265,7 @@ class _MembersState extends State<_Members> {
             ),
             child: ExpansionTile(
               onExpansionChanged: _changedExpansion,
+              initiallyExpanded: true,
               trailing: AnimatedRotation(
                 turns: _isExpanded ? 0 : .5,
                 duration: const Duration(milliseconds: 200),
@@ -306,7 +307,7 @@ class _MembersState extends State<_Members> {
                         child: _buildAvatarUrl(member.avatarUrl),
                       ),
                       title: Text(
-                        member.nickname,
+                        member.isCurrentUser ? 'Você' : member.nickname,
                         style: const TextStyle(
                           fontSize: TConstants.fontSizeMd,
                           fontWeight: FontWeight.w600,
