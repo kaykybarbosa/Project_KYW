@@ -7,7 +7,7 @@ class CreateTaskRequest {
   final String criticality;
   final String deadline;
   final String description;
-  final String attachments;
+  final List attachments;
   final String projectId;
   final String completedAt;
   final List<String> attributedTo;
@@ -17,7 +17,7 @@ class CreateTaskRequest {
     this.criticality = '',
     this.deadline = '',
     this.description = '',
-    this.attachments = '',
+    this.attachments = const [],
     this.projectId = '',
     this.completedAt = '',
     this.attributedTo = const [],

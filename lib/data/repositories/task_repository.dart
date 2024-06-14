@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:kyw_management/data/dtos/request/create_task_request.dart';
 import 'package:kyw_management/data/dtos/response/all_tasks_response.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
@@ -53,9 +54,11 @@ class TaskRepository implements ITaskRepository {
   @override
   AsyncResult<Unit, ApiException> createTask(CreateTaskRequest request) async {
     try {
+      FormData formData = FormData.fromMap(request.toMap());
+
       await _http.post(
         '${_http.baseUrl}/tasks',
-        data: request.toJson(),
+        data: formData,
       );
 
       return const Success(unit);
