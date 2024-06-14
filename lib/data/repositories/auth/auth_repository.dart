@@ -6,6 +6,7 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:kyw_management/data/dtos/request/user_login_request.dart';
 import 'package:kyw_management/data/dtos/request/user_register_request.dart';
 import 'package:kyw_management/data/dtos/response/refresh_token_response.dart';
+import 'package:kyw_management/data/dtos/response/user_response.dart';
 import 'package:kyw_management/data/services/http_service/http_service.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
 import 'package:kyw_management/domain/exception/api_exception.dart';
@@ -23,6 +24,8 @@ abstract class IAuthRepository {
   AsyncResult<Unit, ApiException> register(UserRegisterRequest request);
 
   AsyncResult<RefreshTokenResponse, ApiException> refreshToken(String token);
+
+  AsyncResult<UserResponse, ApiException> getCurrentUser(String userId);
 }
 
 class AuthRepository implements IAuthRepository {
@@ -80,6 +83,21 @@ class AuthRepository implements IAuthRepository {
       final result = await _http.post('${_http.baseUrl}/auth/refreshtoken', data: request);
 
       return RefreshTokenResponse.fromMap(result.data).toSuccess();
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<UserResponse, ApiException> getCurrentUser(String userId) async {
+    try {
+      final result = await _http.get(
+        '${_http.baseUrl}/users/$userId',
+      );
+
+      return UserResponse.fromMap(result.data).toSuccess();
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {

@@ -12,6 +12,7 @@ class CurrentUserModel extends Equatable {
     this.nickname = '',
     this.email = '',
     this.phone = '',
+    this.avatarUrl,
     this.roles = const [],
   });
 
@@ -22,6 +23,7 @@ class CurrentUserModel extends Equatable {
   final String nickname;
   final String email;
   final String phone;
+  final String? avatarUrl;
   final List<String> roles;
 
   Map<String, dynamic> toMap() => {
@@ -31,6 +33,8 @@ class CurrentUserModel extends Equatable {
         'refreshToken': refreshToken,
         'nickname': nickname,
         'email': email,
+        'phone': phone,
+        'avatarUrl': avatarUrl,
         'roles': roles,
       };
 
@@ -41,6 +45,8 @@ class CurrentUserModel extends Equatable {
         refreshToken: map['refreshToken'],
         nickname: map['nickname'],
         email: map['email'],
+        phone: map['phone'] ?? '',
+        avatarUrl: map['avatarUrl'],
         roles: map['email'].isNotEmpty ? List<String>.from(map['roles']) : [],
       );
 
@@ -56,6 +62,8 @@ class CurrentUserModel extends Equatable {
     String? refreshToken,
     String? nickname,
     String? email,
+    String? phone,
+    String? avatarUrl,
     List<String>? roles,
   }) =>
       CurrentUserModel(
@@ -65,6 +73,8 @@ class CurrentUserModel extends Equatable {
         refreshToken: refreshToken ?? this.refreshToken,
         nickname: nickname ?? this.nickname,
         email: email ?? this.email,
+        phone: phone ?? this.phone,
+        avatarUrl: avatarUrl ?? this.avatarUrl,
         roles: roles ?? this.roles,
       );
 
@@ -78,5 +88,6 @@ class CurrentUserModel extends Equatable {
         email,
         phone,
         roles,
+        avatarUrl,
       ];
 }

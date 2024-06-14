@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => AuthenticateUserCubit(
               appController: AppController.instance,
               authRepository: IAuthRepository.instance,
+              authRepositoryAuth: IAuthRepository.instanceAuth,
               authSettings: IAuthSettingsService.instance,
             ),
           ),
