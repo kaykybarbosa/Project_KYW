@@ -73,7 +73,10 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           BlocProvider(
-            create: (_) => TaskCubit(ITaskRepository.instance),
+            create: (_) => TaskCubit(
+              taskRepository: ITaskRepository.instance,
+              projectRepository: IProjectRepository.instance,
+            ),
           ),
         ],
         child: GetMaterialApp(
