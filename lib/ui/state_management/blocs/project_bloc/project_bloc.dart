@@ -34,6 +34,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<DeleteMessages>(_deleteMessages);
     on<GetAllTasks>(_getAllTasks);
     on<GetMembers>(_getMembers);
+    on<SignOutProject>(_signOutProject);
   }
 
   final IProjectRepository _repository;
@@ -71,6 +72,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     List<MessageResponse> messages = [];
     List<MemberOfProjectResponse> members = [];
     List<TaskResponse> tasks = [];
+
     final result = await _repository.getProjectById(event.projectId);
 
     if (result.isSuccess()) {
@@ -159,5 +161,35 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     _storage.deleteAllMessage(messages.map<int>((e) => e.id).toList());
 
     emit(state.copyWith());
+  }
+
+  void _signOutProject(SignOutProject event, Emitter<ProjectState> emit) async {
+    emit(state.copyWith(status: ProjectStatus.signOutProjectInProgress));
+
+    final result = await _repository.signOutProject(event.projectId);
+
+    if (result.isSuccess()) {
+      final projectsResult = await _repository.getAllProjects();
+
+      if (projectsResult.isSuccess()) {
+        final projects = projectsResult.getOrDefault(state.projects);
+
+        emit(
+          state.copyWith(
+            projects: projects,
+            status: ProjectStatus.signOutProjectSuccess,
+          ),
+        );
+
+        return;
+      }
+    }
+
+    emit(
+      state.copyWith(
+        status: ProjectStatus.signOutProjectFailure,
+        errorMessage: result.exceptionOrNull()?.message,
+      ),
+    );
   }
 }

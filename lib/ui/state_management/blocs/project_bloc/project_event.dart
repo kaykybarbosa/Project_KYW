@@ -66,3 +66,12 @@ class GetAllTasks extends ProjectEvent {
   @override
   List<Object> get props => [projectId];
 }
+
+class SignOutProject extends ProjectEvent {
+  const SignOutProject(this.projectId);
+
+  final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
+}

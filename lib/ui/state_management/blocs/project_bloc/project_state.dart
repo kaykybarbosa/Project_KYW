@@ -8,6 +8,7 @@ class ProjectState extends Equatable {
     this.messages = const [],
     this.members = const [],
     this.tasks = const [],
+    this.errorMessage,
   }) : projectDetails = detailProject ?? DetailProjectResponse.empty();
 
   final List<ProjectResponse> projects;
@@ -16,6 +17,7 @@ class ProjectState extends Equatable {
   final List<MessageResponse> messages;
   final List<MemberOfProjectResponse> members;
   final List<TaskResponse> tasks;
+  final String? errorMessage;
 
   @override
   List<Object?> get props => [
@@ -25,6 +27,7 @@ class ProjectState extends Equatable {
         messages,
         members,
         tasks,
+        errorMessage,
       ];
 
   ///
@@ -55,6 +58,7 @@ class ProjectState extends Equatable {
     List<MessageResponse>? messages,
     List<MemberOfProjectResponse>? members,
     List<TaskResponse>? tasks,
+    String? errorMessage,
   }) =>
       ProjectState(
         projects: projects ?? this.projects,
@@ -63,6 +67,7 @@ class ProjectState extends Equatable {
         messages: messages ?? this.messages,
         members: members ?? this.members,
         tasks: tasks ?? this.tasks,
+        errorMessage: errorMessage,
       );
 }
 
@@ -82,6 +87,10 @@ enum ProjectStatus {
   taskInProgress,
   taskSuccess,
   taskFailure,
+
+  signOutProjectInProgress,
+  signOutProjectSuccess,
+  signOutProjectFailure,
 }
 
 extension ProjectStatusX on ProjectStatus {
@@ -97,4 +106,8 @@ extension ProjectStatusX on ProjectStatus {
 
   bool get isTaskInProgress => this == ProjectStatus.taskInProgress;
   bool get isTaskSuccess => this == ProjectStatus.taskSuccess;
+
+  bool get signOutProjectInProgress => this == ProjectStatus.signOutProjectInProgress;
+  bool get signOutProjectSuccess => this == ProjectStatus.signOutProjectSuccess;
+  bool get signOutProjectFailure => this == ProjectStatus.signOutProjectFailure;
 }

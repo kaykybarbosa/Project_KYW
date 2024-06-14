@@ -26,6 +26,8 @@ abstract class IProjectRepository {
   AsyncResult<Unit, ApiException> addMemberByEmail(String projectId, {required String email});
 
   AsyncResult<List<MemberOfProjectResponse>, ApiException> getAllMembers(String projectId);
+
+  AsyncResult<Unit, ApiException> signOutProject(String projectId);
 }
 
 class ProjectRepository implements IProjectRepository {
@@ -156,6 +158,19 @@ class ProjectRepository implements IProjectRepository {
           result.data.map<MemberOfProjectResponse>((member) => MemberOfProjectResponse.fromMap(member)).toList();
 
       return Success(members);
+    } on DioException catch (e) {
+      return ApiException(message: e.message).toFailure();
+    } catch (e) {
+      return ApiException(message: e.toString()).toFailure();
+    }
+  }
+
+  @override
+  AsyncResult<Unit, ApiException> signOutProject(String projectId) async {
+    try {
+      await _http.post('${_http.baseUrl}/users/exit/$projectId');
+
+      return const Success(unit);
     } on DioException catch (e) {
       return ApiException(message: e.message).toFailure();
     } catch (e) {
