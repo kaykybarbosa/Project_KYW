@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class CurrentUserModel {
-  CurrentUserModel({
+import 'package:equatable/equatable.dart';
+
+class CurrentUserModel extends Equatable {
+  const CurrentUserModel({
     this.id = '',
     this.token = '',
     this.type = '',
     this.refreshToken = '',
     this.nickname = '',
     this.email = '',
+    this.phone = '',
     this.roles = const [],
   });
 
@@ -18,6 +21,7 @@ class CurrentUserModel {
   final String refreshToken;
   final String nickname;
   final String email;
+  final String phone;
   final List<String> roles;
 
   Map<String, dynamic> toMap() => {
@@ -63,4 +67,16 @@ class CurrentUserModel {
         email: email ?? this.email,
         roles: roles ?? this.roles,
       );
+
+  @override
+  List<Object?> get props => [
+        id,
+        token,
+        refreshToken,
+        type,
+        nickname,
+        email,
+        phone,
+        roles,
+      ];
 }
