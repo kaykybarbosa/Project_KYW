@@ -14,6 +14,7 @@ import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
 import 'package:kyw_management/ui/widgets/submit_button.dart';
 import 'package:kyw_management/utils/colors.dart';
+import 'package:kyw_management/utils/dialog/dialog_custom.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
 
@@ -21,68 +22,80 @@ class ProjectDetailsScreen extends StatelessWidget {
   const ProjectDetailsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverPersistentDelegate(),
-              ),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: <Widget>[
-                    /// Nome
-                    _ProjectName(state.projectDetails.name),
+  Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
+        listenWhen: (previous, current) => previous.status != current.status,
+        listener: (context, state) {
+          if (state.status.signOutProjectSuccess) {
+            snackBarCustom(
+              title: 'Você saiu do projeto.',
+              showMessageText: false,
+            );
 
-                    /// Quantidade de membros
-                    const _NumberOfMembers(),
+            Get.offAndToNamed(AppRoutes.home);
+          } else if (state.status.signOutProjectFailure) {
+            snackBarCustom(
+              message: state.errorMessage,
+              type: SnackBarType.failure,
+            );
+          }
+        },
+        builder: (context, state) => Stack(
+          children: <Widget>[
+            Scaffold(
+              body: CustomScrollView(
+                slivers: <Widget>[
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SliverPersistentDelegate(),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: <Widget>[
+                        /// Nome
+                        _ProjectName(state.projectDetails.name),
 
-                    const _Divider(),
+                        /// Quantidade de membros
+                        const _NumberOfMembers(),
 
-                    /// Descrição
-                    _Description(state.projectDetails.description),
+                        const _Divider(),
 
-                    const Gap(20),
+                        /// Descrição
+                        _Description(state.projectDetails.description),
 
-                    /// Opções
-                    const _Options(),
+                        const Gap(20),
 
-                    const _Divider(),
+                        /// Opções
+                        const _Options(),
 
-                    /// Membros
-                    const _Members(),
+                        const _Divider(),
 
-                    const _Divider(),
+                        /// Membros
+                        const _Members(),
 
-                    /// Sair do Projeto
-                    ListTile(
-                      leading: const Icon(
-                        TIcons.singOut,
-                        color: TColors.warn,
-                      ),
-                      title: const Text(
-                        'Sair do projeto',
-                        style: TextStyle(
-                          color: TColors.warn,
-                          fontSize: TConstants.fontSizeMd + 1,
-                        ),
-                      ),
-                      onTap: () {},
+                        const _Divider(),
+
+                        /// Sair do Projeto
+                        _SignOutProject(state.projectDetails.id),
+
+                        const Gap(10),
+                      ],
                     ),
-
-                    const Gap(10),
-                  ],
+                  )
+                ],
+              ),
+            ),
+            Visibility(
+              visible: state.status.signOutProjectInProgress,
+              child: Container(
+                color: TColors.base900.withOpacity(.3),
+                child: const Center(
+                  child: CircularProgressIndicator(),
                 ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 class _NumberOfMembers extends StatelessWidget {
@@ -402,6 +415,40 @@ class _Divider extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SignOutProject extends StatelessWidget {
+  const _SignOutProject(this.projectId);
+
+  final String projectId;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: const Icon(
+          TIcons.singOut,
+          color: TColors.warn,
+        ),
+        title: const Text(
+          'Sair do projeto',
+          style: TextStyle(
+            color: TColors.warn,
+            fontSize: TConstants.fontSizeMd + 1,
+          ),
+        ),
+        onTap: () => dialogCustom(
+          context,
+          okText: 'Sair',
+          title: 'Sair do projeto?',
+          desc: 'Você tem certeza que deseja sair do projeto?',
+          cancelVisible: true,
+          okForegroundColor: TColors.warn,
+          mainIcon: TIcons.question,
+          okOnTap: () => {
+            context.read<ProjectBloc>().add(SignOutProject(projectId)),
+            Get.back(),
+          },
+        ),
+      );
 }
 
 class _SliverPersistentDelegate extends SliverPersistentHeaderDelegate {
