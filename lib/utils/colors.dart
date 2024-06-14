@@ -28,4 +28,16 @@ abstract class TColors {
   static const Color success = Color(0xFF06AC93);
   static const Color warn = Color(0xFFDB4F64);
   static const Color alert = Color(0xFFFABD52);
+
+  static const Color primaryLight = Color.fromARGB(130, 49, 132, 236);
+  static const Color secondaryLight = Color.fromARGB(130, 50, 58, 71);
+  static const Color redLight = Color.fromARGB(130, 219, 79, 100);
+  static const Color yellowLight = Color.fromARGB(130, 250, 189, 82);
+  static const Color greenLight = Color.fromARGB(130, 6, 172, 147);
+
+  static const Color primaryExtraLight = Color.fromARGB(75, 49, 132, 236);
+  static const Color secondaryExtraLight = Color.fromARGB(75, 50, 58, 71);
+  static const Color redExtraLight = Color.fromARGB(75, 219, 79, 100);
+  static const Color yellowExtraLight = Color.fromARGB(75, 250, 189, 82);
+  static const Color greenExtraLight = Color.fromARGB(75, 6, 172, 147);
 }

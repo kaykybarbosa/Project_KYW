@@ -41,6 +41,8 @@ abstract class TIcons {
   static const IconData italic = FontAwesomeIcons.italic;
   static const IconData link = FontAwesomeIcons.link;
   static const IconData edit = FontAwesomeIcons.pen;
+  static const IconData close = FontAwesomeIcons.xmark;
+  static const IconData exclamation = FontAwesomeIcons.exclamation;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
