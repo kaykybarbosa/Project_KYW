@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
@@ -154,9 +154,9 @@ class _Description extends StatelessWidget {
             Expanded(
               child: Text(
                 description,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: TConstants.fontSizeLg,
-                  color: TColors.descriptions,
+                  color: description.isEmpty ? TColors.primary : TColors.descriptions,
                 ),
               ),
             ),
@@ -174,17 +174,24 @@ class _Options extends StatefulWidget {
 
 class _OptionsState extends State<_Options> {
   late final TextEditingController _controller;
+  late final FocusNode _focus;
+
+  void _requestFocus() {
+    Future.delayed(400.milliseconds, () => _focus.requestFocus());
+  }
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: '');
+    _focus = FocusNode();
   }
 
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _focus.dispose();
   }
 
   @override
@@ -198,83 +205,87 @@ class _OptionsState extends State<_Options> {
       {
         'icon': TIcons.userPlus,
         'title': 'Adicionar membros',
-        'onTap': () => showModalBottomSheet(
-              context: context,
-              showDragHandle: true,
-              isScrollControlled: true,
-              builder: (context) => BlocProvider(
-                create: (context) => AddMemberProjectCubit(IProjectRepository.instance),
-                child: BlocBuilder<ProjectBloc, ProjectState>(
-                  builder: (context, projecetState) {
-                    return BlocConsumer<AddMemberProjectCubit, AddMemberProjectState>(
-                      listener: (context, addMemberState) {
-                        if (addMemberState.status.isSuccess) {
-                          snackBarCustom(
-                            showMessageText: false,
-                            title: 'Membro adicionado com sucesso.',
-                            type: SnackBarType.success,
-                          );
+        'onTap': () => {
+              showModalBottomSheet(
+                context: context,
+                showDragHandle: true,
+                isScrollControlled: true,
+                builder: (context) => BlocProvider(
+                  create: (context) => AddMemberProjectCubit(IProjectRepository.instance),
+                  child: BlocBuilder<ProjectBloc, ProjectState>(
+                    builder: (context, projecetState) {
+                      return BlocConsumer<AddMemberProjectCubit, AddMemberProjectState>(
+                        listener: (context, addMemberState) {
+                          if (addMemberState.status.isSuccess) {
+                            snackBarCustom(
+                              showMessageText: false,
+                              title: 'Membro adicionado com sucesso.',
+                              type: SnackBarType.success,
+                            );
 
-                          _controller.text = '';
+                            _controller.text = '';
 
-                          context.read<ProjectBloc>().add(GetMembers(projecetState.projectDetails.id));
-                        } else if (addMemberState.status.isFailure) {
-                          snackBarCustom(
-                            showMessageText: false,
-                            title: addMemberState.errorMessage ?? 'Não foi possível convidar o usuário.',
-                            type: SnackBarType.failure,
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        return Container(
-                          margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                          padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              /// Título
-                              const Text(
-                                'Adicionar membros',
-                                style: TextStyle(
-                                  fontSize: TConstants.fontSizeLg + 2,
-                                  fontWeight: FontWeight.w600,
+                            context.read<ProjectBloc>().add(GetMembers(projecetState.projectDetails.id));
+                          } else if (addMemberState.status.isFailure) {
+                            snackBarCustom(
+                              showMessageText: false,
+                              title: addMemberState.errorMessage ?? 'Não foi possível convidar o usuário.',
+                              type: SnackBarType.failure,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                /// Título
+                                const Text(
+                                  'Adicionar membros',
+                                  style: TextStyle(
+                                    fontSize: TConstants.fontSizeLg + 2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                              const Gap(10),
+                                const Gap(10),
 
-                              /// Input
-                              MyTextFieldBorder(
-                                controller: _controller,
-                                text: 'E-mail',
-                                placeHolder: 'E-mail do usuário',
-                                errorText: state.email.displayError,
-                                onChanged: (value) => context.read<AddMemberProjectCubit>().emailChanged(value),
-                              ),
-                              const Gap(25),
+                                /// Input
+                                MyTextFieldBorder(
+                                  controller: _controller,
+                                  text: 'E-mail',
+                                  focusNode: _focus,
+                                  placeHolder: 'E-mail do usuário',
+                                  errorText: state.email.displayError,
+                                  onChanged: (value) => context.read<AddMemberProjectCubit>().emailChanged(value),
+                                ),
+                                const Gap(25),
 
-                              /// ConvidarBtn
-                              SubmitButton(
-                                label: 'Adicionar',
-                                isInProgress: state.status.isInProgress,
-                                onPressed: state.isValid
-                                    ? () => context
-                                        .read<AddMemberProjectCubit>()
-                                        .submitForm(projecetState.projectDetails.id)
-                                    : null,
-                              ),
-                              const Gap(10),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
+                                /// ConvidarBtn
+                                SubmitButton(
+                                  label: 'Adicionar',
+                                  isInProgress: state.status.isInProgress,
+                                  onPressed: state.isValid
+                                      ? () => context
+                                          .read<AddMemberProjectCubit>()
+                                          .submitForm(projecetState.projectDetails.id)
+                                      : null,
+                                ),
+                                const Gap(10),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
+              _requestFocus(),
+            },
       },
       {
         'icon': TIcons.link,
@@ -464,7 +475,7 @@ class _SliverPersistentDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     final topPositioned = MediaQuery.of(context).viewPadding.top + 5;
-    final percent = shrinkOffset / (maxHeaderHeight - 85);
+    final percent = shrinkOffset / (maxHeaderHeight - 80);
     final percent2 = shrinkOffset / (maxHeaderHeight - 35);
     final currentImageSize = (maxImageSize * (1 - percent)).clamp(
       minImageSize,

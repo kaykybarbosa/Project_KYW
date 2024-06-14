@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:kyw_management/env/env.dart';
 
 class CurrentUserModel extends Equatable {
   const CurrentUserModel({
@@ -25,6 +26,21 @@ class CurrentUserModel extends Equatable {
   final String phone;
   final String? avatarUrl;
   final List<String> roles;
+
+  @override
+  List<Object?> get props => [
+        id,
+        token,
+        refreshToken,
+        type,
+        nickname,
+        email,
+        phone,
+        roles,
+        avatarUrl,
+      ];
+
+  String? get avatarUrlLocal => avatarUrl?.replaceAll(RegExp(r'localhost'), Env.LOCALHOST);
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -77,17 +93,4 @@ class CurrentUserModel extends Equatable {
         avatarUrl: avatarUrl ?? this.avatarUrl,
         roles: roles ?? this.roles,
       );
-
-  @override
-  List<Object?> get props => [
-        id,
-        token,
-        refreshToken,
-        type,
-        nickname,
-        email,
-        phone,
-        roles,
-        avatarUrl,
-      ];
 }

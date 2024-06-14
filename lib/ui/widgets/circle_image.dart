@@ -9,6 +9,7 @@ class CircleImage extends StatelessWidget {
   const CircleImage({
     super.key,
     this.image,
+    this.imageUrl,
     this.onTap,
     this.icon = TIcons.userGroup,
     this.firstRadius = 65,
@@ -24,10 +25,11 @@ class CircleImage extends StatelessWidget {
   const CircleImage.medium({
     super.key,
     this.image,
+    this.imageUrl,
     this.onTap,
     this.icon = TIcons.userGroup,
     this.firstRadius = 55,
-    this.secoundRadius = 50,
+    this.secoundRadius = 130,
     this.iconSize = 30.0,
     this.changeIconVisible = true,
     this.containerSize = 18,
@@ -39,6 +41,7 @@ class CircleImage extends StatelessWidget {
   final double firstRadius;
   final double secoundRadius;
   final File? image;
+  final String? imageUrl;
   final double iconSize;
   final IconData icon;
   final bool changeIconVisible;

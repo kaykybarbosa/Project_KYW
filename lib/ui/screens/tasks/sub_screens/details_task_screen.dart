@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/ui/widgets/expansion_tile/my_expansion_child.dart';
@@ -122,8 +121,6 @@ class _ProjectDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final project = context.select((ProjectBloc bloc) => bloc.state.projectDetails);
-
     return BlocBuilder<TaskCubit, TaskState>(
       buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
       builder: (context, state) {
@@ -154,13 +151,13 @@ class _ProjectDetails extends StatelessWidget {
                     Flexible(
                       child: _Card(
                         title: 'Admin',
-                        info: project.creator.nickname,
+                        info: '${state.projectDetails?.creator.nickname}',
                       ),
                     ),
                     Flexible(
                       child: _Card(
                         title: 'Projeto',
-                        info: project.name,
+                        info: '${state.projectDetails?.name}',
                         isRight: true,
                       ),
                     ),
@@ -222,7 +219,6 @@ class _MembersState extends State<_Members> {
   Widget build(BuildContext context) => BlocBuilder<TaskCubit, TaskState>(
         buildWhen: (previous, current) => previous.taskDetails != current.taskDetails,
         builder: (context, state) {
-          // final members = context.select((ProjectBloc bloc) => bloc.state.members);
           final members = state.taskDetails.attributedTo;
 
           return Container(

@@ -35,14 +35,14 @@ class AllProjectsResponse {
 
 class ProjectResponse extends Equatable {
   const ProjectResponse({
-    required this.id,
-    required this.name,
+    this.id = '',
+    this.name = '',
     this.description,
     this.creator,
     this.imageUrl,
     this.linkGroup,
-    required this.pin,
-    required this.createAt,
+    this.pin = false,
+    this.createAt,
   });
 
   final String id;
@@ -52,7 +52,7 @@ class ProjectResponse extends Equatable {
   final String? imageUrl;
   final String? linkGroup;
   final bool pin;
-  final DateTime createAt;
+  final DateTime? createAt;
 
   @override
   List<Object?> get props => [

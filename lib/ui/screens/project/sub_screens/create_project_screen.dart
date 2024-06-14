@@ -274,7 +274,6 @@ class _DescriptionInput extends StatelessWidget {
           placeHolder: TTexts.labelDescription,
           textInputType: TextInputType.multiline,
           onChanged: (value) => context.read<AddProjectBloc>().add(DescriptionChanged(description: value)),
-          errorText: state.description.displayError,
         ),
       );
 }
