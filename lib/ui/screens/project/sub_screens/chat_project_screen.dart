@@ -127,49 +127,16 @@ class _Leading extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
-
-                MyImageNetwork(
-                  width: TConstants.imageCircular - 5,
-                  assetsReplace: 'assets/group.png',
-                  image: state.projectDetails.imageUrlLocal,
-                  cacheWidth: 157,
-                  cacheHeight: 217,
+                Hero(
+                  tag: 'details_project',
+                  child: MyImageNetwork(
+                    width: TConstants.imageCircular - 5,
+                    assetsReplace: 'assets/group.png',
+                    image: state.projectDetails.imageUrlLocal,
+                    cacheWidth: 157,
+                    cacheHeight: 217,
+                  ),
                 ),
-
-                // state.projectDetails.imageUrl != null
-                //     ? Hero(
-                //         tag: 'details_project',
-                //         child: Container(
-                //           width: TConstants.imageCircular - 5,
-                //           decoration: BoxDecoration(
-                //             color: TColors.base150,
-                //             shape: BoxShape.circle,
-                //             image: DecorationImage(
-                //               image: CachedNetworkImageProvider(
-                //                 state.projectDetails.imageUrlLocal!,
-                //                 maxWidth: 157,
-                //                 maxHeight: 217,
-                //               ),
-                //               fit: BoxFit.cover,
-                //             ),
-                //           ),
-                //         ),
-                //       )
-                //     : Hero(
-                //         tag: 'details_project',
-                //         child: Container(
-                //           width: TConstants.imageCircular - 5,
-                //           decoration: const BoxDecoration(
-                //             color: TColors.base200,
-                //             shape: BoxShape.circle,
-                //           ),
-                //           child: Image.asset(
-                //             'assets/group.png',
-                //             width: TConstants.imageCircular - 5,
-                //             fit: BoxFit.cover,
-                //           ),
-                //         ),
-                //       ),
               ],
             ),
           ),
