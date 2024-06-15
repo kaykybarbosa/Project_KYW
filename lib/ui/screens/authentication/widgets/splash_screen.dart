@@ -7,8 +7,8 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({
     super.key,
     this.padding,
-    this.width = 100,
-    this.height = 100,
+    this.width = 120,
+    this.height = 120,
     this.progressVisible,
   });
 
@@ -37,7 +37,7 @@ class SplashScreen extends StatelessWidget {
               padding: padding,
               width: width,
               height: height,
-              isDarkMode: true,
+              isDarkMode: false,
             ),
 
             /// Progress indicator
@@ -47,7 +47,7 @@ class SplashScreen extends StatelessWidget {
                 alignment: Alignment(0.0, 0.5),
                 child: CircularProgressIndicator(color: TColors.base100),
               ),
-            )
+            ),
           ],
         ),
       );

@@ -9,6 +9,7 @@ class CreateTaskState extends Equatable {
     this.category = const TaskCategoryInput.pure(),
     this.dateOfConclusion = const TaskDateOfConclusionInput.pure(),
     this.members = const [],
+    this.attributedTo = const [],
     this.description = '',
     this.isValid = false,
     this.status = FormzSubmissionStatus.initial,
@@ -20,7 +21,8 @@ class CreateTaskState extends Equatable {
   final TaskTitleInput title;
   final TaskCategoryInput category;
   final TaskDateOfConclusionInput dateOfConclusion;
-  final List<String> members;
+  final List<MemberOfProjectResponse> members;
+  final List<MemberOfProjectResponse> attributedTo;
   final String description;
   final bool isValid;
   final FormzSubmissionStatus status;
@@ -39,6 +41,7 @@ class CreateTaskState extends Equatable {
         category,
         dateOfConclusion,
         members,
+        attributedTo,
         description,
         isValid,
         errorMessage,
@@ -47,12 +50,19 @@ class CreateTaskState extends Equatable {
         categories,
       ];
 
+  bool memberIsSelected(MemberOfProjectResponse member) {
+    final memberAlreadySelected = attributedTo.firstWhereOrNull((m) => m == member);
+
+    return memberAlreadySelected != null;
+  }
+
   CreateTaskState copyWith({
     String? projectId,
     TaskTitleInput? title,
     TaskCategoryInput? category,
     TaskDateOfConclusionInput? dateOfConclusion,
-    List<String>? members,
+    List<MemberOfProjectResponse>? members,
+    List<MemberOfProjectResponse>? attributedTo,
     String? description,
     bool? isValid,
     FormzSubmissionStatus? status,
@@ -65,6 +75,7 @@ class CreateTaskState extends Equatable {
       category: category ?? this.category,
       dateOfConclusion: dateOfConclusion ?? this.dateOfConclusion,
       members: members ?? this.members,
+      attributedTo: attributedTo ?? this.attributedTo,
       description: description ?? this.description,
       isValid: isValid ?? this.isValid,
       status: status ?? FormzSubmissionStatus.initial,

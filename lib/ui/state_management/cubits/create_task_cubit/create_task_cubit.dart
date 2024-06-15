@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:get/get.dart';
 import 'package:kyw_management/data/dtos/request/create_task_request.dart';
+import 'package:kyw_management/data/dtos/response/member_of_project_response.dart';
 import 'package:kyw_management/data/repositories/task_repository.dart';
 import 'package:kyw_management/domain/enums/criticality_enum.dart';
 import 'package:kyw_management/ui/state_management/models_input/create_task/task_category_input.dart';
@@ -19,8 +21,25 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
 
   final ITaskRepository _repository;
 
-  /// TODO: Adicionar membros do projeto.
-  void addProjectMembers() {}
+  void addMembersOfProject(List<MemberOfProjectResponse> members) {
+    emit(state.copyWith(members: members));
+  }
+
+  void addAttributedTo(MemberOfProjectResponse member) {
+    final members = List<MemberOfProjectResponse>.from(state.attributedTo);
+
+    members.add(member);
+
+    emit(state.copyWith(attributedTo: members));
+  }
+
+  void removeAttributedTo(MemberOfProjectResponse member) {
+    final members = List<MemberOfProjectResponse>.from(state.attributedTo);
+
+    members.remove(member);
+
+    emit(state.copyWith(attributedTo: members));
+  }
 
   void titleChanged(String value) {
     final title = TaskTitleInput.dirty(value);
@@ -117,6 +136,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       deadline: date.toIso8601String(),
       description: state.description,
       projectId: state.projectId,
+      attributedTo: state.attributedTo.map((member) => member.id).toList(),
     );
 
     final result = _repository.createTask(request);

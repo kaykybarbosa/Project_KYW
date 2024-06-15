@@ -35,10 +35,43 @@ class HasNewMessage extends ProjectEvent {
   const HasNewMessage(this.message);
 
   final MessageResponse message;
+
+  @override
+  List<Object> get props => [message];
 }
 
 class DeleteMessages extends ProjectEvent {
   const DeleteMessages(this.projectId);
 
   final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
+}
+
+class GetMembers extends ProjectEvent {
+  const GetMembers(this.projectId);
+
+  final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
+}
+
+class GetAllTasks extends ProjectEvent {
+  const GetAllTasks(this.projectId);
+
+  final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
+}
+
+class SignOutProject extends ProjectEvent {
+  const SignOutProject(this.projectId);
+
+  final String projectId;
+
+  @override
+  List<Object> get props => [projectId];
 }

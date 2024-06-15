@@ -3,16 +3,18 @@ part of 'task_cubit.dart';
 
 class TaskState extends Equatable {
   const TaskState({
-    this.tasksOficial = const AllTasksResponse(),
-    this.tasks = const AllTasksResponse(),
+    this.tasksOficial = const [],
+    this.tasks = const [],
     this.taskDetails = const TaskResponse(),
+    this.projectDetails,
     this.status = TaskCubitStatus.initial,
     this.errorMessage,
   });
 
-  final AllTasksResponse tasksOficial;
-  final AllTasksResponse tasks;
+  final List<TaskResponse> tasksOficial;
+  final List<TaskResponse> tasks;
   final TaskResponse taskDetails;
+  final DetailProjectResponse? projectDetails;
   final TaskCubitStatus status;
   final String? errorMessage;
 
@@ -22,20 +24,23 @@ class TaskState extends Equatable {
         tasks,
         status,
         taskDetails,
+        projectDetails,
         errorMessage,
       ];
 
   TaskState copyWith({
-    AllTasksResponse? tasksOficial,
-    AllTasksResponse? tasks,
+    List<TaskResponse>? tasksOficial,
+    List<TaskResponse>? tasks,
     TaskResponse? taskDetails,
+    DetailProjectResponse? projectDetails,
     TaskCubitStatus? status,
     String? errorMessage,
   }) {
     return TaskState(
       tasksOficial: tasksOficial ?? this.tasksOficial,
-      tasks: tasks ?? this.tasksOficial,
+      tasks: tasks ?? (tasksOficial ?? this.tasksOficial),
       taskDetails: taskDetails ?? this.taskDetails,
+      projectDetails: projectDetails ?? this.projectDetails,
       status: status ?? TaskCubitStatus.initial,
       errorMessage: errorMessage ?? this.errorMessage,
     );

@@ -12,6 +12,7 @@ abstract class TIcons {
   static const IconData share = FontAwesomeIcons.share;
   static const IconData configurations = FontAwesomeIcons.gear;
   static const IconData user = FontAwesomeIcons.user;
+  static const IconData userPlus = FontAwesomeIcons.userPlus;
   static const IconData solidUser = FontAwesomeIcons.solidUser;
   static const IconData userGroup = FontAwesomeIcons.userGroup;
   static const IconData info = FontAwesomeIcons.circleInfo;
@@ -38,10 +39,15 @@ abstract class TIcons {
   static const IconData calendar = FontAwesomeIcons.calendarDays;
   static const IconData bold = FontAwesomeIcons.bold;
   static const IconData italic = FontAwesomeIcons.italic;
+  static const IconData link = FontAwesomeIcons.link;
+  static const IconData edit = FontAwesomeIcons.pen;
+  static const IconData close = FontAwesomeIcons.xmark;
+  static const IconData exclamation = FontAwesomeIcons.exclamation;
 
   /// Arrows
   static const IconData arrowRight = FontAwesomeIcons.arrowRight;
   static const IconData arrowLeftIOS = FontAwesomeIcons.chevronLeft;
+  static const IconData arrowRightIOS = FontAwesomeIcons.chevronRight;
   static const IconData arrowUpIOS = FontAwesomeIcons.chevronUp;
   static const IconData anglesDown = FontAwesomeIcons.anglesDown;
   static const IconData anglesUp = FontAwesomeIcons.anglesUp;

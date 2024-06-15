@@ -7,6 +7,7 @@ abstract class TElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: TColors.base100,
+      shadowColor: Colors.transparent,
       backgroundColor: TColors.primary,
       disabledForegroundColor: TColors.base200.withOpacity(.8),
       disabledBackgroundColor: TColors.base120,

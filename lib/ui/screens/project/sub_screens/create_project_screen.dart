@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
@@ -15,7 +16,6 @@ import 'package:kyw_management/utils/texts.dart';
 
 class CreateProjectScreen extends StatelessWidget {
   const CreateProjectScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) => BlocProvider(
@@ -81,35 +81,33 @@ class _BodyState extends State<_Body> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            if (pageController.page?.toInt() == 1) {
-              context.read<AddProjectBloc>().add(ChangedCurrentPage());
-              changePage();
-            } else {
-              Get.back();
-            }
-          },
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              if (pageController.page?.toInt() == 1) {
+                context.read<AddProjectBloc>().add(ChangedCurrentPage());
+                changePage();
+              } else {
+                Get.back();
+              }
+            },
+          ),
+          title: const Text('Novo Projeto'),
         ),
-        title: const Text('Novo Projeto'),
-      ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: const [
-          /// Imagem, Título e Descrição
-          _NameAndDescriptionScreen(),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: const [
+            /// Imagem, Título e Descrição
+            _NameAndDescriptionScreen(),
 
-          /// Convidar amigos
-          InviteFriendsScreen(),
-        ],
-      ),
-      floatingActionButton: const _MyFloatingButton(),
-    );
-  }
+            /// Convidar amigos
+            InviteFriendsScreen(),
+          ],
+        ),
+        floatingActionButton: const _MyFloatingButton(),
+      );
 }
 
 class _NameAndDescriptionScreen extends StatelessWidget {
@@ -276,7 +274,6 @@ class _DescriptionInput extends StatelessWidget {
           placeHolder: TTexts.labelDescription,
           textInputType: TextInputType.multiline,
           onChanged: (value) => context.read<AddProjectBloc>().add(DescriptionChanged(description: value)),
-          errorText: state.description.displayError,
         ),
       );
 }

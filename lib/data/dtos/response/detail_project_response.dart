@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:kyw_management/data/dtos/user_include_response.dart';
+import 'package:kyw_management/env/env.dart';
 
 class DetailProjectResponse extends Equatable {
   const DetailProjectResponse({
@@ -21,6 +22,8 @@ class DetailProjectResponse extends Equatable {
   final String? linkGroup;
   final bool pin;
   final DateTime createAt;
+
+  String? get imageUrlLocal => imageUrl?.replaceAll(RegExp(r'localhost'), Env.LOCALHOST);
 
   @override
   List<Object?> get props => [

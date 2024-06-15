@@ -9,6 +9,7 @@ class AppRoutes {
   static const String changePassword = '/forgot-password/change-password';
   static const String notifications = '/notifications';
   static const String createProject = '/create-project';
+  static const String detailsProject = '/details-project';
   static const String inviteFriends = '/create-project/invited-friends';
   static const String configuration = '/configuration';
   static const String myAccount = '/my-account';
@@ -22,6 +23,6 @@ class AppRoutes {
   static const String configurationDeleteAccount = '/configuration/account/delete-account';
   static const String chat = '/home/chat/:projectId';
   static const String addTask = '/add-task';
-  static const String detailTask = '/detail-task';
+  static const String taskDetails = '/task-details';
   static const String createTask = '/create-task';
 }

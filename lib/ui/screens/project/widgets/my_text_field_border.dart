@@ -17,6 +17,7 @@ class MyTextFieldBorder extends StatelessWidget {
     this.errorText,
     this.suffix,
     this.enable,
+    this.focusNode,
     this.controller,
     this.textInputAction,
     this.inputFormatter,
@@ -32,6 +33,7 @@ class MyTextFieldBorder extends StatelessWidget {
   final String? errorText;
   final Widget? suffix;
   final bool? enable;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
   final TextInputFormatter? inputFormatter;
@@ -91,6 +93,7 @@ class MyTextFieldBorder extends StatelessWidget {
                 controller: controller,
                 enabled: enable,
                 maxLines: maxLine,
+                focusNode: focusNode,
                 keyboardType: textInputType,
                 textInputAction: textInputAction,
                 style: TextStyle(color: theme.primaryColor),

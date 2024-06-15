@@ -50,7 +50,7 @@ class HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMi
           body: NestedScrollView(
             floatHeaderSlivers: true,
             physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (_, __) => [
+            headerSliverBuilder: (_, __) => <Widget>[
               /// AppBar
               const HomeAppBar(),
             ],

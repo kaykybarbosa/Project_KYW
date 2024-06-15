@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/data/repositories/repositories_bindings.dart';
 import 'package:kyw_management/data/services/storage_service/storages_service_bindings.dart';
 import 'package:kyw_management/data/services/web_socket_client.dart';
 import 'package:kyw_management/data/storages/db/database_bindings.dart';

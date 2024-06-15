@@ -69,7 +69,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     emit(
       state.copyWith(
         title: title,
-        isValid: Formz.validate([title, state.description]),
+        isValid: Formz.validate([title]),
       ),
     );
   }
@@ -83,7 +83,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, AddProjectState> {
     emit(
       state.copyWith(
         description: description,
-        isValid: Formz.validate([state.title, description]),
+        isValid: Formz.validate([state.title]),
       ),
     );
   }

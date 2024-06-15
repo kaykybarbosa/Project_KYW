@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
-import 'package:kyw_management/data/dtos/response/all_projects_response.dart';
 import 'package:kyw_management/data/dtos/response/message_response.dart';
 import 'package:kyw_management/ui/screens/project/sub_screens/tasks_project_screen.dart';
 import 'package:kyw_management/ui/screens/project/widgets/message_chat.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
 import 'package:kyw_management/ui/state_management/cubits/send_message_cubit/send_message_cubit.dart';
-import 'package:kyw_management/ui/state_management/cubits/task_cubit/task_cubit.dart';
+import 'package:kyw_management/ui/widgets/imagens/my_image_network.dart';
+import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
@@ -26,8 +27,8 @@ class ChatProjectScreenState extends State<ChatProjectScreen> with SingleTickerP
   Widget build(BuildContext context) => BlocConsumer<ProjectBloc, ProjectState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
-          if (state.status.isDetailSuccess) {
-            context.read<TaskCubit>().getAllTasks();
+          if (state.status.isDetailsSuccess) {
+            context.read<ProjectBloc>().add(GetAllTasks(widget.projectId));
           }
         },
         builder: (context, state) => _Body(widget.projectId),
@@ -70,7 +71,16 @@ class _BodyState extends State<_Body> with SingleTickerProviderStateMixin {
         builder: (context, state) => Scaffold(
           appBar: AppBar(
             backgroundColor: Theme.of(context).primaryColor,
-            leading: const _Leading(),
+            leading: state.status.isDetailsInProgress
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: const SkeltonIndicator(),
+                    ),
+                  )
+                : const _Leading(),
+            leadingWidth: 65,
             title: _Title(projectId: widget.projectId),
             actions: const [_PopupMenuItem()],
             bottom: TabBar(
@@ -117,16 +127,16 @@ class _Leading extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 const Icon(Icons.arrow_back),
-                state.detailProject.imageUrl == null
-                    ? CircleAvatar(
-                        radius: 16,
-                        backgroundImage: AssetImage(state.detailProject.imageUrl ?? 'assets/group.png'),
-                      )
-                    : const CircleAvatar(
-                        radius: 16,
-                        backgroundColor: Colors.grey,
-                        child: Icon(Icons.group),
-                      )
+                Hero(
+                  tag: 'details_project',
+                  child: MyImageNetwork(
+                    width: TConstants.imageCircular - 5,
+                    assetsReplace: 'assets/group.png',
+                    image: state.projectDetails.imageUrlLocal,
+                    cacheWidth: 157,
+                    cacheHeight: 217,
+                  ),
+                ),
               ],
             ),
           ),
@@ -149,12 +159,11 @@ class _PopupMenuItem extends StatelessWidget {
 
     final List<Map<String, dynamic>> options = [
       {
-        'label': 'Projeto info',
-        'onTap': () {},
-      },
-      {
         'label': 'Limpar mensagens',
-        'onTap': deleteMessages,
+        'onTap': () => {
+              deleteMessages(),
+              Get.back(),
+            },
       },
       {
         'label': 'Sair do projeto',
@@ -179,10 +188,7 @@ class _PopupMenuItem extends StatelessWidget {
                   value['label'],
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                onTap: () => {
-                  value['onTap'](),
-                  Get.back(),
-                },
+                onTap: value['onTap'],
               ),
             ),
           )
@@ -195,62 +201,58 @@ class _Title extends StatelessWidget {
   const _Title({required this.projectId});
 
   final String projectId;
-  static late ProjectResponse _project;
 
   @override
-  Widget build(BuildContext context) {
-    _project = context.read<ProjectBloc>().getProjectById(projectId);
-
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (_, state) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // Project name
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(
-              _project.name,
-              style: const TextStyle(
-                fontSize: 18,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          // Members the group
-          const Text(
-            'Você',
-            style: TextStyle(fontSize: 12),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class _Members extends StatelessWidget {
-  const _Members({required this.widget});
-
-  final ChatProjectScreen widget;
-
-  @override
-  Widget build(BuildContext context) => const SizedBox(
-        width: 200,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 2),
-                child: Text(
-                  'Kbuloso, Marquinho...',
-                  style: TextStyle(
-                    fontSize: 12,
-                    overflow: TextOverflow.ellipsis,
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        buildWhen: (previous, current) => previous.status != current.status,
+        builder: (_, state) => state.status.isDetailsInProgress
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SkeltonIndicator(
+                    width: Get.width * .3,
+                    height: 20,
                   ),
+                  const Gap(2),
+                  SkeltonIndicator(
+                    width: Get.width * .4,
+                    height: 10,
+                  ),
+                ],
+              )
+            : InkWell(
+                onTap: () => Get.toNamed(AppRoutes.detailsProject),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    /// Nome
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              state.projectDetails.name,
+                              style: const TextStyle(
+                                fontSize: TConstants.fontSizeLg + 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    /// Membros
+                    Text(
+                      state.getNicknamesOfMembers(),
+                      style: const TextStyle(fontSize: 12),
+                    )
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
       );
 }
 

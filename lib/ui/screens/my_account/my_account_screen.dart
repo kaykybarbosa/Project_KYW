@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/storages/models/current_user_model.dart';
-import 'package:kyw_management/ui/widgets/circle_image.dart';
+import 'package:kyw_management/ui/widgets/expansion_tile/avatar_url_tile.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
+import 'package:kyw_management/utils/input_formatters.dart';
 
 class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({super.key});
@@ -25,7 +26,7 @@ class MyAccountScreen extends StatelessWidget {
     },
     {
       'title': 'Telefone',
-      'label': '+55 98 4004-8922',
+      'label': InputFormatters.phone.maskText(_currentUser.phone),
       'icon': TIcons.phone,
     },
   ];
@@ -38,11 +39,8 @@ class MyAccountScreen extends StatelessWidget {
           children: <Widget>[
             const SizedBox(height: 20.0),
 
-            // Profile image
-            const CircleImage.medium(
-              icon: TIcons.solidUser,
-              iconWithPadding: false,
-            ),
+            /// Avatar
+            _ProfileImage(_currentUser.avatarUrlLocal),
 
             // Informations the user
             Expanded(
@@ -77,9 +75,7 @@ class MyAccountScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  trailing: _ChangeDataIcon(
-                    onTap: () {},
-                  ),
+                  trailing: _ChangeDataIcon(onTap: () {}),
                 ),
                 separatorBuilder: (__, _) => const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -91,6 +87,49 @@ class MyAccountScreen extends StatelessWidget {
             )
           ],
         ),
+      );
+}
+
+class _ProfileImage extends StatelessWidget {
+  const _ProfileImage(this.avatarUrlLocal);
+
+  final String? avatarUrlLocal;
+
+  @override
+  Widget build(BuildContext context) => Stack(
+        alignment: const Alignment(.95, .6),
+        children: <Widget>[
+          AvatarUrlTile(
+            avatarUrl: avatarUrlLocal,
+            width: 130,
+            cacheWidth: 455,
+            cacheHeight: 455,
+          ),
+          InkWell(
+            onTap: () {},
+            child: Stack(
+              alignment: const Alignment(2.5, -2.5),
+              children: <Widget>[
+                Container(
+                  width: 18,
+                  height: 18,
+                  padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
+                  decoration: BoxDecoration(
+                    color: TColors.base100,
+                    border: Border.all(color: TColors.base200),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Container(),
+                ),
+                const Icon(
+                  TIcons.pen,
+                  size: TConstants.iconXs + 2,
+                  color: TColors.primary,
+                ),
+              ],
+            ),
+          ),
+        ],
       );
 }
 
@@ -112,7 +151,7 @@ class _ChangeDataIcon extends StatelessWidget {
               decoration: BoxDecoration(
                 color: TColors.base100,
                 border: Border.all(color: TColors.base200),
-                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs),
+                borderRadius: BorderRadius.circular(TConstants.cardRadiusXs - 7),
               ),
               child: const SizedBox(),
             ),

@@ -67,14 +67,19 @@ dependencies:
   # Websocket
   stomp_dart_client: ^2.0.0
 
-  # Image picker
+  # Image 
   image_picker: ^1.1.2
+  cached_network_image: ^3.3.1
 
   # Input formatter
   mask_text_input_formatter: ^2.9.0
 
   # Animate
   flutter_animate: ^4.5.0
+
+  # Spash - Icon
+  flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
 
   
   flutter_localizations:
@@ -101,3 +106,22 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Thin.ttf
 
+
+# Splash
+flutter_native_splash:
+  color: "#323A47"
+  android: true
+  ios: true
+  image: assets/splash_app.png
+  android_12:
+    color: "#323A47"
+    image: assets/splash_app.png
+  
+#Icon
+flutter_launcher_icons:
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  image_path: "assets/logo_app.png"
+  adaptive_icon_background: "#323A47"
+  adaptive_icon_foreground: "assets/android_app.png"

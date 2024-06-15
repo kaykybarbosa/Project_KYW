@@ -7,9 +7,14 @@ import 'package:kyw_management/utils/constants.dart';
 import 'package:kyw_management/utils/icons.dart';
 
 class CardTask extends StatelessWidget {
-  const CardTask({super.key, required this.task});
+  const CardTask({
+    super.key,
+    required this.task,
+    this.onTap,
+  });
 
   final TaskResponse task;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -29,50 +34,53 @@ class CardTask extends StatelessWidget {
             ),
           ],
         ),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 8,
-          ),
-          decoration: const BoxDecoration(
-            color: TColors.base100,
-            border: Border(
-              top: BorderSide(color: TColors.base200),
-              right: BorderSide(color: TColors.base200),
-              bottom: BorderSide(color: TColors.base200),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 8,
             ),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(TConstants.radiusLeftInput),
-              bottomLeft: Radius.circular(TConstants.radiusLeftInput),
-              topRight: Radius.circular(TConstants.cardRadiusXs),
-              bottomRight: Radius.circular(TConstants.cardRadiusXs),
+            decoration: const BoxDecoration(
+              color: TColors.base100,
+              border: Border(
+                top: BorderSide(color: TColors.base200),
+                right: BorderSide(color: TColors.base200),
+                bottom: BorderSide(color: TColors.base200),
+              ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(TConstants.radiusLeftInput),
+                bottomLeft: Radius.circular(TConstants.radiusLeftInput),
+                topRight: Radius.circular(TConstants.cardRadiusXs),
+                bottomRight: Radius.circular(TConstants.cardRadiusXs),
+              ),
             ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              /// Nome
-              _TaskName(task: task),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                /// Nome
+                _TaskName(task: task),
 
-              /// Descrição
-              _TaskDescription(task: task),
+                /// Descrição
+                _TaskDescription(task: task),
 
-              /// Categoria e Status
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  /// -- Título
-                  const Text(
-                    'Status',
-                    style: TextStyle(fontSize: TConstants.fontSizeMd),
-                  ),
+                /// Categoria e Status
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    /// -- Título
+                    const Text(
+                      'Status',
+                      style: TextStyle(fontSize: TConstants.fontSizeMd),
+                    ),
 
-                  /// -- Status
-                  MyCardStatus(status: task.status)
-                ],
-              )
-            ],
+                    /// -- Status
+                    MyCardStatus(status: task.status)
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       );
@@ -89,7 +97,7 @@ class _TaskName extends StatelessWidget {
         children: <Widget>[
           /// Nome
           Text(
-            task.description,
+            task.title,
             style: const TextStyle(
               fontSize: TConstants.fontSizeLg,
               fontWeight: FontWeight.bold,
@@ -115,7 +123,7 @@ class _TaskDescription extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: 10, right: 35),
         child: Text(
-          task.description,
+          '${task.description}',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
