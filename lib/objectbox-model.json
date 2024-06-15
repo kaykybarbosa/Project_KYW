@@ -1,0 +1,148 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "5:9176327664423535516",
+      "lastPropertyId": "7:2559704926572998253",
+      "name": "MessageModel",
+      "properties": [
+        {
+          "id": "1:8441717303719906635",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4216460832316152973",
+          "name": "currentUserId",
+          "type": 9
+        },
+        {
+          "id": "3:3707706288675256417",
+          "name": "messageId",
+          "type": 9
+        },
+        {
+          "id": "4:7921868239712666450",
+          "name": "senderId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:2233796622705494105",
+          "relationTarget": "UserIncludeResponse"
+        },
+        {
+          "id": "5:5249949683172450250",
+          "name": "projectId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:5333179155948424398",
+          "relationTarget": "ProjectIncludeResponse"
+        },
+        {
+          "id": "6:4733467294600499986",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "7:2559704926572998253",
+          "name": "sentIn",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:7999810695677560694",
+      "lastPropertyId": "4:6932811942645091297",
+      "name": "UserIncludeResponse",
+      "properties": [
+        {
+          "id": "1:3276657148034383030",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4279556542493173540",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "3:4250374489291003245",
+          "name": "nickname",
+          "type": 9
+        },
+        {
+          "id": "4:6932811942645091297",
+          "name": "avatarUrl",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:5187236611407360037",
+      "lastPropertyId": "3:6162902038009140508",
+      "name": "ProjectIncludeResponse",
+      "properties": [
+        {
+          "id": "1:1822348506138872879",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3442990494667782421",
+          "name": "projectId",
+          "type": 9
+        },
+        {
+          "id": "3:6162902038009140508",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "7:5187236611407360037",
+  "lastIndexId": "6:5333179155948424398",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    3694419320491295600,
+    4607073361781796973,
+    632816148333431856,
+    2613446829570482106
+  ],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    6543103656144520450,
+    4753695960815210549,
+    3037320259593609535,
+    6847899715388605132,
+    7228614411897435110,
+    7417395419298307988,
+    7347372675632564917,
+    4819443787248771219,
+    7750818519451931965,
+    3991461923309328802,
+    3303759470612521738,
+    6223497650481154069,
+    691881582770152483,
+    6182178949642222496,
+    249132271780913112,
+    4412632841902862663,
+    5841859942318752357,
+    8816725207231477272,
+    5591223865823536897,
+    4267189600675961536,
+    6581292721200000415
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
