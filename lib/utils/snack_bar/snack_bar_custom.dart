@@ -4,7 +4,7 @@ import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
-SnackbarController snackBarCustom({
+SnackbarController snackbarCustom({
   String title = 'Ops... Algo deu errado.',
   String? message,
   SnackBarType type = SnackBarType.success,

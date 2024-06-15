@@ -40,14 +40,14 @@ class CreateTaskScreen extends StatelessWidget {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isFailure) {
-              snackBarCustom(
+              snackbarCustom(
                 message: state.errorMessage ?? 'Não foi possível criar a task.',
                 type: SnackBarType.failure,
               );
             } else if (state.status.isSuccess) {
               context.read<ProjectBloc>().add(GetAllTasks(projectId));
               Get.back();
-              snackBarCustom(title: 'Sucesso.', message: 'Task criada com sucesso.');
+              snackbarCustom(title: 'Sucesso.', message: 'Task criada com sucesso.');
             }
           },
           child: Scaffold(

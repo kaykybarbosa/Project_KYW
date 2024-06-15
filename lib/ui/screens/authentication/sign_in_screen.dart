@@ -24,7 +24,7 @@ class SignInScreen extends StatelessWidget {
           if (state.status.isSuccess) {
             Get.offAllNamed(AppRoutes.home);
           } else if (state.status.isFailure) {
-            snackBarCustom(
+            snackbarCustom(
               message: state.errorMessage,
               type: SnackBarType.danger,
             );

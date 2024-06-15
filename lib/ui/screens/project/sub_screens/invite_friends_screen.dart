@@ -39,7 +39,7 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
         // listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isEmailAlreadyExists) {
-            snackBarCustom(
+            snackbarCustom(
               title: 'Este e-mail já está na lista de Membros.',
               showMessageText: false,
               type: SnackBarType.failure,

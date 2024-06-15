@@ -26,14 +26,14 @@ class CreateProjectScreen extends StatelessWidget {
             if (state.status.isSuccess) {
               context.read<ProjectBloc>().add(const GetAllProjects(canGetAll: true));
 
-              snackBarCustom(
+              snackbarCustom(
                 title: 'Sucesso.',
                 message: 'Projeto criado.',
               );
 
               Get.offAndToNamed(AppRoutes.home);
             } else if (state.status.isFailure) {
-              snackBarCustom(
+              snackbarCustom(
                 message: state.errorMessage ?? 'Erro ao criar projeto.',
                 type: SnackBarType.failure,
               );
@@ -149,9 +149,9 @@ class _Image extends StatelessWidget {
         buildWhen: (previous, current) => previous.image != current.image,
         listener: (context, state) {
           if (state.status.isPickerImageFailure) {
-            snackBarCustom(title: 'Erro ao selecionar image..', type: SnackBarType.failure);
+            snackbarCustom(title: 'Erro ao selecionar image..', type: SnackBarType.failure);
           } else if (state.status.isPickerImageSuccess) {
-            snackBarCustom(title: 'Imagem selecionada.');
+            snackbarCustom(title: 'Imagem selecionada.');
           }
         },
         builder: (context, state) => CircleImage(

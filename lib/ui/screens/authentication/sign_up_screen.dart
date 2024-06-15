@@ -25,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isFailure) {
-            snackBarCustom(
+            snackbarCustom(
               message: state.errorMessage,
               type: SnackBarType.danger,
             );
