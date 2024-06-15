@@ -26,14 +26,14 @@ class ProjectDetailsScreen extends StatelessWidget {
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.signOutProjectSuccess) {
-            snackBarCustom(
+            snackbarCustom(
               title: 'Você saiu do projeto.',
               showMessageText: false,
             );
 
             Get.offAndToNamed(AppRoutes.home);
           } else if (state.status.signOutProjectFailure) {
-            snackBarCustom(
+            snackbarCustom(
               message: state.errorMessage,
               type: SnackBarType.failure,
             );
@@ -177,8 +177,31 @@ class _OptionsState extends State<_Options> {
   late final FocusNode _focus;
 
   void _requestFocus() {
-    Future.delayed(400.milliseconds, () => _focus.requestFocus());
+    Future.delayed(
+      400.milliseconds,
+      () => _focus.requestFocus(),
+    );
   }
+
+  void _callSnackbarSuccess() {
+    snackbarCustom(
+      showMessageText: false,
+      title: 'Membro adicionado com sucesso.',
+      type: SnackBarType.success,
+    );
+  }
+
+  void _callSnackbarFailure(String? message) {
+    snackbarCustom(
+      showMessageText: false,
+      title: message ?? 'Não foi possível convidar o usuário.',
+      type: SnackBarType.failure,
+    );
+  }
+
+  void _cleanController() => _controller.text = '';
+
+  void _getNewMember(String projectDetailsId) => context.read<ProjectBloc>().add(GetMembers(projectDetailsId));
 
   @override
   void initState() {
@@ -213,74 +236,61 @@ class _OptionsState extends State<_Options> {
                 builder: (context) => BlocProvider(
                   create: (context) => AddMemberProjectCubit(IProjectRepository.instance),
                   child: BlocBuilder<ProjectBloc, ProjectState>(
-                    builder: (context, projecetState) {
-                      return BlocConsumer<AddMemberProjectCubit, AddMemberProjectState>(
-                        listener: (context, addMemberState) {
-                          if (addMemberState.status.isSuccess) {
-                            snackBarCustom(
-                              showMessageText: false,
-                              title: 'Membro adicionado com sucesso.',
-                              type: SnackBarType.success,
-                            );
+                    builder: (context, projectState) => BlocConsumer<AddMemberProjectCubit, AddMemberProjectState>(
+                      listener: (context, addMemberState) {
+                        if (addMemberState.status.isSuccess) {
+                          _callSnackbarSuccess();
 
-                            _controller.text = '';
+                          _cleanController();
 
-                            context.read<ProjectBloc>().add(GetMembers(projecetState.projectDetails.id));
-                          } else if (addMemberState.status.isFailure) {
-                            snackBarCustom(
-                              showMessageText: false,
-                              title: addMemberState.errorMessage ?? 'Não foi possível convidar o usuário.',
-                              type: SnackBarType.failure,
-                            );
-                          }
-                        },
-                        builder: (context, state) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                            padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                /// Título
-                                const Text(
-                                  'Adicionar membros',
-                                  style: TextStyle(
-                                    fontSize: TConstants.fontSizeLg + 2,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const Gap(10),
-
-                                /// Input
-                                MyTextFieldBorder(
-                                  controller: _controller,
-                                  text: 'E-mail',
-                                  focusNode: _focus,
-                                  placeHolder: 'E-mail do usuário',
-                                  errorText: state.email.displayError,
-                                  onChanged: (value) => context.read<AddMemberProjectCubit>().emailChanged(value),
-                                ),
-                                const Gap(25),
-
-                                /// ConvidarBtn
-                                SubmitButton(
-                                  label: 'Adicionar',
-                                  isInProgress: state.status.isInProgress,
-                                  onPressed: state.isValid
-                                      ? () => context
-                                          .read<AddMemberProjectCubit>()
-                                          .submitForm(projecetState.projectDetails.id)
-                                      : null,
-                                ),
-                                const Gap(10),
-                              ],
+                          _getNewMember(projectState.projectDetails.id);
+                        } else if (addMemberState.status.isFailure) {
+                          _callSnackbarFailure(addMemberState.errorMessage);
+                        }
+                      },
+                      builder: (context, state) => Container(
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                        padding: const EdgeInsets.symmetric(horizontal: TConstants.defaultMargin),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            /// Título
+                            const Text(
+                              'Adicionar membros',
+                              style: TextStyle(
+                                fontSize: TConstants.fontSizeLg + 2,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          );
-                        },
-                      );
-                    },
+                            const Gap(10),
+
+                            /// Input
+                            MyTextFieldBorder(
+                              controller: _controller,
+                              text: 'E-mail',
+                              focusNode: _focus,
+                              placeHolder: 'E-mail do usuário',
+                              errorText: state.email.displayError,
+                              onChanged: (value) => context.read<AddMemberProjectCubit>().emailChanged(value),
+                            ),
+                            const Gap(25),
+
+                            /// ConvidarBtn
+                            SubmitButton(
+                              label: 'Adicionar',
+                              isInProgress: state.status.isInProgress,
+                              onPressed: state.isValid
+                                  ? () =>
+                                      context.read<AddMemberProjectCubit>().submitForm(projectState.projectDetails.id)
+                                  : null,
+                            ),
+                            const Gap(10),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -336,68 +346,67 @@ class _Members extends StatelessWidget {
   const _Members();
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProjectBloc, ProjectState>(
-      builder: (context, state) {
-        final members = state.members;
+  Widget build(BuildContext context) => BlocBuilder<ProjectBloc, ProjectState>(
+        buildWhen: (previous, current) => previous.members != current.members,
+        builder: (context, state) {
+          final members = state.members;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            /// Título
-            const Padding(
-              padding: EdgeInsets.only(left: 15, top: 5, bottom: 10),
-              child: _NumberOfMembers(
-                style: TextStyle(fontSize: TConstants.fontSizeLg - 1),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              /// Título
+              const Padding(
+                padding: EdgeInsets.only(left: 15, bottom: 10),
+                child: _NumberOfMembers(
+                  style: TextStyle(fontSize: TConstants.fontSizeLg - 1),
+                ),
               ),
-            ),
 
-            /// Membros
-            Column(
-              children: members
-                  .map<Widget>(
-                    (member) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: TColors.base100,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: TColors.base900.withOpacity(.20),
-                            blurRadius: 10,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          /// Avatar
-                          AvatarUrlTile(avatarUrl: member.avatarUrlLocal),
+              /// Membros
+              Column(
+                children: members
+                    .map<Widget>(
+                      (member) => Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: TColors.base100,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: TColors.base900.withOpacity(.20),
+                              blurRadius: 10,
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            /// Avatar
+                            AvatarUrlTile(avatarUrl: member.avatarUrlLocal),
 
-                          const Gap(10),
+                            const Gap(10),
 
-                          /// Nome
-                          Expanded(
-                            child: Text(
-                              member.isCurrentUser ? 'Você' : member.nickname,
-                              style: const TextStyle(
-                                fontSize: TConstants.fontSizeLg,
+                            /// Nome
+                            Expanded(
+                              child: Text(
+                                member.isCurrentUser ? 'Você' : member.nickname,
+                                style: const TextStyle(
+                                  fontSize: TConstants.fontSizeLg,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ],
-        );
-      },
-    );
-  }
+                    )
+                    .toList(),
+              ),
+            ],
+          );
+        },
+      );
 }
 
 class _Divider extends StatelessWidget {
