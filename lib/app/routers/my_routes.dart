@@ -9,7 +9,7 @@ class AppRoutes {
   static const String changePassword = '/forgot-password/change-password';
   static const String notifications = '/notifications';
   static const String createProject = '/create-project';
-  static const String detailsProject = '/details-project';
+  static const String detailsProject = '/project-details';
   static const String inviteFriends = '/create-project/invited-friends';
   static const String configuration = '/configuration';
   static const String myAccount = '/my-account';

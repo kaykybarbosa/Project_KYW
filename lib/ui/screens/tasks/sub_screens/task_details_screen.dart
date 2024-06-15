@@ -11,16 +11,16 @@ import 'package:kyw_management/ui/widgets/skelton_indicator.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 
-class DetailsTaskScreen extends StatefulWidget {
-  const DetailsTaskScreen({super.key, required this.taskId});
+class TaskDetailsScreen extends StatefulWidget {
+  const TaskDetailsScreen({super.key, required this.taskId});
 
   final String taskId;
 
   @override
-  State<DetailsTaskScreen> createState() => _DetailsTaskScreenState();
+  State<TaskDetailsScreen> createState() => _TaskDetailsScreenState();
 }
 
-class _DetailsTaskScreenState extends State<DetailsTaskScreen> {
+class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   void _getTaskById(String taskId) => context.read<TaskCubit>().getTaskById(taskId);
 
   @override
@@ -82,6 +82,7 @@ class _Body extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                /// Detalhes do projeto
                 const _ProjectDetails(),
 
                 const Gap(20),
