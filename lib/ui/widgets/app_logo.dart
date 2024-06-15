@@ -24,6 +24,8 @@ class AppLogo extends StatelessWidget {
         fit: BoxFit.contain,
         width: width,
         height: height,
+        cacheWidth: 275,
+        cacheHeight: 275,
       ),
     );
   }
