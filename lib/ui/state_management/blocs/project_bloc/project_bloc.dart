@@ -108,7 +108,10 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     tasks = result.getOrDefault([]);
 
-    emit(state.copyWith(tasks: tasks, status: ProjectStatus.taskSuccess));
+    emit(state.copyWith(
+      tasks: tasks,
+      status: ProjectStatus.taskSuccess,
+    ));
   }
 
   void _getMembers(GetMembers event, Emitter<ProjectState> emit) async {
@@ -122,7 +125,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 
     emit(state.copyWith(
       members: members,
-      status: ProjectStatus.success,
+      status: ProjectStatus.newMemberSuccess,
     ));
   }
 

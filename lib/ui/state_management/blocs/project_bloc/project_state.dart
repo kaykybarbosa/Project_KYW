@@ -84,6 +84,9 @@ enum ProjectStatus {
 
   newMessage,
 
+  newMemberSuccess,
+  newMemberFailure,
+
   taskInProgress,
   taskSuccess,
   taskFailure,
