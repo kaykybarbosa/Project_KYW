@@ -4,54 +4,6 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "2:632816148333431856",
-      "lastPropertyId": "3:8816725207231477272",
-      "name": "ProjectMessage",
-      "properties": [
-        {
-          "id": "1:4412632841902862663",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:5841859942318752357",
-          "name": "projectId",
-          "type": 9
-        },
-        {
-          "id": "3:8816725207231477272",
-          "name": "name",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "3:2613446829570482106",
-      "lastPropertyId": "3:6581292721200000415",
-      "name": "UserResponse",
-      "properties": [
-        {
-          "id": "1:5591223865823536897",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:4267189600675961536",
-          "name": "userId",
-          "type": 9
-        },
-        {
-          "id": "3:6581292721200000415",
-          "name": "nickname",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "5:9176327664423535516",
       "lastPropertyId": "7:2559704926572998253",
       "name": "MessageModel",
@@ -78,7 +30,7 @@
           "type": 11,
           "flags": 520,
           "indexId": "5:2233796622705494105",
-          "relationTarget": "UserResponse"
+          "relationTarget": "UserIncludeResponse"
         },
         {
           "id": "5:5249949683172450250",
@@ -86,7 +38,7 @@
           "type": 11,
           "flags": 520,
           "indexId": "6:5333179155948424398",
-          "relationTarget": "ProjectMessage"
+          "relationTarget": "ProjectIncludeResponse"
         },
         {
           "id": "6:4733467294600499986",
@@ -100,9 +52,62 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "6:5466046592235276204",
+      "lastPropertyId": "3:9067586958297095178",
+      "name": "ProjectIncludeResponse",
+      "properties": [
+        {
+          "id": "1:946108123318967035",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2457997795539037983",
+          "name": "projectId",
+          "type": 9
+        },
+        {
+          "id": "3:9067586958297095178",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:5990734515440978588",
+      "lastPropertyId": "4:8250088367997920263",
+      "name": "UserIncludeResponse",
+      "properties": [
+        {
+          "id": "1:9182036901915829744",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6408298667293789990",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "3:4744120349934455701",
+          "name": "nickname",
+          "type": 9
+        },
+        {
+          "id": "4:8250088367997920263",
+          "name": "avatarUrl",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "5:9176327664423535516",
+  "lastEntityId": "7:5990734515440978588",
   "lastIndexId": "6:5333179155948424398",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -110,7 +115,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [
     3694419320491295600,
-    4607073361781796973
+    4607073361781796973,
+    632816148333431856,
+    2613446829570482106
   ],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
@@ -128,7 +135,13 @@
     6223497650481154069,
     691881582770152483,
     6182178949642222496,
-    249132271780913112
+    249132271780913112,
+    4412632841902862663,
+    5841859942318752357,
+    8816725207231477272,
+    5591223865823536897,
+    4267189600675961536,
+    6581292721200000415
   ],
   "retiredRelationUids": [],
   "version": 1
