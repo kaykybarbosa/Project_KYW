@@ -30,5 +30,5 @@ export 'package:kyw_management/ui/screens/project/sub_screens/chat_project_scree
 export 'package:kyw_management/ui/screens/project/sub_screens/create_project_screen.dart';
 export 'package:kyw_management/ui/screens/project/sub_screens/invite_friends_screen.dart';
 export 'package:kyw_management/ui/screens/tasks/sub_screens/create_task_screen.dart';
-export 'package:kyw_management/ui/screens/tasks/sub_screens/details_task_screen.dart';
+export 'package:kyw_management/ui/screens/tasks/sub_screens/task_details_screen.dart';
 export 'package:kyw_management/utils/constants.dart';
