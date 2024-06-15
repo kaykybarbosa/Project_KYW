@@ -21,37 +21,10 @@ class AppLogo extends StatelessWidget {
     return Center(
       child: Image.asset(
         'assets/$image',
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         width: width,
         height: height,
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) => Center(
-  //       child: Stack(
-  //         alignment: Alignment.center,
-  //         children: <Widget>[
-  //           Padding(
-  //             padding: padding ?? const EdgeInsets.only(top: 27.0),
-  //             child: Icon(
-  //               TIcons.logo,
-  //               color: isDarkMode ? TColors.base100.withOpacity(.4) : TColors.secondary.withOpacity(.5),
-  //               size: iconSize,
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.only(left: 12),
-  //             child: Text(
-  //               'K Y W',
-  //               style: GoogleFonts.roboto(
-  //                 fontSize: fontSize,
-  //                 color: isDarkMode ? TColors.base100 : TColors.secondary,
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     );
 }
