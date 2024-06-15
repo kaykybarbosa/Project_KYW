@@ -35,5 +35,5 @@ class AuthUserModel extends Equatable {
         password: map['password'],
       );
 
-  factory AuthUserModel.fromJson(String source) => AuthUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AuthUserModel.fromJson(String source) => AuthUserModel.fromMap(json.decode(source));
 }

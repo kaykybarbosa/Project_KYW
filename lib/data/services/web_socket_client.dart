@@ -31,12 +31,6 @@ class WebSocketClient {
         url: '$url/connect',
         onConnect: onConnect ?? (_) => log('Connect to the server in URL: $url/connect', name: 'WEBSOCKET'),
         onWebSocketError: (dynamic error) => log(error.toString(), name: 'WEBSOCKET'),
-        // stompConnectHeaders: {
-        //   'Authorization':
-        //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJici5jb20ua3l3Iiwic3ViIjoia2J1bG9zbzJAZ21haWwuY29tIiwiaWQiOiIzMGViNDM4Mi0xYTIxLTRmOGYtOTc4MS1hNTdkZGI3Y2JkOTkiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiZXhwIjoxNzE4MDU0ODEzfQ.bLnKSzp84pc4El2an5SmDtNTByS9K8Wy21EtmfSkgoM'
-        // },
-        // webSocketConnectHeaders: {'Authorization: 'Bearer ${user?.token}'},
-        beforeConnect: () async {},
       ),
     );
 

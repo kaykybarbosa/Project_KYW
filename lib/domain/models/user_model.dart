@@ -16,7 +16,7 @@ class UserModel extends Equatable {
     this.number = '',
     this.password = '',
     this.confirmPassword = '',
-    this.isActive = true,
+    this.isActive = false,
   });
 
   UserModel pure({
@@ -39,7 +39,14 @@ class UserModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [name, email, number, password, confirmPassword, isActive];
+  List<Object?> get props => [
+        name,
+        email,
+        number,
+        password,
+        confirmPassword,
+        isActive,
+      ];
 
   UserModel copyWith({
     String? id,
