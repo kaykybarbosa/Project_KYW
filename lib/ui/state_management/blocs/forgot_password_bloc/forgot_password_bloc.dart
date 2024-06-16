@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-
-import '../../models_input/models_states_export.dart';
+import 'package:kyw_management/ui/state_management/models_input/code_input.dart';
+import 'package:kyw_management/ui/state_management/models_input/email_input.dart';
 
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';

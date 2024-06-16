@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-
-import '../../models_input/models_states_export.dart';
+import 'package:kyw_management/ui/state_management/models_input/code_input.dart';
 
 part 'forgot_code_state.dart';
 

@@ -6,8 +6,8 @@ import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/data/repositories/project_repository.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
-import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
 import 'package:kyw_management/ui/state_management/blocs/project_bloc/project_bloc.dart';
+import 'package:kyw_management/ui/state_management/cubits/create_project_cubit/create_project_cubit.dart';
 import 'package:kyw_management/ui/widgets/circle_image.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
@@ -19,8 +19,8 @@ class CreateProjectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => AddProjectBloc(IProjectRepository.instance),
-        child: BlocConsumer<AddProjectBloc, AddProjectState>(
+        create: (context) => CreateProjectCubit(IProjectRepository.instance),
+        child: BlocConsumer<CreateProjectCubit, CreateProjectState>(
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isSuccess) {
@@ -66,7 +66,7 @@ class _BodyState extends State<_Body> {
     pageController.dispose();
   }
 
-  void changePage() {
+  void _changePage() {
     int page = 0;
 
     if (pageController.page?.toInt() == 0) {
@@ -86,8 +86,8 @@ class _BodyState extends State<_Body> {
           leading: BackButton(
             onPressed: () {
               if (pageController.page?.toInt() == 1) {
-                context.read<AddProjectBloc>().add(ChangedCurrentPage());
-                changePage();
+                context.read<CreateProjectCubit>().changePage();
+                _changePage();
               } else {
                 Get.back();
               }
@@ -145,7 +145,7 @@ class _Image extends StatelessWidget {
   const _Image();
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocConsumer<CreateProjectCubit, CreateProjectState>(
         buildWhen: (previous, current) => previous.image != current.image,
         listener: (context, state) {
           if (state.status.isPickerImageFailure) {
@@ -185,7 +185,7 @@ class _Image extends StatelessWidget {
                         child: IconButton(
                           onPressed: () => {
                             Get.back(),
-                            context.read<AddProjectBloc>().add(RemoveImage()),
+                            context.read<CreateProjectCubit>().removeImage(),
                           },
                           constraints: const BoxConstraints(maxHeight: 20, maxWidth: 20),
                           icon: const Icon(
@@ -209,7 +209,7 @@ class _Image extends StatelessWidget {
                         icon: TIcons.camera,
                         onTap: () => {
                           Get.back(),
-                          context.read<AddProjectBloc>().add(const PickerImage()),
+                          context.read<CreateProjectCubit>().pickerImageFile(),
                         },
                       ),
                       PickerIcon(
@@ -217,7 +217,7 @@ class _Image extends StatelessWidget {
                         icon: TIcons.gallery,
                         onTap: () => {
                           Get.back(),
-                          context.read<AddProjectBloc>().add(const PickerImage(fromGallery: true)),
+                          context.read<CreateProjectCubit>().pickerImageFile(fromGallery: true),
                         },
                       ),
                     ],
@@ -247,7 +247,7 @@ class _TitleInput extends StatelessWidget {
   const _TitleInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocBuilder<CreateProjectCubit, CreateProjectState>(
         buildWhen: (previous, current) => previous.title.value != current.title.value,
         builder: (context, state) => MyTextFieldBorder(
           text: TTexts.title,
@@ -255,7 +255,7 @@ class _TitleInput extends StatelessWidget {
           placeHolder: TTexts.labelTitle,
           textInputType: TextInputType.text,
           textInputAction: TextInputAction.next,
-          onChanged: (value) => context.read<AddProjectBloc>().add(TitleChanged(title: value)),
+          onChanged: (value) => context.read<CreateProjectCubit>().titleChanged(value),
           errorText: state.title.displayError,
         ),
       );
@@ -265,7 +265,7 @@ class _DescriptionInput extends StatelessWidget {
   const _DescriptionInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocBuilder<CreateProjectCubit, CreateProjectState>(
         buildWhen: (previous, current) => previous.description.value != current.description.value,
         builder: (context, state) => MyTextFieldBorder(
           maxLine: 5,
@@ -273,7 +273,7 @@ class _DescriptionInput extends StatelessWidget {
           text: TTexts.description,
           placeHolder: TTexts.labelDescription,
           textInputType: TextInputType.multiline,
-          onChanged: (value) => context.read<AddProjectBloc>().add(DescriptionChanged(description: value)),
+          onChanged: (value) => context.read<CreateProjectCubit>().descriptionChanged(value),
         ),
       );
 }
@@ -285,14 +285,14 @@ class _MyFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     void changePage(int currentPage) {
       if (currentPage == 0) {
-        context.read<AddProjectBloc>().add(ChangedCurrentPage());
-        context.findAncestorStateOfType<_BodyState>()?.changePage();
+        context.read<CreateProjectCubit>().changePage();
+        context.findAncestorStateOfType<_BodyState>()?._changePage();
       } else {
-        context.read<AddProjectBloc>().add(FormSubmittedd());
+        context.read<CreateProjectCubit>().formSubmitted();
       }
     }
 
-    return BlocBuilder<AddProjectBloc, AddProjectState>(
+    return BlocBuilder<CreateProjectCubit, CreateProjectState>(
       buildWhen: (previous, current) =>
           previous.isValid != current.isValid || previous.currentPage != current.currentPage,
       builder: (context, state) => FloatingActionButton(

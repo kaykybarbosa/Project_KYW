@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:kyw_management/app/routers/app_pages/app_pages_exports.dart';
 import 'package:kyw_management/domain/enums/snack_bar_type.dart';
 import 'package:kyw_management/ui/screens/project/widgets/my_text_field_border.dart';
-import 'package:kyw_management/ui/state_management/blocs/add_project_bloc/add_project_bloc.dart';
+import 'package:kyw_management/ui/state_management/cubits/create_project_cubit/create_project_cubit.dart';
 import 'package:kyw_management/utils/colors.dart';
 import 'package:kyw_management/utils/icons.dart';
 import 'package:kyw_management/utils/snack_bar/snack_bar_custom.dart';
@@ -35,7 +35,7 @@ class InviteFriendsScreenState extends State<InviteFriendsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocConsumer<CreateProjectCubit, CreateProjectState>(
         // listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
           if (state.status.isEmailAlreadyExists) {
@@ -58,7 +58,7 @@ class _InviteFriendsScreen extends StatelessWidget {
   const _InviteFriendsScreen();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocBuilder<CreateProjectCubit, CreateProjectState>(
         buildWhen: (previous, current) => current.currentPage == 1,
         builder: (context, state) => Column(
           children: <Widget>[
@@ -99,7 +99,7 @@ class _InviteFriendsScreen extends StatelessWidget {
                     /// -- Lista com os membros convidados
                     Expanded(
                       flex: 11,
-                      child: _ListMembers(users: state.invitedFriends.map((e) => e.value).toList()),
+                      child: _ListMembers(users: state.invitedMembers.map((e) => e.value).toList()),
                     )
                   ],
                 ),
@@ -133,13 +133,13 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocBuilder<CreateProjectCubit, CreateProjectState>(
         builder: (context, state) => MyTextFieldBorder(
           controller: context.findAncestorStateOfType<InviteFriendsScreenState>()?.emailController,
           placeHolder: TTexts.labelEmail,
           text: TTexts.inviteFriendsByEmail,
           textInputType: TextInputType.emailAddress,
-          onChanged: (value) => context.read<AddProjectBloc>().add(EmailChanged(email: value)),
+          onChanged: (value) => context.read<CreateProjectCubit>().emailChanged(value),
           errorText: state.email.displayError,
         ),
       );
@@ -149,9 +149,9 @@ class _AddButton extends StatelessWidget {
   const _AddButton();
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AddProjectBloc, AddProjectState>(
+  Widget build(BuildContext context) => BlocBuilder<CreateProjectCubit, CreateProjectState>(
         builder: (context, state) => TextButton(
-          onPressed: () => context.read<AddProjectBloc>().add(InvitedFriends()),
+          onPressed: () => context.read<CreateProjectCubit>().invitedMembers(),
           style: ButtonStyle(
             shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(TConstants.cardRadiusXs))),
@@ -214,7 +214,7 @@ class _ListMembers extends StatelessWidget {
                   TIcons.more,
                   color: TColors.primary,
                 ),
-                itemBuilder: (_) => [
+                itemBuilder: (_) => <PopupMenuEntry<dynamic>>[
                   PopupMenuItem(
                     child: const Row(
                       children: <Widget>[
@@ -230,7 +230,7 @@ class _ListMembers extends StatelessWidget {
                         ),
                       ],
                     ),
-                    onTap: () => context.read<AddProjectBloc>().add(RemoveFriends(email: users[index])),
+                    onTap: () => context.read<CreateProjectCubit>().removeMember(users[index]),
                   ),
                 ],
               ),

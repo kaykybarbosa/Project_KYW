@@ -5,7 +5,10 @@ import 'package:kyw_management/app/controllers/app_controller.dart';
 import 'package:kyw_management/data/dtos/request/user_register_request.dart';
 import 'package:kyw_management/data/repositories/auth/auth_repository.dart';
 import 'package:kyw_management/domain/models/auth_user_model.dart';
-import 'package:kyw_management/ui/state_management/models_input/models_states_export.dart';
+import 'package:kyw_management/ui/state_management/models_input/email_input.dart';
+import 'package:kyw_management/ui/state_management/models_input/name_input.dart';
+import 'package:kyw_management/ui/state_management/models_input/password_input.dart';
+import 'package:kyw_management/ui/state_management/models_input/phone_input.dart';
 
 part 'sign_up_state.dart';
 
