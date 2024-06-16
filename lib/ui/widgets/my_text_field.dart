@@ -23,6 +23,8 @@ class MyTextFormField extends StatelessWidget {
     this.enableInteractiveSelection,
     this.textCapitalization,
     this.isPasswordInput = false,
+    this.isInputUnderline = false,
+    this.contentPadding,
     this.onChanged,
     this.onSubmit,
     this.onTap,
@@ -44,6 +46,8 @@ class MyTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final bool canRequestFocus;
   final bool? enableInteractiveSelection;
+  final bool isInputUnderline;
+  final EdgeInsetsGeometry? contentPadding;
   final TextCapitalization? textCapitalization;
   final Function(String value)? onChanged;
   final Function()? onSubmit;
@@ -52,33 +56,45 @@ class MyTextFormField extends StatelessWidget {
   final bool isPasswordInput;
 
   @override
-  Widget build(BuildContext context) => TextFormField(
-        controller: controller,
-        initialValue: initialValue,
-        focusNode: focusNode,
-        maxLines: maxLines,
-        obscureText: obscureText,
-        textInputAction: textInputAction,
-        keyboardType: keyboardType,
-        inputFormatters: inputFormatters,
-        canRequestFocus: canRequestFocus,
-        enableInteractiveSelection: enableInteractiveSelection,
-        textCapitalization: textCapitalization ?? TextCapitalization.none,
-        decoration: InputDecoration(
-          hintText: hintText,
-          errorText: errorText,
-          helperText: helperText,
-          suffix: suffix,
-          suffixIcon: suffixIcon != null
-              ? Icon(
-                  suffixIcon,
-                  size: suffixIconSize,
-                )
-              : null,
-          hintStyle: errorText != null ? TextStyle(color: Theme.of(context).colorScheme.error.withOpacity(.8)) : null,
-        ),
-        onTap: onTap,
-        onEditingComplete: onSubmit,
-        onChanged: onChanged,
-      );
+  Widget build(BuildContext context) {
+    final inputTheme = Theme.of(context).inputDecorationTheme;
+
+    return TextFormField(
+      controller: controller,
+      initialValue: initialValue,
+      focusNode: focusNode,
+      maxLines: maxLines,
+      obscureText: obscureText,
+      textInputAction: textInputAction,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      canRequestFocus: canRequestFocus,
+      enableInteractiveSelection: enableInteractiveSelection,
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      decoration: InputDecoration(
+        contentPadding: contentPadding,
+        hintText: hintText,
+        errorText: errorText,
+        helperText: helperText,
+        suffix: suffix,
+        suffixIcon: suffixIcon != null
+            ? Icon(
+                suffixIcon,
+                size: suffixIconSize,
+              )
+            : null,
+        hintStyle: errorText != null ? TextStyle(color: Theme.of(context).colorScheme.error.withOpacity(.8)) : null,
+        disabledBorder:
+            isInputUnderline ? UnderlineInputBorder(borderSide: inputTheme.disabledBorder!.borderSide) : null,
+        focusedBorder: isInputUnderline ? UnderlineInputBorder(borderSide: inputTheme.focusedBorder!.borderSide) : null,
+        enabledBorder: isInputUnderline ? UnderlineInputBorder(borderSide: inputTheme.enabledBorder!.borderSide) : null,
+        errorBorder: isInputUnderline ? UnderlineInputBorder(borderSide: inputTheme.errorBorder!.borderSide) : null,
+        focusedErrorBorder:
+            isInputUnderline ? UnderlineInputBorder(borderSide: inputTheme.focusedErrorBorder!.borderSide) : null,
+      ),
+      onTap: onTap,
+      onEditingComplete: onSubmit,
+      onChanged: onChanged,
+    );
+  }
 }
