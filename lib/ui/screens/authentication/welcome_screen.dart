@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kyw_management/app/routers/my_routes.dart';
 import 'package:kyw_management/ui/widgets/app_logo.dart';
 import 'package:kyw_management/ui/widgets/my_elevated_button_underline.dart';
@@ -40,21 +39,6 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      );
-}
-
-class _AppName extends StatelessWidget {
-  const _AppName();
-
-  @override
-  Widget build(BuildContext context) => Center(
-        child: Text(
-          'KYW',
-          style: GoogleFonts.sofia(
-            fontSize: 45,
-            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
       );

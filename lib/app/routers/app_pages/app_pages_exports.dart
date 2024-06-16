@@ -1,7 +1,6 @@
 export 'package:get/get_navigation/get_navigation.dart';
 export 'package:kyw_management/app/controllers/app_controller_bindings.dart';
 export 'package:kyw_management/app/routers/my_routes.dart';
-export 'package:kyw_management/data/middlewares/current_user_is_auth.dart';
 export 'package:kyw_management/data/middlewares/first_access.dart';
 export 'package:kyw_management/data/repositories/auth/auth_repository_bindings.dart';
 export 'package:kyw_management/data/repositories/repositories_bindings.dart';

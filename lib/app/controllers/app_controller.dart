@@ -16,7 +16,7 @@ class AppController extends GetxController {
     required IConfigureAppStorage configureAppStorage,
   })  : _currentUserStorage = currentUserStorage,
         _configureAppStorage = configureAppStorage,
-        _currentUser = CurrentUserModel();
+        _currentUser = const CurrentUserModel();
 
   /// Instância
   static AppController get instance => Get.find<AppController>();
@@ -56,7 +56,7 @@ class AppController extends GetxController {
   // -- SETTERS
 
   Future _setCurrentUser() async {
-    await _currentUserStorage.currentUser.then((value) => _currentUser = value ?? CurrentUserModel());
+    await _currentUserStorage.currentUser.then((value) => _currentUser = value ?? const CurrentUserModel());
   }
 
   /// Atualiza o status do usuário no app.
